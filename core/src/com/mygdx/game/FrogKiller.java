@@ -19,7 +19,6 @@ import states.PlayState;
 public class FrogKiller extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private GameStateManager gsm;
-	private Texture img;
 	private OrthographicCamera cam;
 	//private Rectangle viewport;
 	private static final int VIRTUAL_WIDTH = 800;
@@ -28,7 +27,7 @@ public class FrogKiller extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-	this.batch = new SpriteBatch();
+		this.batch = new SpriteBatch();
 		this.gsm = new GameStateManager();
 		this.gsm.push(new PlayState(gsm));
 
@@ -44,7 +43,6 @@ public class FrogKiller extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 	//public void resize(int width, int height)
 	//{

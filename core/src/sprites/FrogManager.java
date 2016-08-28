@@ -16,7 +16,6 @@ public class FrogManager {
 
     private static final int FROG_OFFSET_X = 70;
     private static final int FROG_OFFSET_Y = 20;
-    private static final float INITIAL_FROG_MAX_LIFE_TIME_SECS = 5.0f;
 
     private float frogMaxLifeTime;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
@@ -24,8 +23,8 @@ public class FrogManager {
     private Array<Integer> unpopulatedHolesIndexes;
 
 
-    public FrogManager(Array<Hole> holes) {
-        this.frogMaxLifeTime = INITIAL_FROG_MAX_LIFE_TIME_SECS;
+    public FrogManager(Array<Hole> holes, float frogMaxLifeTime) {
+        this.frogMaxLifeTime = frogMaxLifeTime;
         this.holes = holes;
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();

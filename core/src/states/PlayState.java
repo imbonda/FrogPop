@@ -12,9 +12,11 @@ import sprites.FrogManager;
 import sprites.Hole;
 
 public class PlayState extends State {
+
     private static final int VIRTUAL_WIDTH = 800;
     private static final int VIRTUAL_HEIGHT = 530;
   //  private static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/(float)VIRTUAL_HEIGHT;
+    private static final float INITIAL_FROG_MAX_LIFE_TIME_SECS = 5.0f;
     private static final float FROG_LIFE_TIME_DECREASE_FACTOR = 0.8f;
     private static final Vector2[] HOLES_POSITIONS = {
                 new Vector2(50, 50), new Vector2(300, 50), new Vector2(50, 200),
@@ -42,7 +44,7 @@ public class PlayState extends State {
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
-        this.frogManager = new FrogManager(this.holes);
+        this.frogManager = new FrogManager(this.holes, INITIAL_FROG_MAX_LIFE_TIME_SECS);
         this.frogManager.addFrog();
         this.cam.setToOrtho(false,this.sprite.getWidth(),this.sprite.getHeight());
     }
