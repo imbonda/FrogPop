@@ -20,7 +20,9 @@ public class PlayState extends State {
   //  private static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/(float)VIRTUAL_HEIGHT;
     private static float FROG_LIFE_TIME_SECS =5.0f;
     private static final Vector2[] HOLES_POSITIONS = {
-            new Vector2(50, 50), new Vector2(300, 50), new Vector2(50, 200), new Vector2(300, 200),new Vector2(550, 50),new Vector2(550, 200),new Vector2(50, 350),new Vector2(300, 350),new Vector2(550,350)
+                new Vector2(50, 50), new Vector2(300, 50), new Vector2(50, 200),
+                new Vector2(300, 200), new Vector2(550, 50), new Vector2(550, 200),
+                new Vector2(50, 350), new Vector2(300, 350), new Vector2(550,350)
     };
 
     BitmapFont scoreFont;
@@ -55,18 +57,14 @@ public class PlayState extends State {
             if (this.frog.isFrogTouched(touchVector) && !frog.isDead) {
                 this.yourscore++;
                 this.frog.isDead = true;
-                if((this.yourscore%10)==0&&yourscore!=0)
-                {
+                if((this.yourscore%10)==0&&yourscore!=0) {
                     this.FROG_LIFE_TIME_SECS=(float)(FROG_LIFE_TIME_SECS*0.8);
                 }
-                                }
-            else
-            {
+            }
+            else {
                 this.gsm.push(new GameOver(gsm));
             }
-
         }
-
     }
 
     @Override
@@ -96,16 +94,16 @@ public class PlayState extends State {
         scoreFont.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         scoreFont.draw(batch, "Your Mother Fucking Score: " + yourscore, 25, 520);
     }
-    private void drawGO(SpriteBatch batch)
-    {
+
+    private void drawGO(SpriteBatch batch) {
         Time.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         Time.draw(batch, "Time remain:"+ (int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)),25,470);
     }
-    private void drawLevel(SpriteBatch batch)
-    {
+
+    private void drawLevel(SpriteBatch batch) {
         Level.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         Level.draw(batch, "Your Level :" + (int) yourscore /+10, 25, 495);
-        if(yourscore%10==0&yourscore!=0) {
+        if(yourscore % 10 == 0 & yourscore != 0) {
             Level.setColor(Color.RED);
            // Level.getData().setScale(1,1);
             Level.draw(batch, "Level up!", VIRTUAL_WIDTH/2-15, VIRTUAL_WIDTH/2+70);
@@ -124,8 +122,7 @@ public class PlayState extends State {
             batch.draw(this.frog.getFrogTexture(), frogPosition.x, frogPosition.y,0,0,100, 100-(int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
             //batch.draw(this.frog.getFrogTexture(), frogPosition.x, frogPosition.y);
         }
-        else
-        {
+        else {
             Vector2 frogPosition = this.frog.getPosition();
             this.frog = FrogGenerator.generateFrog(this.holes);
             batch.draw(this.frog.getFrogTexture(), frogPosition.x, frogPosition.y,0,0,100, 100-(int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
@@ -136,12 +133,13 @@ public class PlayState extends State {
     public void dispose() {
         sprite.getTexture().dispose();
     }
-    public float getGameWitdh()
-    {
-        return VIRTUAL_WIDTH;}
 
-    public float getGameHeight()
-    {
-        return VIRTUAL_HEIGHT;}
+    public float getGameWitdh() {
+        return VIRTUAL_WIDTH;
+    }
+
+    public float getGameHeight() {
+        return VIRTUAL_HEIGHT;
+    }
 
 }
