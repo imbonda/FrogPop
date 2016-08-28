@@ -16,13 +16,16 @@ public class FrogManager {
 
     private static final int FROG_OFFSET_X = 70;
     private static final int FROG_OFFSET_Y = 20;
-    private static final float FROG_MAX_LIFE_TIME_SECS = 1.0f;
+    private static final float INITIAL_FROG_MAX_LIFE_TIME_SECS = 5.0f;
 
+    private float frogMaxLifeTime;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
     private Array<Hole> holes;
     private Array<Integer> unpopulatedHolesIndexes;
 
+
     public FrogManager(Array<Hole> holes) {
+        this.frogMaxLifeTime = INITIAL_FROG_MAX_LIFE_TIME_SECS;
         this.holes = holes;
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
@@ -35,7 +38,7 @@ public class FrogManager {
         int randomHoleIndex = this.getRandomUnpopulatedHoleIndex();
         Vector2 frogPosition = this.getFrogPosition(randomHoleIndex);
         // Add a new frog positioned at the chosen hole.
-        this.frogToHoleIndexMap.put(new Frog(frogPosition, FROG_MAX_LIFE_TIME_SECS), randomHoleIndex);
+        this.frogToHoleIndexMap.put(new Frog(frogPosition, this.frogMaxLifeTime), randomHoleIndex);
         // The hole is now populated.
         this.unpopulatedHolesIndexes.removeValue(randomHoleIndex, true);
     }
@@ -58,30 +61,28 @@ public class FrogManager {
 //        //..
 //    }
 
-    public void removeFrog() {
-//        this.frogToHoleIndexMap.remove();
-//        Frog frog = this.frogs.pop();
-//        frog.dispose();
+    public Set<Frog> getFrogs() {
+        return this.frogToHoleIndexMap.keySet();
+    }
+
+    public void decreaseFrogMaxLifeTime(float decreaseFactor) {
+        this.frogMaxLifeTime *= decreaseFactor;
     }
 
     public void update(float deltaTime) {
         for (Frog frog: this.getFrogs()) {
             frog.update(deltaTime);
-            if (frog.isLifeTimeExpired()) {
+            if (frog.isLifeTimeExpired() && frog.isKilled) {
                 System.out.println("Dead");
                 int frogOldHole = this.frogToHoleIndexMap.get(frog);
                 int randomHoleIndex = this.getRandomUnpopulatedHoleIndex();
                 Vector2 frogPosition = this.getFrogPosition(randomHoleIndex);
                 this.frogToHoleIndexMap.put(frog, randomHoleIndex);
-                frog.resurrect(frogPosition, FROG_MAX_LIFE_TIME_SECS);
+                frog.resurrect(frogPosition, this.frogMaxLifeTime);
                 this.unpopulatedHolesIndexes.removeValue(randomHoleIndex, true);
                 this.unpopulatedHolesIndexes.add(frogOldHole);
             }
         }
-    }
-
-    public Set<Frog> getFrogs() {
-        return this.frogToHoleIndexMap.keySet();
     }
 
     public void dispose() {

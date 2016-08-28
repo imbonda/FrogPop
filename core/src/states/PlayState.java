@@ -15,7 +15,7 @@ public class PlayState extends State {
     private static final int VIRTUAL_WIDTH = 800;
     private static final int VIRTUAL_HEIGHT = 530;
   //  private static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/(float)VIRTUAL_HEIGHT;
-    private static float FROG_LIFE_TIME_SECS =5.0f;
+    private static final float FROG_LIFE_TIME_DECREASE_FACTOR = 0.8f;
     private static final Vector2[] HOLES_POSITIONS = {
                 new Vector2(50, 50), new Vector2(300, 50), new Vector2(50, 200),
                 new Vector2(300, 200), new Vector2(550, 50), new Vector2(550, 200),
@@ -45,7 +45,6 @@ public class PlayState extends State {
         this.frogManager = new FrogManager(this.holes);
         this.frogManager.addFrog();
         this.cam.setToOrtho(false,this.sprite.getWidth(),this.sprite.getHeight());
-
     }
 
     @Override
@@ -57,8 +56,7 @@ public class PlayState extends State {
                     this.yourscore++;
                     frog.isKilled = true;
                     if((this.yourscore%10)==0&&yourscore!=0) {
-                        //TODO
-                        this.FROG_LIFE_TIME_SECS=(float)(FROG_LIFE_TIME_SECS*0.8);
+                        this.frogManager.decreaseFrogMaxLifeTime(FROG_LIFE_TIME_DECREASE_FACTOR);
                     }
                 }
                 else {
@@ -102,7 +100,7 @@ public class PlayState extends State {
 
     private void drawGO(SpriteBatch batch) {
         Time.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        //TODO
+        // TODO: 8/29/2016 fix timer, or remove if unnecessary
         //Time.draw(batch, "Time remain:"+ (int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)),25,470);
     }
 
@@ -126,7 +124,7 @@ public class PlayState extends State {
         for (Frog frog: this.frogManager.getFrogs()) {
             if (!frog.isKilled && !frog.isLifeTimeExpired()) {
                 batch.draw(frog.getFrogTexture(), frog.getPosition().x, frog.getPosition().y,
-                            0, 0, 100, 100-(int)(((FROG_LIFE_TIME_SECS- frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
+                            0, 0, 100, 100-(int)(((frog.maxLifeTime- frog.lifeTime)*100)/(frog.maxLifeTime)));
             }
         }
     }

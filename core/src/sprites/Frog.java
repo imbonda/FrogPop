@@ -37,6 +37,7 @@ public class Frog {
 
     public void resurrect(Vector2 position, float timeToLive) {
         this.position.set(position);
+        this.frogRectangle.setPosition(this.position);
         this.maxLifeTime = timeToLive;
         this.lifeTime = 0;
         this.isKilled = false;

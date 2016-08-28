@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
  * Created by MichaelBond on 8/25/2016.
  */
 public class Buttons {
+
     private Texture Button1Texture;
     private Vector2 position;
     private Rectangle ButtonRectangle;
@@ -31,6 +32,5 @@ public class Buttons {
 
     public boolean isButtonsTouched(Vector2 touchVector) {
         return this.ButtonRectangle.contains(touchVector);
-
     }
 }
