@@ -12,16 +12,19 @@ public class Frog {
     private Vector2 position;
     private Rectangle frogRectangle;
 
+    public float maxLifeTime;
     public float lifeTime;
-    public boolean isDead = false;
+    public boolean isKilled;
 
-    public Frog(float xCord, float yCord) {
+    public Frog(Vector2 position, float timeToLive) {
         this.frogTexture = new Texture("frog.png");
-        this.position = new Vector2(xCord, yCord);
+        this.position = new Vector2(position);
+        this.maxLifeTime = timeToLive;
         this.frogRectangle = new Rectangle(
                     this.position.x, this.position.y,
                     this.frogTexture.getWidth(), this.frogTexture.getHeight());
         this.lifeTime = 0;
+        this.isKilled = false;
     }
 
     public Texture getFrogTexture() {
@@ -32,8 +35,26 @@ public class Frog {
         return position;
     }
 
+    public void resurrect(Vector2 position, float timeToLive) {
+        this.position.set(position);
+        this.maxLifeTime = timeToLive;
+        this.lifeTime = 0;
+        this.isKilled = false;
+    }
+
+    public void update(float deltaTime) {
+        this.lifeTime += deltaTime;
+    }
+
+    public boolean isLifeTimeExpired() {
+        return this.lifeTime >= this.maxLifeTime;
+    }
+
     public boolean isFrogTouched(Vector2 touchVector) {
         return this.frogRectangle.contains(touchVector);
+    }
 
+    public void dispose() {
+        this.frogTexture.dispose();
     }
 }

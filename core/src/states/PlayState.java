@@ -1,9 +1,6 @@
 package states;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import sprites.Frog;
-import sprites.FrogGenerator;
+import sprites.FrogManager;
 import sprites.Hole;
 
 public class PlayState extends State {
@@ -30,7 +27,7 @@ public class PlayState extends State {
     BitmapFont Level;
     Sprite sprite;
     private Array<Hole> holes;
-    private Frog frog;
+    private FrogManager frogManager;
     private int yourscore = 0;
 
     public PlayState(GameStateManager gsm) {
@@ -45,7 +42,8 @@ public class PlayState extends State {
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
-        this.frog = FrogGenerator.generateFrog(this.holes);
+        this.frogManager = new FrogManager(this.holes);
+        this.frogManager.addFrog();
         this.cam.setToOrtho(false,this.sprite.getWidth(),this.sprite.getHeight());
 
     }
@@ -54,15 +52,19 @@ public class PlayState extends State {
     public void handleInput() {
         if (Gdx.input.justTouched()) {
             Vector2 touchVector = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
-            if (this.frog.isFrogTouched(touchVector) && !frog.isDead) {
-                this.yourscore++;
-                this.frog.isDead = true;
-                if((this.yourscore%10)==0&&yourscore!=0) {
-                    this.FROG_LIFE_TIME_SECS=(float)(FROG_LIFE_TIME_SECS*0.8);
+            for (Frog frog: this.frogManager.getFrogs()) {
+                if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
+                    this.yourscore++;
+                    frog.isKilled = true;
+                    if((this.yourscore%10)==0&&yourscore!=0) {
+                        //TODO
+                        this.FROG_LIFE_TIME_SECS=(float)(FROG_LIFE_TIME_SECS*0.8);
+                    }
                 }
-            }
-            else {
-                this.gsm.push(new GameOver(gsm));
+                else {
+                    this.gsm.push(new GameOver(gsm));
+                    return;
+                }
             }
         }
     }
@@ -70,10 +72,13 @@ public class PlayState extends State {
     @Override
     public void update(float deltaTime) {
         handleInput();
-        this.frog.lifeTime += deltaTime;
-        if (this.frog.lifeTime >= FROG_LIFE_TIME_SECS) {
-            this.gsm.set(new GameOver(gsm));
-         //   this.frog = FrogGenerator.generateFrog(this.holes);
+
+        this.frogManager.update(deltaTime);
+        for (Frog frog : this.frogManager.getFrogs()) {
+            if (frog.isLifeTimeExpired()) {
+                this.gsm.set(new GameOver(gsm));
+                return;
+            }
         }
     }
 
@@ -83,7 +88,7 @@ public class PlayState extends State {
        //batch.setProjectionMatrix(this.cam.combined);
         sprite.draw(batch);
         drawHole(batch);
-        drawFrog(batch);
+        drawFrogs(batch);
         drawScore(batch);
         drawGO(batch);
         drawLevel(batch);
@@ -97,7 +102,8 @@ public class PlayState extends State {
 
     private void drawGO(SpriteBatch batch) {
         Time.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        Time.draw(batch, "Time remain:"+ (int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)),25,470);
+        //TODO
+        //Time.draw(batch, "Time remain:"+ (int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)),25,470);
     }
 
     private void drawLevel(SpriteBatch batch) {
@@ -116,22 +122,19 @@ public class PlayState extends State {
         }
     }
 
-    private void drawFrog(SpriteBatch batch) {
-        if (!frog.isDead) {
-            Vector2 frogPosition = this.frog.getPosition();
-            batch.draw(this.frog.getFrogTexture(), frogPosition.x, frogPosition.y,0,0,100, 100-(int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
-            //batch.draw(this.frog.getFrogTexture(), frogPosition.x, frogPosition.y);
-        }
-        else {
-            Vector2 frogPosition = this.frog.getPosition();
-            this.frog = FrogGenerator.generateFrog(this.holes);
-            batch.draw(this.frog.getFrogTexture(), frogPosition.x, frogPosition.y,0,0,100, 100-(int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
+    public void drawFrogs(SpriteBatch batch) {
+        for (Frog frog: this.frogManager.getFrogs()) {
+            if (!frog.isKilled && !frog.isLifeTimeExpired()) {
+                batch.draw(frog.getFrogTexture(), frog.getPosition().x, frog.getPosition().y,
+                            0, 0, 100, 100-(int)(((FROG_LIFE_TIME_SECS- frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
+            }
         }
     }
 
     @Override
     public void dispose() {
         sprite.getTexture().dispose();
+        this.frogManager.dispose();
     }
 
     public float getGameWitdh() {
