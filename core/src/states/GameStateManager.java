@@ -1,6 +1,7 @@
 package states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.Stack;
 
@@ -10,6 +11,7 @@ import java.util.Stack;
 public class GameStateManager {
 
     private Stack<State> states;
+    private Viewport viewport;
 
 
     public GameStateManager() {
@@ -39,5 +41,9 @@ public class GameStateManager {
     public void render(SpriteBatch batch) {
         State stateToRender = this.states.peek();
         stateToRender.render(batch);
+    }
+    public void setViewport(Viewport v) {
+        this.states.peek().setViewport(v);
+
     }
 }

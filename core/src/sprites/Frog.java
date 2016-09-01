@@ -16,7 +16,7 @@ public class Frog {
     public boolean isDead = false;
 
     public Frog(float xCord, float yCord) {
-        this.frogTexture = new Texture("frog.png");
+        this.frogTexture = new Texture("frog1.png");
         this.position = new Vector2(xCord, yCord);
         this.frogRectangle = new Rectangle(
                     this.position.x, this.position.y,
