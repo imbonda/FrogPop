@@ -23,18 +23,10 @@ public class FrogPop extends Game {
 
 	public SpriteBatch batch;
 
-	private OrthographicCamera cam;
-	private Viewport viewport;
-	private static final int VIRTUAL_WIDTH = 800;
-	private static final int VIRTUAL_HEIGHT = 530;
-
 
 	@Override
 	public void create () {
 		this.batch = new SpriteBatch();
-		cam = new OrthographicCamera(VIRTUAL_WIDTH,VIRTUAL_HEIGHT);
-		viewport = new FitViewport(VIRTUAL_WIDTH,VIRTUAL_HEIGHT,cam);
-		viewport.apply();
 
 		setScreen(new PlayScreen(this));
 	}
@@ -42,19 +34,11 @@ public class FrogPop extends Game {
 	@Override
 	public void render () {
 		super.render();
-
-//		cam.update();
-//		batch.setProjectionMatrix(cam.combined);
-//		this.gsm.setViewport(viewport);
-//		this.gsm.update(Gdx.graphics.getDeltaTime());
-//		this.gsm.render(this.batch);
-
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		viewport.update(width, height);
 	}
 	
 	@Override
