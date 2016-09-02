@@ -39,10 +39,6 @@ public class FrogPop extends Game {
 		setScreen(new PlayScreen(this));
 	}
 
-	public void resize(int width, int height) {
-		viewport.update(width, height);
-		cam.position.set(cam.viewportWidth / 2, cam.viewportHeight / 2, 0);
-	}
 	@Override
 	public void render () {
 		super.render();
@@ -53,6 +49,12 @@ public class FrogPop extends Game {
 //		this.gsm.update(Gdx.graphics.getDeltaTime());
 //		this.gsm.render(this.batch);
 
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		viewport.update(width, height);
 	}
 	
 	@Override
