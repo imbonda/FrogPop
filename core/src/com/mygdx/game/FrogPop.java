@@ -7,6 +7,9 @@ import com.mygdx.game.screens.PlayScreen;
 
 public class FrogPop extends Game {
 
+	public static final int VIRTUAL_WIDTH = 800;
+	public static final int VIRTUAL_HEIGHT = 530;
+
 	public SpriteBatch batch;
 
 
@@ -18,18 +21,18 @@ public class FrogPop extends Game {
 	}
 
 	@Override
-	public void render () {
-		super.render();
+	public void resize(int width, int height) {
+		super.resize(width, height);
 	}
 
 	@Override
-	public void resize(int width, int height) {
-		super.resize(width, height);
+	public void render () {
+		super.render();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+		this.batch.dispose();
 	}
 
 }

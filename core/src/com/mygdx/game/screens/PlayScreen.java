@@ -24,9 +24,6 @@ import com.mygdx.game.sprites.Hole;
  */
 public class PlayScreen implements Screen {
 
-    private static final int VIRTUAL_WIDTH = 800;
-    private static final int VIRTUAL_HEIGHT = 530;
-    //  private static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/(float)VIRTUAL_HEIGHT;
     private static float FROG_LIFE_TIME_SECS =5.0f;
     private static final Vector2[] HOLES_POSITIONS = {
             new Vector2(50, 50), new Vector2(300, 50), new Vector2(50, 200), new Vector2(300, 200),new Vector2(550, 50),new Vector2(550, 200),new Vector2(50, 350),new Vector2(300, 350),new Vector2(550,350)
@@ -43,9 +40,12 @@ public class PlayScreen implements Screen {
     private int yourscore = 0;
     private int frogs=1;
     private int lives=3;
-
     private FrogPop game;
     private Viewport gameViewPort;
+    private FrogGenerator frogManage;
+    private Texture frog1=new Texture("2.png");
+    private Texture frog2=new Texture("3.png");
+    private Texture frog3=new Texture("4.png");
 
 
     public PlayScreen(FrogPop game) {
@@ -55,25 +55,33 @@ public class PlayScreen implements Screen {
         this.Level = new BitmapFont();
         this.Life = new BitmapFont();
         this.holes = new Array<Hole>();
+        frogManage =new FrogGenerator();
+        FROG_LIFE_TIME_SECS =5.0f;
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
         frog=new Frog[9];
-        for(int i=0;i<9;i++) {
-            this.frog[i] = FrogGenerator.generateFrog(this.holes);
-            // frog[i].lifeTime=FROG_LIFE_TIME_SECS;
-        }
-
+            this.frog[0] = frogManage.generateFrog(this.holes);
+        this.frog[1] = frogManage.generateFrog(this.holes);
+        this.frog[02] = frogManage.generateFrog(this.holes);
+        this.frog[3] = frogManage.generateFrog(this.holes);
+        this.frog[4] = frogManage.generateFrog(this.holes);
+        this.frog[5] = frogManage.generateFrog(this.holes);
+        this.frog[6] = frogManage.generateFrog(this.holes);
+        this.frog[7] = frogManage.generateFrog(this.holes);
+        this.frog[8] = frogManage.generateFrog(this.holes);
         this.game = game;
-        this.gameViewPort = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, new OrthographicCamera());
+        this.gameViewPort = new FitViewport(
+                    FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
     }
 
     public void handleInput() {
         if (Gdx.input.justTouched()) {
             touches=this.gameViewPort.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
             Vector2 touchVector = new Vector2(touches.x,touches.y);
-            System.out.println("   Touch in:  "+ touches.x+"    " +touches.y);
+
             if (this.frog[0].isFrogTouched(touchVector) && !frog[0].isDead) {
+                   // System.out.print(getLastfrog());
                 this.yourscore++;
                 this.frog[0].isDead = true;
                 if((this.yourscore%10)==0&&yourscore!=0)
@@ -85,7 +93,7 @@ public class PlayScreen implements Screen {
             {
                 lives--;
                 if(lives==0) {
-                    game.setScreen(new GameOverScreen(game));
+                    game.setScreen(new GameOverScreen(game,yourscore));
                 }
             }
 
@@ -94,21 +102,20 @@ public class PlayScreen implements Screen {
 
     public void update(float deltaTime) {
         handleInput();
-        for(int i=0;i<9;i++) {
+        for(int i=0;i<frogs;i++) {
             this.frog[i].lifeTime += deltaTime;
         }
         if (this.frog[0].lifeTime >= FROG_LIFE_TIME_SECS) {
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen(game,yourscore));
         }
     }
 
     @Override
     public void render(float delta) {
         update(delta);
-
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
-
         this.game.batch.begin();
         drawBackground();
         drawHole();
@@ -121,7 +128,6 @@ public class PlayScreen implements Screen {
 
     public void drawBackground() {
         SpriteBatch batch = this.game.batch;
-
         batch.draw(this.backgroundTexture, 0, 0);
     }
 
@@ -134,9 +140,8 @@ public class PlayScreen implements Screen {
     private void drawGO()
     {
         SpriteBatch batch = this.game.batch;
-
         Time.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        Time.draw(batch, "Time remain:"+ (int)(((FROG_LIFE_TIME_SECS- this.frog[0].lifeTime)*100)/(FROG_LIFE_TIME_SECS)),25,470);
+        Time.draw(batch, "Time remain:"+ (int)(((FROG_LIFE_TIME_SECS- this.frog[getLastfrog()].lifeTime)*100)/(FROG_LIFE_TIME_SECS)),25,470);
         Life.setColor(Color.GREEN);
         Life.setColor(Color.GREEN);
         Life.draw(batch, "Lifes:"+lives,740,510);
@@ -151,8 +156,7 @@ public class PlayScreen implements Screen {
         Level.draw(batch, "Your Level :" + (int) yourscore /+10, 25, 495);
         if(yourscore%10==0&yourscore!=0) {
             Level.setColor(Color.RED);
-            // Level.getData().setScale(1,1);
-            Level.draw(batch, "Level up!", VIRTUAL_WIDTH/2-15, VIRTUAL_WIDTH/2+70);
+            Level.draw(batch, "Level up!", FrogPop.VIRTUAL_WIDTH/2-15, FrogPop.VIRTUAL_WIDTH/2+70);
         }
     }
 
@@ -168,20 +172,34 @@ public class PlayScreen implements Screen {
     private void drawFrog() {
         SpriteBatch batch = this.game.batch;
 
-        //  if (yourscore >= 2) {
-        //    Vector2 frogPosition = this.frog[1].getPosition();
-        //  batch.draw(this.frog[1].getFrogTexture(),frogPosition.x, frogPosition.y, 0, 0, 100, 100-(int)(((FROG_LIFE_TIME_SECS- this.frog[1].lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
+         // if (yourscore >= 2) {
+           // Vector2 frogPosition = this.frog[1].getPosition();
+         //batch.draw(this.frog[1].getFrogTexture(),frogPosition.x, frogPosition.y, 0, 0, 100, 100-(int)(((FROG_LIFE_TIME_SECS- this.frog[1].lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
         //}
         if (!frog[0].isDead) {
             Vector2 frogPosition = this.frog[0].getPosition();
             batch.draw(this.frog[0].getFrogTexture(), frogPosition.x, frogPosition.y,0,0,100, 100-(int)(((FROG_LIFE_TIME_SECS- this.frog[0].lifeTime)*100)/(FROG_LIFE_TIME_SECS)));
         }
         else {
+            this.frog[0] = frogManage.generateFrog(this.holes);
             Vector2 frogPosition = this.frog[0].getPosition();
-            this.frog[0] = FrogGenerator.generateFrog(this.holes);
             batch.draw(this.frog[0].getFrogTexture(), frogPosition.x, frogPosition.y, 0, 0, 100, 100 - (int) (((FROG_LIFE_TIME_SECS - this.frog[0].lifeTime) * 100) / (FROG_LIFE_TIME_SECS)));
         }
     }
+    public int getLastfrog()
+    {
+        int lastindex=0;
+        int i=0;
+        while(i<frogs) {
+            if (frog[i].lifeTime > frog[lastindex].lifeTime) {
+                lastindex = i;
+            }
+
+            i++;
+        }
+        return lastindex;
+        }
+
 
     @Override
     public void resize(int width, int height) {

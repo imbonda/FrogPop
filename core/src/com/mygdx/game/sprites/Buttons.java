@@ -30,7 +30,6 @@ public class Buttons {
     }
 
     public boolean isButtonsTouched(Vector2 touchVector) {
-        System.out.println("button is at "+ position.x+"  "+position.y);
         return this.ButtonRectangle.contains(touchVector);
 
     }
