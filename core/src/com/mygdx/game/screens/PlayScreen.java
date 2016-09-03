@@ -77,14 +77,10 @@ public class PlayScreen implements Screen {
                     if((this.yourscore%10)==0&&yourscore!=0) {
                         this.frogManager.decreaseFrogMaxLifeTime(FROG_LIFE_TIME_DECREASE_FACTOR);
                     }
-                }
-                else {
-                    this.lives--;
+                    return;
                 }
             }
-            if(lives==0) {
-                game.setScreen(new GameOverScreen(game,yourscore));
-            }
+            this.lives--;
         }
     }
 
@@ -92,6 +88,15 @@ public class PlayScreen implements Screen {
         handleInput();
 
         this.frogManager.update(deltaTime);
+
+        for (Frog frog: this.frogManager.getFrogs()) {
+            if (frog.isLifeTimeExpired()) {
+                this.lives--;
+            }
+        }
+        if(this.lives <= 0) {
+            game.setScreen(new GameOverScreen(game,yourscore));
+        }
     }
 
     @Override
