@@ -1,6 +1,7 @@
-package sprites;
+package com.mygdx.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
@@ -22,7 +23,7 @@ public class Frog implements Pool.Poolable {
 
 
     public Frog() {
-        this.frogTexture = new Texture("frog.png");
+        this.frogTexture = new Texture("frog1.png");
         this.lifeTime = 0;
         this.isKilled = false;
         this.position = new Vector2(0, 0);
@@ -32,7 +33,7 @@ public class Frog implements Pool.Poolable {
         this.position.set(positionX, positionY);
         this.frogRectangle = new Rectangle(
                 this.position.x, this.position.y,
-                this.frogTexture.getWidth(), this.frogTexture.getHeight());
+                    this.frogTexture.getWidth(), this.frogTexture.getHeight()+35);
         this.maxLifeTime = timeToLive;
         this.lifeTime = 0;
     }
@@ -60,7 +61,7 @@ public class Frog implements Pool.Poolable {
     }
 
     public boolean isFrogTouched(Vector2 touchVector) {
-        return this.frogRectangle.contains(touchVector);
+        return this.frogRectangle.contains(touchVector.x,touchVector.y+35);
     }
 
     public void dispose() {

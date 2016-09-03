@@ -3,6 +3,8 @@ package sprites;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.mygdx.game.sprites.Frog;
+import com.mygdx.game.sprites.Hole;
 
 import java.util.HashMap;
 import java.util.Iterator;
