@@ -1,17 +1,13 @@
-package sprites;
+package com.mygdx.game.sprites;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.mygdx.game.sprites.Frog;
-import com.mygdx.game.sprites.Hole;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
-import sprites.Exceptions.OverpopulatedHolesException;
+import com.mygdx.game.sprites.Exceptions.OverpopulatedHolesException;
 
 
 /**
