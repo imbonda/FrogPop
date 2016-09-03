@@ -60,12 +60,10 @@ public class PlayState extends State {
                     if((this.yourscore%10)==0&&yourscore!=0) {
                         this.frogManager.decreaseFrogMaxLifeTime(FROG_LIFE_TIME_DECREASE_FACTOR);
                     }
-                }
-                else {
-                    this.gsm.push(new GameOver(gsm));
                     return;
                 }
             }
+            this.gsm.push(new GameOver(gsm));
         }
     }
 

@@ -3,11 +3,15 @@ package sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
+
 
 /**
+ * This class represents a frog.
  * Created by MichaelBond on 8/25/2016.
  */
-public class Frog {
+public class Frog implements Pool.Poolable {
+
     private Texture frogTexture;
     private Vector2 position;
     private Rectangle frogRectangle;
@@ -16,15 +20,31 @@ public class Frog {
     public float lifeTime;
     public boolean isKilled;
 
-    public Frog(Vector2 position, float timeToLive) {
+
+    public Frog() {
         this.frogTexture = new Texture("frog.png");
-        this.position = new Vector2(position);
-        this.maxLifeTime = timeToLive;
-        this.frogRectangle = new Rectangle(
-                    this.position.x, this.position.y,
-                    this.frogTexture.getWidth(), this.frogTexture.getHeight());
         this.lifeTime = 0;
         this.isKilled = false;
+        this.position = new Vector2(0, 0);
+    }
+
+    public void init(float positionX, float positionY, float timeToLive) {
+        this.position.set(positionX, positionY);
+        this.frogRectangle = new Rectangle(
+                this.position.x, this.position.y,
+                this.frogTexture.getWidth(), this.frogTexture.getHeight());
+        this.maxLifeTime = timeToLive;
+        this.lifeTime = 0;
+    }
+
+    @Override
+    public void reset() {
+        this.isKilled = false;
+        this.position.set(0, 0);
+    }
+
+    public void update(float deltaTime) {
+        this.lifeTime += deltaTime;
     }
 
     public Texture getFrogTexture() {
@@ -33,18 +53,6 @@ public class Frog {
 
     public Vector2 getPosition() {
         return position;
-    }
-
-    public void resurrect(Vector2 position, float timeToLive) {
-        this.position.set(position);
-        this.frogRectangle.setPosition(this.position);
-        this.maxLifeTime = timeToLive;
-        this.lifeTime = 0;
-        this.isKilled = false;
-    }
-
-    public void update(float deltaTime) {
-        this.lifeTime += deltaTime;
     }
 
     public boolean isLifeTimeExpired() {
