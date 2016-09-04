@@ -1,10 +1,13 @@
 package com.mygdx.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+
+import java.util.Random;
 
 
 /**
@@ -13,35 +16,47 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class Frog implements Pool.Poolable {
 
-    private Texture frogTexture;
+    private Texture frogTexture[];
     private Vector2 position;
     private Rectangle frogRectangle;
-
+    private double framekey;
+    private int randtype;
     public float maxLifeTime;
     public float lifeTime;
     public boolean isKilled;
+    private double dir=0.25;
 
 
     public Frog() {
-        this.frogTexture = new Texture("frog1.png");
+        Random rand = new Random();
+        this.frogTexture=new Texture[4];
+        this.frogTexture[0] = new Texture("0.png");
+        this.frogTexture[1] = new Texture("1.png");
+        this.frogTexture[2] = new Texture("2.png");
+        this.frogTexture[3] = new Texture("3.png");
+        this.randtype=rand.nextInt(2);
         this.lifeTime = 0;
         this.isKilled = false;
         this.position = new Vector2(0, 0);
+        framekey=0;
     }
 
     public void init(float positionX, float positionY, float timeToLive) {
         this.position.set(positionX, positionY);
         this.frogRectangle = new Rectangle(
                 this.position.x, this.position.y,
-                    this.frogTexture.getWidth(), this.frogTexture.getHeight()+35);
+                    this.frogTexture[0].getWidth(), this.frogTexture[0].getHeight()+35);
         this.maxLifeTime = timeToLive;
         this.lifeTime = 0;
     }
 
     @Override
     public void reset() {
+        Random rand = new Random();
         this.isKilled = false;
         this.position.set(0, 0);
+        framekey=0;
+        this.randtype=rand.nextInt(2);
     }
 
     public void update(float deltaTime) {
@@ -49,7 +64,15 @@ public class Frog implements Pool.Poolable {
     }
 
     public Texture getFrogTexture() {
-        return this.frogTexture;
+        if(framekey==0){
+            dir=0.25;
+        }
+        if(framekey>3.7){
+            dir=-0.25;
+        }
+        framekey+=dir;
+        //if(randtype==1)
+        return this.frogTexture[(int)(framekey%4)];
     }
 
     public Vector2 getPosition() {
@@ -65,6 +88,6 @@ public class Frog implements Pool.Poolable {
     }
 
     public void dispose() {
-        this.frogTexture.dispose();
+        this.frogTexture[(int)framekey%4].dispose();
     }
 }

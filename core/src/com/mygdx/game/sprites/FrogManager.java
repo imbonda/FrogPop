@@ -15,7 +15,7 @@ import com.mygdx.game.sprites.Exceptions.OverpopulatedHolesException;
  */
 public class FrogManager {
 
-    private static final int FROG_OFFSET_X = 70;
+    private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
 
     private float frogMaxLifeTime;
@@ -83,11 +83,9 @@ public class FrogManager {
 
     public void update(float deltaTime) {
         Iterator<Frog> frogIterator = this.activeFrogs.iterator();
-
         while (frogIterator.hasNext()) {
             Frog frog = frogIterator.next();
             frog.update(deltaTime);
-
             if (frog.isKilled) {
                 int frogHoleIndex = this.frogToHoleIndexMap.remove(frog);
                 frogIterator.remove();
@@ -103,5 +101,4 @@ public class FrogManager {
             frog.dispose();
         }
     }
-
-}
+   }
