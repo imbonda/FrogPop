@@ -15,7 +15,6 @@ import java.util.Random;
  * Created by MichaelBond on 8/25/2016.
  */
 public class Frog implements Pool.Poolable {
-
     private Texture frogTexture[];
     private Vector2 position;
     private Rectangle frogRectangle;
@@ -25,7 +24,6 @@ public class Frog implements Pool.Poolable {
     public float lifeTime;
     public boolean isKilled;
     private double dir=0.25;
-
 
     public Frog() {
         Random rand = new Random();
@@ -40,12 +38,11 @@ public class Frog implements Pool.Poolable {
         this.position = new Vector2(0, 0);
         framekey=0;
     }
-
     public void init(float positionX, float positionY, float timeToLive) {
         this.position.set(positionX, positionY);
         this.frogRectangle = new Rectangle(
-                this.position.x, this.position.y,
-                    this.frogTexture[0].getWidth(), this.frogTexture[0].getHeight()+35);
+                this.position.x-20, this.position.y-35,
+                    this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
         this.maxLifeTime = timeToLive;
         this.lifeTime = 0;
     }
@@ -82,9 +79,13 @@ public class Frog implements Pool.Poolable {
     public boolean isLifeTimeExpired() {
         return this.lifeTime >= this.maxLifeTime;
     }
+    public void setKilled()
+    {
+        isKilled=true;
+    }
 
     public boolean isFrogTouched(Vector2 touchVector) {
-        return this.frogRectangle.contains(touchVector.x,touchVector.y+35);
+        return this.frogRectangle.contains(touchVector.x,touchVector.y);
     }
 
     public void dispose() {

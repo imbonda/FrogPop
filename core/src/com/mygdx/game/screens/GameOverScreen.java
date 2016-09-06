@@ -29,9 +29,11 @@ public class GameOverScreen implements Screen {
     private Buttons button1;
     private FrogPop game;
     private Viewport viewport;
+    private int level;
 
-    public GameOverScreen(FrogPop game,int s) {
+    public GameOverScreen(FrogPop game,int s,int l) {
         this.yourscore=s;
+        this.level=l;
         this.game = game;
         this.Loser = new BitmapFont();
         this.Score = new BitmapFont();
@@ -74,7 +76,9 @@ public class GameOverScreen implements Screen {
         Loser.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         Loser.draw(batch, "You Lost",300,400);
         Score.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        Score.draw(batch, "Your Score was: "+yourscore,300,380);
+        Score.draw(batch, "Your score was: "+yourscore,300,380);
+        Score.draw(batch, "Your level was: "+level,300,360);
+
     }
 
     private void drawButtons()

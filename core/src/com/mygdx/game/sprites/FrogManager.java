@@ -25,6 +25,8 @@ public class FrogManager {
             return new Frog();
         }
     };
+
+
     private Array<Frog> activeFrogs;
     private Array<Hole> holes;
     private Array<Integer> unpopulatedHolesIndexes;
@@ -93,8 +95,7 @@ public class FrogManager {
                 addFrog();
                 this.unpopulatedHolesIndexes.add(frogHoleIndex);
             }
-        }
-    }
+    }}
 
     public void dispose() {
         for (Frog frog: this.getFrogs()) {

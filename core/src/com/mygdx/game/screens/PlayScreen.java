@@ -30,12 +30,11 @@ public class PlayScreen implements Screen {
     private static float FROG_LIFE_TIME_SECS =5.0f;
     private static final float FROG_LIFE_TIME_DECREASE_FACTOR = 0.92f;
     private static final Vector2[] HOLES_POSITIONS = { new Vector2(50, 40), new Vector2(300, 40), new Vector2(50, 190), new Vector2(300, 190),new Vector2(550, 40),new Vector2(550, 190),new Vector2(50, 330),new Vector2(300, 330),new Vector2(550,330)};
-
     private BitmapFont scoreFont;
     private BitmapFont Time;
     private BitmapFont Level;
     private BitmapFont Life;
-    private Texture backgroundTexture;
+    private Texture[] backgroundTexture;
     private Array<Hole> holes;
     private int yourscore = 0;
     private int lives=3;
@@ -45,11 +44,15 @@ public class PlayScreen implements Screen {
     private Clock levelstimer;
     private int level=0;
     private Random randAdd=new Random();
-    private int[] whenAddfrogs={randAdd.nextInt(5)+1,randAdd.nextInt(7)+10,randAdd.nextInt(8)+20,randAdd.nextInt(8)+30,randAdd.nextInt(10)+40};
+    private int[] whenAddfrogs={randAdd.nextInt(5)+3,randAdd.nextInt(7)+13,randAdd.nextInt(8)+20,randAdd.nextInt(8)+30,randAdd.nextInt(10)+40};
 
-    //the randAdd is to randomize frog add between levels
     public PlayScreen(FrogPop game) {
-        this.backgroundTexture=new Texture("world2.jpg");
+        randAdd=new Random();
+        this.backgroundTexture=new Texture[4];
+        this.backgroundTexture[0]=new Texture("world.jpg");
+        this.backgroundTexture[1]=new Texture("world2.jpg");
+        this.backgroundTexture[2]=new Texture("world3.jpg");
+        this.backgroundTexture[3]=new Texture("world4.jpg");
         this.scoreFont = new BitmapFont();
         this.Time = new BitmapFont();
         this.Level = new BitmapFont();
@@ -62,12 +65,10 @@ public class PlayScreen implements Screen {
         this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS);
         this.frogManager.addFrog();
         this.game = game;
-        this.gameViewPort = new FitViewport(
-                    FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
+        this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
     }
 
     public void handleInput() {
-
         if (Gdx.input.justTouched()) {
             Vector2 touchVector = this.gameViewPort.unproject(
                         new Vector2(Gdx.input.getX(),Gdx.input.getY()));
@@ -90,10 +91,11 @@ public class PlayScreen implements Screen {
         for (Frog frog: this.frogManager.getFrogs()) {
             if (frog.isLifeTimeExpired()) {
                 this.lives--;
+                frog.setKilled();
             }
         }
         if(this.lives <= 0) {
-            game.setScreen(new GameOverScreen(game,yourscore));
+            game.setScreen(new GameOverScreen(game,yourscore,level));
         }
         if(levelstimer.isLevelup()) {
             this.frogManager.decreaseFrogMaxLifeTime(FROG_LIFE_TIME_DECREASE_FACTOR);
@@ -111,7 +113,6 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
         this.game.batch.begin();
         drawBackground();
@@ -126,32 +127,26 @@ public class PlayScreen implements Screen {
 
     public void drawBackground() {
         SpriteBatch batch = this.game.batch;
-        batch.draw(this.backgroundTexture, 0, 0);
+        Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
+        batch.draw(this.backgroundTexture[(level/10)%4], 0, 0);
     }
     public void drawClock() {
         SpriteBatch batch = this.game.batch;
-        //float rotate=levelstimer.getTimetoadd();
-      // rotate=rotate/rotate*360;
-
         batch.draw(levelstimer.getFrogTexture(),403,480,levelstimer.getFrogTexture().getWidth()/2,0,levelstimer.getFrogTexture().getWidth()/2,levelstimer.getFrogTexture().getHeight()/2,1,1.4f,levelstimer.getRotation(),0,0,100,100,false,false);
-        //System.out.println((int)(((-levelstimer.getTimetoadd()- -levelstimer.getClocltime())*360)/(levelstimer.getTimetoadd())));
-        //batch.draw(levelstimer.getFrogTexture(), 400, 520);
     }
 
     private void drawScore() {
         SpriteBatch batch = this.game.batch;
 
         scoreFont.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        scoreFont.draw(batch, "Your Mother Fucking Score: " + yourscore, 25, 520);
+        scoreFont.draw(batch, "Your Score: " + yourscore, 25, 520);
     }
     private void drawGO()
     {
         SpriteBatch batch = this.game.batch;
         Time.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        //Time.draw(batch, "Time remain:"+ (int)(((FROG_LIFE_TIME_SECS- this.frog.lifeTime)*100)/(FROG_LIFE_TIME_SECS)),25,470);
-        Life.setColor(Color.GREEN);
-        Life.setColor(Color.GREEN);
-        Life.draw(batch, "Lifes:"+lives,740,510);
+        Life.setColor(Color.RED);
+        Life.draw(batch, "Lifes:"+lives,720,510);
     }
     private void drawLevel()
     {

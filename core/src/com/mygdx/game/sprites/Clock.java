@@ -23,7 +23,6 @@ public class Clock {
     public float timetoadd;
     public float rotationbugfixer=0;
     public float rotation;
-//i got fucked up with level soconds finaly got something but messy
     public Clock() {
         timetoadd=6f;
         maxLifeTime=6f;
@@ -31,15 +30,6 @@ public class Clock {
         this.clockTime = 0;
         this.position = new Vector2(0, 0);
     }
-
-    //public void init(float positionX, float positionY, float timeToLive) {
-     //  this.position.set(positionX, positionY);
-        //this.frogRectangle = new Rectangle(
-          //      this.position.x, this.position.y,
-            //    this.frogTexture[0].getWidth(), this.frogTexture[0].getHeight()+35);
-      //  this.maxLifeTime = timeToLive;
-       // this.lifeTime = 0;
-   // }
 
     public void update(float deltaTime) {
         rotationbugfixer += deltaTime;
@@ -77,7 +67,6 @@ public class Clock {
     {
         rotation=(this.timetoadd-this.rotationbugfixer)*360/(this.timetoadd);
         return rotation;
-        //return (timetoadd)*360/this.timetoadd;
     }
 
 
