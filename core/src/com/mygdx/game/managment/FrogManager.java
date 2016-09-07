@@ -1,4 +1,4 @@
-package com.mygdx.game.sprites;
+package com.mygdx.game.managment;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import com.mygdx.game.sprites.Exceptions.OverpopulatedHolesException;
+import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.Hole;
 
 
 /**
@@ -19,10 +21,20 @@ public class FrogManager {
     private static final int FROG_OFFSET_Y = 20;
 
     private float frogMaxLifeTime;
+    private final FrogFactory frogFactory = FrogFactory.getInstance();
     private final Pool<Frog> frogPool = new Pool<Frog>() {
         @Override
         protected Frog newObject() {
-            return new Frog();
+            try {
+                return FrogManager.this.frogFactory.getRandomFrog();
+            }
+            catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     };
 
@@ -71,10 +83,6 @@ public class FrogManager {
                 holePosition.x + FROG_OFFSET_X, holePosition.y + FROG_OFFSET_Y);
     }
 
-//    private float getRandomLifeTime() {
-//        //..
-//    }
-
     public Array<Frog> getFrogs() {
         return this.activeFrogs;
     }
@@ -102,4 +110,5 @@ public class FrogManager {
             frog.dispose();
         }
     }
-   }
+
+}

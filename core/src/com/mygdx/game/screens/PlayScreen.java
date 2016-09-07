@@ -13,8 +13,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
-import com.mygdx.game.sprites.Frog;
-import com.mygdx.game.sprites.FrogManager;
+import com.mygdx.game.managment.LevelController;
+import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.managment.FrogManager;
 import com.mygdx.game.sprites.Hole;
 import com.mygdx.game.sprites.Timer;
 
@@ -60,6 +61,8 @@ public class PlayScreen implements Screen {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
         this.levelTimer = new Timer();
+        //TODO (Test)
+        LevelController lc = new LevelController(levelTimer);
         this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS);
         this.frogManager.addFrog();
         this.game = game;
