@@ -35,8 +35,8 @@ public class GameOverScreen implements Screen {
         this.yourscore=s;
         this.level=l;
         this.game = game;
-        this.Loser = new BitmapFont();
-        this.Score = new BitmapFont();
+        this.Loser = new BitmapFont(Gdx.files.internal("font.fnt"));
+        this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("end.jpg")));
         button1=new Buttons(300,265);
         this.viewport = new FitViewport(

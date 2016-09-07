@@ -14,17 +14,17 @@ import com.badlogic.gdx.utils.Array;
 public class Timer extends Sprite {
 
     private static final float DEFAULT_COUNTDOWN_TIME = 6;
-    private static final Vector2 DEFAULT_TIMER_TEXTURE_POSITION = new Vector2(350, 430);
+    private static final Vector2 DEFAULT_TIMER_TEXTURE_POSITION = new Vector2(350, 425);
 
     private static final class TimerHandClockTextureMeta {
         public static int TEXTURE_SRC_X = 0;
         public static int TEXTURE_SRC_Y = 0;
-        public static int TEXTURE_SRC_WIDTCH = 100;
-        public static int TEXTURE_SRC_HEIGHT = 100;
-        public static float TEXTURE_SCALE_X = 0.8f;
-        public static float TEXTURE_SCALE_Y = 1;
-        public static int TEXTURE_OFFSET_X = -5;
-        public static int TEXTURE_OFFSET_Y = -7;
+        public static int TEXTURE_SRC_WIDTH = 20;
+        public static int TEXTURE_SRC_HEIGHT = 74;
+        public static float TEXTURE_SCALE_X = 0.3f;
+        public static float TEXTURE_SCALE_Y = 0.6f;
+        public static int TEXTURE_OFFSET_X = 0;
+        public static int TEXTURE_OFFSET_Y = -3;
     }
 
     private enum State {STATIC, VIBRATING}
@@ -49,21 +49,20 @@ public class Timer extends Sprite {
         this.timerState = State.VIBRATING;
         this.stateTimer = 0;
 
-        Texture timerTexture = new Texture("Animation/timer.png");
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i = 0; i < 6; ++i) {
-            frames.add(new TextureRegion(timerTexture, i * 128, 0, 128, 128));
-        }
-        this.timerVibrate = new Animation(0.1f, frames);
-        frames.clear();
+        // TODO (consider using animation for clock vibration on timeout)
+//        Texture timerTexture = new Texture("Animation/timer.png");
+//        Array<TextureRegion> frames = new Array<TextureRegion>();
+//        for(int i = 0; i < 6; ++i) {
+//            frames.add(new TextureRegion(timerTexture, i * 128, 0, 128, 128));
+//        }
+//        this.timerVibrate = new Animation(0.1f, frames);
+//        frames.clear();
     }
 
     public void update(float deltaTime) {
         if (this.timeLeftToCountDown > 0) {
             this.timeLeftToCountDown -= deltaTime;
         }
-        // TODO (handle properly)
-        this.stateTimer += deltaTime;
     }
 
     public boolean isTimedOut() {
@@ -96,7 +95,7 @@ public class Timer extends Sprite {
                     getClockHandRotation(),
                     TimerHandClockTextureMeta.TEXTURE_SRC_X,
                     TimerHandClockTextureMeta.TEXTURE_SRC_Y,
-                    TimerHandClockTextureMeta.TEXTURE_SRC_WIDTCH,
+                    TimerHandClockTextureMeta.TEXTURE_SRC_WIDTH,
                     TimerHandClockTextureMeta.TEXTURE_SRC_HEIGHT,
                     false, false);
     }

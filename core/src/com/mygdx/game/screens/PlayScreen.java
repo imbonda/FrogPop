@@ -28,7 +28,7 @@ public class PlayScreen implements Screen {
 
     private static float FROG_LIFE_TIME_SECS =5.0f;
     private static final float FROG_LIFE_TIME_DECREASE_FACTOR = 0.92f;
-    private static final Vector2[] HOLES_POSITIONS = { new Vector2(50, 40), new Vector2(300, 40), new Vector2(50, 190), new Vector2(300, 190),new Vector2(550, 40),new Vector2(550, 190),new Vector2(50, 330),new Vector2(300, 330),new Vector2(550,330)};
+    private static final Vector2[] HOLES_POSITIONS = { new Vector2(50, 35), new Vector2(300, 35), new Vector2(50, 185), new Vector2(300, 185),new Vector2(550, 35),new Vector2(550, 185),new Vector2(50, 325),new Vector2(300, 325),new Vector2(550,325)};
     private BitmapFont scoreFont;
     private BitmapFont Time;
     private BitmapFont Level;
@@ -51,10 +51,10 @@ public class PlayScreen implements Screen {
         this.backgroundTexture[1]=new Texture("world2.jpg");
         this.backgroundTexture[2]=new Texture("world3.jpg");
         this.backgroundTexture[3]=new Texture("world4.jpg");
-        this.scoreFont = new BitmapFont();
-        this.Time = new BitmapFont();
-        this.Level = new BitmapFont();
-        this.Life = new BitmapFont();
+        this.scoreFont = new BitmapFont(Gdx.files.internal("font.fnt"));
+        this.Time = new BitmapFont(Gdx.files.internal("font.fnt"));
+        this.Level = new BitmapFont(Gdx.files.internal("font.fnt"));
+        this.Life = new BitmapFont(Gdx.files.internal("font.fnt"));
         this.holes = new Array<Hole>();
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
@@ -78,8 +78,10 @@ public class PlayScreen implements Screen {
                     return;
                 }
             }
+            Gdx.input.vibrate(500);
             this.lives--;
         }
+
     }
 
     public void update(float deltaTime) {
@@ -90,6 +92,7 @@ public class PlayScreen implements Screen {
             if (frog.isLifeTimeExpired()) {
                 this.lives--;
                 frog.setKilled();
+                Gdx.input.vibrate(500);
             }
         }
         if(this.lives <= 0) {
