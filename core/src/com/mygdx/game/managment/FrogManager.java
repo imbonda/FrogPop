@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Pool;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.mygdx.game.sprites.Exceptions.OverpopulatedHolesException;
+import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.sprites.Hole;
 
