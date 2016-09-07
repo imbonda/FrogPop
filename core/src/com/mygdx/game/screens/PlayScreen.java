@@ -18,6 +18,7 @@ import com.mygdx.game.sprites.Clock;
 import com.mygdx.game.sprites.Frog;
 import com.mygdx.game.sprites.FrogManager;
 import com.mygdx.game.sprites.Hole;
+import com.mygdx.game.sprites.Timer;
 
 import java.util.Random;
 
@@ -41,13 +42,12 @@ public class PlayScreen implements Screen {
     private FrogPop game;
     private Viewport gameViewPort;
     private FrogManager frogManager;
-    private Clock levelstimer;
+    private Timer levelTimer;
     private int level=0;
     private Random randAdd=new Random();
     private int[] whenAddfrogs={randAdd.nextInt(5)+3,randAdd.nextInt(7)+13,randAdd.nextInt(8)+20,randAdd.nextInt(8)+30,randAdd.nextInt(10)+40};
 
     public PlayScreen(FrogPop game) {
-        randAdd=new Random();
         this.backgroundTexture=new Texture[4];
         this.backgroundTexture[0]=new Texture("world.jpg");
         this.backgroundTexture[1]=new Texture("world2.jpg");
@@ -61,7 +61,7 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
-        levelstimer=new Clock();
+        this.levelTimer = new Timer();
         this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS);
         this.frogManager.addFrog();
         this.game = game;
@@ -86,7 +86,7 @@ public class PlayScreen implements Screen {
 
     public void update(float deltaTime) {
         handleInput();
-        levelstimer.update(deltaTime);
+        this.levelTimer.update(deltaTime);
         this.frogManager.update(deltaTime);
         for (Frog frog: this.frogManager.getFrogs()) {
             if (frog.isLifeTimeExpired()) {
@@ -97,15 +97,14 @@ public class PlayScreen implements Screen {
         if(this.lives <= 0) {
             game.setScreen(new GameOverScreen(game,yourscore,level));
         }
-        if(levelstimer.isLevelup()) {
+        if(this.levelTimer.isTimedOut()) {
             this.frogManager.decreaseFrogMaxLifeTime(FROG_LIFE_TIME_DECREASE_FACTOR);
-            levelstimer.clockUP();
+            this.levelTimer.setCountTimeByFactor(1.05f);
             level++;
             if((level==whenAddfrogs[level/10])&&level<59)
             {frogManager.addFrog();
                 FROG_LIFE_TIME_SECS=FROG_LIFE_TIME_SECS*1.2f;
             }
-
         }
     }
 
@@ -116,12 +115,12 @@ public class PlayScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
         this.game.batch.begin();
         drawBackground();
-        drawClock();
         drawHole();
         drawFrog();
         drawScore();
         drawGO();
         drawLevel();
+        this.levelTimer.draw(this.game.batch);
         this.game.batch.end();
     }
 
@@ -129,10 +128,6 @@ public class PlayScreen implements Screen {
         SpriteBatch batch = this.game.batch;
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         batch.draw(this.backgroundTexture[(level/10)%4], 0, 0);
-    }
-    public void drawClock() {
-        SpriteBatch batch = this.game.batch;
-        batch.draw(levelstimer.getFrogTexture(),403,480,levelstimer.getFrogTexture().getWidth()/2,0,levelstimer.getFrogTexture().getWidth()/2,levelstimer.getFrogTexture().getHeight()/2,1,1.4f,levelstimer.getRotation(),0,0,100,100,false,false);
     }
 
     private void drawScore() {

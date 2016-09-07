@@ -16,13 +16,16 @@ import java.util.Random;
  */
 public class Clock {
 
-    private Texture clockTexture;
     private Vector2 position;
     public float maxLifeTime;
     public float clockTime;
     public float timetoadd;
     public float rotationbugfixer=0;
     public float rotation;
+
+    private Texture clockTexture;
+
+
     public Clock() {
         timetoadd=6f;
         maxLifeTime=6f;
@@ -69,8 +72,8 @@ public class Clock {
         return rotation;
     }
 
-
     public void dispose() {
         this.clockTexture.dispose();
     }
+
 }
