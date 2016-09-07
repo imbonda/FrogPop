@@ -98,8 +98,7 @@ public class Frog implements Pool.Poolable {
     public boolean isLifeTimeExpired() {
         return this.lifeTime >= this.maxLifeTime;
     }
-    public void setKilled()
-    {
+    public void setKilled() {
         isKilled=true;
     }
 
