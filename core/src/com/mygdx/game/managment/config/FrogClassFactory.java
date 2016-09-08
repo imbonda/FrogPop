@@ -15,7 +15,7 @@ public class FrogClassFactory {
     public static Class<? extends Frog> getFrogClassByName(String classNme)
                 throws ClassNotFoundException{
         if (REGULAR_FROG.equals(classNme)) {
-            return Frog.class;
+            return RegularFrog.class;
         }
 
         throw new ClassNotFoundException("Could not find a frog class with the given name: " + classNme);

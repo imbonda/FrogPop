@@ -77,7 +77,7 @@ public class PlayScreen implements Screen {
             for (Frog frog: this.frogManager.getFrogs()) {
                 if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
                     this.yourscore++;
-                    frog.isKilled = true;
+                    frog.setKilled();
                     return;
                 }
             }
@@ -120,7 +120,7 @@ public class PlayScreen implements Screen {
         this.game.batch.begin();
         drawBackground();
         drawHole();
-        drawFrog();
+        drawFrogs();
         drawScore();
         drawGO();
         drawLevel();
@@ -163,12 +163,11 @@ public class PlayScreen implements Screen {
         }
     }
 
-    private void drawFrog() {
+    private void drawFrogs() {
         SpriteBatch batch = this.game.batch;
         for (Frog frog: this.frogManager.getFrogs()) {
-            if (!frog.isKilled && !frog.isLifeTimeExpired()) {
-                batch.draw(frog.getFrogTexture(), frog.getPosition().x, frog.getPosition().y,
-                        0, 0, 100, 100-(int)(((frog.maxLifeTime- frog.lifeTime)*100)/(frog.maxLifeTime)));
+            if (!frog.isKilled() && !frog.isLifeTimeExpired()) {
+                frog.draw(batch);
             }
         }
     }

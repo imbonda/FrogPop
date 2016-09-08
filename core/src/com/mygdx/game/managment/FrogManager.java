@@ -96,7 +96,7 @@ public class FrogManager {
         while (frogIterator.hasNext()) {
             Frog frog = frogIterator.next();
             frog.update(deltaTime);
-            if (frog.isKilled) {
+            if (frog.isKilled()) {
                 int frogHoleIndex = this.frogToHoleIndexMap.remove(frog);
                 frogIterator.remove();
                 this.frogPool.free(frog);
