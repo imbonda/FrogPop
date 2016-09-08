@@ -66,6 +66,7 @@ public class FrogFactory {
      * Singleton private constructor.
      */
     private FrogFactory() {
+        this.randomFrogClassGenerator = new RandomFrogClassGenerator(null, 0, 0);
     }
 
     /**
@@ -91,7 +92,7 @@ public class FrogFactory {
             rangeMap.maxBound = (int)Math.ceil(spawnProb * 100) + probWorldLeftBound;
             rangeMap.frogClass = frogMetaData.frogClass;
             rangeMaps.add(rangeMap);
-            probWorldLeftBound += rangeMap.maxBound + 1;
+            probWorldLeftBound = rangeMap.maxBound + 1;
         }
 
         this.randomFrogClassGenerator = new RandomFrogClassGenerator(
