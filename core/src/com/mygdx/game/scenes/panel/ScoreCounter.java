@@ -20,6 +20,7 @@ public class ScoreCounter extends Group {
     public ScoreCounter() {
         setTransform(false);
         initScoreLabel();
+        addActor(this.scoreLabel);
         this.score = 0;
         updateScoreLabel();
     }
@@ -31,6 +32,10 @@ public class ScoreCounter extends Group {
         this.scoreLabel = new Label("", style);
         this.scoreLabel.setWidth(260);
         this.scoreLabel.setPosition(LABEL_POSITION.x, LABEL_POSITION.y);
+    }
+
+    public int getScore() {
+        return this.score;
     }
 
     public void addScore(int value) {

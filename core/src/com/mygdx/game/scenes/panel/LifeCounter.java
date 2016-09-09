@@ -20,6 +20,7 @@ public class LifeCounter extends Group {
     public LifeCounter() {
         setTransform(false);
         initLifeLabel();
+        addActor(this.lifeLabel);
         this.life = 3;
         updateLifeLabel();
     }
@@ -31,6 +32,10 @@ public class LifeCounter extends Group {
         this.lifeLabel = new Label("", style);
         this.lifeLabel.setWidth(260);
         this.lifeLabel.setPosition(LABEL_POSITION.x, LABEL_POSITION.y);
+    }
+
+    public int getLife() {
+        return this.life;
     }
 
     public void addLife(int value) {

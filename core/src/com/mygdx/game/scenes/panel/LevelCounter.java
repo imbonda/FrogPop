@@ -1,6 +1,7 @@
 package com.mygdx.game.scenes.panel;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -20,6 +21,7 @@ public class LevelCounter extends Group {
     public LevelCounter() {
         setTransform(false);
         initLevelLabel();
+        addActor(this.levelLabel);
         this.level = 0;
         updateLevelLabel();
     }
@@ -33,6 +35,10 @@ public class LevelCounter extends Group {
         this.levelLabel.setPosition(LABEL_POSITION.x, LABEL_POSITION.y);
     }
 
+    public int getLevel() {
+        return this.level;
+    }
+
     public void advance() {
         this.level += 1;
         updateLevelLabel();
@@ -41,4 +47,5 @@ public class LevelCounter extends Group {
     private void updateLevelLabel() {
         this.levelLabel.setText("Level: " + this.level);
     }
+
 }
