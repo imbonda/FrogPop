@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.managment.FrogManager;
 import com.mygdx.game.sprites.Hole;
@@ -29,12 +30,7 @@ import java.util.Random;
 public class PlayScreen implements Screen {
 
     private static float FROG_LIFE_TIME_SECS =5.0f;
-    private static final float FROG_LIFE_TIME_DECREASE_FACTOR = 0.92f;
     private static final Vector2[] HOLES_POSITIONS = { new Vector2(50, 35), new Vector2(300, 35), new Vector2(50, 185), new Vector2(300, 185),new Vector2(550, 35),new Vector2(550, 185),new Vector2(50, 325),new Vector2(300, 325),new Vector2(550,325)};
-    private BitmapFont scoreFont;
-    private BitmapFont Time;
-    private BitmapFont Level;
-    private BitmapFont Life;
     private Texture[] backgroundTexture;
     private Array<Hole> holes;
     private FrogPop game;
@@ -43,7 +39,6 @@ public class PlayScreen implements Screen {
     private Timer levelTimer;
     private LevelController levelController;
     private Hud hud;
-    private int level=0;
     private Random randAdd=new Random();
     private int[] whenAddfrogs={randAdd.nextInt(5)+3,randAdd.nextInt(7)+13,randAdd.nextInt(8)+20,randAdd.nextInt(8)+30,randAdd.nextInt(10)+40};
 
@@ -55,17 +50,13 @@ public class PlayScreen implements Screen {
         this.backgroundTexture[1]=new Texture("world2.jpg");
         this.backgroundTexture[2]=new Texture("world3.jpg");
         this.backgroundTexture[3]=new Texture("world4.jpg");
-        this.scoreFont = new BitmapFont(Gdx.files.internal("font.fnt"));
-        this.Time = new BitmapFont(Gdx.files.internal("font.fnt"));
-        this.Level = new BitmapFont(Gdx.files.internal("font.fnt"));
-        this.Life = new BitmapFont(Gdx.files.internal("font.fnt"));
         this.holes = new Array<Hole>();
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
         this.levelTimer = new Timer();
         this.hud = new Hud(this.game.batch);
-        this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS);
+        this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS, this.hud);
         //TODO (Test)
         this.levelController = new LevelController(this.levelTimer, this.hud, this.frogManager);
         this.frogManager.addFrog();
@@ -85,7 +76,7 @@ public class PlayScreen implements Screen {
                 }
             }
             Gdx.input.vibrate(500);
-            this.hud.lifeCounter.subdtractLife(1);
+            this.hud.lifeCounter.addLife(-1);
         }
 
     }
@@ -94,24 +85,9 @@ public class PlayScreen implements Screen {
         handleInput();
         this.levelController.update(deltaTime);
         this.frogManager.update(deltaTime);
-        for (Frog frog: this.frogManager.getFrogs()) {
-            if (frog.isLifeTimeExpired()) {
-                this.hud.lifeCounter.subdtractLife(1);
-                frog.setKilled();
-                Gdx.input.vibrate(500);
-            }
-        }
         if(this.hud.lifeCounter.getLife() <= 0) {
             game.setScreen(new GameOverScreen(this.game, this.hud));
-        }
-        if(this.levelTimer.isTimedOut()) {
-            this.frogManager.decreaseFrogMaxLifeTime(FROG_LIFE_TIME_DECREASE_FACTOR);
-            this.levelTimer.setCountTimeByFactor(1.05f);
-            level++;
-            if((level==whenAddfrogs[level/10])&&level<59)
-            {frogManager.addFrog();
-                FROG_LIFE_TIME_SECS=FROG_LIFE_TIME_SECS*1.2f;
-            }
+            SpritesDrawer.getInstance().removeAllSprites();
         }
     }
 
@@ -122,12 +98,8 @@ public class PlayScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
         this.game.batch.begin();
         drawBackground();
-        drawHole();
-        drawFrogs();
-        //drawScore();
-        //drawGO();
-        //drawLevel();
-        this.levelTimer.draw(this.game.batch);
+        drawHoles();
+        SpritesDrawer.getInstance().drawSprites();
         this.game.batch.end();
 
         this.game.batch.setProjectionMatrix(this.hud.stage.getCamera().combined);
@@ -137,10 +109,10 @@ public class PlayScreen implements Screen {
     public void drawBackground() {
         SpriteBatch batch = this.game.batch;
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
-        batch.draw(this.backgroundTexture[(level/10)%4], 0, 0);
+        batch.draw(this.backgroundTexture[(this.hud.levelCounter.getLevel()/10)%4], 0, 0);
     }
 
-    private void drawHole() {
+    private void drawHoles() {
         SpriteBatch batch = this.game.batch;
 
         for (Hole hole: this.holes) {
@@ -149,14 +121,6 @@ public class PlayScreen implements Screen {
         }
     }
 
-    private void drawFrogs() {
-        SpriteBatch batch = this.game.batch;
-        for (Frog frog: this.frogManager.getFrogs()) {
-            if (!frog.isKilled() && !frog.isLifeTimeExpired()) {
-                frog.draw(batch);
-            }
-        }
-    }
     @Override
     public void resize(int width, int height) {
         this.gameViewPort.update(width, height, true);

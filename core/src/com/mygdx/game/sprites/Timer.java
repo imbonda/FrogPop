@@ -48,6 +48,7 @@ public class Timer extends Sprite {
         this.timeLeftToCountDown = this.timeToCountDown;
         this.timerState = State.VIBRATING;
         this.stateTimer = 0;
+        SpritesDrawer.getInstance().addSprite(this);
 
         // TODO (consider using animation for clock vibration on timeout)
 //        Texture timerTexture = new Texture("Animation/timer.png");

@@ -1,17 +1,12 @@
 package com.mygdx.game.sprites.frogs;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
-
-import java.util.Random;
-
+import com.mygdx.game.sprites.SpritesDrawer;
 
 /**
  * This class represents an abstract frog.
@@ -26,11 +21,14 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
     protected float lifeTime;
     protected boolean isKilled;
 
+    private SpritesDrawer spritesDrawer;
+
 
     public Frog() {
         this.lifeTime = 0;
         this.isKilled = false;
         this.position = new Vector2(0, 0);
+        this.spritesDrawer = SpritesDrawer.getInstance();
     }
 
     /**
@@ -88,11 +86,13 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
         this.position.set(positionX, positionY);
         this.maxLifeTime = timeToLive;
         this.lifeTime = 0;
+        this.spritesDrawer.addSprite(this);
     }
 
     public void defaultReset() {
         this.isKilled = false;
         this.position.set(0, 0);
+        this.spritesDrawer.removeSprite(this);
     }
 
     public void update(float deltaTime) {

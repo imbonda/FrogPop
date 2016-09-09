@@ -1,5 +1,6 @@
 package com.mygdx.game.managment;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
+import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.sprites.Hole;
 
@@ -37,17 +39,17 @@ public class FrogManager {
             return null;
         }
     };
-
-
+    private Hud hud;
     private Array<Frog> activeFrogs;
     private Array<Hole> holes;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
 
 
-    public FrogManager(Array<Hole> holes, float frogMaxLifeTime) {
-        this.frogMaxLifeTime = frogMaxLifeTime;
+    public FrogManager(Array<Hole> holes, float frogMaxLifeTime, Hud hud) {
         this.holes = holes;
+        this.frogMaxLifeTime = frogMaxLifeTime;
+        this.hud = hud;
         this.activeFrogs = new Array<Frog>();
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
@@ -97,18 +99,22 @@ public class FrogManager {
             Frog frog = frogIterator.next();
             frog.update(deltaTime);
             if (frog.isKilled()) {
-                int frogHoleIndex = this.frogToHoleIndexMap.remove(frog);
-                frogIterator.remove();
-                this.frogPool.free(frog);
-                addFrog();
-                this.unpopulatedHolesIndexes.add(frogHoleIndex);
+                recycleDeadFrog(frogIterator, frog);
             }
-    }}
-
-    public void dispose() {
-        for (Frog frog: this.getFrogs()) {
-            frog.dispose();
+            else if (frog.isLifeTimeExpired()) {
+                recycleDeadFrog(frogIterator, frog);
+                this.hud.lifeCounter.addLife(frog.getPenaltyValue());
+                Gdx.input.vibrate(500);
+            }
         }
+    }
+
+    private void recycleDeadFrog(Iterator<Frog> frogIterator, Frog frog) {
+        int frogHoleIndex = this.frogToHoleIndexMap.remove(frog);
+        frogIterator.remove();
+        this.frogPool.free(frog);
+        addFrog();
+        this.unpopulatedHolesIndexes.add(frogHoleIndex);
     }
 
 }

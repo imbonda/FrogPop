@@ -9,24 +9,45 @@ import com.badlogic.gdx.utils.Array;
  */
 public class SpritesDrawer {
 
+    private static SpritesDrawer ourInstance = new SpritesDrawer();
+
+    /**
+     * Singleton implementation.
+     *
+     * @return  The singleton object.
+     */
+    public static SpritesDrawer getInstance() {
+        return ourInstance;
+    }
+
+    /**
+     * Singleton private constructor.
+     */
+    private SpritesDrawer() {
+    }
+
+    private final static Array<Sprite> sprites = new Array<Sprite>();
+
     private SpriteBatch batch;
-    private Array<Sprite> sprites;
 
-
-    public SpritesDrawer(SpriteBatch batch) {
+    public void setBatch(SpriteBatch batch) {
         this.batch = batch;
     }
 
     public void addSprite(Sprite sprite) {
-        this.sprites.add(sprite);
+        sprites.add(sprite);
     }
 
     public void removeSprite(Sprite sprite) {
-        this.sprites.removeValue(sprite, true);
+        sprites.removeValue(sprite, true);
+    }
+
+    public void removeAllSprites() {
+        sprites.clear();
     }
 
     public void drawSprites() {
-        for (Sprite sprite : this.sprites) {
+        for (Sprite sprite : sprites) {
             sprite.draw(this.batch);
         }
     }

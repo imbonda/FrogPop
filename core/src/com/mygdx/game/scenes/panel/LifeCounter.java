@@ -43,11 +43,6 @@ public class LifeCounter extends Group {
         updateLifeLabel();
     }
 
-    public void subdtractLife(int value) {
-        this.life -= value;
-        updateLifeLabel();
-    }
-
     private void updateLifeLabel() {
         this.lifeLabel.setText("Life: " + this.life);
     }

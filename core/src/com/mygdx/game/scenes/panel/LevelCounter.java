@@ -22,7 +22,7 @@ public class LevelCounter extends Group {
         setTransform(false);
         initLevelLabel();
         addActor(this.levelLabel);
-        this.level = 0;
+        this.level = 1;
         updateLevelLabel();
     }
 
