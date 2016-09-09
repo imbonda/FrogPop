@@ -3,6 +3,7 @@ package com.mygdx.game.managment;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.managment.config.Config;
 import com.mygdx.game.managment.metadata.LevelMetaData;
+import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Timer;
 
 /**
@@ -17,11 +18,13 @@ public class LevelController {
     private Array<LevelMetaData> levelsMetaData;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
+    private Hud hud;
     private FrogFactory frogFactory;
 
 
-    public LevelController(Timer levelTimer) {
+    public LevelController(Timer levelTimer, Hud hud) {
         this.levelTimer = levelTimer;
+        this.hud = hud;
         this.frogFactory = FrogFactory.getInstance();
         this.currentLevel = STARTING_LEVEL;
         this.levelsMetaData = Config.levelsMetaData;
@@ -50,5 +53,6 @@ public class LevelController {
     private void levelUp() {
         this.currentLevel++;
         setCurrentLevel();
+        this.hud.levelCounter.advance();
     }
 }

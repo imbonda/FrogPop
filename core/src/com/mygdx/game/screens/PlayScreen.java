@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.LevelController;
+import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.managment.FrogManager;
 import com.mygdx.game.sprites.Hole;
@@ -42,11 +43,14 @@ public class PlayScreen implements Screen {
     private Viewport gameViewPort;
     private FrogManager frogManager;
     private Timer levelTimer;
+    private Hud hud;
     private int level=0;
     private Random randAdd=new Random();
     private int[] whenAddfrogs={randAdd.nextInt(5)+3,randAdd.nextInt(7)+13,randAdd.nextInt(8)+20,randAdd.nextInt(8)+30,randAdd.nextInt(10)+40};
 
     public PlayScreen(FrogPop game) {
+        this.game = game;
+
         this.backgroundTexture=new Texture[4];
         this.backgroundTexture[0]=new Texture("world.jpg");
         this.backgroundTexture[1]=new Texture("world2.jpg");
@@ -61,11 +65,11 @@ public class PlayScreen implements Screen {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
         this.levelTimer = new Timer();
+        this.hud = new Hud(this.game.batch);
         //TODO (Test)
-        LevelController lc = new LevelController(levelTimer);
+        LevelController lc = new LevelController(levelTimer, hud);
         this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS);
         this.frogManager.addFrog();
-        this.game = game;
         this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
     }
 
@@ -121,11 +125,13 @@ public class PlayScreen implements Screen {
         drawBackground();
         drawHole();
         drawFrogs();
-        drawScore();
-        drawGO();
-        drawLevel();
+        //drawScore();
+        //drawGO();
+        //drawLevel();
         this.levelTimer.draw(this.game.batch);
         this.game.batch.end();
+
+        this.hud.draw();
     }
 
     public void drawBackground() {
