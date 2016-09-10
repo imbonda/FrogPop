@@ -23,14 +23,14 @@ public class LevelController {
     private Array<LevelMetaData> levelsMetaData;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
-    private FrogFactory frogFactory;
+    private FrogClassFactory frogClassFactory;
     private FrogManager frogManager;
 
 
     public LevelController(FrogManager frogManager) {
         this.frogManager = frogManager;
         this.levelTimer = new Timer();
-        this.frogFactory = FrogFactory.getInstance();
+        this.frogClassFactory = FrogClassFactory.getInstance();
         this.currentLevel = STARTING_LEVEL;
         this.levelsMetaData = Config.levelsMetaData;
         this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
@@ -41,11 +41,11 @@ public class LevelController {
         for (LevelMetaData levelMetaData : this.levelsMetaData) {
             if (levelMetaData.id == this.currentLevel) {
                 this.currentLevelMetaData = levelMetaData;
-                this.frogFactory.setLevelMetaData(this.currentLevelMetaData);
+                this.frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
                 return;
             }
         }
-        this.frogFactory.setLevelMetaData(this.currentLevelMetaData);
+        this.frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
     }
 
     public void update(float deltaTime) {

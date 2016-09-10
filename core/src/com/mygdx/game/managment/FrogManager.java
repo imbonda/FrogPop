@@ -26,7 +26,6 @@ public class FrogManager {
     private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
 
-    private final FrogFactory frogFactory = FrogFactory.getInstance();
     private final FrogPool frogPool = new FrogPool();
 
     private Array<Hole> holes;

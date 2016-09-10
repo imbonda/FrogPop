@@ -22,7 +22,7 @@ public class FrogPool extends Pool {
 
     @Override
     protected Frog newObject() {
-        Class<? extends Frog> frogClass = FrogFactory.getInstance().getRandomFrogClass();
+        Class<? extends Frog> frogClass = FrogClassFactory.getInstance().getRandomFrogClass();
         if (null == frogClass) {
             return null;
         }
