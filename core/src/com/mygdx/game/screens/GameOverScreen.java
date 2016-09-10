@@ -63,6 +63,7 @@ public class GameOverScreen implements Screen {
             Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
             Vector2 touchVector = new Vector2(touches.x,touches.y);
             if (this.button1.isButtonsTouched(touchVector)) {
+                this.hud.reset();
                 this.game.setScreen(new PlayScreen(this.game));
             }
         }

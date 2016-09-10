@@ -61,7 +61,6 @@ public class PlayScreen implements Screen {
             game.setScreen(new GameOverScreen(this.game));
             SpritesDrawer.getInstance().removeAllSprites();
             Gdx.input.setInputProcessor(null);
-            this.hud.reset();
         }
     }
 

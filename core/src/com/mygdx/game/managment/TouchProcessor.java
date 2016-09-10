@@ -25,8 +25,8 @@ public class TouchProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 touchVector = this.viewport.unproject(
-                new Vector2(Gdx.input.getX(),Gdx.input.getY()));
+        Vector2 touchVector = new Vector2(screenX,screenY);
+        touchVector = this.viewport.unproject(touchVector);
 
         for (Frog frog: this.frogManager.activeFrogs) {
             if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
