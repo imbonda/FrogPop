@@ -73,16 +73,23 @@ public class Config {
         try {
             String className = frogElement.getAttribute("class");
             String spawnProbString = frogElement.getAttribute("spawn_prob");
+            String maxAllowedString = frogElement.getAttribute("max_allowed", null);
             float spawnProbability = Float.parseFloat(spawnProbString);
-            return new FrogMetaData(getFrogClassByName(className), spawnProbability);
+            if (null == maxAllowedString) {
+                return new FrogMetaData(getFrogClassByName(className), spawnProbability);
+            }
+            else {
+                int maxAllowed = Integer.parseInt(maxAllowedString);
+                return new FrogMetaData(getFrogClassByName(className), spawnProbability, maxAllowed);
+            }
         }
         catch (GdxRuntimeException e) {
             throw new InvalidAttributeValueException("A 'Level' element does not contain "+
                     "one ore more crucial attributes.");
         }
         catch (NumberFormatException e) {
-            throw new InvalidAttributeValueException("Attribute is of the wrong type: " +
-                "'spawn_prob' is supposed to be float.");
+            throw new InvalidAttributeValueException("Attribute is of the wrong type.\n" +
+                        e.getMessage());
         }
     }
 

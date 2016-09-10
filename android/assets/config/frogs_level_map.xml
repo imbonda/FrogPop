@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <levelMap>
     <level id="1">
-        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.3" />
-        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.7" />
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.3" max_allowed="1" />
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.7" max_allowed="1" />
     </level>
 </levelMap>
