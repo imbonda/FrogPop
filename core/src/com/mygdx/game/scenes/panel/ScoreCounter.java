@@ -28,7 +28,7 @@ public class ScoreCounter extends Group {
 
     private void initScoreLabel() {
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font = Hud.FONT;
+        style.font = Hud.getInstance().getFont();
         style.fontColor = new Color(0x000000ff);
         this.scoreLabel = new Label("", style);
         this.scoreLabel.setWidth(260);

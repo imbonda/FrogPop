@@ -28,7 +28,8 @@ public class LifeCounter extends Group {
 
     private void initLifeLabel() {
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font = Hud.FONT;
+        Hud hud = Hud.getInstance();
+        style.font = hud.FONT;
         style.fontColor = new Color(0xff0000ff);
         this.lifeLabel = new Label("", style);
         this.lifeLabel.setWidth(260);

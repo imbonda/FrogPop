@@ -28,7 +28,7 @@ public class LevelCounter extends Group {
 
     private void initLevelLabel() {
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font = Hud.FONT;
+        style.font = Hud.getInstance().getFont();
         style.fontColor = new Color(0x000000ff);
         this.levelLabel = new Label("", style);
         this.levelLabel.setWidth(260);

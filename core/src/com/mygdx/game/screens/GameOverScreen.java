@@ -23,7 +23,6 @@ import com.mygdx.game.sprites.Buttons;
 public class GameOverScreen implements Screen {
 
     private Hud hud;
-    private Vector3 touches;
     private Sprite End;
     private BitmapFont Loser;
     private BitmapFont Score;
@@ -31,9 +30,9 @@ public class GameOverScreen implements Screen {
     private FrogPop game;
     private Viewport viewport;
 
-    public GameOverScreen(FrogPop game, Hud hud) {
-        this.hud = hud;
+    public GameOverScreen(FrogPop game) {
         this.game = game;
+        this.hud = Hud.getInstance();
         this.Loser = new BitmapFont(Gdx.files.internal("font.fnt"));
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("end.jpg")));
@@ -61,7 +60,7 @@ public class GameOverScreen implements Screen {
 
     public void handleInput() {
         if (Gdx.input.justTouched()) {
-            touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
+            Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
             Vector2 touchVector = new Vector2(touches.x,touches.y);
             if (this.button1.isButtonsTouched(touchVector)) {
                 this.game.setScreen(new PlayScreen(this.game));
@@ -75,8 +74,8 @@ public class GameOverScreen implements Screen {
         Loser.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         Loser.draw(batch, "You Lost",300,400);
         Score.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        Score.draw(batch, "Your score was: "+hud.scoreCounter.getScore(),300,380);
-        Score.draw(batch, "Your level was: "+hud.levelCounter.getLevel(),300,360);
+        Score.draw(batch, "Your score was: "+hud.getScoreCounter().getScore(),300,380);
+        Score.draw(batch, "Your level was: "+hud.getLevelCounter().getLevel(),300,360);
 
     }
 

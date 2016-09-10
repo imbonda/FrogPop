@@ -23,14 +23,12 @@ public class LevelController {
     private Array<LevelMetaData> levelsMetaData;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
-    private Hud hud;
     private FrogFactory frogFactory;
     private FrogManager frogManager;
 
 
-    public LevelController(FrogManager frogManager, Hud hud) {
+    public LevelController(FrogManager frogManager) {
         this.frogManager = frogManager;
-        this.hud = hud;
         this.levelTimer = new Timer();
         this.frogFactory = FrogFactory.getInstance();
         this.currentLevel = STARTING_LEVEL;
@@ -65,6 +63,6 @@ public class LevelController {
     private void levelUp() {
         this.currentLevel++;
         setCurrentLevel();
-        this.hud.levelCounter.advance();
+        Hud.getInstance().getLevelCounter().advance();
     }
 }

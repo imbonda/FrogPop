@@ -42,15 +42,13 @@ public class FrogManager {
     };
     private Array<Hole> holes;
     private float frogMaxLifeTime;
-    private Hud hud;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
 
 
-    public FrogManager(Array<Hole> holes, float frogMaxLifeTime, Hud hud) {
+    public FrogManager(Array<Hole> holes, float frogMaxLifeTime) {
         this.holes = holes;
         this.frogMaxLifeTime = frogMaxLifeTime;
-        this.hud = hud;
         this.activeFrogs = new Array<Frog>();
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
@@ -100,7 +98,7 @@ public class FrogManager {
             }
             else if (frog.isLifeTimeExpired()) {
                 recycleDeadFrog(frogIterator, frog);
-                this.hud.lifeCounter.addLife(frog.getPenaltyValue());
+                Hud.getInstance().getLifeCounter().addLife(frog.getPenaltyValue());
                 Gdx.input.vibrate(500);
             }
         }

@@ -2,11 +2,9 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -17,12 +15,8 @@ import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.managment.TouchProcessor;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
-import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.managment.FrogManager;
 import com.mygdx.game.sprites.Hole;
-import com.mygdx.game.sprites.Timer;
-
-import java.util.Random;
 
 
 /**
@@ -52,22 +46,23 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
-        this.hud = new Hud(this.game.batch);
-        this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS, this.hud);
-        this.levelController = new LevelController(this.frogManager, this.hud);
+        this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS);
+        this.levelController = new LevelController(this.frogManager);
         this.frogManager.addFrog();
         this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
+        this.hud = Hud.getInstance();
 
-        Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort, this.frogManager, this.hud));
+        Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort, this.frogManager));
     }
 
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
         this.frogManager.update(deltaTime);
-        if (this.hud.lifeCounter.getLife() <= 0) {
-            game.setScreen(new GameOverScreen(this.game, this.hud));
+        if (this.hud.getLifeCounter().getLife() <= 0) {
+            game.setScreen(new GameOverScreen(this.game));
             SpritesDrawer.getInstance().removeAllSprites();
             Gdx.input.setInputProcessor(null);
+            this.hud.reset();
         }
     }
 
@@ -82,14 +77,14 @@ public class PlayScreen implements Screen {
         SpritesDrawer.getInstance().drawSprites();
         this.game.batch.end();
 
-        this.game.batch.setProjectionMatrix(this.hud.stage.getCamera().combined);
+        this.game.batch.setProjectionMatrix(this.hud.getStage().getCamera().combined);
         this.hud.draw();
     }
 
     public void drawBackground() {
         SpriteBatch batch = this.game.batch;
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
-        batch.draw(this.backgroundTexture[(this.hud.levelCounter.getLevel()/10)%4], 0, 0);
+        batch.draw(this.backgroundTexture[(this.hud.getLevelCounter().getLevel()/10)%4], 0, 0);
     }
 
     private void drawHoles() {
