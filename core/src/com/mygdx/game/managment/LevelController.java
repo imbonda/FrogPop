@@ -28,10 +28,10 @@ public class LevelController {
     private FrogManager frogManager;
 
 
-    public LevelController(Timer levelTimer, Hud hud, FrogManager frogManager) {
-        this.levelTimer = levelTimer;
-        this.hud = hud;
+    public LevelController(FrogManager frogManager, Hud hud) {
         this.frogManager = frogManager;
+        this.hud = hud;
+        this.levelTimer = new Timer();
         this.frogFactory = FrogFactory.getInstance();
         this.currentLevel = STARTING_LEVEL;
         this.levelsMetaData = Config.levelsMetaData;

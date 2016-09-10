@@ -15,6 +15,7 @@ import com.mygdx.game.FrogPop;
 import com.mygdx.game.scenes.panel.LevelCounter;
 import com.mygdx.game.scenes.panel.LifeCounter;
 import com.mygdx.game.scenes.panel.ScoreCounter;
+import com.mygdx.game.sprites.SpritesDrawer;
 
 /**
  * Created by MichaelBond on 9/8/2016.
@@ -44,6 +45,10 @@ public class Hud implements Disposable {
         setStage();
     }
 
+    public void setBatch(SpriteBatch batch) {
+        this.batch = batch;
+    }
+
     private void setStage() {
         Viewport hudViewPort = new FitViewport(
                 FrogPop.VIRTUAL_WIDTH,
@@ -58,6 +63,12 @@ public class Hud implements Disposable {
 
     public void draw() {
         this.stage.draw();
+    }
+
+    public void reset() {
+        this.scoreCounter.reset();
+        this.levelCounter.reset();
+        this.lifeCounter.reset();
     }
 
     @Override

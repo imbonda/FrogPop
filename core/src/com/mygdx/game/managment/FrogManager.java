@@ -19,10 +19,11 @@ import com.mygdx.game.sprites.Hole;
  */
 public class FrogManager {
 
+    public Array<Frog> activeFrogs;
+
     private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
 
-    private float frogMaxLifeTime;
     private final FrogFactory frogFactory = FrogFactory.getInstance();
     private final Pool<Frog> frogPool = new Pool<Frog>() {
         @Override
@@ -39,9 +40,9 @@ public class FrogManager {
             return null;
         }
     };
-    private Hud hud;
-    private Array<Frog> activeFrogs;
     private Array<Hole> holes;
+    private float frogMaxLifeTime;
+    private Hud hud;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
 
@@ -83,10 +84,6 @@ public class FrogManager {
         Vector2 holePosition = this.holes.get(holeIndex).getPosition();
         return new Vector2(
                 holePosition.x + FROG_OFFSET_X, holePosition.y + FROG_OFFSET_Y);
-    }
-
-    public Array<Frog> getFrogs() {
-        return this.activeFrogs;
     }
 
     public void decreaseFrogMaxLifeTime(float decreaseFactor) {

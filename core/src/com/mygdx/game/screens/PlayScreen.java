@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.LevelController;
+import com.mygdx.game.managment.TouchProcessor;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.frogs.Frog;
@@ -36,11 +37,8 @@ public class PlayScreen implements Screen {
     private FrogPop game;
     private Viewport gameViewPort;
     private FrogManager frogManager;
-    private Timer levelTimer;
     private LevelController levelController;
     private Hud hud;
-    private Random randAdd=new Random();
-    private int[] whenAddfrogs={randAdd.nextInt(5)+3,randAdd.nextInt(7)+13,randAdd.nextInt(8)+20,randAdd.nextInt(8)+30,randAdd.nextInt(10)+40};
 
     public PlayScreen(FrogPop game) {
         this.game = game;
@@ -54,40 +52,22 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
-        this.levelTimer = new Timer();
         this.hud = new Hud(this.game.batch);
         this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS, this.hud);
-        //TODO (Test)
-        this.levelController = new LevelController(this.levelTimer, this.hud, this.frogManager);
+        this.levelController = new LevelController(this.frogManager, this.hud);
         this.frogManager.addFrog();
         this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
-    }
 
-    public void handleInput() {
-        if (Gdx.input.justTouched()) {
-            Vector2 touchVector = this.gameViewPort.unproject(
-                        new Vector2(Gdx.input.getX(),Gdx.input.getY()));
-
-            for (Frog frog: this.frogManager.getFrogs()) {
-                if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
-                    this.hud.scoreCounter.addScore(1);
-                    frog.setKilled();
-                    return;
-                }
-            }
-            Gdx.input.vibrate(500);
-            this.hud.lifeCounter.addLife(-1);
-        }
-
+        Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort, this.frogManager, this.hud));
     }
 
     public void update(float deltaTime) {
-        handleInput();
         this.levelController.update(deltaTime);
         this.frogManager.update(deltaTime);
-        if(this.hud.lifeCounter.getLife() <= 0) {
+        if (this.hud.lifeCounter.getLife() <= 0) {
             game.setScreen(new GameOverScreen(this.game, this.hud));
             SpritesDrawer.getInstance().removeAllSprites();
+            Gdx.input.setInputProcessor(null);
         }
     }
 

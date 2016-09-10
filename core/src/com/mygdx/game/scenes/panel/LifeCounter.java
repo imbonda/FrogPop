@@ -11,6 +11,7 @@ import com.mygdx.game.scenes.Hud;
  */
 public class LifeCounter extends Group {
 
+    private static final int INITIAL_LIFE = 3;
     private static final Vector2 LABEL_POSITION = new Vector2(720, 510);
 
     private int life;
@@ -21,7 +22,7 @@ public class LifeCounter extends Group {
         setTransform(false);
         initLifeLabel();
         addActor(this.lifeLabel);
-        this.life = 3;
+        this.life = INITIAL_LIFE;
         updateLifeLabel();
     }
 
@@ -40,6 +41,11 @@ public class LifeCounter extends Group {
 
     public void addLife(int value) {
         this.life += value;
+        updateLifeLabel();
+    }
+
+    public void reset() {
+        this.life = INITIAL_LIFE;
         updateLifeLabel();
     }
 

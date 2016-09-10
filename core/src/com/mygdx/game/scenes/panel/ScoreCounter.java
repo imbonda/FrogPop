@@ -11,6 +11,7 @@ import com.mygdx.game.scenes.Hud;
  */
 public class ScoreCounter extends Group {
 
+    private static final int INITIAL_SCORE = 0;
     private static final Vector2 LABEL_POSITION = new Vector2(25, 520);
 
     private int score;
@@ -21,7 +22,7 @@ public class ScoreCounter extends Group {
         setTransform(false);
         initScoreLabel();
         addActor(this.scoreLabel);
-        this.score = 0;
+        this.score = INITIAL_SCORE;
         updateScoreLabel();
     }
 
@@ -43,8 +44,8 @@ public class ScoreCounter extends Group {
         updateScoreLabel();
     }
 
-    public void subtractScore(int value) {
-        this.score -= value;
+    public void reset() {
+        this.score = INITIAL_SCORE;
         updateScoreLabel();
     }
 
