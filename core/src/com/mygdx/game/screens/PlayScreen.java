@@ -24,7 +24,6 @@ import com.mygdx.game.sprites.Hole;
  */
 public class PlayScreen implements Screen {
 
-    private static float FROG_LIFE_TIME_SECS =5.0f;
     private static final Vector2[] HOLES_POSITIONS = { new Vector2(50, 35), new Vector2(300, 35), new Vector2(50, 185), new Vector2(300, 185),new Vector2(550, 35),new Vector2(550, 185),new Vector2(50, 325),new Vector2(300, 325),new Vector2(550,325)};
     private Texture[] backgroundTexture;
     private Array<Hole> holes;
@@ -46,7 +45,7 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 9; ++i) {
             this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
         }
-        this.frogManager = new FrogManager(this.holes, FROG_LIFE_TIME_SECS);
+        this.frogManager = new FrogManager(this.holes);
         this.levelController = new LevelController(this.frogManager);
         this.frogManager.addFrog();
         this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
