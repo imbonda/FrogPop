@@ -42,9 +42,10 @@ public class LevelController {
             if (levelMetaData.id == this.currentLevel) {
                 this.currentLevelMetaData = levelMetaData;
                 this.frogFactory.setLevelMetaData(this.currentLevelMetaData);
-                break;
+                return;
             }
         }
+        this.frogFactory.setLevelMetaData(this.currentLevelMetaData);
     }
 
     public void update(float deltaTime) {

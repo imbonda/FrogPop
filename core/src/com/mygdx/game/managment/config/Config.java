@@ -95,7 +95,7 @@ public class Config {
 
     private static Class<? extends Frog> getFrogClassByName(String className)
                 throws ClassNotFoundException{
-        return FrogClassFactory.getFrogClassByName(className);
+        return ClassForName.getFrogClassByName(className);
     }
 
 }

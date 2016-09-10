@@ -3,6 +3,7 @@ package com.mygdx.game.managment;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.HashMap;
@@ -26,21 +27,8 @@ public class FrogManager {
     private static final int FROG_OFFSET_Y = 20;
 
     private final FrogFactory frogFactory = FrogFactory.getInstance();
-    private final Pool<Frog> frogPool = new Pool<Frog>() {
-        @Override
-        protected Frog newObject() {
-            try {
-                return FrogManager.this.frogFactory.getRandomFrog();
-            }
-            catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    };
+    private final FrogPool frogPool = new FrogPool();
+
     private Array<Hole> holes;
     private float frogMaxLifeTime;
     private Array<Integer> unpopulatedHolesIndexes;
@@ -63,12 +51,16 @@ public class FrogManager {
         Vector2 frogPosition = this.getFrogPlacementPosition(randomHoleIndex);
         // Add a new frog positioned at the chosen hole.
         Frog frog = this.frogPool.obtain();
-        // // TODO: 9/3/2016 check if null ?
-        frog.init(frogPosition.x, frogPosition.y, this.frogMaxLifeTime);
-        this.activeFrogs.add(frog);
-        this.frogToHoleIndexMap.put(frog, randomHoleIndex);
-        // The hole is now populated.
-        this.unpopulatedHolesIndexes.removeValue(randomHoleIndex, true);
+        if (null != frog) {
+            frog.init(frogPosition.x, frogPosition.y, this.frogMaxLifeTime);
+            this.activeFrogs.add(frog);
+            this.frogToHoleIndexMap.put(frog, randomHoleIndex);
+            // The hole is now populated.
+            this.unpopulatedHolesIndexes.removeValue(randomHoleIndex, true);
+        }
+        else {
+            (new Logger("A")).debug("No default frog was supplied");
+        }
     }
 
     private int getRandomUnpopulatedHoleIndex() {

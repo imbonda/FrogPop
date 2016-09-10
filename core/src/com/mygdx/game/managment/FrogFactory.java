@@ -61,7 +61,9 @@ public class FrogFactory {
         }
 
         public Class<? extends Frog> random() {
-            //FrogFactory.this.randomizedFrogClassesCounterMap.get()
+            if (this.worldPortionsSum <= 0) {
+                return null;
+            }
             int randVal = FrogFactory.this.random.nextInt(this.worldPortionsSum);
             int portionsSum = 0;
             Iterator<PortionMap> portionMapIterator = portionMaps.iterator();
@@ -71,6 +73,7 @@ public class FrogFactory {
                     updateFrogGenerationProbability(portionMapIterator, portionMap);
                     return portionMap.frogMetaData.frogClass;
                 }
+                portionsSum += portionMap.portion;
             }
             return null;
         }
@@ -116,7 +119,7 @@ public class FrogFactory {
             portionMap.portion = (int)Math.ceil(spawnProb * 100);
             portionMap.frogMetaData = frogMetaData;
             portionMaps.add(portionMap);
-            probWorldPortionsSum = portionMap.portion;
+            probWorldPortionsSum += portionMap.portion;
         }
 
         this.randomFrogClassGenerator = new RandomFrogClassGenerator(
@@ -128,11 +131,9 @@ public class FrogFactory {
      *     supplied in the xml config.
      *
      * @return  A random frog according to the probability function supplied in the xml config.
-     * @throws IllegalAccessException
-     * @throws InstantiationException
      */
-    public Frog getRandomFrog() throws IllegalAccessException, InstantiationException{
-        return this.randomFrogClassGenerator.random().newInstance();
+    public Class<? extends Frog> getRandomFrogClass() {
+        return this.randomFrogClassGenerator.random();
     }
 
 }
