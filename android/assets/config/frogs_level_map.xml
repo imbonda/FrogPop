@@ -4,4 +4,11 @@
         <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.7" />
         <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.3" max_allowed="1" />
     </level>
+
+    <addFrog at_level="1" />
+    <addFrog min_level="3" max_level="7" />
+    <addFrog min_level="13" max_level="19" />
+    <addFrog min_level="20" max_level="27" />
+    <addFrog min_level="30" max_level="37" />
+    <addFrog min_level="40" max_level="49" />
 </levelMap>

@@ -47,7 +47,6 @@ public class PlayScreen implements Screen {
         }
         this.frogManager = new FrogManager(this.holes);
         this.levelController = new LevelController(this.frogManager);
-        this.frogManager.addFrog();
         this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
         this.hud = Hud.getInstance();
 
