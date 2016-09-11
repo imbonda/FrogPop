@@ -2,6 +2,7 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,7 +24,6 @@ import com.mygdx.game.sprites.Hole;
  * Created by MichaelBond on 9/1/2016.
  */
 public class PlayScreen implements Screen {
-
     private static final Vector2[] HOLES_POSITIONS = { new Vector2(50, 35), new Vector2(300, 35), new Vector2(50, 185), new Vector2(300, 185),new Vector2(550, 35),new Vector2(550, 185),new Vector2(50, 325),new Vector2(300, 325),new Vector2(550,325)};
     private Texture[] backgroundTexture;
     private Array<Hole> holes;
@@ -32,10 +32,13 @@ public class PlayScreen implements Screen {
     private FrogManager frogManager;
     private LevelController levelController;
     private Hud hud;
+    private Music music;
 
     public PlayScreen(FrogPop game) {
         this.game = game;
-
+        this.music=Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
+        music.setLooping(true);
+        music.play();
         this.backgroundTexture=new Texture[4];
         this.backgroundTexture[0]=new Texture("world.jpg");
         this.backgroundTexture[1]=new Texture("world2.jpg");
@@ -49,14 +52,15 @@ public class PlayScreen implements Screen {
         this.levelController = new LevelController(this.frogManager);
         this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
         this.hud = Hud.getInstance();
-
         Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort, this.frogManager));
+
     }
 
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
         this.frogManager.update(deltaTime);
         if (this.hud.getLifeCounter().getLife() <= 0) {
+            music.dispose();
             game.setScreen(new GameOverScreen(this.game));
             SpritesDrawer.getInstance().removeAllSprites();
             Gdx.input.setInputProcessor(null);
@@ -73,7 +77,6 @@ public class PlayScreen implements Screen {
         drawHoles();
         SpritesDrawer.getInstance().drawSprites();
         this.game.batch.end();
-
         this.game.batch.setProjectionMatrix(this.hud.getStage().getCamera().combined);
         this.hud.draw();
     }

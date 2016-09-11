@@ -30,7 +30,7 @@ public class TouchProcessor implements InputProcessor {
 
         for (Frog frog: this.frogManager.activeFrogs) {
             if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
-                this.hud.getScoreCounter().addScore(1);
+                this.hud.getScoreCounter().addScore(frog.getProfitValue());
                 frog.setKilled();
                 return true;
             }

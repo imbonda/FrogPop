@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.managment.metadata.FrogMetaData;
 import com.mygdx.game.managment.metadata.LevelMetaData;
 import com.mygdx.game.sprites.frogs.Frog;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -78,15 +77,14 @@ public class FrogClassFactory {
             return null;
         }
 
-        private void updateFrogGenerationProbability(Iterator<PortionMap> portionMapIterator,
-                                                     PortionMap portionMap) {
+        private void updateFrogGenerationProbability(Iterator<PortionMap> portionMapIterator,PortionMap portionMap) {
             Class<? extends Frog> frogClass = portionMap.frogMetaData.frogClass;
             Integer frogsCreated = FrogClassFactory.this.randomizedFrogClassesCounterMap.get(frogClass);
-            frogsCreated = (null == frogsCreated) ? 0 : frogsCreated;
+            frogsCreated = (null == frogsCreated) ? 1 : frogsCreated + 1;
             // Update the map to know that a new frog is going to be generated.
-            FrogClassFactory.this.randomizedFrogClassesCounterMap.put(frogClass, frogsCreated + 1);
+            FrogClassFactory.this.randomizedFrogClassesCounterMap.put(frogClass, frogsCreated);
             if (portionMap.frogMetaData.isLimited &&
-                    frogsCreated >= portionMap.frogMetaData.maxAllowed) {
+                        frogsCreated >= portionMap.frogMetaData.maxAllowed) {
                 // The maximal number of frogs of this class has been reached,
                 // update the probability mapping function.
                 this.worldPortionsSum -= portionMap.portion;
@@ -114,12 +112,16 @@ public class FrogClassFactory {
         int probWorldPortionsSum = 0;
         Array<PortionMap> portionMaps = new Array<PortionMap>();
         for (FrogMetaData frogMetaData : this.levelMetaData.levelRelatedFrogs) {
-            float spawnProb = frogMetaData.spawnProb;
-            PortionMap portionMap = new PortionMap();
-            portionMap.portion = (int)Math.ceil(spawnProb * 100);
-            portionMap.frogMetaData = frogMetaData;
-            portionMaps.add(portionMap);
-            probWorldPortionsSum += portionMap.portion;
+            if (!frogMetaData.isLimited ||
+                        frogMetaData.maxAllowed > this.randomizedFrogClassesCounterMap.getOrDefault(
+                                    frogMetaData.frogClass, 0)) {
+                float spawnProb = frogMetaData.spawnProb;
+                PortionMap portionMap = new PortionMap();
+                portionMap.portion = (int) Math.ceil(spawnProb * 100);
+                portionMap.frogMetaData = frogMetaData;
+                portionMaps.add(portionMap);
+                probWorldPortionsSum += portionMap.portion;
+            }
         }
 
         this.randomFrogClassGenerator = new RandomFrogClassGenerator(

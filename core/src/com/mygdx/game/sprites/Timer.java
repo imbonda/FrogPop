@@ -22,7 +22,7 @@ public class Timer extends Sprite {
         public static int TEXTURE_SRC_WIDTH = 20;
         public static int TEXTURE_SRC_HEIGHT = 74;
         public static float TEXTURE_SCALE_X = 0.3f;
-        public static float TEXTURE_SCALE_Y = 0.6f;
+        public static float TEXTURE_SCALE_Y = 0.8f;
         public static int TEXTURE_OFFSET_X = 0;
         public static int TEXTURE_OFFSET_Y = -3;
     }

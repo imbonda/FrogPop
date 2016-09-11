@@ -28,14 +28,14 @@ public class RegularFrog extends Frog {
     public RegularFrog() {
         Random rand = new Random();
         this.frogTexture=new Texture[8];
-        this.frogTexture[0] = new Texture("0.png");
-        this.frogTexture[1] = new Texture("1.png");
-        this.frogTexture[2] = new Texture("2.png");
-        this.frogTexture[3] = new Texture("3.png");
-        this.frogTexture[4] = new Texture("0.png");
-        this.frogTexture[5] = new Texture("eye2.png");
-        this.frogTexture[6] = new Texture("eye3.png");
-        this.frogTexture[7] = new Texture("eye4.png");
+        this.frogTexture[0] = new Texture("frog/0.png");
+        this.frogTexture[1] = new Texture("frog/1.png");
+        this.frogTexture[2] = new Texture("frog/2.png");
+        this.frogTexture[3] = new Texture("frog/3.png");
+        this.frogTexture[4] = new Texture("frog/0.png");
+        this.frogTexture[5] = new Texture("frog/eye2.png");
+        this.frogTexture[6] = new Texture("frog/eye3.png");
+        this.frogTexture[7] = new Texture("frog/eye4.png");
         this.randTextureType = rand.nextInt(2);
         this.frameKey = 0;
     }
