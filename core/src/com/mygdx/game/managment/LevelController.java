@@ -57,7 +57,7 @@ public class LevelController {
             this.frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
         }
         // In case a frog needs to be added, add it.
-        if (this.levelsToAddFrog.size > 0 && this.currentLevel == this.levelsToAddFrog.get(0)) {
+        while (this.levelsToAddFrog.size > 0 && this.currentLevel == this.levelsToAddFrog.get(0)) {
             this.frogManager.addFrog();
             this.levelsToAddFrog.removeIndex(0);
         }
