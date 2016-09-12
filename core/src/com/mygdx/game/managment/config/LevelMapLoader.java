@@ -14,6 +14,8 @@ import java.io.IOException;
 import javax.management.InvalidAttributeValueException;
 
 /**
+ * This class is responsible for loading all the data related to the levels configurations.
+ *
  * Created by MichaelBond on 9/11/2016.
  */
 public class LevelMapLoader {

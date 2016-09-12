@@ -1,18 +1,15 @@
 package com.mygdx.game.managment;
 
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.managment.metadata.FrogMetaData;
 import com.mygdx.game.managment.metadata.LevelMetaData;
 import com.mygdx.game.sprites.frogs.Frog;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
 
 /**
- * This class is a singleton used for generating random frog instances by a variable requested -
+ * This class is a singleton used for generating random frog classes by a variable requested -
  *  probability function.
  *
  * Created by MichaelBond on 9/8/2016.
@@ -49,6 +46,9 @@ public class FrogClassFactory {
         public FrogMetaData frogMetaData;
     }
 
+    /**
+     * A private class that is responsible of generating random frog classes.
+     */
     private class RandomFrogClassGenerator {
 
         private Array<PortionMap> portionMaps;
@@ -77,6 +77,14 @@ public class FrogClassFactory {
             return null;
         }
 
+        /**
+         * Updates the probability function by modifying the underlying probability world.
+         *
+         * @param portionMapIterator    A portion-map iterator to be used to remove the given -
+         *                              portion from the underlying probability world if needed.
+         * @param portionMap    The portion-map to be removed from the underlying probability -
+         *                      world if needed.
+         */
         private void updateFrogGenerationProbability(Iterator<PortionMap> portionMapIterator,PortionMap portionMap) {
             Class<? extends Frog> frogClass = portionMap.frogMetaData.frogClass;
             Integer frogsCreated = FrogClassFactory.this.randomizedFrogClassesCounterMap.get(frogClass);

@@ -8,6 +8,8 @@ import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Timer;
 
 /**
+ * This class is responsible for managing all the level related logic.
+ *
  * Created by MichaelBond on 9/7/2016.
  */
 public class LevelController {
@@ -36,6 +38,9 @@ public class LevelController {
         setCurrentLevel();
     }
 
+    /**
+     * Sets the data indicating when to add new frogs.
+     */
     private void setLevelsToAddFrog() {
         this.levelsToAddFrog = new Array<Integer>();
         for (AddFrogMetaData addFrogMetaData : Config.addFrogsMetaData) {
@@ -43,6 +48,9 @@ public class LevelController {
         }
     }
 
+    /**
+     * This method sets all the data necessary for the current level.
+     */
     private void setCurrentLevel() {
         // Look for a level configuration, specific for this level.
         for (LevelMetaData levelMetaData : this.levelsMetaData) {
@@ -63,6 +71,11 @@ public class LevelController {
         }
     }
 
+    /**
+     * Updating the current level and advancing to the next one if needed.
+     *
+     * @param deltaTime The time passed from the last update call.
+     */
     public void update(float deltaTime) {
         this.levelTimer.update(deltaTime);
         if (this.levelTimer.isTimedOut()) {
@@ -72,6 +85,10 @@ public class LevelController {
         }
     }
 
+    /**
+     * This method performs a level-up.
+     * Making the Level controller to advance to the next level.
+     */
     private void levelUp() {
         this.currentLevel++;
         setCurrentLevel();

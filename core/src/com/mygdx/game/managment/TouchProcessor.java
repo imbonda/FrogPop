@@ -8,6 +8,8 @@ import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.frogs.Frog;
 
 /**
+ * This class is responsible for all the touch events happening during the game runtime.
+ *
  * Created by MichaelBond on 9/10/2016.
  */
 public class TouchProcessor implements InputProcessor {
