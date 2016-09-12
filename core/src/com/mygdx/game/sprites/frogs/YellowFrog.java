@@ -36,14 +36,14 @@ import java.util.Random;
         public YellowFrog() {
             Random rand = new Random();
             this.frogTexture=new Texture[8];
-            this.frogTexture[0] = new Texture("frog/0y.png");
-            this.frogTexture[1] = new Texture("frog/1y.png");
-            this.frogTexture[2] = new Texture("frog/2y.png");
-            this.frogTexture[3] = new Texture("frog/3y.png");
-            this.frogTexture[4] = new Texture("frog/0y.png");
-            this.frogTexture[5] = new Texture("frog/eye2y.png");
-            this.frogTexture[6] = new Texture("frog/eye3y.png");
-            this.frogTexture[7] = new Texture("frog/eye4y.png");
+            this.frogTexture[0] = new Texture("Frog/0y.png");
+            this.frogTexture[1] = new Texture("Frog/1y.png");
+            this.frogTexture[2] = new Texture("Frog/2y.png");
+            this.frogTexture[3] = new Texture("Frog/3y.png");
+            this.frogTexture[4] = new Texture("Frog/0y.png");
+            this.frogTexture[5] = new Texture("Frog/eye2y.png");
+            this.frogTexture[6] = new Texture("Frog/eye3y.png");
+            this.frogTexture[7] = new Texture("Frog/eye4y.png");
             this.randTextureType = rand.nextInt(2);
             this.frameKey = 0;
         }

@@ -120,9 +120,9 @@ public class FrogClassFactory {
         int probWorldPortionsSum = 0;
         Array<PortionMap> portionMaps = new Array<PortionMap>();
         for (FrogMetaData frogMetaData : this.levelMetaData.levelRelatedFrogs) {
-            if (!frogMetaData.isLimited ||
-                        frogMetaData.maxAllowed > this.randomizedFrogClassesCounterMap.getOrDefault(
-                                    frogMetaData.frogClass, 0)) {
+            Integer frogClassCounter = this.randomizedFrogClassesCounterMap.get(frogMetaData.frogClass);
+            frogClassCounter = (null == frogClassCounter) ? 0 : frogClassCounter;
+            if (!frogMetaData.isLimited || frogMetaData.maxAllowed > frogClassCounter) {
                 float spawnProb = frogMetaData.spawnProb;
                 PortionMap portionMap = new PortionMap();
                 portionMap.portion = (int) Math.ceil(spawnProb * 100);
