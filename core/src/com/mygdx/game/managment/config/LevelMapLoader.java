@@ -116,14 +116,14 @@ public class LevelMapLoader {
      * @return  A AddFrogMetaData object that holds the xml-element object's data.
      */
     public static AddFrogMetaData createAddFrogMetaData(XmlReader.Element addFrogElement) {
-        if (null != addFrogElement.get("at_level", null)) {
+        if (null != addFrogElement.getAttribute("at_level", null)) {
             //..
             String atLevelString = addFrogElement.getAttribute("at_level");
             int atLevel = Integer.parseInt(atLevelString);
             return new AddFrogMetaData(atLevel);
         }
-        else if (null != addFrogElement.get("min_level", null) &&
-                null != addFrogElement.get("max_level", null)){
+        else if (null != addFrogElement.getAttribute("min_level", null) &&
+                null != addFrogElement.getAttribute("max_level", null)){
             String minLevelString = addFrogElement.getAttribute("min_level");
             String maxLevelString = addFrogElement.getAttribute("max_level");
             int minLevel = Integer.parseInt(minLevelString);
