@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.scenes.Hud;
 
 /**
+ * This class is part of the HUD, and it is the part responsible for the life-counting.
+ *
  * Created by MichaelBond on 9/9/2016.
  */
 public class LifeCounter extends Group {

@@ -7,6 +7,9 @@ import com.mygdx.game.screens.PlayScreen;
 import com.mygdx.game.sprites.SpritesDrawer;
 
 
+/**
+ * This class is our game main starting point.
+ */
 public class FrogPop extends Game {
 
 	public static final int VIRTUAL_WIDTH = 800;

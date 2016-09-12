@@ -15,6 +15,10 @@ import com.mygdx.game.scenes.panel.LifeCounter;
 import com.mygdx.game.scenes.panel.ScoreCounter;
 
 /**
+ * This is a singleton class used to represent the HUD (head-up display) of the game.
+ * It makes the maintaining of the score, life and level very easy and accessible throughout -
+ * the code.
+ *
  * Created by MichaelBond on 9/10/2016.
  */
 public class Hud implements Disposable {
@@ -43,11 +47,20 @@ public class Hud implements Disposable {
     public static Stage stage;
     private static SpriteBatch batch;
 
+    /**
+     * Sets tha batch to be used for drawing the hud.
+     *
+     * @param batch2    The batch object to be used for drawing the hud later on.
+     */
     public void setBatch(SpriteBatch batch2) {
         batch = batch2;
         setStage();
     }
 
+    /**
+     * Sets the hud's stage.
+     * The stage is what actually hold all the hud's elements, and it draws them eventually.
+     */
     private static void setStage() {
         Viewport hudViewPort = new FitViewport(
                 FrogPop.VIRTUAL_WIDTH,
@@ -60,16 +73,25 @@ public class Hud implements Disposable {
         stage.addActor(lifeCounter);
     }
 
+    /**
+     * Draws the hud.
+     */
     public void draw() {
         stage.draw();
     }
 
+    /**
+     * Resets the hud to its default configuration.
+     */
     public void reset() {
         scoreCounter.reset();
         levelCounter.reset();
         lifeCounter.reset();
     }
 
+    /**
+     * Disposes the hud.
+     */
     @Override
     public void dispose() {
         stage.dispose();
