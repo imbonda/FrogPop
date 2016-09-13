@@ -55,7 +55,7 @@ import java.util.Random;
 
         @Override
         public void applyAbilityOnTouch() {
-
+            // No ability yet.
         }
 
         @Override
