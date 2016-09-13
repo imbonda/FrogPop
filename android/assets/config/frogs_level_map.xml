@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<levelMap>
+    <level id="1">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.33" />
+        <frog class="com.mygdx.game.sprites.frogs.RedFrog" spawn_prob="0.33" max_allowed="1" />
+        <frog class="com.mygdx.game.sprites.frogs.YellowFrog" spawn_prob="0.33" max_allowed="1" />
+    </level>
+    <level id="10">
+        <frog class="com.mygdx.game.sprites.frogs.RedFrog" spawn_prob="1" />
+    </level>
+    <level id="11">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.33" />
+        <frog class="com.mygdx.game.sprites.frogs.RedFrog" spawn_prob="0.33" max_allowed="1" />
+        <frog class="com.mygdx.game.sprites.frogs.YellowFrog" spawn_prob="0.33" max_allowed="1" />
+    </level>
+    
+    <addFrog at_level="1" />
+    <addFrog min_level="3" max_level="10" />
+    <addFrog min_level="13" max_level="19" />
+    <addFrog min_level="20" max_level="27" />
+    <addFrog min_level="30" max_level="37" />
+    <addFrog min_level="40" max_level="49" />
+</levelMap>
