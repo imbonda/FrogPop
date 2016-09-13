@@ -51,7 +51,7 @@ public class LevelMapLoader {
             e.printStackTrace();
             // TODO (handle exception properly).
         }
-        catch (InvalidAttributeValueException e) {
+        catch (IllegalStateException e) {
             e.printStackTrace();
             // TODO (handle exception properly).
         }
@@ -68,7 +68,7 @@ public class LevelMapLoader {
      *  inside this element or one of it's children.
      */
     private static LevelMetaData createLevelMetaData(XmlReader.Element levelElement)
-            throws ClassNotFoundException, InvalidAttributeValueException{
+            throws ClassNotFoundException, IllegalStateException{
         String idString = levelElement.getAttribute("id");
         int levelId = Integer.parseInt(idString);
 
@@ -80,7 +80,7 @@ public class LevelMapLoader {
     }
 
     private static FrogMetaData createFrogMetaData(XmlReader.Element frogElement)
-            throws ClassNotFoundException, InvalidAttributeValueException {
+            throws ClassNotFoundException, IllegalStateException {
         try {
             String className = frogElement.getAttribute("class");
             String spawnProbString = frogElement.getAttribute("spawn_prob");
@@ -95,11 +95,11 @@ public class LevelMapLoader {
             }
         }
         catch (GdxRuntimeException e) {
-            throw new InvalidAttributeValueException("A 'Level' element does not contain "+
+            throw new IllegalStateException("A 'Level' element does not contain "+
                     "one ore more crucial attributes.");
         }
         catch (NumberFormatException e) {
-            throw new InvalidAttributeValueException("Attribute is of the wrong type.\n" +
+            throw new IllegalStateException("Attribute is of the wrong type.\n" +
                     e.getMessage());
         }
     }
