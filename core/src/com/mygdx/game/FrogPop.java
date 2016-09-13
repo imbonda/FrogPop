@@ -14,6 +14,7 @@ public class FrogPop extends Game {
 
 	public static final int VIRTUAL_WIDTH = 800;
 	public static final int VIRTUAL_HEIGHT = 530;
+	public static final String LOGGER_TAG = "FrogPopLogging";
 
 	public SpriteBatch batch;
 

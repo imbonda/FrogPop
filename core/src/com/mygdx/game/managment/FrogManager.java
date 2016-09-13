@@ -3,12 +3,11 @@ package com.mygdx.game.managment;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Logger;
-import com.badlogic.gdx.utils.Pool;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.frogs.Frog;
@@ -63,7 +62,8 @@ public class FrogManager {
             this.unpopulatedHolesIndexes.removeValue(randomHoleIndex, true);
         }
         else {
-            (new Logger("A")).debug("No default frog was supplied");
+            // Log this incident.
+            Gdx.app.log(FrogPop.LOGGER_TAG, "Could not obtain a frog to add to the screen.");
         }
     }
 
