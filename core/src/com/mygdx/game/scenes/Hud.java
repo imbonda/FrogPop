@@ -74,6 +74,17 @@ public class Hud implements Disposable {
     }
 
     /**
+     * Updates the Hud's stage viewport.
+     *
+     * @param width     The width of the screen in pixels.
+     * @param height    The height of the screen in pixels.
+     * @param centerCamera  Whether or not to center the camera in the center of the viewport.
+     */
+    public void resize(int width, int height, boolean centerCamera) {
+        stage.getViewport().update(width, height, centerCamera);
+    }
+
+    /**
      * Draws the hud.
      */
     public void draw() {

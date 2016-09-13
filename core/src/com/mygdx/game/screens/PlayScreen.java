@@ -99,6 +99,7 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         this.gameViewPort.update(width, height, true);
+        this.hud.resize(width, height, true);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class RegularFrog extends Frog {
     }
 
     @Override
-    public void applyAbility() {
+    public void applyAbilityOnTouch() {
         // No ability :(
     }
 

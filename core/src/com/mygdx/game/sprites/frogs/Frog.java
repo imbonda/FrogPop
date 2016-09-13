@@ -55,9 +55,9 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
     /**
      * This method should be implemented by each sub-class.
-     * This method applies the frog's special ability.
+     * This method applies the frog's special ability when it is touched.
      */
-    public abstract void applyAbility();
+    public abstract void applyAbilityOnTouch();
 
     /**
      * This method should be implemented by each sub-class.

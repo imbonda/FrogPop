@@ -4,6 +4,7 @@ package com.mygdx.game.sprites.frogs;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.scenes.Hud;
 
 import java.util.Random;
 
@@ -46,8 +47,8 @@ public class RedFrog extends Frog {
     }
 
     @Override
-    public void applyAbility() {
-        // No ability :(
+    public void applyAbilityOnTouch() {
+        Hud.getInstance().getLifeCounter().addLife(1);
     }
 
     @Override

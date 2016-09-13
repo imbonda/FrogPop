@@ -54,8 +54,8 @@ import java.util.Random;
         }
 
         @Override
-        public void applyAbility() {
-            // No ability :(
+        public void applyAbilityOnTouch() {
+
         }
 
         @Override
@@ -71,7 +71,6 @@ import java.util.Random;
         @Override
         public void init(float positionX, float positionY, float timeToLive) {
             super.defaultInit(positionX, positionY, timeToLive);
-
             Random rand=new Random();
             this.frogRectangle = new Rectangle(
                     this.position.x-20, this.position.y-35,
@@ -82,7 +81,6 @@ import java.util.Random;
         @Override
         public void reset() {
             super.defaultReset();
-
             Random rand = new Random();
             this.frameKey = 0;
             this.randTextureType = rand.nextInt(2);
