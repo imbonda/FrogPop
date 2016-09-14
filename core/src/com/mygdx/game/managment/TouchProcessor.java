@@ -19,9 +19,9 @@ public class TouchProcessor implements InputProcessor {
     private Hud hud;
 
 
-    public TouchProcessor(Viewport viewport, FrogManager frogManager) {
+    public TouchProcessor(Viewport viewport) {
         this.viewport = viewport;
-        this.frogManager = frogManager;
+        this.frogManager = FrogManager.getInstance();
         this.hud = Hud.getInstance();
     }
 

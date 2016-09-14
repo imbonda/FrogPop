@@ -35,6 +35,7 @@ public class LevelController {
      */
     private LevelController() {
         this.frogClassFactory = FrogClassFactory.getInstance();
+        this.frogManager = FrogManager.getInstance();
         this.currentLevel = STARTING_LEVEL;
         this.speed = STARTING_SPEED;
         this.levelsMetaData = Config.levelsMetaData;
@@ -53,30 +54,26 @@ public class LevelController {
     /**
      * Initializes the singleton instance to a given level.
      *
-     * @param frogManager   A frog manager instance to use for working with frogs.
      * @param level         A level to set the LevelController to.
      */
-    public void init(FrogManager frogManager, int level) {
-        this.frogManager = frogManager;
+    public void init(int level) {
         this.currentLevel = level;
         // TODO (finish function: calculate the speed for the given level..)
-        init();
+        setup();
     }
 
     /**
      * Initializes the singleton instance to a given level.
-     *
-     * @param frogManager   A frog manager instance to use for working with frogs.
      */
-    public void init(FrogManager frogManager) {
-        this.frogManager = frogManager;
+    public void init() {
         this.currentLevel = STARTING_LEVEL;
         this.speed = STARTING_SPEED;
-        init();
+        setup();
     }
 
-    private void init() {
+    private void setup() {
         this.levelTimer = new Timer();
+        this.frogManager.reset();
         setLevelsToAddFrog();
         setCurrentLevel();
     }
@@ -126,6 +123,7 @@ public class LevelController {
      */
     public void update(float deltaTime) {
         this.levelTimer.update(deltaTime);
+        this.frogManager.update(deltaTime);
         if (this.levelTimer.isTimedOut()) {
             this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
             levelUp();

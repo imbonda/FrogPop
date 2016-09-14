@@ -22,23 +22,47 @@ import com.mygdx.game.sprites.Hole;
  */
 public class FrogManager {
 
-    public Array<Frog> activeFrogs;
-
     private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
 
-    private final FrogPool frogPool = new FrogPool();
+    private static FrogManager ourInstance = new FrogManager();
 
+    /**
+     * Singleton implementation.
+     *
+     * @return  The singleton object.
+     */
+    public static FrogManager getInstance() {
+        return ourInstance;
+    }
+
+    /**
+     * Singleton private constructor.
+     */
+    private FrogManager() {
+        this.holes = PlayScreen.holes;
+        this.activeFrogs = new Array<Frog>();
+        this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
+        this.unpopulatedHolesIndexes = new Array<Integer>();
+        setUnpopulatedHolesIndexes();
+    }
+
+    public Array<Frog> activeFrogs;
+
+    private final FrogPool frogPool = new FrogPool();
     private Array<Hole> holes;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
 
 
-    public FrogManager() {
-        this.holes = PlayScreen.holes;
-        this.activeFrogs = new Array<Frog>();
-        this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
-        this.unpopulatedHolesIndexes = new Array<Integer>();
+    /**
+     * Resets the frog-manager to it's default configuration.
+     */
+    public void reset() {
+        this.frogPool.freeAll(this.activeFrogs);
+        this.activeFrogs.clear();
+        this.frogToHoleIndexMap.clear();
+        this.unpopulatedHolesIndexes.clear();
         setUnpopulatedHolesIndexes();
     }
 
@@ -121,14 +145,6 @@ public class FrogManager {
         this.frogPool.free(frog);
         addFrog();
         this.unpopulatedHolesIndexes.add(frogHoleIndex);
-    }
-
-    public void reset() {
-        this.frogPool.freeAll(this.activeFrogs);
-        this.activeFrogs.clear();
-        this.frogToHoleIndexMap.clear();
-        this.unpopulatedHolesIndexes.clear();
-        setUnpopulatedHolesIndexes();
     }
 
 }

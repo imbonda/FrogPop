@@ -42,7 +42,6 @@ public class PlayScreen implements Screen {
     private Texture[] backgroundTexture;
     private FrogPop game;
     private Viewport gameViewPort;
-    private FrogManager frogManager;
     private LevelController levelController;
     private Hud hud;
     private Music music;
@@ -53,22 +52,21 @@ public class PlayScreen implements Screen {
         music.setLooping(true);
         music.play();
         this.backgroundTexture=new Texture[4];
-        this.backgroundTexture[0]=new Texture("world.jpg");
-        this.backgroundTexture[1]=new Texture("world2.jpg");
-        this.backgroundTexture[2]=new Texture("world3.jpg");
-        this.backgroundTexture[3]=new Texture("world4.jpg");
-        this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
+        this.backgroundTexture[0] = new Texture("world.jpg");
+        this.backgroundTexture[1] = new Texture("world2.jpg");
+        this.backgroundTexture[2] = new Texture("world3.jpg");
+        this.backgroundTexture[3] = new Texture("world4.jpg");
+        this.gameViewPort = new FitViewport(
+                    FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
         this.hud = Hud.getInstance();
-        this.frogManager = new FrogManager();
         this.levelController = LevelController.getInstance();
-        this.levelController.init(this.frogManager);
-        Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort, this.frogManager));
+        this.levelController.init();
+        Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort));
 
     }
 
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
-        this.frogManager.update(deltaTime);
         if (this.hud.getLifeCounter().getLife() <= 0) {
             music.dispose();
             game.setScreen(new GameOverScreen(this.game));
