@@ -13,7 +13,7 @@ import java.util.HashMap;
  *
  * Created by MichaelBond on 9/10/2016.
  */
-public class FrogPool extends Pool {
+public class FrogPool {
 
     private Array<Frog> allFrogs;
     private HashMap<Class<? extends Frog>, Array<Integer>> classToFreeInstancesIndexesMap;
@@ -29,7 +29,6 @@ public class FrogPool extends Pool {
      * Checks for the frog-class to be instantiated, then tries to use an already instantiated -
      * instance that has been freed, or generates a new one if could not find any free ones to reuse.
      */
-    @Override
     protected Frog newObject() {
         Class<? extends Frog> frogClass = FrogClassFactory.getInstance().getRandomFrogClass();
         if (null == frogClass) {
@@ -60,11 +59,16 @@ public class FrogPool extends Pool {
      *
      * @return  A frog object ready to be used.
      */
-    @Override
     public Frog obtain() {
         return newObject();
     }
 
+    /**
+     * Puts the specified object in the pool, making it eligible to be returned by -
+     * {@link #obtain()}.
+     *
+     * @param frog  The frog to free.
+     */
     public void free(Frog frog) {
         Class<? extends Frog> frogClass = frog.getClass();
         Array<Integer> freeInstancesIndexes = this.classToFreeInstancesIndexesMap.get(frogClass);
@@ -77,9 +81,19 @@ public class FrogPool extends Pool {
     }
 
     /**
+     * Puts the specified objects in the pool. Null objects within the array are silently ignored.
+     *
+     * @param frogs     The array of frogs to be freed.
+     */
+    public void freeAll(Array<Frog> frogs) {
+        for (Frog frog: frogs) {
+            free(frog);
+        }
+    }
+
+    /**
      * Clears the frog pool.
      */
-    @Override
     public void clear() {
         // TODO (consider disposing all frogs).
         this.allFrogs.clear();

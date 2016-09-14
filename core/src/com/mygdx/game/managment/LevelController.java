@@ -15,10 +15,34 @@ import com.mygdx.game.sprites.Timer;
 public class LevelController {
 
     private static final int STARTING_LEVEL = 1;
+    private static final float STARTING_SPEED = 1.0f;
     private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.05f;
-    private static final float FROG_LIFE_TIME_DECREASE_FACTOR = 0.92f;
+    private static final float SPEED_SCALE_FACTOR = 1.087f;
+
+    private static LevelController ourInstance = new LevelController();
+
+    /**
+     * Singleton implementation.
+     *
+     * @return  The singleton object.
+     */
+    public static LevelController getInstance() {
+        return ourInstance;
+    }
+
+    /**
+     * Singleton private constructor.
+     */
+    private LevelController() {
+        this.frogClassFactory = FrogClassFactory.getInstance();
+        this.currentLevel = STARTING_LEVEL;
+        this.speed = STARTING_SPEED;
+        this.levelsMetaData = Config.levelsMetaData;
+        this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
+    }
 
     private int currentLevel;
+    private float speed;
     private Array<LevelMetaData> levelsMetaData;
     private Array<Integer> levelsToAddFrog;
     private LevelMetaData currentLevelMetaData;
@@ -26,15 +50,34 @@ public class LevelController {
     private FrogClassFactory frogClassFactory;
     private FrogManager frogManager;
 
-
-    public LevelController(FrogManager frogManager) {
+    /**
+     * Initializes the singleton instance to a given level.
+     *
+     * @param frogManager   A frog manager instance to use for working with frogs.
+     * @param level         A level to set the LevelController to.
+     */
+    public void init(FrogManager frogManager, int level) {
         this.frogManager = frogManager;
-        this.levelTimer = new Timer();
-        this.frogClassFactory = FrogClassFactory.getInstance();
+        this.currentLevel = level;
+        // TODO (finish function: calculate the speed for the given level..)
+        init();
+    }
+
+    /**
+     * Initializes the singleton instance to a given level.
+     *
+     * @param frogManager   A frog manager instance to use for working with frogs.
+     */
+    public void init(FrogManager frogManager) {
+        this.frogManager = frogManager;
         this.currentLevel = STARTING_LEVEL;
-        this.levelsMetaData = Config.levelsMetaData;
+        this.speed = STARTING_SPEED;
+        init();
+    }
+
+    private void init() {
+        this.levelTimer = new Timer();
         setLevelsToAddFrog();
-        this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
         setCurrentLevel();
     }
 
@@ -42,7 +85,12 @@ public class LevelController {
      * Sets the data indicating when to add new frogs.
      */
     private void setLevelsToAddFrog() {
-        this.levelsToAddFrog = new Array<Integer>();
+        if (null == this.levelsToAddFrog) {
+            this.levelsToAddFrog = new Array<Integer>();
+        }
+        else {
+            this.levelsToAddFrog.clear();
+        }
         for (AddFrogMetaData addFrogMetaData : Config.addFrogsMetaData) {
             this.levelsToAddFrog.add(addFrogMetaData.getLevelToAddFrog());
         }
@@ -65,7 +113,7 @@ public class LevelController {
             this.frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
         }
         // In case a frog needs to be added, add it.
-        while (this.levelsToAddFrog.size > 0 && this.currentLevel == this.levelsToAddFrog.get(0)) {
+        while (this.levelsToAddFrog.size > 0 && this.currentLevel >= this.levelsToAddFrog.get(0)) {
             this.frogManager.addFrog();
             this.levelsToAddFrog.removeIndex(0);
         }
@@ -80,7 +128,6 @@ public class LevelController {
         this.levelTimer.update(deltaTime);
         if (this.levelTimer.isTimedOut()) {
             this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
-            this.frogManager.decreaseFrogMaxLifeTime(FROG_LIFE_TIME_DECREASE_FACTOR);
             levelUp();
         }
     }
@@ -91,7 +138,16 @@ public class LevelController {
      */
     private void levelUp() {
         this.currentLevel++;
+        scaleSpeed(SPEED_SCALE_FACTOR);
         setCurrentLevel();
         Hud.getInstance().getLevelCounter().advance();
+    }
+
+    public void scaleSpeed(float scaleFactor) {
+        this.speed *= scaleFactor;
+    }
+
+    public float getSpeed() {
+        return this.speed;
     }
 }

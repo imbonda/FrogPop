@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
+import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.sprites.SpritesDrawer;
 
 /**
@@ -15,9 +16,10 @@ import com.mygdx.game.sprites.SpritesDrawer;
  */
 public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
+    protected static final float FROG_MAX_LIFE_TIME = 5.0f;
+
     protected Vector2 position;
     protected Rectangle frogRectangle;
-    protected float maxLifeTime;
     protected float lifeTime;
     protected boolean isKilled;
 
@@ -65,9 +67,8 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      *
      * @param positionX The x coordinate the the frog new positing.
      * @param positionY The y coordinate the the frog new positing.
-     * @param timeToLive    The new time-to-live of the frog.
      */
-    public abstract void init(float positionX, float positionY, float timeToLive);
+    public abstract void init(float positionX, float positionY);
 
     /**
      * This method should be implemented by each sub-class.
@@ -82,9 +83,8 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      */
     public abstract void dispose();
 
-    public void defaultInit(float positionX, float positionY, float timeToLive) {
+    public void defaultInit(float positionX, float positionY) {
         this.position.set(positionX, positionY);
-        this.maxLifeTime = timeToLive;
         this.lifeTime = 0;
         this.spritesDrawer.addSprite(this);
     }
@@ -96,15 +96,11 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
     }
 
     public void update(float deltaTime) {
-        this.lifeTime += deltaTime;
-    }
-
-    public Vector2 getPosition() {
-        return position;
+        this.lifeTime += deltaTime * LevelController.getInstance().getSpeed();
     }
 
     public boolean isLifeTimeExpired() {
-        return this.lifeTime >= this.maxLifeTime;
+        return this.lifeTime >= FROG_MAX_LIFE_TIME;
     }
 
     public void setKilled() {

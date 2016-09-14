@@ -24,9 +24,22 @@ import com.mygdx.game.sprites.Hole;
  * Created by MichaelBond on 9/1/2016.
  */
 public class PlayScreen implements Screen {
-    private static final Vector2[] HOLES_POSITIONS = { new Vector2(50, 35), new Vector2(300, 35), new Vector2(50, 185), new Vector2(300, 185),new Vector2(550, 35),new Vector2(550, 185),new Vector2(50, 325),new Vector2(300, 325),new Vector2(550,325)};
+
+    public static Array<Hole> holes = new Array<Hole>();
+
+    private static final Vector2[] HOLES_POSITIONS = {
+            new Vector2(50, 35), new Vector2(300, 35), new Vector2(50, 185),
+            new Vector2(300, 185), new Vector2(550, 35), new Vector2(550, 185),
+            new Vector2(50, 325), new Vector2(300, 325), new Vector2(550,325)
+    };
+
+    static {
+        for (Vector2 holePosition : HOLES_POSITIONS) {
+            holes.add(new Hole(holePosition.x, holePosition.y));
+        }
+    }
+
     private Texture[] backgroundTexture;
-    private Array<Hole> holes;
     private FrogPop game;
     private Viewport gameViewPort;
     private FrogManager frogManager;
@@ -44,14 +57,11 @@ public class PlayScreen implements Screen {
         this.backgroundTexture[1]=new Texture("world2.jpg");
         this.backgroundTexture[2]=new Texture("world3.jpg");
         this.backgroundTexture[3]=new Texture("world4.jpg");
-        this.holes = new Array<Hole>();
-        for (int i = 0; i < 9; ++i) {
-            this.holes.add(new Hole(HOLES_POSITIONS[i].x, HOLES_POSITIONS[i].y));
-        }
-        this.frogManager = new FrogManager(this.holes);
-        this.levelController = new LevelController(this.frogManager);
         this.gameViewPort = new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
         this.hud = Hud.getInstance();
+        this.frogManager = new FrogManager();
+        this.levelController = LevelController.getInstance();
+        this.levelController.init(this.frogManager);
         Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort, this.frogManager));
 
     }
@@ -90,7 +100,7 @@ public class PlayScreen implements Screen {
     private void drawHoles() {
         SpriteBatch batch = this.game.batch;
 
-        for (Hole hole: this.holes) {
+        for (Hole hole: holes) {
             Vector2 holePosition = hole.getPosition();
             batch.draw(hole.getHoleTexture(), holePosition.x, holePosition.y);
         }

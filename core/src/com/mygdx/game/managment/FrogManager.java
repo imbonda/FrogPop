@@ -10,6 +10,7 @@ import java.util.Iterator;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
 import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.screens.PlayScreen;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.sprites.Hole;
 
@@ -23,24 +24,25 @@ public class FrogManager {
 
     public Array<Frog> activeFrogs;
 
-    private static final float FROG_LIFE_TIME_SECS = 5.0f;
     private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
 
     private final FrogPool frogPool = new FrogPool();
 
     private Array<Hole> holes;
-    private float frogMaxLifeTime;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
 
 
-    public FrogManager(Array<Hole> holes) {
-        this.holes = holes;
-        this.frogMaxLifeTime = FROG_LIFE_TIME_SECS;
+    public FrogManager() {
+        this.holes = PlayScreen.holes;
         this.activeFrogs = new Array<Frog>();
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
+        setUnpopulatedHolesIndexes();
+    }
+
+    private void setUnpopulatedHolesIndexes() {
         for (int i = 0; i < holes.size; ++i) {
             this.unpopulatedHolesIndexes.add(i);
         }
@@ -55,7 +57,7 @@ public class FrogManager {
         // Add a new frog positioned at the chosen hole.
         Frog frog = this.frogPool.obtain();
         if (null != frog) {
-            frog.init(frogPosition.x, frogPosition.y, this.frogMaxLifeTime);
+            frog.init(frogPosition.x, frogPosition.y);
             this.activeFrogs.add(frog);
             this.frogToHoleIndexMap.put(frog, randomHoleIndex);
             // The hole is now populated.
@@ -84,10 +86,6 @@ public class FrogManager {
         Vector2 holePosition = this.holes.get(holeIndex).getPosition();
         return new Vector2(
                 holePosition.x + FROG_OFFSET_X, holePosition.y + FROG_OFFSET_Y);
-    }
-
-    public void decreaseFrogMaxLifeTime(float decreaseFactor) {
-        this.frogMaxLifeTime *= decreaseFactor;
     }
 
     /**
@@ -123,6 +121,14 @@ public class FrogManager {
         this.frogPool.free(frog);
         addFrog();
         this.unpopulatedHolesIndexes.add(frogHoleIndex);
+    }
+
+    public void reset() {
+        this.frogPool.freeAll(this.activeFrogs);
+        this.activeFrogs.clear();
+        this.frogToHoleIndexMap.clear();
+        this.unpopulatedHolesIndexes.clear();
+        setUnpopulatedHolesIndexes();
     }
 
 }
