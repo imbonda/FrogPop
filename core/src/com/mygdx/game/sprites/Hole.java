@@ -16,7 +16,6 @@ public class Hole extends Sprite {
     public Hole(float xCord, float yCord) {
         this.holeTexture = new Texture("holen.png");
         this.position = new Vector2(xCord, yCord);
-        SpritesDrawer.getInstance().addSprite(this);
     }
 
     public Vector2 getPosition() {
