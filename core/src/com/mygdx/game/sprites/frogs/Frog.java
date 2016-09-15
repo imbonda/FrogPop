@@ -17,20 +17,18 @@ import com.mygdx.game.sprites.SpritesDrawer;
 public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
     protected static final float FROG_MAX_LIFE_TIME = 5.0f;
+    private static final SpritesDrawer spritesDrawer = SpritesDrawer.getInstance();
 
     protected Vector2 position;
     protected Rectangle frogRectangle;
     protected float lifeTime;
     protected boolean isKilled;
 
-    private SpritesDrawer spritesDrawer;
-
 
     public Frog() {
         this.lifeTime = 0;
         this.isKilled = false;
         this.position = new Vector2(0, 0);
-        this.spritesDrawer = SpritesDrawer.getInstance();
     }
 
     /**
@@ -86,13 +84,13 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
     public void defaultInit(float positionX, float positionY) {
         this.position.set(positionX, positionY);
         this.lifeTime = 0;
-        this.spritesDrawer.addSprite(this);
+        spritesDrawer.addSprite(this);
     }
 
     public void defaultReset() {
         this.isKilled = false;
         this.position.set(0, 0);
-        this.spritesDrawer.removeSprite(this);
+        spritesDrawer.removeSprite(this);
     }
 
     public void update(float deltaTime) {

@@ -54,7 +54,7 @@ public class LevelController {
     /**
      * Initializes the singleton instance to a given level.
      *
-     * @param level         A level to set the LevelController to.
+     * @param level A level to set the LevelController to.
      */
     public void init(int level) {
         this.currentLevel = level;

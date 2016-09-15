@@ -16,7 +16,6 @@ import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.managment.TouchProcessor;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
-import com.mygdx.game.managment.FrogManager;
 import com.mygdx.game.sprites.Hole;
 
 
@@ -47,11 +46,12 @@ public class PlayScreen implements Screen {
     private Music music;
 
     public PlayScreen(FrogPop game) {
+        SpritesDrawer.getInstance().addSprites(holes);
         this.game = game;
-        this.music=Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
-        music.setLooping(true);
-        music.play();
-        this.backgroundTexture=new Texture[4];
+        this.music = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
+        this.music.setLooping(true);
+        this.music.play();
+        this.backgroundTexture = new Texture[4];
         this.backgroundTexture[0] = new Texture("world.jpg");
         this.backgroundTexture[1] = new Texture("world2.jpg");
         this.backgroundTexture[2] = new Texture("world3.jpg");
@@ -62,17 +62,20 @@ public class PlayScreen implements Screen {
         this.levelController = LevelController.getInstance();
         this.levelController.init();
         Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort));
-
     }
 
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
         if (this.hud.getLifeCounter().getLife() <= 0) {
-            music.dispose();
-            game.setScreen(new GameOverScreen(this.game));
-            SpritesDrawer.getInstance().removeAllSprites();
-            Gdx.input.setInputProcessor(null);
+            gameOver();
         }
+    }
+
+    private void gameOver() {
+        this.game.setScreen(new GameOverScreen(this.game));
+        dispose();
+        SpritesDrawer.getInstance().clear();
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
@@ -82,7 +85,6 @@ public class PlayScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
         this.game.batch.begin();
         drawBackground();
-        drawHoles();
         SpritesDrawer.getInstance().drawSprites();
         this.game.batch.end();
         this.game.batch.setProjectionMatrix(this.hud.getStage().getCamera().combined);
@@ -95,15 +97,6 @@ public class PlayScreen implements Screen {
         batch.draw(this.backgroundTexture[(this.hud.getLevelCounter().getLevel()/10)%4], 0, 0);
     }
 
-    private void drawHoles() {
-        SpriteBatch batch = this.game.batch;
-
-        for (Hole hole: holes) {
-            Vector2 holePosition = hole.getPosition();
-            batch.draw(hole.getHoleTexture(), holePosition.x, holePosition.y);
-        }
-    }
-
     @Override
     public void resize(int width, int height) {
         this.gameViewPort.update(width, height, true);
@@ -112,6 +105,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
+        this.music.dispose();
     }
 
     @Override
