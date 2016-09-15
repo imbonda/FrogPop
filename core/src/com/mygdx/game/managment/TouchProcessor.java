@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.frogs.Frog;
-import com.mygdx.game.sprites.frogs.YellowFrog;
 
 /**
  * This class is responsible for all the touch events happening during the game runtime.
@@ -20,28 +19,27 @@ public class TouchProcessor implements InputProcessor {
     private Hud hud;
 
 
-    public TouchProcessor(Viewport viewport, FrogManager frogManager) {
+    public TouchProcessor(Viewport viewport) {
         this.viewport = viewport;
-        this.frogManager = frogManager;
+        this.frogManager = FrogManager.getInstance();
         this.hud = Hud.getInstance();
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        int i=0;
         Vector2 touchVector = new Vector2(screenX,screenY);
         touchVector = this.viewport.unproject(touchVector);
+
         for (Frog frog: this.frogManager.activeFrogs) {
             if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
                 this.hud.getScoreCounter().addScore(frog.getProfitValue());
-                frog.applyAbility();
+                frog.applyAbilityOnTouch();
                 frog.setKilled();
                 return true;
             }
         }
-
-         {Gdx.input.vibrate(500);}
-    this.hud.getLifeCounter().addLife(-1);
+        Gdx.input.vibrate(500);
+        this.hud.getLifeCounter().addLife(-1);
         return false;
     }
 

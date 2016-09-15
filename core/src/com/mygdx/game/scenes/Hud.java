@@ -66,10 +66,22 @@ public class Hud implements Disposable {
                 FrogPop.VIRTUAL_WIDTH,
                 FrogPop.VIRTUAL_HEIGHT,
                 new OrthographicCamera());
+
         stage = new Stage(hudViewPort, batch);
         stage.addActor(scoreCounter);
         stage.addActor(levelCounter);
         stage.addActor(lifeCounter);
+    }
+
+    /**
+     * Updates the Hud's stage viewport.
+     *
+     * @param width     The width of the screen in pixels.
+     * @param height    The height of the screen in pixels.
+     * @param centerCamera  Whether or not to center the camera in the center of the viewport.
+     */
+    public void resize(int width, int height, boolean centerCamera) {
+        stage.getViewport().update(width, height, centerCamera);
     }
 
     /**

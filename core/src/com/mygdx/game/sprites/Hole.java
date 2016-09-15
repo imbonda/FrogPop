@@ -1,12 +1,15 @@
 package com.mygdx.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by MichaelBond on 8/25/2016.
  */
-public class Hole {
+public class Hole extends Sprite {
+
     private Texture holeTexture;
     private Vector2 position;
 
@@ -15,11 +18,16 @@ public class Hole {
         this.position = new Vector2(xCord, yCord);
     }
 
-    public Texture getHoleTexture() {
-        return this.holeTexture;
-    }
-
     public Vector2 getPosition() {
         return position;
     }
+
+    /**
+     * This method is responsible for drawing the hole properly.
+     */
+    @Override
+    public void draw(Batch batch) {
+        batch.draw(this.holeTexture, this.position.x, this.position.y);
+    }
+
 }

@@ -38,11 +38,17 @@ public class SpritesDrawer {
         sprites.add(sprite);
     }
 
+    public void addSprites(Array<? extends Sprite> sprites) {
+        for (Sprite sprite : sprites) {
+            addSprite(sprite);
+        }
+    }
+
     public void removeSprite(Sprite sprite) {
         sprites.removeValue(sprite, true);
     }
 
-    public void removeAllSprites() {
+    public void clear() {
         sprites.clear();
     }
 

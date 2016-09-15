@@ -46,12 +46,8 @@ public class RegularFrog extends Frog {
     }
 
     @Override
-    public void applyAbility() {
+    public void applyAbilityOnTouch() {
         // No ability :(
-    }
-    public void initAbility()
-    {
-        //no aabilty
     }
 
     @Override
@@ -65,8 +61,9 @@ public class RegularFrog extends Frog {
     }
 
     @Override
-    public void init(float positionX, float positionY, float timeToLive) {
-        super.defaultInit(positionX, positionY, timeToLive);
+    public void init(float positionX, float positionY) {
+        super.defaultInit(positionX, positionY);
+
         Random rand=new Random();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
@@ -77,6 +74,7 @@ public class RegularFrog extends Frog {
     @Override
     public void reset() {
         super.defaultReset();
+
         Random rand = new Random();
         this.frameKey = 0;
         this.randTextureType = rand.nextInt(2);
@@ -85,7 +83,7 @@ public class RegularFrog extends Frog {
     @Override
     public void draw(Batch batch) {
         batch.draw(getFrogTexture(), this.position.x, this.position.y,
-                0, 0, 100, 100-(int)(((this.maxLifeTime - this.lifeTime)*100)/(this.maxLifeTime)));
+                0, 0, 100, 100-(int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
     }
 
     public Texture getFrogTexture() {

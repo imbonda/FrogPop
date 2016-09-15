@@ -12,12 +12,12 @@ import com.mygdx.game.sprites.frogs.YellowFrog;
  * Created by MichaelBond on 9/10/2016.
  */
 public class ClassForName {
+
     // Frog's classes names.
     private static final String REGULAR_FROG = RegularFrog.class.getCanonicalName();
     private static final String RED_FROG = RedFrog.class.getCanonicalName();
     private static final String YELLOW_FROG = YellowFrog.class.getCanonicalName();
     private static final String Blue_FROG = BlueFrog.class.getCanonicalName();
-
 
 
     /**

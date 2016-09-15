@@ -1,12 +1,12 @@
 package com.mygdx.game.sprites.frogs;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
+import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.sprites.SpritesDrawer;
 
 /**
@@ -16,24 +16,19 @@ import com.mygdx.game.sprites.SpritesDrawer;
  */
 public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
+    protected static final float FROG_MAX_LIFE_TIME = 5.0f;
+    private static final SpritesDrawer spritesDrawer = SpritesDrawer.getInstance();
+
     protected Vector2 position;
     protected Rectangle frogRectangle;
-    protected float maxLifeTime;
     protected float lifeTime;
     protected boolean isKilled;
-    private int speed=1;
-    private SpritesDrawer spritesDrawer;
 
 
     public Frog() {
         this.lifeTime = 0;
         this.isKilled = false;
         this.position = new Vector2(0, 0);
-        this.spritesDrawer = SpritesDrawer.getInstance();
-        initAbility();
-    }
-    public void setSpeed(int x)
-    {this.speed=speed*x;
     }
 
     /**
@@ -60,11 +55,9 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
     /**
      * This method should be implemented by each sub-class.
-     * This method applies the frog's special ability.
+     * This method applies the frog's special ability when it is touched.
      */
-    public abstract void initAbility();
-
-    public abstract void applyAbility();
+    public abstract void applyAbilityOnTouch();
 
     /**
      * This method should be implemented by each sub-class.
@@ -72,9 +65,8 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      *
      * @param positionX The x coordinate the the frog new positing.
      * @param positionY The y coordinate the the frog new positing.
-     * @param timeToLive    The new time-to-live of the frog.
      */
-    public abstract void init(float positionX, float positionY, float timeToLive);
+    public abstract void init(float positionX, float positionY);
 
     /**
      * This method should be implemented by each sub-class.
@@ -89,33 +81,24 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      */
     public abstract void dispose();
 
-    public void defaultInit(float positionX, float positionY, float timeToLive) {
+    public void defaultInit(float positionX, float positionY) {
         this.position.set(positionX, positionY);
-        this.maxLifeTime = timeToLive;
         this.lifeTime = 0;
-        this.spritesDrawer.addSprite(this);
+        spritesDrawer.addSprite(this);
     }
 
     public void defaultReset() {
         this.isKilled = false;
         this.position.set(0, 0);
-        this.spritesDrawer.removeSprite(this);
+        spritesDrawer.removeSprite(this);
     }
 
     public void update(float deltaTime) {
-        this.lifeTime += speed*deltaTime;
-    }
-
-    public Vector2 getPosition() {
-        return position;
+        this.lifeTime += deltaTime * LevelController.getInstance().getSpeed();
     }
 
     public boolean isLifeTimeExpired() {
-        if(this.lifeTime >= this.maxLifeTime) {
-            Gdx.input.vibrate(500);
-            return true;
-        }
-        else return false;
+        return this.lifeTime >= FROG_MAX_LIFE_TIME;
     }
 
     public void setKilled() {

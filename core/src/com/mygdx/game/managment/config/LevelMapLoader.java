@@ -51,7 +51,7 @@ public class LevelMapLoader {
             e.printStackTrace();
             // TODO (handle exception properly).
         }
-        catch (InvalidAttributeValueException e) {
+        catch (IllegalStateException e) {
             e.printStackTrace();
             // TODO (handle exception properly).
         }
@@ -68,7 +68,7 @@ public class LevelMapLoader {
      *  inside this element or one of it's children.
      */
     private static LevelMetaData createLevelMetaData(XmlReader.Element levelElement)
-            throws ClassNotFoundException, InvalidAttributeValueException{
+            throws ClassNotFoundException, IllegalStateException{
         String idString = levelElement.getAttribute("id");
         int levelId = Integer.parseInt(idString);
 
@@ -80,7 +80,7 @@ public class LevelMapLoader {
     }
 
     private static FrogMetaData createFrogMetaData(XmlReader.Element frogElement)
-            throws ClassNotFoundException, InvalidAttributeValueException {
+            throws ClassNotFoundException, IllegalStateException {
         try {
             String className = frogElement.getAttribute("class");
             String spawnProbString = frogElement.getAttribute("spawn_prob");
@@ -95,11 +95,11 @@ public class LevelMapLoader {
             }
         }
         catch (GdxRuntimeException e) {
-            throw new InvalidAttributeValueException("A 'Level' element does not contain "+
+            throw new IllegalStateException("A 'Level' element does not contain "+
                     "one ore more crucial attributes.");
         }
         catch (NumberFormatException e) {
-            throw new InvalidAttributeValueException("Attribute is of the wrong type.\n" +
+            throw new IllegalStateException("Attribute is of the wrong type.\n" +
                     e.getMessage());
         }
     }
@@ -116,14 +116,14 @@ public class LevelMapLoader {
      * @return  A AddFrogMetaData object that holds the xml-element object's data.
      */
     public static AddFrogMetaData createAddFrogMetaData(XmlReader.Element addFrogElement) {
-        if (null != addFrogElement.get("at_level", null)) {
+        if (null != addFrogElement.getAttribute("at_level", null)) {
             //..
             String atLevelString = addFrogElement.getAttribute("at_level");
             int atLevel = Integer.parseInt(atLevelString);
             return new AddFrogMetaData(atLevel);
         }
-        else if (null != addFrogElement.get("min_level", null) &&
-                null != addFrogElement.get("max_level", null)){
+        else if (null != addFrogElement.getAttribute("min_level", null) &&
+                null != addFrogElement.getAttribute("max_level", null)){
             String minLevelString = addFrogElement.getAttribute("min_level");
             String maxLevelString = addFrogElement.getAttribute("max_level");
             int minLevel = Integer.parseInt(minLevelString);

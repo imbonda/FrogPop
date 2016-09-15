@@ -31,11 +31,14 @@ public class Timer extends Sprite {
     private State timerState;
     private Animation timerVibrate;
     private float stateTimer;
+
     private TextureRegion timerTexture;
     private TextureRegion clockHandTexture;
     private Vector2 timerTexturePosition;
+
     private float timeToCountDown;
     private float timeLeftToCountDown;
+
 
     public Timer() {
         this.timerTexture = new TextureRegion(new Texture("timer.png"));
@@ -74,7 +77,9 @@ public class Timer extends Sprite {
 
     @Override
     public void draw(Batch batch) {
-        batch.draw(this.timerTexture,
+        batch.draw(
+                    //getFrame(),
+                    this.timerTexture,
                     DEFAULT_TIMER_TEXTURE_POSITION.x,
                     DEFAULT_TIMER_TEXTURE_POSITION.y);
         batch.draw(this.clockHandTexture.getTexture(),

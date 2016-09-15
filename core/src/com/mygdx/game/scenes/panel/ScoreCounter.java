@@ -15,8 +15,10 @@ public class ScoreCounter extends Group {
 
     private static final int INITIAL_SCORE = 0;
     private static final Vector2 LABEL_POSITION = new Vector2(25, 520);
+
     private int score;
     private Label scoreLabel;
+
 
     public ScoreCounter() {
         setTransform(false);

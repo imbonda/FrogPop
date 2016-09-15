@@ -1,6 +1,5 @@
 package com.mygdx.game.sprites.frogs;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,9 +12,8 @@ import java.util.Random;
     import com.badlogic.gdx.graphics.Texture;
     import com.badlogic.gdx.graphics.g2d.Batch;
     import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.scenes.Hud;
 
-import java.util.Random;
+    import java.util.Random;
 
     /**
      * This class represents a regular-frog.
@@ -25,12 +23,15 @@ import java.util.Random;
      * Created by MichaelBond on 9/8/2016.
      */
     public class YellowFrog extends Frog {
-        private static final int FROG_PROFIT_VALUE = 0;
-        private static final int FROG_PENALTY_VALUE = 0;
+
+        private static final int FROG_PROFIT_VALUE = 1;
+        private static final int FROG_PENALTY_VALUE = -1;
+
         private Texture frogTexture[];
         private double frameKey;
         private int randTextureType;
         private double dir = 0.25;
+
 
         public YellowFrog() {
             Random rand = new Random();
@@ -53,19 +54,8 @@ import java.util.Random;
         }
 
         @Override
-        public void applyAbility() {
-            Hud.getInstance().getLifeCounter().addLife(-1);
-            Gdx.input.vibrate(new long[] { 0, 200, 200, 200}, -1);
-        }
-        public void initAbility()
-        {
-        }
-        @Override
-        public boolean isLifeTimeExpired() {
-            if(this.lifeTime >= this.maxLifeTime) {
-                return true;
-            }
-            else return false;
+        public void applyAbilityOnTouch() {
+            // No ability yet.
         }
 
         @Override
@@ -79,8 +69,8 @@ import java.util.Random;
         }
 
         @Override
-        public void init(float positionX, float positionY, float timeToLive) {
-            super.defaultInit(positionX, positionY, timeToLive);
+        public void init(float positionX, float positionY) {
+            super.defaultInit(positionX, positionY);
             Random rand=new Random();
             this.frogRectangle = new Rectangle(
                     this.position.x-20, this.position.y-35,
@@ -95,10 +85,11 @@ import java.util.Random;
             this.frameKey = 0;
             this.randTextureType = rand.nextInt(2);
         }
+
         @Override
         public void draw(Batch batch) {
             batch.draw(getFrogTexture(), this.position.x, this.position.y,
-                    0, 0, 100, 100-(int)(((this.maxLifeTime - this.lifeTime)*100)/(this.maxLifeTime)));
+                    0, 0, 100, 100-(int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
         }
 
         public Texture getFrogTexture() {

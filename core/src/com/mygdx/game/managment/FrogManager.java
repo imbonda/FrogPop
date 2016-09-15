@@ -3,14 +3,14 @@ package com.mygdx.game.managment;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Logger;
-import com.badlogic.gdx.utils.Pool;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
 import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.screens.PlayScreen;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.sprites.Hole;
 
@@ -21,23 +21,54 @@ import com.mygdx.game.sprites.Hole;
  * Created by MichaelBond on 8/28/2016.
  */
 public class FrogManager {
-    public Array<Frog> activeFrogs;
-    private static final float FROG_LIFE_TIME_SECS = 5.0f;
+
     private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
-    private final FrogPool frogPool = new FrogPool();
-    private Array<Hole> holes;
-    private float frogMaxLifeTime;
-    private Array<Integer> unpopulatedHolesIndexes;
-    private HashMap<Frog, Integer> frogToHoleIndexMap;
 
-    public FrogManager(Array<Hole> holes) {
-        this.holes = holes;
-        this.frogMaxLifeTime = FROG_LIFE_TIME_SECS;
+    private static FrogManager ourInstance = new FrogManager();
+
+    /**
+     * Singleton implementation.
+     *
+     * @return  The singleton object.
+     */
+    public static FrogManager getInstance() {
+        return ourInstance;
+    }
+
+    /**
+     * Singleton private constructor.
+     */
+    private FrogManager() {
+        this.holes = PlayScreen.holes;
         this.activeFrogs = new Array<Frog>();
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
-        for (int i = 0; i < holes.size; ++i) {this.unpopulatedHolesIndexes.add(i);
+        setUnpopulatedHolesIndexes();
+    }
+
+    public Array<Frog> activeFrogs;
+
+    private final FrogPool frogPool = new FrogPool();
+    private Array<Hole> holes;
+    private Array<Integer> unpopulatedHolesIndexes;
+    private HashMap<Frog, Integer> frogToHoleIndexMap;
+
+
+    /**
+     * Resets the frog-manager to it's default configuration.
+     */
+    public void reset() {
+        this.frogPool.freeAll(this.activeFrogs);
+        this.activeFrogs.clear();
+        this.frogToHoleIndexMap.clear();
+        this.unpopulatedHolesIndexes.clear();
+        setUnpopulatedHolesIndexes();
+    }
+
+    private void setUnpopulatedHolesIndexes() {
+        for (int i = 0; i < holes.size; ++i) {
+            this.unpopulatedHolesIndexes.add(i);
         }
     }
 
@@ -50,14 +81,15 @@ public class FrogManager {
         // Add a new frog positioned at the chosen hole.
         Frog frog = this.frogPool.obtain();
         if (null != frog) {
-            frog.init(frogPosition.x, frogPosition.y, this.frogMaxLifeTime);
+            frog.init(frogPosition.x, frogPosition.y);
             this.activeFrogs.add(frog);
             this.frogToHoleIndexMap.put(frog, randomHoleIndex);
             // The hole is now populated.
             this.unpopulatedHolesIndexes.removeValue(randomHoleIndex, true);
         }
         else {
-            (new Logger("A")).debug("No default frog was supplied");
+            // Log this incident.
+            Gdx.app.log(FrogPop.LOGGER_TAG, "Could not obtain a frog to add to the screen.");
         }
     }
 
@@ -80,10 +112,6 @@ public class FrogManager {
                 holePosition.x + FROG_OFFSET_X, holePosition.y + FROG_OFFSET_Y);
     }
 
-    public void decreaseFrogMaxLifeTime(float decreaseFactor) {
-        this.frogMaxLifeTime *= decreaseFactor;
-    }
-
     /**
      * Updates all the (active) frog on the screen.
      *
@@ -100,6 +128,7 @@ public class FrogManager {
             else if (frog.isLifeTimeExpired()) {
                 recycleDeadFrog(frogIterator, frog);
                 Hud.getInstance().getLifeCounter().addLife(frog.getPenaltyValue());
+                Gdx.input.vibrate(500);
             }
         }
     }
