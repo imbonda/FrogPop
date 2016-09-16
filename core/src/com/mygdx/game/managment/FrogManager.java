@@ -122,13 +122,9 @@ public class FrogManager {
         while (frogIterator.hasNext()) {
             Frog frog = frogIterator.next();
             frog.update(deltaTime);
-            if (frog.isKilled()) {
+            if (frog.isKilled() || frog.isLifeTimeExpired()) {
+                frog.onDeath();
                 recycleDeadFrog(frogIterator, frog);
-            }
-            else if (frog.isLifeTimeExpired()) {
-                recycleDeadFrog(frogIterator, frog);
-                Hud.getInstance().getLifeCounter().addLife(frog.getPenaltyValue());
-                Gdx.input.vibrate(500);
             }
         }
     }

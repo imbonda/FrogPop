@@ -1,7 +1,9 @@
 package com.mygdx.game.managment.config;
 
 import com.mygdx.game.sprites.frogs.BlueFrog;
+import com.mygdx.game.sprites.frogs.ColorfullFrog;
 import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.frogs.Pinkfrog;
 import com.mygdx.game.sprites.frogs.RedFrog;
 import com.mygdx.game.sprites.frogs.RegularFrog;
 import com.mygdx.game.sprites.frogs.YellowFrog;
@@ -18,6 +20,8 @@ public class ClassForName {
     private static final String RED_FROG = RedFrog.class.getCanonicalName();
     private static final String YELLOW_FROG = YellowFrog.class.getCanonicalName();
     private static final String Blue_FROG = BlueFrog.class.getCanonicalName();
+    private static final String Pink_FROG = Pinkfrog.class.getCanonicalName();
+    private static final String Colorfull_Frog = ColorfullFrog.class.getCanonicalName();
 
 
     /**
@@ -41,6 +45,12 @@ public class ClassForName {
         }
         else if (Blue_FROG.equals(classNme)) {
             return BlueFrog.class;
+        }
+        else if (Pink_FROG.equals(classNme)) {
+            return Pinkfrog.class;
+        }
+        else if (Colorfull_Frog.equals(classNme)) {
+            return ColorfullFrog.class;
         }
 
         throw new ClassNotFoundException("Could not find a frog class with the given name: " + classNme);

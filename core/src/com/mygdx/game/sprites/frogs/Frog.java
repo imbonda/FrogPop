@@ -1,5 +1,6 @@
 package com.mygdx.game.sprites.frogs;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -41,23 +42,16 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
     /**
      * This method should be implemented by each sub-class.
-     *
-     * @return  The profit-value for killing this frog.
+     * It method is called whenever a frog is considered dead, and should take care of all the -
+     * underlying logic. (Updating the Hud, etc.)
      */
-    public abstract int getProfitValue();
+    public abstract void onDeath();
 
     /**
      * This method should be implemented by each sub-class.
-     *
-     * @return  The penalty-value for failing to kill this frog.
+     * This method is called whenever a frog is being touched by the user.
      */
-    public abstract int getPenaltyValue();
-
-    /**
-     * This method should be implemented by each sub-class.
-     * This method applies the frog's special ability when it is touched.
-     */
-    public abstract void applyAbilityOnTouch();
+    public abstract void touched();
 
     /**
      * This method should be implemented by each sub-class.
@@ -99,10 +93,6 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
     public boolean isLifeTimeExpired() {
         return this.lifeTime >= FROG_MAX_LIFE_TIME;
-    }
-
-    public void setKilled() {
-        this.isKilled = true;
     }
 
     public boolean isKilled() {

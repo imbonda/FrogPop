@@ -1,9 +1,11 @@
 package com.mygdx.game.sprites.frogs;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.scenes.Hud;
 
 import java.util.Random;
 
@@ -16,8 +18,8 @@ import java.util.Random;
  */
 public class RegularFrog extends Frog {
 
-    private static final int FROG_PROFIT_VALUE = 1;
-    private static final int FROG_PENALTY_VALUE = -1;
+    private static final int FROG_SCORE_PROFIT_VALUE = 1;
+    private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
     private Texture frogTexture[];
     private double frameKey;
@@ -42,22 +44,23 @@ public class RegularFrog extends Frog {
 
     @Override
     public void dispose() {
-        this.frogTexture[(int)this.frameKey%4].dispose();
+        this.frogTexture[(int)this.frameKey%8].dispose();
     }
 
     @Override
-    public void applyAbilityOnTouch() {
-        // No ability :(
+    public void touched() {
+        this.isKilled = true;
     }
 
     @Override
-    public int getProfitValue() {
-        return FROG_PROFIT_VALUE;
-    }
-
-    @Override
-    public int getPenaltyValue() {
-        return FROG_PENALTY_VALUE;
+    public void onDeath() {
+        if (isKilled()) {
+            Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
+        }
+        else {
+            Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PENALTY_VALUE);
+            Gdx.input.vibrate(500);
+        }
     }
 
     @Override
