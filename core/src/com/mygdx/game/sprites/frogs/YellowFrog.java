@@ -59,14 +59,13 @@ import java.util.Random;
         @Override
         public void touched() {
             this.isKilled = true;
-            Gdx.input.vibrate(new long[] { 0, 200, 200, 200}, -1);
         }
 
         @Override
         public void onDeath() {
             if (isKilled()) {
                 Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PROFIT_VALUE);
-                Gdx.input.vibrate(500);
+                Gdx.input.vibrate(new long[] { 0, 200, 200, 200}, -1);
             }
             else {
                 Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
