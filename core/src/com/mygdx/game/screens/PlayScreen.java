@@ -24,6 +24,8 @@ import com.mygdx.game.sprites.Hole;
  */
 public class PlayScreen implements Screen {
 
+    public static Viewport gameViewPort = new FitViewport(
+                FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
     public static Array<Hole> holes = new Array<Hole>();
 
     private static final Vector2[] HOLES_POSITIONS = {
@@ -40,7 +42,6 @@ public class PlayScreen implements Screen {
 
     private Texture[] backgroundTexture;
     private FrogPop game;
-    private Viewport gameViewPort;
     private LevelController levelController;
     private Hud hud;
     private Music music;
@@ -56,12 +57,10 @@ public class PlayScreen implements Screen {
         this.backgroundTexture[1] = new Texture("world2.jpg");
         this.backgroundTexture[2] = new Texture("world3.jpg");
         this.backgroundTexture[3] = new Texture("world4.jpg");
-        this.gameViewPort = new FitViewport(
-                    FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
         this.hud = Hud.getInstance();
         this.levelController = LevelController.getInstance();
         this.levelController.init();
-        Gdx.input.setInputProcessor(new TouchProcessor(this.gameViewPort));
+        Gdx.input.setInputProcessor(new TouchProcessor(gameViewPort));
     }
 
     public void update(float deltaTime) {
@@ -82,7 +81,7 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
+        this.game.batch.setProjectionMatrix(gameViewPort.getCamera().combined);
         this.game.batch.begin();
         drawBackground();
         SpritesDrawer.getInstance().drawSprites();
@@ -99,7 +98,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        this.gameViewPort.update(width, height, true);
+        gameViewPort.update(width, height, true);
         this.hud.resize(width, height, true);
     }
 

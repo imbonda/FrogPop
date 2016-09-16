@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.managment.FrogManager;
+import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.screens.PlayScreen;
 
@@ -71,6 +72,7 @@ public class BlueFrog extends Frog {
                 this.position.x-20, this.position.y-35,
                 this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
         this.randTextureType = rand.nextInt(2);
+        LevelController.getInstance().scaleSpeed(0.5f);
     }
 
     @Override
@@ -79,12 +81,20 @@ public class BlueFrog extends Frog {
         Random rand = new Random();
         this.frameKey = 0;
         this.randTextureType = rand.nextInt(2);
+        LevelController.getInstance().scaleSpeed(2f);
     }
 
     @Override
     public void draw(Batch batch) {
         batch.draw(getFrogTexture(), this.position.x, this.position.y,
                 0, 0, 100, 100-(int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
+//        PlayScreen.gameViewPort.getCamera().rotate(
+//                (float)(20 - 10 *frameKey%4),
+//                PlayScreen.gameViewPort.getWorldWidth() / 2,
+//                PlayScreen.gameViewPort.getWorldHeight() / 2,
+//                0
+//        );
+//        PlayScreen.gameViewPort.getCamera().update();
     }
 
     public Texture getFrogTexture() {
