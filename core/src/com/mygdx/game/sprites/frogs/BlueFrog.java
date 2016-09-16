@@ -1,6 +1,7 @@
 package com.mygdx.game.sprites.frogs;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -53,12 +54,13 @@ public class BlueFrog extends Frog {
     }
 
     @Override
-    public void updateHudOnDeath() {
+    public void onDeath() {
         if (isKilled()) {
             Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
         }
         else {
             Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PENALTY_VALUE);
+            Gdx.input.vibrate(500);
         }
     }
 

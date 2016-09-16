@@ -123,7 +123,7 @@ public class FrogManager {
             Frog frog = frogIterator.next();
             frog.update(deltaTime);
             if (frog.isKilled() || frog.isLifeTimeExpired()) {
-                frog.updateHudOnDeath();
+                frog.onDeath();
                 recycleDeadFrog(frogIterator, frog);
             }
         }

@@ -63,14 +63,10 @@ import java.util.Random;
         }
 
         @Override
-        public boolean isLifeTimeExpired() {
-            return this.lifeTime >= FROG_MAX_LIFE_TIME;
-        }
-
-        @Override
-        public void updateHudOnDeath() {
+        public void onDeath() {
             if (isKilled()) {
                 Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PROFIT_VALUE);
+                Gdx.input.vibrate(500);
             }
             else {
                 Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);

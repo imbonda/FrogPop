@@ -42,9 +42,10 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
     /**
      * This method should be implemented by each sub-class.
-     * It should update the Hud in a manner appropriate for the specific frog.
+     * It method is called whenever a frog is considered dead, and should take care of all the -
+     * underlying logic. (Updating the Hud, etc.)
      */
-    public abstract void updateHudOnDeath();
+    public abstract void onDeath();
 
     /**
      * This method should be implemented by each sub-class.
@@ -91,11 +92,7 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
     }
 
     public boolean isLifeTimeExpired() {
-        if(this.lifeTime >= FROG_MAX_LIFE_TIME) {
-            Gdx.input.vibrate(500);
-            return true;
-        }
-        return false;
+        return this.lifeTime >= FROG_MAX_LIFE_TIME;
     }
 
     public boolean isKilled() {
