@@ -2,12 +2,10 @@ package com.mygdx.game.sprites.frogs;
 
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.managment.FrogManager;
+import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.scenes.Hud;
-import com.mygdx.game.screens.PlayScreen;
 
 import java.util.Random;
 
@@ -20,8 +18,9 @@ import java.util.Random;
  */
 public class BlueFrog extends Frog {
 
-    private static final int FROG_PROFIT_VALUE = 1;
-    private static final int FROG_PENALTY_VALUE = -1;
+    private static final int FROG_SCORE_PROFIT_VALUE = 1;
+    private static final int FROG_LIFE_PENALTY_VALUE = -1;
+
     private Texture frogTexture[];
     private double frameKey;
     private int randTextureType;
@@ -49,33 +48,32 @@ public class BlueFrog extends Frog {
     }
 
     @Override
-    public void applyAbility() {
-
-    }
-    public void initAbility()
-    {
-
+    public void applyAbilityOnTouch() {
     }
 
     @Override
-    public int getProfitValue() {
-        return FROG_PROFIT_VALUE;
+    public void updateHudOnDeath() {
+        if (isKilled()) {
+            Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
+        }
+        else {
+            Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PENALTY_VALUE);
+        }
     }
 
     @Override
-    public int getPenaltyValue() {
-        return FROG_PENALTY_VALUE;
-    }
-
-    @Override
-    public void init(float positionX, float positionY, float timeToLive) {
-        super.defaultInit(positionX, positionY, timeToLive);
-        this.maxLifeTime=maxLifeTime*0.8f;
+    public void init(float positionX, float positionY) {
+        super.defaultInit(positionX, positionY);
         Random rand=new Random();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
         this.randTextureType = rand.nextInt(2);
+        initAbility();
+    }
+
+    private void initAbility() {
+        LevelController.getInstance().scaleSpeed(0.3f);
     }
 
     @Override
@@ -84,12 +82,13 @@ public class BlueFrog extends Frog {
         Random rand = new Random();
         this.frameKey = 0;
         this.randTextureType = rand.nextInt(2);
+        LevelController.getInstance().scaleSpeed(3.333333f);
     }
 
     @Override
     public void draw(Batch batch) {
         batch.draw(getFrogTexture(), this.position.x, this.position.y,
-                0, 0, 100, 100-(int)(((this.maxLifeTime - this.lifeTime)*100)/(this.maxLifeTime)));
+                0, 0, 100, 100-(int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
     }
 
     public Texture getFrogTexture() {
@@ -112,7 +111,7 @@ public class BlueFrog extends Frog {
             }
             this.frameKey += dir;
         }
-
+        /////////////////////System.out.print((int)this.frameKey);
         return this.frogTexture[(int)(this.frameKey % 8)];
     }
 

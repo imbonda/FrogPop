@@ -40,7 +40,7 @@ public class PlayScreen implements Screen {
 
     private Texture[] backgroundTexture;
     private FrogPop game;
-    private Viewport gameViewPort;
+    public static Viewport gameViewPort;
     private LevelController levelController;
     private Hud hud;
     private Music music;

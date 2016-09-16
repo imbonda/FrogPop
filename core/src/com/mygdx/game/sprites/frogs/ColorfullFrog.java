@@ -4,8 +4,10 @@ package com.mygdx.game.sprites.frogs;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.screens.PlayScreen;
 
 import java.util.Random;
 
@@ -16,41 +18,53 @@ import java.util.Random;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class RedFrog extends Frog {
+public class ColorfullFrog extends Frog {
 
-    private static final int FROG_SCORE_PROFIT_VALUE = 2;
-    private static final int FROG_LIFE_PROFIT_VALUE = 1;
+    private static final int FROG_SCORE_PROFIT_VALUE = 3;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
+
     private Texture frogTexture[];
     private double frameKey;
     private int randTextureType;
     private double dir = 0.25;
+    private int rotatedirectionB=-1;
+    private float rotatedirectionA=-1f;
+    private float rotationcontroller=0;
+    private Vector3 deafultPosition=new Vector3(400,265,0);
+    private Vector3 deafultaxis=new Vector3(0,0,100);
 
-
-    public RedFrog() {
+    public ColorfullFrog() {
         Random rand = new Random();
         this.frogTexture=new Texture[8];
-        this.frogTexture[0] = new Texture("Frog/0r.png");
+        this.frogTexture[0] = new Texture("Frog/0p.png");
         this.frogTexture[1] = new Texture("Frog/1r.png");
-        this.frogTexture[2] = new Texture("Frog/2r.png");
-        this.frogTexture[3] = new Texture("Frog/3r.png");
-        this.frogTexture[4] = new Texture("Frog/0r.png");
+        this.frogTexture[2] = new Texture("Frog/2b.png");
+        this.frogTexture[3] = new Texture("Frog/3y.png");
+        this.frogTexture[4] = new Texture("Frog/0p.png");
         this.frogTexture[5] = new Texture("Frog/eye2r.png");
-        this.frogTexture[6] = new Texture("Frog/eye3r.png");
-        this.frogTexture[7] = new Texture("Frog/eye4r.png");
+        this.frogTexture[6] = new Texture("Frog/eye3b.png");
+        this.frogTexture[7] = new Texture("Frog/eye4y.png");
         this.randTextureType = rand.nextInt(2);
         this.frameKey = 0;
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        this.lifeTime += deltaTime * LevelController.getInstance().getSpeed()*1.2f;
     }
 
     @Override
     public void dispose() {
         this.frogTexture[(int)this.frameKey%4].dispose();
     }
+    private void whileUpAbility()
+    {
+        rotationcontroller=rotatedirectionA+rotationcontroller;
+        PlayScreen.gameViewPort.getCamera().rotateAround(deafultPosition,deafultaxis,rotatedirectionA);
+        PlayScreen.gameViewPort.getCamera().update();
+
+    }
+    @Override
+    public void update(float deltaTime) {
+        this.lifeTime += deltaTime * LevelController.getInstance().getSpeed();
+        whileUpAbility();
+    }
+
 
     @Override
     public void applyAbilityOnTouch() {
@@ -61,7 +75,6 @@ public class RedFrog extends Frog {
     public void updateHudOnDeath() {
         if (isKilled()) {
             Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
-            Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PROFIT_VALUE);
         }
         else {
             Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PENALTY_VALUE);
@@ -71,7 +84,6 @@ public class RedFrog extends Frog {
     @Override
     public void init(float positionX, float positionY) {
         super.defaultInit(positionX, positionY);
-
         Random rand=new Random();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
@@ -82,10 +94,13 @@ public class RedFrog extends Frog {
     @Override
     public void reset() {
         super.defaultReset();
-
+        PlayScreen.gameViewPort.getCamera().rotateAround(deafultPosition,deafultaxis,-rotationcontroller);
+        PlayScreen.gameViewPort.getCamera().update();
         Random rand = new Random();
         this.frameKey = 0;
         this.randTextureType = rand.nextInt(2);
+        rotationcontroller=0;
+        rotatedirectionA=-4;
     }
 
     @Override
@@ -114,7 +129,6 @@ public class RedFrog extends Frog {
             }
             this.frameKey += dir;
         }
-
         return this.frogTexture[(int)(this.frameKey % 8)];
     }
 

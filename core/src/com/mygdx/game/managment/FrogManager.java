@@ -126,9 +126,8 @@ public class FrogManager {
                 recycleDeadFrog(frogIterator, frog);
             }
             else if (frog.isLifeTimeExpired()) {
+                frog.updateHudOnDeath();
                 recycleDeadFrog(frogIterator, frog);
-                Hud.getInstance().getLifeCounter().addLife(frog.getPenaltyValue());
-                Gdx.input.vibrate(500);
             }
         }
     }
