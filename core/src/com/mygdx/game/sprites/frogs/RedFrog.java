@@ -53,8 +53,8 @@ public class RedFrog extends Frog {
     }
 
     @Override
-    public void applyAbilityOnTouch() {
-        // No ability :(
+    public void touched() {
+        this.isKilled = true;
     }
 
     @Override

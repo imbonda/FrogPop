@@ -48,7 +48,8 @@ public class BlueFrog extends Frog {
     }
 
     @Override
-    public void applyAbilityOnTouch() {
+    public void touched() {
+        this.isKilled = true;
     }
 
     @Override

@@ -122,10 +122,7 @@ public class FrogManager {
         while (frogIterator.hasNext()) {
             Frog frog = frogIterator.next();
             frog.update(deltaTime);
-            if (frog.isKilled()) {
-                recycleDeadFrog(frogIterator, frog);
-            }
-            else if (frog.isLifeTimeExpired()) {
+            if (frog.isKilled() || frog.isLifeTimeExpired()) {
                 frog.updateHudOnDeath();
                 recycleDeadFrog(frogIterator, frog);
             }

@@ -57,7 +57,8 @@ import java.util.Random;
         }
 
         @Override
-        public void applyAbilityOnTouch() {
+        public void touched() {
+            this.isKilled = true;
             Gdx.input.vibrate(new long[] { 0, 200, 200, 200}, -1);
         }
 

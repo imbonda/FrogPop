@@ -48,9 +48,9 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
     /**
      * This method should be implemented by each sub-class.
-     * This method applies the frog's special ability when it is touched.
+     * This method is called whenever a frog is being touched by the user.
      */
-    public abstract void applyAbilityOnTouch();
+    public abstract void touched();
 
     /**
      * This method should be implemented by each sub-class.
@@ -96,10 +96,6 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
             return true;
         }
         return false;
-    }
-
-    public void setKilled() {
-        this.isKilled = true;
     }
 
     public boolean isKilled() {
