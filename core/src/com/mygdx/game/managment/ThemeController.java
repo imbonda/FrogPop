@@ -1,5 +1,7 @@
 package com.mygdx.game.managment;
 
+import com.mygdx.game.managment.config.Config;
+import com.mygdx.game.managment.metadata.ThemeMetaData;
 import com.mygdx.game.managment.themes.DefaultTheme;
 import com.mygdx.game.managment.themes.Theme;
 
@@ -23,8 +25,7 @@ public class ThemeController {
      * Singleton private constructor.
      */
     private ThemeController() {
-        // TODO (consider changing)
-        this.currentTheme = new DefaultTheme();
+        this.currentTheme = ThemeMetaData.DEFAULT_THEME;
     }
 
     private Theme currentTheme;
