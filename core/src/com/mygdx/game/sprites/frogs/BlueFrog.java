@@ -22,7 +22,17 @@ public class BlueFrog extends Frog {
     private static final int FROG_SCORE_PROFIT_VALUE = 1;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
-    private Texture frogTexture[];
+    private final Texture frogTexture[] = {
+        new Texture("Frog/0b.png"),
+        new Texture("Frog/1b.png"),
+        new Texture("Frog/2b.png"),
+        new Texture("Frog/3b.png"),
+        new Texture("Frog/0b.png"),
+        new Texture("Frog/eye2b.png"),
+        new Texture("Frog/eye3b.png"),
+        new Texture("Frog/eye4b.png")
+    };
+
     private double frameKey;
     private int randTextureType;
     private double dir = 0.25;
@@ -30,22 +40,16 @@ public class BlueFrog extends Frog {
 
     public BlueFrog() {
         Random rand = new Random();
-        this.frogTexture=new Texture[8];
-        this.frogTexture[0] = new Texture("Frog/0b.png");
-        this.frogTexture[1] = new Texture("Frog/1b.png");
-        this.frogTexture[2] = new Texture("Frog/2b.png");
-        this.frogTexture[3] = new Texture("Frog/3b.png");
-        this.frogTexture[4] = new Texture("Frog/0b.png");
-        this.frogTexture[5] = new Texture("Frog/eye2b.png");
-        this.frogTexture[6] = new Texture("Frog/eye3b.png");
-        this.frogTexture[7] = new Texture("Frog/eye4b.png");
         this.randTextureType = rand.nextInt(2);
         this.frameKey = 0;
     }
 
     @Override
     public void dispose() {
-        this.frogTexture[(int)this.frameKey%4].dispose();
+        // TODO (check if we want this behavior).
+        for (Texture texture : this.frogTexture) {
+            texture.dispose();
+        }
     }
 
     @Override

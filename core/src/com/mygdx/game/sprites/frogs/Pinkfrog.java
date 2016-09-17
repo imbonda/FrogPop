@@ -25,7 +25,17 @@ public class Pinkfrog extends Frog {
     private static final int FROG_SCORE_PROFIT_VALUE = 3;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
-    private Texture frogTexture[];
+    private final Texture frogTexture[] = {
+            new Texture("Frog/0p.png"),
+            new Texture("Frog/1p.png"),
+            new Texture("Frog/2p.png"),
+            new Texture("Frog/3p.png"),
+            new Texture("Frog/0p.png"),
+            new Texture("Frog/eye2p.png"),
+            new Texture("Frog/eye3p.png"),
+            new Texture("Frog/eye4p.png")
+    };
+
     private double frameKey;
     private int randTextureType;
     private double dir = 0.25;
@@ -38,23 +48,18 @@ public class Pinkfrog extends Frog {
 
     public Pinkfrog() {
         Random rand = new Random();
-        this.frogTexture=new Texture[8];
-        this.frogTexture[0] = new Texture("Frog/0p.png");
-        this.frogTexture[1] = new Texture("Frog/1p.png");
-        this.frogTexture[2] = new Texture("Frog/2p.png");
-        this.frogTexture[3] = new Texture("Frog/3p.png");
-        this.frogTexture[4] = new Texture("Frog/0p.png");
-        this.frogTexture[5] = new Texture("Frog/eye2p.png");
-        this.frogTexture[6] = new Texture("Frog/eye3p.png");
-        this.frogTexture[7] = new Texture("Frog/eye4p.png");
         this.randTextureType = rand.nextInt(2);
         this.frameKey = 0;
     }
 
     @Override
     public void dispose() {
-        this.frogTexture[(int)this.frameKey%4].dispose();
+        // TODO (check if we want this behavior).
+        for (Texture texture : this.frogTexture) {
+            texture.dispose();
+        }
     }
+
     private void whileUpAbility()
     {
         if((rotatedelay>16)&&((rotationcontroller>=16)||(rotationcontroller<=-16))){

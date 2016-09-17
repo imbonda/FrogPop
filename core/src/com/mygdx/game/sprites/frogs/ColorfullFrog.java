@@ -24,7 +24,17 @@ public class ColorfullFrog extends Frog {
     private static final int FROG_SCORE_PROFIT_VALUE = 3;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
-    private Texture frogTexture[];
+    private final Texture frogTexture[] = {
+            new Texture("Frog/0p.png"),
+            new Texture("Frog/1r.png"),
+            new Texture("Frog/2b.png"),
+            new Texture("Frog/3y.png"),
+            new Texture("Frog/0p.png"),
+            new Texture("Frog/eye2r.png"),
+            new Texture("Frog/eye3b.png"),
+            new Texture("Frog/eye4y.png")
+    };
+
     private double frameKey;
     private int randTextureType;
     private double dir = 0.25;
@@ -36,22 +46,16 @@ public class ColorfullFrog extends Frog {
 
     public ColorfullFrog() {
         Random rand = new Random();
-        this.frogTexture=new Texture[8];
-        this.frogTexture[0] = new Texture("Frog/0p.png");
-        this.frogTexture[1] = new Texture("Frog/1r.png");
-        this.frogTexture[2] = new Texture("Frog/2b.png");
-        this.frogTexture[3] = new Texture("Frog/3y.png");
-        this.frogTexture[4] = new Texture("Frog/0p.png");
-        this.frogTexture[5] = new Texture("Frog/eye2r.png");
-        this.frogTexture[6] = new Texture("Frog/eye3b.png");
-        this.frogTexture[7] = new Texture("Frog/eye4y.png");
         this.randTextureType = rand.nextInt(2);
         this.frameKey = 0;
     }
 
     @Override
     public void dispose() {
-        this.frogTexture[(int)this.frameKey%4].dispose();
+        // TODO (check if we want this behavior).
+        for (Texture texture : this.frogTexture) {
+            texture.dispose();
+        }
     }
     private void whileUpAbility()
     {

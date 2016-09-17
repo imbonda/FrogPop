@@ -30,7 +30,17 @@ import java.util.Random;
         private static final int FROG_LIFE_PROFIT_VALUE = -1;
         private static final int FROG_LIFE_PENALTY_VALUE = 0;
 
-        private Texture frogTexture[];
+        private final Texture frogTexture[] = {
+                new Texture("Frog/0y.png"),
+                new Texture("Frog/1y.png"),
+                new Texture("Frog/2y.png"),
+                new Texture("Frog/3y.png"),
+                new Texture("Frog/0y.png"),
+                new Texture("Frog/eye2y.png"),
+                new Texture("Frog/eye3y.png"),
+                new Texture("Frog/eye4y.png")
+        };
+
         private double frameKey;
         private int randTextureType;
         private double dir = 0.25;
@@ -38,22 +48,16 @@ import java.util.Random;
 
         public YellowFrog() {
             Random rand = new Random();
-            this.frogTexture=new Texture[8];
-            this.frogTexture[0] = new Texture("Frog/0y.png");
-            this.frogTexture[1] = new Texture("Frog/1y.png");
-            this.frogTexture[2] = new Texture("Frog/2y.png");
-            this.frogTexture[3] = new Texture("Frog/3y.png");
-            this.frogTexture[4] = new Texture("Frog/0y.png");
-            this.frogTexture[5] = new Texture("Frog/eye2y.png");
-            this.frogTexture[6] = new Texture("Frog/eye3y.png");
-            this.frogTexture[7] = new Texture("Frog/eye4y.png");
             this.randTextureType = rand.nextInt(2);
             this.frameKey = 0;
         }
 
         @Override
         public void dispose() {
-            this.frogTexture[(int)this.frameKey%4].dispose();
+            // TODO (check if we want this behavior).
+            for (Texture texture : this.frogTexture) {
+                texture.dispose();
+            }
         }
 
         @Override
