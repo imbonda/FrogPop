@@ -1,7 +1,9 @@
 package com.mygdx.game.managment.config;
 
+import com.mygdx.game.managment.themes.BlueTheme;
 import com.mygdx.game.managment.themes.DefaultTheme;
 import com.mygdx.game.managment.themes.Theme;
+import com.mygdx.game.managment.themes.WhiteTheme;
 import com.mygdx.game.sprites.frogs.BlueFrog;
 import com.mygdx.game.sprites.frogs.ColorfullFrog;
 import com.mygdx.game.sprites.frogs.Frog;
@@ -26,6 +28,8 @@ public class ClassForName {
     private static final String COLORFUL_FROG = ColorfullFrog.class.getCanonicalName();
     // Theme's class names.
     private static final String DEFAULT_THEME = DefaultTheme.class.getCanonicalName();
+    private static final String BLUE_THEME = BlueTheme.class.getCanonicalName();
+    private static final String WHITE_THEME = WhiteTheme.class.getCanonicalName();
 
 
     /**
@@ -70,6 +74,12 @@ public class ClassForName {
             throws ClassNotFoundException {
         if (DEFAULT_THEME.equals(classNme)) {
             return DefaultTheme.class;
+        }
+        else if (BLUE_THEME.equals(classNme)) {
+            return BlueTheme.class;
+        }
+        else if (WHITE_THEME.equals(classNme)) {
+            return WhiteTheme.class;
         }
         throw new ClassNotFoundException("Could not find a theme class with the given name: " +
                     classNme);

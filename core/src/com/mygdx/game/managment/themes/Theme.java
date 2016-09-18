@@ -2,6 +2,7 @@ package com.mygdx.game.managment.themes;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
@@ -18,7 +19,12 @@ public interface Theme {
     /**
      * Returns the theme's background texture.
      */
-    Texture getBackgroundTexture();
+    void draw(Batch batch);
+
+    /**
+     * Returns the theme's music.
+     */
+    void playMusic();
 
     /**
      * Returns the sprite's texture suitable for this theme.
@@ -26,10 +32,5 @@ public interface Theme {
      * @param sprite    The sprite whose theme's related texture we wish to retrieve.
      */
     Texture[] getSpriteTexture(Sprite sprite);
-
-    /**
-     * Returns the theme's music.
-     */
-    void getMusic();
 
 }

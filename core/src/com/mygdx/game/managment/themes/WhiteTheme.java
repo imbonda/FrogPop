@@ -1,6 +1,8 @@
 package com.mygdx.game.managment.themes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.managment.themes.exceptions.UnsupportedSpriteException;
 import com.mygdx.game.sprites.frogs.BlueFrog;
@@ -101,8 +103,14 @@ public class WhiteTheme implements Theme {
     }
 
     @Override
-    public Texture getBackgroundTexture() {
-        return BACKGROUND_TEXTURE;
+    public void draw(Batch batch) {
+        Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
+        batch.draw(BACKGROUND_TEXTURE, 0, 0);
+    }
+
+    @Override
+    public void playMusic() {
+
     }
 
     @Override
@@ -113,11 +121,6 @@ public class WhiteTheme implements Theme {
                     " for a sprite of the following class: " + sprite.getClass());
         }
         return spriteTexture;
-    }
-
-    @Override
-    public void getMusic() {
-
     }
 
 }

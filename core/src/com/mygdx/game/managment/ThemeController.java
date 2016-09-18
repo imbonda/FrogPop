@@ -1,8 +1,8 @@
 package com.mygdx.game.managment;
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.managment.config.Config;
 import com.mygdx.game.managment.metadata.ThemeMetaData;
-import com.mygdx.game.managment.themes.DefaultTheme;
 import com.mygdx.game.managment.themes.Theme;
 
 /**
@@ -25,14 +25,63 @@ public class ThemeController {
      * Singleton private constructor.
      */
     private ThemeController() {
+        this.themesMetaData = Config.themesMetaData;
         this.currentTheme = ThemeMetaData.DEFAULT_THEME;
+        init();
     }
 
-    private Theme currentTheme;
+    // The current active game-theme.
+    public Theme currentTheme;
+
+    private int nextThemeIndex;
+    private Array<ThemeMetaData> themesMetaData;
 
 
-    public void setTheme(Theme theme) {
-        this.currentTheme = theme;
+    /**
+     * Initializes the singleton instance to the default starting theme.
+     */
+    public void init() {
+        this.nextThemeIndex = 0;
+        setup();
+    }
+
+    /**
+     * Initializes the singleton instance to a theme corresponding to a given level.
+     *
+     * @param level A level to set the LevelController to.
+     */
+    public void init(int level) {
+        for (int i = 0; i < this.themesMetaData.size; ++i) {
+            if (level >= this.themesMetaData.get(i).startingLevel) {
+                this.nextThemeIndex = i;
+                continue;
+            }
+            break;
+        }
+        setup();
+    }
+
+    private void setup() {
+        if (this.themesMetaData.size > 0) {
+            // Advance to the next theme.
+            this.currentTheme = this.themesMetaData.get(this.nextThemeIndex).theme;
+            this.nextThemeIndex += 1;
+        }
+    }
+
+    public void update(float deltaTime) {
+        if (this.nextThemeIndex >= this.themesMetaData.size) {
+            // There are no farther themes.
+            return;
+        }
+        LevelController levelController = LevelController.getInstance();
+        int level = levelController.getCurrentLevel();
+        while (this.nextThemeIndex < this.themesMetaData.size &&
+                    level >= this.themesMetaData.get(this.nextThemeIndex).startingLevel) {
+            // Advance to the next theme.
+            this.currentTheme = this.themesMetaData.get(this.nextThemeIndex).theme;
+            this.nextThemeIndex += 1;
+        }
     }
 
 }

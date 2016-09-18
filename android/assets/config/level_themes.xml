@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <levelThemes>
     <theme class="com.mygdx.game.managment.themes.DefaultTheme" starting_level="1" />
+    <theme class="com.mygdx.game.managment.themes.BlueTheme" starting_level="2" />
+    <theme class="com.mygdx.game.managment.themes.WhiteTheme" starting_level="4" />
 </levelThemes>

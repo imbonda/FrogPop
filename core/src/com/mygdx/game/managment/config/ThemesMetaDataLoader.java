@@ -29,28 +29,29 @@ public class ThemesMetaDataLoader {
             e.printStackTrace();
             // TODO (handle exception properly).
         }
-        try {
-            if (null != themeElements) {
-                for (XmlReader.Element theme : themeElements) {
+
+        if (null != themeElements) {
+            for (XmlReader.Element theme : themeElements) {
+                try {
                     themesMetaData.add(createThemeMetaData(theme));
                 }
+                catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                    // TODO (handle exception properly).
+                }
+                catch (InstantiationException e) {
+                    e.printStackTrace();
+                    // TODO (handle exception properly).
+                }
+                catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                    // TODO (handle exception properly).
+                }
+                catch (IllegalStateException e) {
+                    e.printStackTrace();
+                    // TODO (handle exception properly).
+                }
             }
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            // TODO (handle exception properly).
-        }
-        catch (InstantiationException e) {
-            e.printStackTrace();
-            // TODO (handle exception properly).
-        }
-        catch (IllegalAccessException e) {
-            e.printStackTrace();
-            // TODO (handle exception properly).
-        }
-        catch (IllegalStateException e) {
-            e.printStackTrace();
-            // TODO (handle exception properly).
         }
     }
 

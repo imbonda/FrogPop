@@ -5,14 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.LevelController;
+import com.mygdx.game.managment.ThemeController;
 import com.mygdx.game.managment.TouchProcessor;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
@@ -40,9 +39,9 @@ public class PlayScreen implements Screen {
         }
     }
 
-    private Texture[] backgroundTexture;
     private FrogPop game;
     private LevelController levelController;
+    private ThemeController themeController;
     private Hud hud;
     private Music music;
 
@@ -52,14 +51,10 @@ public class PlayScreen implements Screen {
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
         this.music.setLooping(true);
         this.music.play();
-        this.backgroundTexture = new Texture[4];
-        this.backgroundTexture[0] = new Texture("world.jpg");
-        this.backgroundTexture[1] = new Texture("world2.jpg");
-        this.backgroundTexture[2] = new Texture("world3.jpg");
-        this.backgroundTexture[3] = new Texture("world4.jpg");
         this.hud = Hud.getInstance();
         this.levelController = LevelController.getInstance();
         this.levelController.init();
+        this.themeController = ThemeController.getInstance();
         Gdx.input.setInputProcessor(new TouchProcessor(gameViewPort));
     }
 
@@ -83,17 +78,11 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.setProjectionMatrix(gameViewPort.getCamera().combined);
         this.game.batch.begin();
-        drawBackground();
+        this.themeController.currentTheme.draw(this.game.batch);
         SpritesDrawer.getInstance().drawSprites();
         this.game.batch.end();
         this.game.batch.setProjectionMatrix(this.hud.getStage().getCamera().combined);
         this.hud.draw();
-    }
-
-    public void drawBackground() {
-        SpriteBatch batch = this.game.batch;
-        Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
-        batch.draw(this.backgroundTexture[(this.hud.getLevelCounter().getLevel()/10)%4], 0, 0);
     }
 
     @Override
