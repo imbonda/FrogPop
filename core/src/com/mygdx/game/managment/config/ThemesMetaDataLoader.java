@@ -40,6 +40,14 @@ public class ThemesMetaDataLoader {
             e.printStackTrace();
             // TODO (handle exception properly).
         }
+        catch (InstantiationException e) {
+            e.printStackTrace();
+            // TODO (handle exception properly).
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+            // TODO (handle exception properly).
+        }
         catch (IllegalStateException e) {
             e.printStackTrace();
             // TODO (handle exception properly).
@@ -57,12 +65,13 @@ public class ThemesMetaDataLoader {
      *  inside this element or one of it's children.
      */
     private static ThemeMetaData createThemeMetaData(XmlReader.Element themeElement)
-                throws ClassNotFoundException, IllegalStateException {
+                throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+                    IllegalStateException {
         try {
             String className = themeElement.getAttribute("class");
             String levelString = themeElement.getAttribute("starting_level");
             int startingLevel = Integer.parseInt(levelString);
-            return new ThemeMetaData(getThemeClassByName(className), startingLevel);
+            return new ThemeMetaData(getThemeClassByName(className).newInstance(), startingLevel);
         }
         catch (GdxRuntimeException e) {
             throw new IllegalStateException("A 'theme' element does not contain " +
@@ -75,7 +84,7 @@ public class ThemesMetaDataLoader {
     }
 
     private static Class<? extends Theme> getThemeClassByName(String className)
-            throws ClassNotFoundException{
+            throws ClassNotFoundException {
         return ClassForName.getThemeClassByName(className);
     }
 

@@ -10,12 +10,12 @@ public class ThemeMetaData {
 
     public static Theme DEFAULT_THEME = new DefaultTheme();
 
-    public Class<? extends Theme> themeClass;
+    public Theme theme;
     public int startingLevel;
 
 
-    public ThemeMetaData(Class<? extends Theme> themeClass, int startingLevel) {
-        this.themeClass = themeClass;
+    public ThemeMetaData(Theme theme, int startingLevel) {
+        this.theme = theme;
         this.startingLevel = startingLevel;
     }
 }
