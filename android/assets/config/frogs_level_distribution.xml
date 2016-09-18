@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<frogsDistribution>
+    <level id="1">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="1" />
+    </level>
+    <level id="3">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.5" />
+        <frog class="com.mygdx.game.sprites.frogs.Pinkfrog" spawn_prob="0.5" max_allowed="1"/>
+    </level>
+    <level id ="5">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.8" />
+        <frog class="com.mygdx.game.sprites.frogs.RedFrog" spawn_prob="0.2" max_allowed="1" />
+    </level>
+    <level id="7">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.8" />
+        <frog class="com.mygdx.game.sprites.frogs.YellowFrog" spawn_prob="0.2" max_allowed="1" />
+    </level>
+    <level id="9">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.8" />
+        <frog class="com.mygdx.game.sprites.frogs.BlueFrog" spawn_prob="0.2" max_allowed="1" />
+    </level>
+    <level id="11">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="1" />
+    </level>
+    <level id="12">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.7" />
+        <frog class="com.mygdx.game.sprites.frogs.YellowFrog" spawn_prob="0.1" max_allowed="1" />
+        <frog class="com.mygdx.game.sprites.frogs.RedFrog" spawn_prob="0.1" max_allowed="1" />
+    </level>
+    <level id="15">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.6" />
+        <frog class="com.mygdx.game.sprites.frogs.YellowFrog" spawn_prob="0.1" max_allowed="1" />
+        <frog class="com.mygdx.game.sprites.frogs.RedFrog" spawn_prob="0.1" max_allowed="1" />
+        <frog class="com.mygdx.game.sprites.frogs.Pinkfrog" spawn_prob="0.1" max_allowed="1"/>
+        <frog class="com.mygdx.game.sprites.frogs.ColorfullFrog" spawn_prob="0.03" max_allowed="1"/>
+    </level>
+    <level id="18">
+        <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.6" />
+        <frog class="com.mygdx.game.sprites.frogs.YellowFrog" spawn_prob="0.1" max_allowed="1" />
+        <frog class="com.mygdx.game.sprites.frogs.RedFrog" spawn_prob="0.1" max_allowed="1" />
+        <frog class="com.mygdx.game.sprites.frogs.BlueFrog" spawn_prob="0.1" max_allowed="1"/>
+        <frog class="com.mygdx.game.sprites.frogs.Pinkfrog" spawn_prob="0.1" max_allowed="1"/>
+        <frog class="com.mygdx.game.sprites.frogs.ColorfullFrog" spawn_prob="0.03" max_allowed="1"/>
+    </level>
+</frogsDistribution>
