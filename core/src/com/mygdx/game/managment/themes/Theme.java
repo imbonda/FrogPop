@@ -1,6 +1,7 @@
 package com.mygdx.game.managment.themes;
 
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -24,7 +25,7 @@ public interface Theme {
     /**
      * Returns the theme's music.
      */
-    void playMusic();
+    Music getMusic();
 
     /**
      * Returns the sprite's texture suitable for this theme.

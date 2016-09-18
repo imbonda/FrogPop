@@ -43,14 +43,10 @@ public class PlayScreen implements Screen {
     private LevelController levelController;
     private ThemeController themeController;
     private Hud hud;
-    private Music music;
 
     public PlayScreen(FrogPop game) {
         SpritesDrawer.getInstance().addSprites(holes);
         this.game = game;
-        this.music = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
-        this.music.setLooping(true);
-        this.music.play();
         this.hud = Hud.getInstance();
         this.levelController = LevelController.getInstance();
         this.levelController.init();
@@ -93,7 +89,6 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.music.dispose();
     }
 
     @Override

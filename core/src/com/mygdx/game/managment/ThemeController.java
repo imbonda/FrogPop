@@ -64,8 +64,7 @@ public class ThemeController {
     private void setup() {
         if (this.themesMetaData.size > 0) {
             // Advance to the next theme.
-            this.currentTheme = this.themesMetaData.get(this.nextThemeIndex).theme;
-            this.nextThemeIndex += 1;
+            setTheme();
         }
     }
 
@@ -79,9 +78,16 @@ public class ThemeController {
         while (this.nextThemeIndex < this.themesMetaData.size &&
                     level >= this.themesMetaData.get(this.nextThemeIndex).startingLevel) {
             // Advance to the next theme.
-            this.currentTheme = this.themesMetaData.get(this.nextThemeIndex).theme;
-            this.nextThemeIndex += 1;
+            setTheme();
         }
+    }
+
+    private void setTheme() {
+        this.currentTheme.getMusic().stop();
+        this.currentTheme = this.themesMetaData.get(this.nextThemeIndex).theme;
+        this.nextThemeIndex += 1;
+        this.currentTheme.getMusic().setLooping(true);
+        this.currentTheme.getMusic().play();
     }
 
 }

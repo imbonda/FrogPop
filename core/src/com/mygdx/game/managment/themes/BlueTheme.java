@@ -1,6 +1,7 @@
 package com.mygdx.game.managment.themes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 public class BlueTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("world2.jpg");
+    private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
 
     // Blue frog.
     private static final Texture BLUE_FROG_TEXTURE[] = {
@@ -109,8 +111,8 @@ public class BlueTheme implements Theme {
     }
 
     @Override
-    public void playMusic() {
-
+    public Music getMusic() {
+        return MUSIC;
     }
 
     @Override
