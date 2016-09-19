@@ -27,7 +27,6 @@ public class ThemeController {
     private ThemeController() {
         this.themesMetaData = Config.themesMetaData;
         this.currentTheme = ThemeMetaData.DEFAULT_THEME;
-        init();
     }
 
     // The current active game-theme.
@@ -88,9 +87,6 @@ public class ThemeController {
         this.nextThemeIndex += 1;
         this.currentTheme.getMusic().setLooping(true);
         this.currentTheme.getMusic().play();
-    }
-    public void reset() {
-nextThemeIndex=0;
     }
 
 }
