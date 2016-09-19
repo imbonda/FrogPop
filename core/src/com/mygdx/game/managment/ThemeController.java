@@ -27,7 +27,6 @@ public class ThemeController {
     private ThemeController() {
         this.themesMetaData = Config.themesMetaData;
         this.currentTheme = ThemeMetaData.DEFAULT_THEME;
-        init();
     }
 
     // The current active game-theme.

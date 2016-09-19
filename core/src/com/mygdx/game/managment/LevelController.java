@@ -54,6 +54,7 @@ public class LevelController {
     public void init() {
         this.currentLevel = STARTING_LEVEL;
         this.speed = STARTING_SPEED;
+        ThemeController.getInstance().init();
         setup();
     }
 
@@ -64,6 +65,7 @@ public class LevelController {
      */
     public void init(int level) {
         this.currentLevel = level;
+        ThemeController.getInstance().init(level);
         // TODO (finish function: calculate the speed for the given level..)
         setup();
     }
