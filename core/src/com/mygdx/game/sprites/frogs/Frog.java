@@ -17,7 +17,7 @@ import com.mygdx.game.sprites.SpritesDrawer;
  */
 public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
-    protected static final float FROG_MAX_LIFE_TIME = 5.0f;
+    protected static final float FROG_MAX_LIFE_TIME = 4.0f;
     private static final SpritesDrawer spritesDrawer = SpritesDrawer.getInstance();
 
     protected Vector2 position;

@@ -28,8 +28,8 @@ public class Pinkfrog extends Frog {
     private final Texture frogTexture[] = {
             new Texture("Frog/0p.png"),
             new Texture("Frog/1p.png"),
-            new Texture("Frog/2p.png"),
-            new Texture("Frog/3p.png"),
+            new Texture("Frog/0p.png"),
+            new Texture("Frog/1p.png"),
             new Texture("Frog/0p.png"),
             new Texture("Frog/eye2p.png"),
             new Texture("Frog/eye3p.png"),
@@ -48,7 +48,7 @@ public class Pinkfrog extends Frog {
 
     public Pinkfrog() {
         Random rand = new Random();
-        this.randTextureType = rand.nextInt(2);
+        this.randTextureType = rand.nextInt(1);
         this.frameKey = 0;
     }
 
@@ -102,7 +102,7 @@ public class Pinkfrog extends Frog {
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
-        this.randTextureType = rand.nextInt(2);
+        this.randTextureType = rand.nextInt(1);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class Pinkfrog extends Frog {
         PlayScreen.gameViewPort.getCamera().update();
         Random rand = new Random();
         this.frameKey = 0;
-        this.randTextureType = rand.nextInt(2);
+        this.randTextureType = rand.nextInt(1);
         rotationcontroller=0;
         rotatedirectionA=-4;
         rotatedelay=0;

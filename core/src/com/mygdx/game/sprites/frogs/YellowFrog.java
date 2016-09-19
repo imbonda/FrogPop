@@ -34,7 +34,7 @@ import java.util.Random;
                 new Texture("Frog/0y.png"),
                 new Texture("Frog/1y.png"),
                 new Texture("Frog/2y.png"),
-                new Texture("Frog/3y.png"),
+                new Texture("Frog/2y.png"),
                 new Texture("Frog/0y.png"),
                 new Texture("Frog/eye2y.png"),
                 new Texture("Frog/eye3y.png"),
@@ -48,7 +48,7 @@ import java.util.Random;
 
         public YellowFrog() {
             Random rand = new Random();
-            this.randTextureType = rand.nextInt(2);
+            this.randTextureType = rand.nextInt(1);
             this.frameKey = 0;
         }
 
@@ -92,7 +92,7 @@ import java.util.Random;
             super.defaultReset();
             Random rand = new Random();
             this.frameKey = 0;
-            this.randTextureType = rand.nextInt(2);
+            this.randTextureType = rand.nextInt(1);
         }
 
         @Override
@@ -122,7 +122,7 @@ import java.util.Random;
                 this.frameKey += dir;
             }
 
-            return this.frogTexture[(int)(this.frameKey % 8)];
+            return this.frogTexture[(int)(this.frameKey % 4)];
         }
 
     }

@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.managment.ThemeController;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Buttons;
 
@@ -29,8 +30,10 @@ public class GameOverScreen implements Screen {
     private Buttons button1;
     private FrogPop game;
     private Viewport viewport;
+    private ThemeController themeController;
 
     public GameOverScreen(FrogPop game) {
+        this.themeController=ThemeController.getInstance();
         this.game = game;
         this.hud = Hud.getInstance();
         this.Loser = new BitmapFont(Gdx.files.internal("font.fnt"));
@@ -64,6 +67,7 @@ public class GameOverScreen implements Screen {
             Vector2 touchVector = new Vector2(touches.x,touches.y);
             if (this.button1.isButtonsTouched(touchVector)) {
                 this.hud.reset();
+                this.themeController.reset();
                 this.game.setScreen(new PlayScreen(this.game));
             }
         }

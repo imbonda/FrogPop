@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<levelThemes>
+    <theme class="com.mygdx.game.managment.themes.DefaultTheme" starting_level="1" />
+    <theme class="com.mygdx.game.managment.themes.YellowTheme" starting_level="5" />
+    <theme class="com.mygdx.game.managment.themes.BlueTheme" starting_level="8" />
+    <theme class="com.mygdx.game.managment.themes.PinkTheme" starting_level="13" />
+    <theme class="com.mygdx.game.managment.themes.AllTheme" starting_level="18" />
+</levelThemes>

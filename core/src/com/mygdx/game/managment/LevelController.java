@@ -16,7 +16,7 @@ public class LevelController {
 
     private static final int STARTING_LEVEL = 1;
     private static final float STARTING_SPEED = 1.0f;
-    private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.05f;
+    private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.04f;
     private static final float SPEED_SCALE_FACTOR = 1.087f;
 
     private static LevelController ourInstance = new LevelController();
@@ -34,8 +34,6 @@ public class LevelController {
      * Singleton private constructor.
      */
     private LevelController() {
-        this.frogClassFactory = FrogClassFactory.getInstance();
-        this.frogManager = FrogManager.getInstance();
         this.currentLevel = STARTING_LEVEL;
         this.speed = STARTING_SPEED;
         this.levelsMetaData = Config.levelsMetaData;
@@ -48,8 +46,16 @@ public class LevelController {
     private Array<Integer> levelsToAddFrog;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
-    private FrogClassFactory frogClassFactory;
-    private FrogManager frogManager;
+
+
+    /**
+     * Initializes the singleton instance to the default starting level.
+     */
+    public void init() {
+        this.currentLevel = STARTING_LEVEL;
+        this.speed = STARTING_SPEED;
+        setup();
+    }
 
     /**
      * Initializes the singleton instance to a given level.
@@ -62,18 +68,9 @@ public class LevelController {
         setup();
     }
 
-    /**
-     * Initializes the singleton instance to a given level.
-     */
-    public void init() {
-        this.currentLevel = STARTING_LEVEL;
-        this.speed = STARTING_SPEED;
-        setup();
-    }
-
     private void setup() {
         this.levelTimer = new Timer();
-        this.frogManager.reset();
+        FrogManager.getInstance().reset();
         setLevelsToAddFrog();
         setCurrentLevel();
     }
@@ -97,21 +94,22 @@ public class LevelController {
      * This method sets all the data necessary for the current level.
      */
     private void setCurrentLevel() {
+        FrogClassFactory frogClassFactory = FrogClassFactory.getInstance();
         // Look for a level configuration, specific for this level.
         for (LevelMetaData levelMetaData : this.levelsMetaData) {
             if (levelMetaData.id == this.currentLevel) {
                 this.currentLevelMetaData = levelMetaData;
-                this.frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
+                frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
                 break;
             }
         }
         // If no specific configuration was found, use the last configuration configured.
         if (this.currentLevelMetaData.id != this.currentLevel) {
-            this.frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
+            frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
         }
         // In case a frog needs to be added, add it.
         while (this.levelsToAddFrog.size > 0 && this.currentLevel >= this.levelsToAddFrog.get(0)) {
-            this.frogManager.addFrog();
+            FrogManager.getInstance().addFrog();
             this.levelsToAddFrog.removeIndex(0);
         }
     }
@@ -123,11 +121,12 @@ public class LevelController {
      */
     public void update(float deltaTime) {
         this.levelTimer.update(deltaTime);
-        this.frogManager.update(deltaTime);
+        FrogManager.getInstance().update(deltaTime);
         if (this.levelTimer.isTimedOut()) {
             this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
             levelUp();
         }
+        ThemeController.getInstance().update(deltaTime);
     }
 
     /**
@@ -147,5 +146,9 @@ public class LevelController {
 
     public float getSpeed() {
         return this.speed;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
     }
 }

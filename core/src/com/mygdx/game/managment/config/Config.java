@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.game.managment.metadata.AddFrogMetaData;
 import com.mygdx.game.managment.metadata.LevelMetaData;
+import com.mygdx.game.managment.metadata.ThemeMetaData;
 
 /**
  * This class will hold all the configurations necessary for the game.
@@ -12,16 +13,27 @@ import com.mygdx.game.managment.metadata.LevelMetaData;
  */
 public class Config {
 
-    public static Array<LevelMetaData> levelsMetaData = new Array<LevelMetaData>();
-    public static Array<AddFrogMetaData> addFrogsMetaData = new Array<AddFrogMetaData>();
-    private static XmlReader xmlReader = new XmlReader();
+    private static final XmlReader xmlReader = new XmlReader();
+    public static final Array<LevelMetaData> levelsMetaData = new Array<LevelMetaData>();
+    public static final Array<AddFrogMetaData> addFrogsMetaData = new Array<AddFrogMetaData>();
+    public static final Array<ThemeMetaData> themesMetaData = new Array<ThemeMetaData>();
 
     static {
-        loadConfig();
+        loadLevelsMetaData();
+        loadAddFrogsMetaData();
+        loadThemesMetaData();
     }
 
-    private static void loadConfig() {
-        LevelMapLoader.loadLevelMap(xmlReader, levelsMetaData, addFrogsMetaData);
+    private static void loadLevelsMetaData() {
+        LevelsMetaDataLoader.load(xmlReader, levelsMetaData);
+    }
+
+    private static void loadAddFrogsMetaData() {
+        AddFrogsMetaDataLoader.load(xmlReader, addFrogsMetaData);
+    }
+
+    private static void loadThemesMetaData() {
+        ThemesMetaDataLoader.load(xmlReader, themesMetaData);
     }
 
 }

@@ -24,24 +24,24 @@ public class RedFrog extends Frog {
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
     private final Texture frogTexture[] = {
-            new Texture("Frog/0r.png"),
-            new Texture("Frog/1r.png"),
-            new Texture("Frog/2r.png"),
             new Texture("Frog/3r.png"),
+            new Texture("Frog/2r.png"),
+            new Texture("Frog/1r.png"),
             new Texture("Frog/0r.png"),
-            new Texture("Frog/eye2r.png"),
-            new Texture("Frog/eye3r.png"),
-            new Texture("Frog/eye4r.png")
+            //new Texture("Frog/eye1r.png"),
+            //new Texture("Frog/eye2r.png"),
+            //new Texture("Frog/eye3r.png"),
+            //new Texture("Frog/eye4r.png")
     };
 
     private double frameKey;
     private int randTextureType;
-    private double dir = 0.25;
+    private double dir = 0.15;
 
 
     public RedFrog() {
         Random rand = new Random();
-        this.randTextureType = rand.nextInt(2);
+        this.randTextureType = rand.nextInt(1);
         this.frameKey = 0;
     }
 
@@ -83,7 +83,7 @@ public class RedFrog extends Frog {
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
-        this.randTextureType = rand.nextInt(2);
+        this.randTextureType = rand.nextInt(1);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class RedFrog extends Frog {
 
         Random rand = new Random();
         this.frameKey = 0;
-        this.randTextureType = rand.nextInt(2);
+        this.randTextureType = rand.nextInt(1);
     }
 
     @Override
@@ -103,26 +103,27 @@ public class RedFrog extends Frog {
 
     public Texture getFrogTexture() {
         if (this.randTextureType == 0){
-            if (this.frameKey == 0){
-                this.dir = 0.25;
+            if (this.frameKey < 0.15){
+                this.dir = 0.15;
             }
             if (this.frameKey > 3.7){
-                dir = -0.25;
-            }
-            this.frameKey += dir;}
-        if (this.randTextureType == 1)
-        {
-            if (this.frameKey == 0 || this.frameKey == 4){
-                this.frameKey = 4;
-                this.dir = 0.25;
-            }
-            if(this.frameKey>7.7){
-                dir = -0.25;
+                dir = -0.15;
             }
             this.frameKey += dir;
-        }
+        System.out.print(frameKey);}
+      //  if (this.randTextureType == 1)
+        //{
+          //  if (this.frameKey == 0 || this.frameKey == 4){
+            //    this.frameKey = 4;
+              //  this.dir = 0.12;
+            //}
+            //if(this.frameKey>7.7){
+             //   dir = -0.12;
+            //}
+            //this.frameKey += dir;
+        //}
 
-        return this.frogTexture[(int)(this.frameKey % 8)];
+        return this.frogTexture[(int)(this.frameKey % 4)];
     }
 
 }

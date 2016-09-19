@@ -26,11 +26,13 @@ public class BlueFrog extends Frog {
         new Texture("Frog/0b.png"),
         new Texture("Frog/1b.png"),
         new Texture("Frog/2b.png"),
-        new Texture("Frog/3b.png"),
-        new Texture("Frog/0b.png"),
-        new Texture("Frog/eye2b.png"),
-        new Texture("Frog/eye3b.png"),
-        new Texture("Frog/eye4b.png")
+        new Texture("Frog/2b.png"),
+            //        new Texture("Frog/3b.png"),
+
+            //  new Texture("Frog/0b.png"),
+       // new Texture("Frog/eye2b.png"),
+        //new Texture("Frog/eye3b.png"),
+        //new Texture("Frog/eye4b.png")
     };
 
     private double frameKey;
@@ -58,7 +60,7 @@ public class BlueFrog extends Frog {
     }
 
     @Override
-    public void onDeath() {
+        public void onDeath() {
         if (isKilled()) {
             Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
         }
@@ -75,7 +77,7 @@ public class BlueFrog extends Frog {
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
-        this.randTextureType = rand.nextInt(2);
+        this.randTextureType = rand.nextInt(1);
         initAbility();
     }
 
@@ -88,7 +90,7 @@ public class BlueFrog extends Frog {
         super.defaultReset();
         Random rand = new Random();
         this.frameKey = 0;
-        this.randTextureType = rand.nextInt(2);
+        this.randTextureType = rand.nextInt(1);
         LevelController.getInstance().scaleSpeed(3.333333f);
     }
 
@@ -107,19 +109,19 @@ public class BlueFrog extends Frog {
                 dir = -0.25;
             }
             this.frameKey += dir;}
-        if (this.randTextureType == 1)
-        {
-            if (this.frameKey == 0 || this.frameKey == 4){
-                this.frameKey = 4;
-                this.dir = 0.25;
-            }
-            if(this.frameKey>7.7){
-                dir = -0.25;
-            }
-            this.frameKey += dir;
-        }
+       // if (this.randTextureType == 1)
+        //{
+           // if (this.frameKey == 0 || this.frameKey == 4){
+             //   this.frameKey = 4;
+               // this.dir = 0.25;
+            //}
+            //if(this.frameKey>7.7){
+              //  dir = -0.25;
+         //   }
+           // this.frameKey += dir;
+        //}
 
-        return this.frogTexture[(int)(this.frameKey % 8)];
+        return this.frogTexture[(int)(this.frameKey % 4)];
     }
 
 }
