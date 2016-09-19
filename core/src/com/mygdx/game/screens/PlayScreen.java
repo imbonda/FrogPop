@@ -63,6 +63,7 @@ public class PlayScreen implements Screen {
 
     private void gameOver() {
         this.game.setScreen(new GameOverScreen(this.game));
+        this.themeController.currentTheme.getMusic().stop();
         dispose();
         SpritesDrawer.getInstance().clear();
         Gdx.input.setInputProcessor(null);
