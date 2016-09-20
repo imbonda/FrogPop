@@ -49,9 +49,10 @@ public class LevelController {
 
 
     /**
-     * Initializes the singleton instance to the default starting level.
+     * Initializes the level-controller to it's default configuration.
      */
     public void init() {
+        reset();
         this.currentLevel = STARTING_LEVEL;
         this.speed = STARTING_SPEED;
         ThemeController.getInstance().init();
@@ -64,15 +65,22 @@ public class LevelController {
      * @param level A level to set the LevelController to.
      */
     public void init(int level) {
+        reset();
         this.currentLevel = level;
         ThemeController.getInstance().init(level);
         // TODO (finish function: calculate the speed for the given level..)
         setup();
     }
 
+    /**
+     * Resets the level-controller to allow upcoming initialization.
+     */
+    private void reset() {
+        FrogManager.getInstance().reset();
+    }
+    
     private void setup() {
         this.levelTimer = new Timer();
-        FrogManager.getInstance().reset();
         setLevelsToAddFrog();
         setCurrentLevel();
     }
