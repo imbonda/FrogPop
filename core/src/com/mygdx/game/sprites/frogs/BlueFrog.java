@@ -96,11 +96,6 @@ public class BlueFrog extends Frog {
     }
 
     @Override
-    public void update(float deltaTime) {
-        this.lifeTime += deltaTime * LevelController.getInstance().getSpeed() * (1 / SLOW_DOWN_FACTOR);
-    }
-
-    @Override
     public void draw(Batch batch) {
         batch.draw(getFrogTexture(), this.position.x, this.position.y,
                 0, 0, 100, 100-(int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
