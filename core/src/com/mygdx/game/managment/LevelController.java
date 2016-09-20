@@ -78,7 +78,7 @@ public class LevelController {
     private void reset() {
         FrogManager.getInstance().reset();
     }
-    
+
     private void setup() {
         this.levelTimer = new Timer();
         setLevelsToAddFrog();
@@ -104,18 +104,18 @@ public class LevelController {
      * This method sets all the data necessary for the current level.
      */
     private void setCurrentLevel() {
-        FrogClassFactory frogClassFactory = FrogClassFactory.getInstance();
+        FrogClassAllocator frogClassAllocator = FrogClassAllocator.getInstance();
         // Look for a level configuration, specific for this level.
         for (LevelMetaData levelMetaData : this.levelsMetaData) {
             if (levelMetaData.id == this.currentLevel) {
                 this.currentLevelMetaData = levelMetaData;
-                frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
+                frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
                 break;
             }
         }
         // If no specific configuration was found, use the last configuration configured.
         if (this.currentLevelMetaData.id != this.currentLevel) {
-            frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
+            frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
         }
         // In case a frog needs to be added, add it.
         while (this.levelsToAddFrog.size > 0 && this.currentLevel >= this.levelsToAddFrog.get(0)) {

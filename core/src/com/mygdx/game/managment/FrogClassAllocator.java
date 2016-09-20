@@ -14,23 +14,23 @@ import java.util.Random;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class FrogClassFactory {
+public class FrogClassAllocator {
 
-    private static FrogClassFactory ourInstance = new FrogClassFactory();
+    private static FrogClassAllocator ourInstance = new FrogClassAllocator();
 
     /**
      * Singleton implementation.
      *
      * @return  The singleton object.
      */
-    public static FrogClassFactory getInstance() {
+    public static FrogClassAllocator getInstance() {
         return ourInstance;
     }
 
     /**
      * Singleton private constructor.
      */
-    private FrogClassFactory() {
+    private FrogClassAllocator() {
         this.randomFrogClassGenerator = new RandomFrogClassGenerator(null, 0);
         this.levelMetaData = LevelMetaData.DEFAULT_METADATA;
         this.frogClassesRuntimeInfo = new HashMap<Class<? extends Frog>, FrogClassRuntimeInfo>();
@@ -75,7 +75,7 @@ public class FrogClassFactory {
             if (this.worldPortionsSum <= 0) {
                 return null;
             }
-            int randVal = FrogClassFactory.this.random.nextInt(this.worldPortionsSum);
+            int randVal = FrogClassAllocator.this.random.nextInt(this.worldPortionsSum);
             int portionsSum = 0;
             FrogClassRuntimeInfo runtimeInfo = null;
             Iterator<ProbPortion> portionMapIterator = probPortions.iterator();
@@ -84,7 +84,7 @@ public class FrogClassFactory {
                 if (randVal < portionMap.portion + portionsSum) {
                     Class<? extends Frog> frogClass = portionMap.frogMetaData.frogClass;
                     // Update the map to know that a new frog is going to be generated.
-                    runtimeInfo = FrogClassFactory.this.frogClassesRuntimeInfo.get(frogClass);
+                    runtimeInfo = FrogClassAllocator.this.frogClassesRuntimeInfo.get(frogClass);
                     runtimeInfo.total += 1;
                     runtimeInfo.parallel += 1;
                     updateProbabilityPortions(portionMapIterator, portionMap);
@@ -106,7 +106,7 @@ public class FrogClassFactory {
         private void updateProbabilityPortions(
                     Iterator<ProbPortion> portionMapIterator, ProbPortion probPortion) {
             Class<? extends Frog> frogClass = probPortion.frogMetaData.frogClass;
-            FrogClassRuntimeInfo runtimeInfo = FrogClassFactory.this.frogClassesRuntimeInfo.get(frogClass);
+            FrogClassRuntimeInfo runtimeInfo = FrogClassAllocator.this.frogClassesRuntimeInfo.get(frogClass);
             if (probPortion.frogMetaData.isLimitedTotal &&
                         runtimeInfo.total >= probPortion.frogMetaData.maxAllowed) {
                 // The maximal number of frogs of this class has been reached,
@@ -169,11 +169,11 @@ public class FrogClassFactory {
      *
      * @return  A random frog according to the probability function supplied in the xml config.
      */
-    public Class<? extends Frog> getRandomFrogClass() {
+    public Class<? extends Frog> allocateRandomFrogClass() {
         return this.randomFrogClassGenerator.random();
     }
 
-    public void reuse(Class<? extends Frog> frogClass) {
+    public void deallocate(Class<? extends Frog> frogClass) {
         FrogClassRuntimeInfo runtimeInfo = this.frogClassesRuntimeInfo.get(frogClass);
         FrogMetaData frogMeta = runtimeInfo.probPortion.frogMetaData;
         runtimeInfo.parallel -= 1;
