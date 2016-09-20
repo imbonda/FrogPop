@@ -147,16 +147,21 @@ public class FrogClassAllocator {
                 this.frogClassesRuntimeInfo.put(frogMetaData.frogClass, new FrogClassRuntimeInfo());
             }
             runtimeInfo = this.frogClassesRuntimeInfo.get(frogMetaData.frogClass);
-            int frogClassCounter = runtimeInfo.total;
-            if (!frogMetaData.isLimitedTotal || frogMetaData.maxAllowed > frogClassCounter) {
-                float spawnProb = frogMetaData.spawnProb;
-                ProbPortion probPortion = new ProbPortion();
-                probPortion.portion = (int) Math.ceil(spawnProb * 100);
-                probPortion.frogMetaData = frogMetaData;
-                probPortions.add(probPortion);
-                runtimeInfo.probPortion = probPortion;
-                probWorldPortionsSum += probPortion.portion;
+            if (frogMetaData.isLimitedTotal &&
+                        frogMetaData.maxAllowed <= runtimeInfo.total) {
+                continue;
             }
+            else if (frogMetaData.isLimitedParallel &&
+                        frogMetaData.maxParallel <= runtimeInfo.parallel ) {
+                continue;
+            }
+            float spawnProb = frogMetaData.spawnProb;
+            ProbPortion probPortion = new ProbPortion();
+            probPortion.portion = (int) Math.ceil(spawnProb * 100);
+            probPortion.frogMetaData = frogMetaData;
+            probPortions.add(probPortion);
+            runtimeInfo.probPortion = probPortion;
+            probWorldPortionsSum += probPortion.portion;
         }
 
         this.randomFrogClassGenerator = new RandomFrogClassGenerator(
@@ -187,6 +192,7 @@ public class FrogClassAllocator {
                     frogMeta.isLimitedParallel &&
                     runtimeInfo.parallel < frogMeta.maxParallel &&
                     (!frogMeta.isLimitedTotal || runtimeInfo.total < frogMeta.maxAllowed)) {
+            System.out.println("Yo... adding back");
             this.randomFrogClassGenerator.probPortions.insert(0, runtimeInfo.probPortion);
             this.randomFrogClassGenerator.worldPortionsSum += runtimeInfo.probPortion.portion;
         }
