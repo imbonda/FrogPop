@@ -192,7 +192,6 @@ public class FrogClassAllocator {
                     frogMeta.isLimitedParallel &&
                     runtimeInfo.parallel < frogMeta.maxParallel &&
                     (!frogMeta.isLimitedTotal || runtimeInfo.total < frogMeta.maxAllowed)) {
-            System.out.println("Yo... adding back");
             this.randomFrogClassGenerator.probPortions.insert(0, runtimeInfo.probPortion);
             this.randomFrogClassGenerator.worldPortionsSum += runtimeInfo.probPortion.portion;
         }
