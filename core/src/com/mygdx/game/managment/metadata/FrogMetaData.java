@@ -9,20 +9,37 @@ public class FrogMetaData {
 
     public Class<? extends Frog> frogClass;
     public float spawnProb;
-    public boolean isLimited;
+    public boolean isLimitedTotal;
     public int maxAllowed;
+    public boolean isLimitedParallel;
+    public int maxParallel;
 
 
-    public FrogMetaData(Class<? extends Frog> frogClass, float spawnProbability) {
+    public FrogMetaData(Class<? extends Frog> frogClass,
+                            Float spawnProbability, Integer maxAllowed, Integer maxParallel) {
         this.frogClass = frogClass;
-        this.spawnProb = spawnProbability;
-        this.isLimited = false;
-    }
-
-    public FrogMetaData(Class<? extends Frog> frogClass, float spawnProbability, int maxAllowed) {
-        this.frogClass = frogClass;
-        this.spawnProb = spawnProbability;
-        this.isLimited = true;
-        this.maxAllowed = maxAllowed;
+        // Set frog spawn probability.
+        if (null == spawnProbability) {
+            this.spawnProb = 0;
+        }
+        else {
+            this.spawnProb = spawnProbability;
+        }
+        // Set number of frogs allowed in total.
+        if (null == maxAllowed) {
+            this.isLimitedTotal = false;
+        }
+        else {
+            this.isLimitedTotal = true;
+            this.maxAllowed = maxAllowed;
+        }
+        // Set number of frogs allowed in parallel.
+        if (null == maxParallel) {
+            this.isLimitedParallel = false;
+        }
+        else {
+            this.isLimitedParallel = true;
+            this.maxParallel = maxParallel;
+        }
     }
 }

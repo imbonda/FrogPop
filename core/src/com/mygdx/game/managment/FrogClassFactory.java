@@ -33,29 +33,41 @@ public class FrogClassFactory {
     private FrogClassFactory() {
         this.randomFrogClassGenerator = new RandomFrogClassGenerator(null, 0);
         this.levelMetaData = LevelMetaData.DEFAULT_METADATA;
-        this.randomizedFrogClassesCounterMap = new HashMap<Class<? extends Frog>, Integer>();
+        this.frogClassesRuntimeInfo = new HashMap<Class<? extends Frog>, FrogClassRuntimeInfo>();
     }
 
-    private LevelMetaData levelMetaData;
-    private HashMap<Class<? extends Frog>, Integer> randomizedFrogClassesCounterMap;
-
-    private final Random random = new Random();
-
-    private class PortionMap {
+    private class ProbPortion {
         public int portion;
         public FrogMetaData frogMetaData;
     }
+
+    private class FrogClassRuntimeInfo {
+        public int total;
+        public int parallel;
+        public ProbPortion probPortion;
+
+        FrogClassRuntimeInfo () {
+            this.total = 0;
+            this.parallel = 0;
+            this.probPortion = null;
+        }
+    }
+
+    private LevelMetaData levelMetaData;
+    private HashMap<Class<? extends Frog>, FrogClassRuntimeInfo> frogClassesRuntimeInfo;
+
+    private final Random random = new Random();
 
     /**
      * A private class that is responsible of generating random frog classes.
      */
     private class RandomFrogClassGenerator {
 
-        private Array<PortionMap> portionMaps;
-        private int worldPortionsSum;
+        public Array<ProbPortion> probPortions;
+        public int worldPortionsSum;
 
-        public RandomFrogClassGenerator(Array<PortionMap> portionMaps, int probWorldPortionsSum) {
-            this.portionMaps = portionMaps;
+        public RandomFrogClassGenerator(Array<ProbPortion> probPortions, int probWorldPortionsSum) {
+            this.probPortions = probPortions;
             this.worldPortionsSum = probWorldPortionsSum;
         }
 
@@ -65,12 +77,18 @@ public class FrogClassFactory {
             }
             int randVal = FrogClassFactory.this.random.nextInt(this.worldPortionsSum);
             int portionsSum = 0;
-            Iterator<PortionMap> portionMapIterator = portionMaps.iterator();
+            FrogClassRuntimeInfo runtimeInfo = null;
+            Iterator<ProbPortion> portionMapIterator = probPortions.iterator();
             while (portionMapIterator.hasNext()) {
-                PortionMap portionMap = portionMapIterator.next();
+                ProbPortion portionMap = portionMapIterator.next();
                 if (randVal < portionMap.portion + portionsSum) {
-                    updateFrogGenerationProbability(portionMapIterator, portionMap);
-                    return portionMap.frogMetaData.frogClass;
+                    Class<? extends Frog> frogClass = portionMap.frogMetaData.frogClass;
+                    // Update the map to know that a new frog is going to be generated.
+                    runtimeInfo = FrogClassFactory.this.frogClassesRuntimeInfo.get(frogClass);
+                    runtimeInfo.total += 1;
+                    runtimeInfo.parallel += 1;
+                    updateProbabilityPortions(portionMapIterator, portionMap);
+                    return frogClass;
                 }
                 portionsSum += portionMap.portion;
             }
@@ -82,20 +100,25 @@ public class FrogClassFactory {
          *
          * @param portionMapIterator    A portion-map iterator to be used to remove the given -
          *                              portion from the underlying probability world if needed.
-         * @param portionMap    The portion-map to be removed from the underlying probability -
+         * @param probPortion    The portion-map to be removed from the underlying probability -
          *                      world if needed.
          */
-        private void updateFrogGenerationProbability(Iterator<PortionMap> portionMapIterator,PortionMap portionMap) {
-            Class<? extends Frog> frogClass = portionMap.frogMetaData.frogClass;
-            Integer frogsCreated = FrogClassFactory.this.randomizedFrogClassesCounterMap.get(frogClass);
-            frogsCreated = (null == frogsCreated) ? 1 : frogsCreated + 1;
-            // Update the map to know that a new frog is going to be generated.
-            FrogClassFactory.this.randomizedFrogClassesCounterMap.put(frogClass, frogsCreated);
-            if (portionMap.frogMetaData.isLimited &&
-                        frogsCreated >= portionMap.frogMetaData.maxAllowed) {
+        private void updateProbabilityPortions(
+                    Iterator<ProbPortion> portionMapIterator, ProbPortion probPortion) {
+            Class<? extends Frog> frogClass = probPortion.frogMetaData.frogClass;
+            FrogClassRuntimeInfo runtimeInfo = FrogClassFactory.this.frogClassesRuntimeInfo.get(frogClass);
+            if (probPortion.frogMetaData.isLimitedTotal &&
+                        runtimeInfo.total >= probPortion.frogMetaData.maxAllowed) {
                 // The maximal number of frogs of this class has been reached,
                 // update the probability mapping function.
-                this.worldPortionsSum -= portionMap.portion;
+                this.worldPortionsSum -= probPortion.portion;
+                portionMapIterator.remove();
+            }
+            if (probPortion.frogMetaData.isLimitedParallel &&
+                    runtimeInfo.parallel >= probPortion.frogMetaData.maxParallel) {
+                // The maximal number of frogs of this class has been reached,
+                // update the probability mapping function.
+                this.worldPortionsSum -= probPortion.portion;
                 portionMapIterator.remove();
             }
         }
@@ -109,7 +132,6 @@ public class FrogClassFactory {
      */
     public void setLevelMetaData(LevelMetaData levelMetaData) {
         this.levelMetaData = levelMetaData;
-        this.randomizedFrogClassesCounterMap.clear();
         setFrogGenerationAlgorithm();
     }
 
@@ -118,22 +140,27 @@ public class FrogClassFactory {
      */
     private void setFrogGenerationAlgorithm() {
         int probWorldPortionsSum = 0;
-        Array<PortionMap> portionMaps = new Array<PortionMap>();
+        Array<ProbPortion> probPortions = new Array<ProbPortion>();
+        FrogClassRuntimeInfo runtimeInfo;
         for (FrogMetaData frogMetaData : this.levelMetaData.levelRelatedFrogs) {
-            Integer frogClassCounter = this.randomizedFrogClassesCounterMap.get(frogMetaData.frogClass);
-            frogClassCounter = (null == frogClassCounter) ? 0 : frogClassCounter;
-            if (!frogMetaData.isLimited || frogMetaData.maxAllowed > frogClassCounter) {
+            if (null == this.frogClassesRuntimeInfo.get(frogMetaData.frogClass)) {
+                this.frogClassesRuntimeInfo.put(frogMetaData.frogClass, new FrogClassRuntimeInfo());
+            }
+            runtimeInfo = this.frogClassesRuntimeInfo.get(frogMetaData.frogClass);
+            int frogClassCounter = runtimeInfo.total;
+            if (!frogMetaData.isLimitedTotal || frogMetaData.maxAllowed > frogClassCounter) {
                 float spawnProb = frogMetaData.spawnProb;
-                PortionMap portionMap = new PortionMap();
-                portionMap.portion = (int) Math.ceil(spawnProb * 100);
-                portionMap.frogMetaData = frogMetaData;
-                portionMaps.add(portionMap);
-                probWorldPortionsSum += portionMap.portion;
+                ProbPortion probPortion = new ProbPortion();
+                probPortion.portion = (int) Math.ceil(spawnProb * 100);
+                probPortion.frogMetaData = frogMetaData;
+                probPortions.add(probPortion);
+                runtimeInfo.probPortion = probPortion;
+                probWorldPortionsSum += probPortion.portion;
             }
         }
 
         this.randomFrogClassGenerator = new RandomFrogClassGenerator(
-                portionMaps, probWorldPortionsSum);
+                probPortions, probWorldPortionsSum);
     }
 
     /**
@@ -144,6 +171,25 @@ public class FrogClassFactory {
      */
     public Class<? extends Frog> getRandomFrogClass() {
         return this.randomFrogClassGenerator.random();
+    }
+
+    public void reuse(Class<? extends Frog> frogClass) {
+        FrogClassRuntimeInfo runtimeInfo = this.frogClassesRuntimeInfo.get(frogClass);
+        FrogMetaData frogMeta = runtimeInfo.probPortion.frogMetaData;
+        runtimeInfo.parallel -= 1;
+        boolean isSupportedFrogClass = false;
+        for (FrogMetaData m : this.levelMetaData.levelRelatedFrogs) {
+            if (m.frogClass == frogMeta.frogClass) {
+                isSupportedFrogClass = true;
+            }
+        }
+        if (isSupportedFrogClass &&
+                    frogMeta.isLimitedParallel &&
+                    runtimeInfo.parallel < frogMeta.maxParallel &&
+                    (!frogMeta.isLimitedTotal || runtimeInfo.total < frogMeta.maxAllowed)) {
+            this.randomFrogClassGenerator.probPortions.insert(0, runtimeInfo.probPortion);
+            this.randomFrogClassGenerator.worldPortionsSum += runtimeInfo.probPortion.portion;
+        }
     }
 
 }

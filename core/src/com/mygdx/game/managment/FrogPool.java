@@ -78,6 +78,7 @@ public class FrogPool {
         freeInstancesIndexes.insert(0, this.allFrogs.indexOf(frog, true));
         this.classToFreeInstancesIndexesMap.put(frogClass, freeInstancesIndexes);
         frog.reset();
+        FrogClassFactory.getInstance().reuse(frogClass);
     }
 
     /**

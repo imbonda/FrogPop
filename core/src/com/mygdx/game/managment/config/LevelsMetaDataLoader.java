@@ -75,14 +75,18 @@ public class LevelsMetaDataLoader {
             String className = frogElement.getAttribute("class");
             String spawnProbString = frogElement.getAttribute("spawn_prob");
             String maxAllowedString = frogElement.getAttribute("max_allowed", null);
-            float spawnProbability = Float.parseFloat(spawnProbString);
-            if (null == maxAllowedString) {
-                return new FrogMetaData(getFrogClassByName(className), spawnProbability);
+            String maxParallelString = frogElement.getAttribute("max_parallel", null);
+            Float spawnProbability = Float.parseFloat(spawnProbString);
+            Integer maxAllowed = null;
+            Integer maxParallel = null;
+            if (null != maxAllowedString) {
+                maxAllowed = Integer.parseInt(maxAllowedString);
             }
-            else {
-                int maxAllowed = Integer.parseInt(maxAllowedString);
-                return new FrogMetaData(getFrogClassByName(className), spawnProbability, maxAllowed);
+            if (null != maxParallelString) {
+                maxParallel = Integer.parseInt(maxParallelString);
             }
+            return new FrogMetaData(
+                        getFrogClassByName(className), spawnProbability, maxAllowed, maxParallel);
         }
         catch (GdxRuntimeException e) {
             throw new IllegalStateException("A 'Level' element does not contain " +

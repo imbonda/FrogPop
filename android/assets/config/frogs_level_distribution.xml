@@ -2,6 +2,7 @@
 <frogsDistribution>
     <level id="1">
         <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="1" />
+        <frog class="com.mygdx.game.sprites.frogs.BlueFrog" spawn_prob="1" max_parallel="1"/>
     </level>
     <level id="5">
         <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.5" />

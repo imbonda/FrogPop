@@ -21,6 +21,7 @@ public class BlueFrog extends Frog {
 
     private static final int FROG_SCORE_PROFIT_VALUE = 1;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
+    private static final float SLOW_DOWN_FACTOR = 0.3f;
 
     private final Texture frogTexture[] = {
         new Texture("Frog/0b.png"),
@@ -82,7 +83,7 @@ public class BlueFrog extends Frog {
     }
 
     private void initAbility() {
-        LevelController.getInstance().scaleSpeed(0.3f);
+        LevelController.getInstance().scaleSpeed(SLOW_DOWN_FACTOR);
     }
 
     @Override
@@ -91,7 +92,12 @@ public class BlueFrog extends Frog {
         Random rand = new Random();
         this.frameKey = 0;
         this.randTextureType = rand.nextInt(1);
-        LevelController.getInstance().scaleSpeed(3.333333f);
+        LevelController.getInstance().scaleSpeed(1 / SLOW_DOWN_FACTOR);
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        this.lifeTime += deltaTime * LevelController.getInstance().getSpeed() * (1 / SLOW_DOWN_FACTOR);
     }
 
     @Override
