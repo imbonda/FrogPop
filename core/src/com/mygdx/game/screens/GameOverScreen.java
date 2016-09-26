@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.managment.data.Data;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Buttons;
 
@@ -36,7 +37,7 @@ public class GameOverScreen implements Screen {
         this.Loser = new BitmapFont(Gdx.files.internal("font.fnt"));
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("end.jpg")));
-        button1=new Buttons(300,265);
+        button1=new Buttons(300,245);
         this.viewport = new FitViewport(
                     FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
     }
@@ -76,7 +77,8 @@ public class GameOverScreen implements Screen {
         Loser.draw(batch, "You Lost",300,400);
         Score.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         Score.draw(batch, "Your score was: "+hud.getScoreCounter().getScore(),300,380);
-        Score.draw(batch, "Your level was: "+hud.getLevelCounter().getLevel(),300,360);
+        Score.draw(batch, "Highest score: "+ Data.getInstance().getHighScore(),300,360);
+        Score.draw(batch, "Your level was: "+hud.getLevelCounter().getLevel(),300,340);
 
     }
 

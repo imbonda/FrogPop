@@ -12,6 +12,7 @@ import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.managment.ThemeController;
 import com.mygdx.game.managment.TouchProcessor;
+import com.mygdx.game.managment.data.Data;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.Hole;
@@ -61,6 +62,7 @@ public class PlayScreen implements Screen {
     }
 
     private void gameOver() {
+        Data.getInstance().updateHighScore(this.hud.getScoreCounter().getScore());
         this.game.setScreen(new GameOverScreen(this.game));
         this.themeController.currentTheme.getMusic().stop();
         dispose();
