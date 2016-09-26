@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.managment.themes.exceptions.UnsupportedSpriteException;
-import com.mygdx.game.sprites.frogs.BlueFrog;
+import com.mygdx.game.sprites.frogs.FreezeFrog;
 import com.mygdx.game.sprites.frogs.ColorfullFrog;
-import com.mygdx.game.sprites.frogs.Pinkfrog;
-import com.mygdx.game.sprites.frogs.RedFrog;
+import com.mygdx.game.sprites.frogs.IllusionFrog;
+import com.mygdx.game.sprites.frogs.HealthFrog;
 import com.mygdx.game.sprites.frogs.RegularFrog;
-import com.mygdx.game.sprites.frogs.YellowFrog;
+import com.mygdx.game.sprites.frogs.PoisonFrog;
 
 import java.util.HashMap;
 
@@ -96,12 +96,12 @@ public class PinkTheme implements Theme {
             new HashMap<Class<? extends Sprite>, Texture[]>();
 
     static {
-        SPRITE_CLASS_TO_TEXTURE_MAP.put(BlueFrog.class, BLUE_FROG_TEXTURE);
+        SPRITE_CLASS_TO_TEXTURE_MAP.put(FreezeFrog.class, BLUE_FROG_TEXTURE);
         SPRITE_CLASS_TO_TEXTURE_MAP.put(ColorfullFrog.class, COLORFUL_FROG_TEXTURE);
-        SPRITE_CLASS_TO_TEXTURE_MAP.put(Pinkfrog.class, PINK_FROG_TEXTURE);
-        SPRITE_CLASS_TO_TEXTURE_MAP.put(RedFrog.class, RED_FROG_TEXTURE);
+        SPRITE_CLASS_TO_TEXTURE_MAP.put(IllusionFrog.class, PINK_FROG_TEXTURE);
+        SPRITE_CLASS_TO_TEXTURE_MAP.put(HealthFrog.class, RED_FROG_TEXTURE);
         SPRITE_CLASS_TO_TEXTURE_MAP.put(RegularFrog.class, REGULAR_FROG_TEXTURE);
-        SPRITE_CLASS_TO_TEXTURE_MAP.put(YellowFrog.class, YELLOW_FROG_TEXTURE);
+        SPRITE_CLASS_TO_TEXTURE_MAP.put(PoisonFrog.class, YELLOW_FROG_TEXTURE);
     }
 
     @Override

@@ -24,7 +24,7 @@ import java.util.Random;
      *
      * Created by MichaelBond on 9/8/2016.
      */
-    public class YellowFrog extends Frog {
+    public class PoisonFrog extends Frog {
 
         private static final int FROG_SCORE_PROFIT_VALUE = -1;
         private static final int FROG_LIFE_PROFIT_VALUE = -1;
@@ -46,7 +46,7 @@ import java.util.Random;
         private double dir = 0.25;
 
 
-        public YellowFrog() {
+        public PoisonFrog() {
             Random rand = new Random();
             this.randTextureType = rand.nextInt(1);
             this.frameKey = 0;

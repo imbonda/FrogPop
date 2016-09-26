@@ -17,7 +17,7 @@ import java.util.Random;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class RedFrog extends Frog {
+public class HealthFrog extends Frog {
 
     private static final int FROG_SCORE_PROFIT_VALUE = 2;
     private static final int FROG_LIFE_PROFIT_VALUE = 1;
@@ -39,7 +39,7 @@ public class RedFrog extends Frog {
     private double dir = 0.15;
 
 
-    public RedFrog() {
+    public HealthFrog() {
         Random rand = new Random();
         this.randTextureType = rand.nextInt(1);
         this.frameKey = 0;
