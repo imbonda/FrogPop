@@ -1,7 +1,8 @@
 package com.mygdx.game.managment.data;
 
 /**
- * This class is responsible for maintaining the game saved data and preferences.
+ *
+ * This class exposes some basic API for manipulating the game saved data and preferences.
  *
  * Created by MichaelBond on 9/26/2016.
  */

@@ -6,6 +6,8 @@ import com.badlogic.gdx.Preferences;
 import java.util.Date;
 
 /**
+ * This class is responsible for maintaining the game saved data and preferences.
+ *
  * Created by MichaelBond on 9/26/2016.
  */
 public class DataManager {
