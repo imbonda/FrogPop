@@ -79,7 +79,6 @@ public class PlayScreen implements Screen {
         this.themeController.currentTheme.draw(this.game.batch);
         SpritesDrawer.getInstance().drawSprites();
         this.game.batch.end();
-        this.game.batch.setProjectionMatrix(this.hud.getStage().getCamera().combined);
         this.hud.draw();
     }
 
