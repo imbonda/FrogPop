@@ -1,11 +1,11 @@
 package com.mygdx.game.managment.config;
 
-import com.mygdx.game.managment.themes.AllTheme;
-import com.mygdx.game.managment.themes.BlueTheme;
-import com.mygdx.game.managment.themes.DefaultTheme;
-import com.mygdx.game.managment.themes.PinkTheme;
-import com.mygdx.game.managment.themes.Theme;
-import com.mygdx.game.managment.themes.YellowTheme;
+import com.mygdx.game.themes.AllTheme;
+import com.mygdx.game.themes.BlueTheme;
+import com.mygdx.game.themes.DefaultTheme;
+import com.mygdx.game.themes.PinkTheme;
+import com.mygdx.game.themes.Theme;
+import com.mygdx.game.themes.YellowTheme;
 import com.mygdx.game.sprites.frogs.FreezeFrog;
 import com.mygdx.game.sprites.frogs.ColorfullFrog;
 import com.mygdx.game.sprites.frogs.Frog;

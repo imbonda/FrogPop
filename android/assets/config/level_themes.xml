@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <levelThemes>
-    <theme class="com.mygdx.game.managment.themes.DefaultTheme" duration="1" />
-    <theme class="com.mygdx.game.managment.themes.YellowTheme" duration="2" />
-    <theme class="com.mygdx.game.managment.themes.BlueTheme" duration="2" />
-    <theme class="com.mygdx.game.managment.themes.PinkTheme" duration="1" />
+    <theme class="com.mygdx.game.themes.DefaultTheme" duration="1" />
+    <theme class="com.mygdx.game.themes.YellowTheme" duration="2" />
+    <theme class="com.mygdx.game.themes.BlueTheme" duration="2" />
+    <theme class="com.mygdx.game.themes.PinkTheme" duration="1" />
 </levelThemes>

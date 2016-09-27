@@ -1,4 +1,4 @@
-package com.mygdx.game.managment.themes;
+package com.mygdx.game.themes;
 
 
 import com.badlogic.gdx.audio.Music;

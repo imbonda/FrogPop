@@ -1,12 +1,12 @@
-package com.mygdx.game.managment.themes;
+package com.mygdx.game.themes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.mygdx.game.effects.CloudEffect;
-import com.mygdx.game.managment.themes.exceptions.UnsupportedSpriteException;
+import com.mygdx.game.effects.SunEffect;
+import com.mygdx.game.themes.exceptions.UnsupportedSpriteException;
 import com.mygdx.game.sprites.frogs.FreezeFrog;
 import com.mygdx.game.sprites.frogs.ColorfullFrog;
 import com.mygdx.game.sprites.frogs.IllusionFrog;
@@ -17,15 +17,15 @@ import com.mygdx.game.sprites.frogs.PoisonFrog;
 import java.util.HashMap;
 
 /**
- * TODO This is just an example class, should be removed when actual themes are created !!!
+ * This class is the default implementation of the Theme interface.
  *
  * Created by MichaelBond on 9/18/2016.
  */
-public class PinkTheme implements Theme {
+public class DefaultTheme implements Theme {
 
-    private static final Texture BACKGROUND_TEXTURE = new Texture("world4.jpg");
+    private static final Texture BACKGROUND_TEXTURE = new Texture("world.jpg");
     private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
-    private static CloudEffect clouds=new CloudEffect();
+    private static SunEffect sun=new SunEffect();
 
     // Blue frog.
     private static final Texture BLUE_FROG_TEXTURE[] = {
@@ -95,7 +95,7 @@ public class PinkTheme implements Theme {
     };
 
     private static final HashMap<Class<? extends Sprite>, Texture[]> SPRITE_CLASS_TO_TEXTURE_MAP =
-            new HashMap<Class<? extends Sprite>, Texture[]>();
+                new HashMap<Class<? extends Sprite>, Texture[]>();
 
     static {
         SPRITE_CLASS_TO_TEXTURE_MAP.put(FreezeFrog.class, BLUE_FROG_TEXTURE);
@@ -110,7 +110,7 @@ public class PinkTheme implements Theme {
     public void draw(Batch batch) {
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         batch.draw(BACKGROUND_TEXTURE, 0, 0);
-        clouds.draw(batch);
+        sun.draw(batch);
     }
 
     @Override

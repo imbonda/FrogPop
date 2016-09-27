@@ -1,4 +1,4 @@
-package com.mygdx.game.managment.themes.exceptions;
+package com.mygdx.game.themes.exceptions;
 
 /**
  * Created by MichaelBond on 9/18/2016.

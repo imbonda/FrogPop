@@ -1,7 +1,7 @@
 package com.mygdx.game.managment.metadata;
 
-import com.mygdx.game.managment.themes.DefaultTheme;
-import com.mygdx.game.managment.themes.Theme;
+import com.mygdx.game.themes.DefaultTheme;
+import com.mygdx.game.themes.Theme;
 
 /**
  * Created by MichaelBond on 9/18/2016.
