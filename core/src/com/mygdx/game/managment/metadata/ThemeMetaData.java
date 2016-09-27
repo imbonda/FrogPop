@@ -11,11 +11,11 @@ public class ThemeMetaData {
     public static Theme DEFAULT_THEME = new DefaultTheme();
 
     public Theme theme;
-    public int startingLevel;
+    public int duration;
 
 
-    public ThemeMetaData(Theme theme, int startingLevel) {
+    public ThemeMetaData(Theme theme, int duration) {
         this.theme = theme;
-        this.startingLevel = startingLevel;
+        this.duration = duration;
     }
 }

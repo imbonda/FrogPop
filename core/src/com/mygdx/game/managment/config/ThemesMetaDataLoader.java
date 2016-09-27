@@ -69,9 +69,9 @@ public class ThemesMetaDataLoader {
                     IllegalStateException {
         try {
             String className = themeElement.getAttribute("class");
-            String levelString = themeElement.getAttribute("starting_level");
-            int startingLevel = Integer.parseInt(levelString);
-            return new ThemeMetaData(getThemeClassByName(className).newInstance(), startingLevel);
+            String durationString = themeElement.getAttribute("duration");
+            int duration = Integer.parseInt(durationString);
+            return new ThemeMetaData(getThemeClassByName(className).newInstance(), duration);
         }
         catch (GdxRuntimeException e) {
             throw new IllegalStateException("A 'theme' element does not contain " +

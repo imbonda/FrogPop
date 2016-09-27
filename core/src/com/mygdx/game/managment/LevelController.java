@@ -14,7 +14,8 @@ import com.mygdx.game.sprites.Timer;
  */
 public class LevelController {
 
-    private static final int STARTING_LEVEL = 1;
+    public static final int STARTING_LEVEL = 1;
+
     private static final float STARTING_SPEED = 1.0f;
     private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.04f;
     private static final float SPEED_SCALE_FACTOR = 1.087f;
@@ -107,12 +108,11 @@ public class LevelController {
         FrogClassAllocator frogClassAllocator = FrogClassAllocator.getInstance();
         // Look for a level configuration, specific for this level.
         for (LevelMetaData levelMetaData : this.levelsMetaData) {
-            if (levelMetaData.id == this.currentLevel) {
+            if (this.currentLevel >= levelMetaData.id) {
                 this.currentLevelMetaData = levelMetaData;
-                frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
-                break;
             }
         }
+        frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
         // If no specific configuration was found, use the last configuration configured.
         if (this.currentLevelMetaData.id != this.currentLevel) {
             frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);

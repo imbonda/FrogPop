@@ -10,6 +10,8 @@ import com.mygdx.game.managment.themes.Theme;
  */
 public class ThemeController {
 
+    private static final int INFINITY = -1;
+
     private static ThemeController ourInstance = new ThemeController();
 
     /**
@@ -25,14 +27,21 @@ public class ThemeController {
      * Singleton private constructor.
      */
     private ThemeController() {
-        this.themesMetaData = Config.themesMetaData;
         this.currentTheme = ThemeMetaData.DEFAULT_THEME;
+        this.themesMetaData = Config.themesMetaData;
+        int sum = 0;
+        for (ThemeMetaData meta : this.themesMetaData) {
+            sum += meta.duration;
+        }
+        this.themesCycle = sum;
     }
 
     // The current active game-theme.
     public Theme currentTheme;
 
+    private int themesCycle;
     private int nextThemeIndex;
+    private int nextThemeLevel;
     private Array<ThemeMetaData> themesMetaData;
 
 
@@ -40,8 +49,14 @@ public class ThemeController {
      * Initializes the singleton instance to the default starting theme.
      */
     public void init() {
-        this.nextThemeIndex = 0;
-        setup();
+        if (0 == this.themesMetaData.size) {
+            this.nextThemeLevel = INFINITY;
+        }
+        else {
+            this.nextThemeIndex = 0;
+            this.nextThemeLevel = LevelController.STARTING_LEVEL;
+        }
+        setTheme();
     }
 
     /**
@@ -50,32 +65,27 @@ public class ThemeController {
      * @param level A level to set the LevelController to.
      */
     public void init(int level) {
-        for (int i = 0; i < this.themesMetaData.size; ++i) {
-            if (level >= this.themesMetaData.get(i).startingLevel) {
-                this.nextThemeIndex = i;
-                continue;
-            }
-            break;
+        if (0 == this.themesMetaData.size) {
+            this.nextThemeLevel = INFINITY;
         }
-        setup();
-    }
-
-    private void setup() {
-        if (this.themesMetaData.size > 0) {
-            // Advance to the next theme.
-            setTheme();
+        else {
+            int cyclesCompleted = this.themesCycle *
+                        (level / (LevelController.STARTING_LEVEL + this.themesCycle));
+            this.nextThemeLevel = LevelController.STARTING_LEVEL + cyclesCompleted;
+            for (int i = 0; i < this.themesMetaData.size; ++i) {
+                if (level >= this.nextThemeLevel) {
+                    setTheme();
+                    continue;
+                }
+                break;
+            }
         }
     }
 
     public void update(float deltaTime) {
-        if (this.nextThemeIndex >= this.themesMetaData.size) {
-            // There are no farther themes.
-            return;
-        }
         LevelController levelController = LevelController.getInstance();
         int level = levelController.getCurrentLevel();
-        while (this.nextThemeIndex < this.themesMetaData.size &&
-                    level >= this.themesMetaData.get(this.nextThemeIndex).startingLevel) {
+        if (level == this.nextThemeLevel) {
             // Advance to the next theme.
             setTheme();
         }
@@ -84,7 +94,8 @@ public class ThemeController {
     private void setTheme() {
         this.currentTheme.getMusic().stop();
         this.currentTheme = this.themesMetaData.get(this.nextThemeIndex).theme;
-        this.nextThemeIndex += 1;
+        this.nextThemeLevel += this.themesMetaData.get(this.nextThemeIndex).duration;
+        this.nextThemeIndex = (this.nextThemeIndex + 1) % (this.themesMetaData.size);
         this.currentTheme.getMusic().setLooping(true);
         this.currentTheme.getMusic().play();
     }
