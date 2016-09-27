@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Array;
 public class Timer extends Sprite {
 
     private static final float DEFAULT_COUNTDOWN_TIME = 6;
-    private static final Vector2 DEFAULT_TIMER_TEXTURE_POSITION = new Vector2(350, 425);
+    private static final Vector2 DEFAULT_TIMER_TEXTURE_POSITION = new Vector2(15, 370);
 
     private static final class TimerHandClockTextureMeta {
         public static int TEXTURE_SRC_X = 0;

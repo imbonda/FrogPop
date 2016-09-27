@@ -28,9 +28,9 @@ public class PlayScreen implements Screen {
     public static Array<Hole> holes = new Array<Hole>();
 
     private static final Vector2[] HOLES_POSITIONS = {
-            new Vector2(50, 35), new Vector2(300, 35), new Vector2(50, 185),
-            new Vector2(300, 185), new Vector2(550, 35), new Vector2(550, 185),
-            new Vector2(50, 325), new Vector2(300, 325), new Vector2(550,325)
+            new Vector2(50, 10), new Vector2(300, 10), new Vector2(50, 135),
+            new Vector2(300, 135), new Vector2(550, 10), new Vector2(550, 135),
+            new Vector2(50, 260), new Vector2(300, 260), new Vector2(550,260)
     };
 
     static {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.effects.CloudEffect;
 import com.mygdx.game.managment.themes.exceptions.UnsupportedSpriteException;
 import com.mygdx.game.sprites.frogs.FreezeFrog;
 import com.mygdx.game.sprites.frogs.ColorfullFrog;
@@ -24,6 +25,7 @@ public class BlueTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("world3.jpg");
     private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
+    private static CloudEffect clouds=new CloudEffect();
 
     // Blue frog.
     private static final Texture BLUE_FROG_TEXTURE[] = {
@@ -108,6 +110,7 @@ public class BlueTheme implements Theme {
     public void draw(Batch batch) {
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         batch.draw(BACKGROUND_TEXTURE, 0, 0);
+        clouds.draw(batch);
     }
 
     @Override

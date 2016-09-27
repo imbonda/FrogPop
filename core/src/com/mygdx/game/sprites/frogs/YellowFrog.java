@@ -24,7 +24,7 @@ import java.util.Random;
      *
      * Created by MichaelBond on 9/8/2016.
      */
-    public class PoisonFrog extends Frog {
+    public class YellowFrog extends Frog {
 
         private static final int FROG_SCORE_PROFIT_VALUE = -1;
         private static final int FROG_LIFE_PROFIT_VALUE = -1;
@@ -34,7 +34,7 @@ import java.util.Random;
                 new Texture("Frog/0y.png"),
                 new Texture("Frog/1y.png"),
                 new Texture("Frog/2y.png"),
-                new Texture("Frog/3y.png"),
+                new Texture("Frog/2y.png"),
                 new Texture("Frog/0y.png"),
                 new Texture("Frog/eye2y.png"),
                 new Texture("Frog/eye3y.png"),
@@ -46,7 +46,7 @@ import java.util.Random;
         private double dir = 0.25;
 
 
-        public PoisonFrog() {
+        public YellowFrog() {
             Random rand = new Random();
             this.randTextureType = rand.nextInt(1);
             this.frameKey = 0;
@@ -92,7 +92,7 @@ import java.util.Random;
             super.defaultReset();
             Random rand = new Random();
             this.frameKey = 0;
-            this.randTextureType = rand.nextInt(2);
+            this.randTextureType = rand.nextInt(1);
         }
 
         @Override

@@ -2,7 +2,6 @@
 <frogsDistribution>
     <level id="1">
         <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.5" />
-        <frog class="com.mygdx.game.sprites.frogs.FreezeFrog" spawn_prob="0.5" max_parallel="1"/>
     </level>
     <level id="5">
         <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.5" />
@@ -12,6 +11,7 @@
         <frog class="com.mygdx.game.sprites.frogs.RegularFrog" spawn_prob="0.75" />
         <frog class="com.mygdx.game.sprites.frogs.HealthFrog" spawn_prob="0.2" />
         <frog class="com.mygdx.game.sprites.frogs.PoisonFrog" spawn_prob="0.05" max_allowed="1"/>
+        <frog class="com.mygdx.game.sprites.frogs.FreezeFrog" spawn_prob="0.5" max_parallel="1"/>
 
     </level>
     <level id="13">

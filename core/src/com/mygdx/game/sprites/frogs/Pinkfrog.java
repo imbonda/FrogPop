@@ -20,7 +20,7 @@ import java.util.Random;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class IllusionFrog extends Frog {
+public class Pinkfrog extends Frog {
 
     private static final int FROG_SCORE_PROFIT_VALUE = 3;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
@@ -28,8 +28,8 @@ public class IllusionFrog extends Frog {
     private final Texture frogTexture[] = {
             new Texture("Frog/0p.png"),
             new Texture("Frog/1p.png"),
-            new Texture("Frog/2p.png"),
-            new Texture("Frog/3p.png"),
+            new Texture("Frog/0p.png"),
+            new Texture("Frog/1p.png"),
             new Texture("Frog/0p.png"),
             new Texture("Frog/eye2p.png"),
             new Texture("Frog/eye3p.png"),
@@ -46,7 +46,7 @@ public class IllusionFrog extends Frog {
     private Vector3 deafultPosition=new Vector3(400,265,0);
     private Vector3 deafultaxis=new Vector3(0,0,100);
 
-    public IllusionFrog() {
+    public Pinkfrog() {
         Random rand = new Random();
         this.randTextureType = rand.nextInt(1);
         this.frameKey = 0;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.effects.SunEffect;
 import com.mygdx.game.managment.themes.exceptions.UnsupportedSpriteException;
 import com.mygdx.game.sprites.frogs.FreezeFrog;
 import com.mygdx.game.sprites.frogs.ColorfullFrog;
@@ -24,7 +25,6 @@ public class WhiteTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("world4.jpg");
     private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
-
     // Blue frog.
     private static final Texture BLUE_FROG_TEXTURE[] = {
             new Texture("Frog/0b.png"),

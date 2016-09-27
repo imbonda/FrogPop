@@ -24,14 +24,14 @@ public class HealthFrog extends Frog {
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
     private final Texture frogTexture[] = {
-            new Texture("Frog/3r.png"),
-            new Texture("Frog/2r.png"),
-            new Texture("Frog/1r.png"),
-            new Texture("Frog/0r.png"),
-            //new Texture("Frog/eye1r.png"),
-            //new Texture("Frog/eye2r.png"),
-            //new Texture("Frog/eye3r.png"),
-            //new Texture("Frog/eye4r.png")
+            new Texture("Frog/0y.png"),
+            new Texture("Frog/1y.png"),
+            new Texture("Frog/2y.png"),
+            new Texture("Frog/3y.png"),
+            new Texture("Frog/0y.png"),
+            new Texture("Frog/eye2y.png"),
+            new Texture("Frog/eye3y.png"),
+            new Texture("Frog/eye4y.png")
     };
 
     private double frameKey;
@@ -83,7 +83,7 @@ public class HealthFrog extends Frog {
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
-        this.randTextureType = rand.nextInt(1);
+        this.randTextureType = rand.nextInt(2);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class HealthFrog extends Frog {
 
         Random rand = new Random();
         this.frameKey = 0;
-        this.randTextureType = rand.nextInt(1);
+        this.randTextureType = rand.nextInt(2);
     }
 
     @Override
@@ -111,17 +111,17 @@ public class HealthFrog extends Frog {
             }
             this.frameKey += dir;
         System.out.print(frameKey);}
-      //  if (this.randTextureType == 1)
-        //{
-          //  if (this.frameKey == 0 || this.frameKey == 4){
-            //    this.frameKey = 4;
-              //  this.dir = 0.12;
-            //}
-            //if(this.frameKey>7.7){
-             //   dir = -0.12;
-            //}
-            //this.frameKey += dir;
-        //}
+        if (this.randTextureType == 1)
+        {
+            if (this.frameKey == 0 || this.frameKey == 4){
+                this.frameKey = 4;
+                this.dir = 0.15;
+            }
+            if(this.frameKey>7.7){
+                dir = -0.15;
+            }
+            this.frameKey += dir;
+        }
 
         return this.frogTexture[(int)(this.frameKey % 4)];
     }
