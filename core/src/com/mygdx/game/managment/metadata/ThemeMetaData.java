@@ -1,6 +1,6 @@
 package com.mygdx.game.managment.metadata;
 
-import com.mygdx.game.themes.DefaultTheme;
+import com.mygdx.game.themes.SpringTheme;
 import com.mygdx.game.themes.Theme;
 
 /**
@@ -8,7 +8,7 @@ import com.mygdx.game.themes.Theme;
  */
 public class ThemeMetaData {
 
-    public static Theme DEFAULT_THEME = new DefaultTheme();
+    public static Theme DEFAULT_THEME = new SpringTheme();
 
     public Theme theme;
     public int duration;

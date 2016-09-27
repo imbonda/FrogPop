@@ -21,7 +21,7 @@ import java.util.HashMap;
  *
  * Created by MichaelBond on 9/18/2016.
  */
-public class BlueTheme implements Theme {
+public class AutumnTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("world3.jpg");
     private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));

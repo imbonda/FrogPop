@@ -1,11 +1,10 @@
 package com.mygdx.game.managment.config;
 
-import com.mygdx.game.themes.AllTheme;
-import com.mygdx.game.themes.BlueTheme;
-import com.mygdx.game.themes.DefaultTheme;
-import com.mygdx.game.themes.PinkTheme;
+import com.mygdx.game.themes.AutumnTheme;
+import com.mygdx.game.themes.SpringTheme;
+import com.mygdx.game.themes.WinterTheme;
 import com.mygdx.game.themes.Theme;
-import com.mygdx.game.themes.YellowTheme;
+import com.mygdx.game.themes.SummerTheme;
 import com.mygdx.game.sprites.frogs.FreezeFrog;
 import com.mygdx.game.sprites.frogs.ColorfullFrog;
 import com.mygdx.game.sprites.frogs.Frog;
@@ -29,11 +28,10 @@ public class ClassForName {
     private static final String ILLUSION_FROG = IllusionFrog.class.getCanonicalName();
     private static final String COLORFUL_FROG = ColorfullFrog.class.getCanonicalName();
     // Theme's class names.
-    private static final String DEFAULT_THEME = DefaultTheme.class.getCanonicalName();
-    private static final String BLUE_THEME = BlueTheme.class.getCanonicalName();
-    private static final String YELLOW_THEME = YellowTheme.class.getCanonicalName();
-    private static final String PINK_THEME = PinkTheme.class.getCanonicalName();
-    private static final String All_THEME = AllTheme.class.getCanonicalName();
+    private static final String SPRING_THEME = SpringTheme.class.getCanonicalName();
+    private static final String AUTUMN_THEME = AutumnTheme.class.getCanonicalName();
+    private static final String SUMMER_THEME = SummerTheme.class.getCanonicalName();
+    private static final String WINTER_THEME = WinterTheme.class.getCanonicalName();
 
 
     /**
@@ -76,20 +74,17 @@ public class ClassForName {
      */
     public static Class<? extends Theme> getThemeClassByName(String classNme)
             throws ClassNotFoundException {
-        if (DEFAULT_THEME.equals(classNme)) {
-            return DefaultTheme.class;
+        if (SPRING_THEME.equals(classNme)) {
+            return SpringTheme.class;
         }
-        else if (BLUE_THEME.equals(classNme)) {
-            return BlueTheme.class;
+        else if (AUTUMN_THEME.equals(classNme)) {
+            return AutumnTheme.class;
         }
-        else if (YELLOW_THEME.equals(classNme)) {
-            return YellowTheme.class;
+        else if (SUMMER_THEME.equals(classNme)) {
+            return SummerTheme.class;
         }
-        else if (PINK_THEME.equals(classNme)) {
-            return PinkTheme.class;
-        }
-        else if (All_THEME.equals(classNme)) {
-            return AllTheme.class;
+        else if (WINTER_THEME.equals(classNme)) {
+            return WinterTheme.class;
         }
         throw new ClassNotFoundException("Could not find a theme class with the given name: " +
                     classNme);
