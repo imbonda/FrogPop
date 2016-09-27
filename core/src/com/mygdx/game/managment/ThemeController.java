@@ -83,6 +83,7 @@ public class ThemeController {
     }
 
     public void update(float deltaTime) {
+        this.currentTheme.update(deltaTime);
         LevelController levelController = LevelController.getInstance();
         int level = levelController.getCurrentLevel();
         if (level == this.nextThemeLevel) {

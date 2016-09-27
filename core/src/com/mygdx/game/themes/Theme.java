@@ -18,6 +18,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public interface Theme {
 
     /**
+     * Updates the theme with regard to the time passed since the last call to 'update'.
+     *
+     * @param deltaTime The time passed from the last call.
+     */
+    void update(float deltaTime);
+
+    /**
      * Returns the theme's background texture.
      */
     void draw(Batch batch);
