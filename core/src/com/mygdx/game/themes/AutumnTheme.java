@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.effects.RainEffect;
 import com.mygdx.game.effects.SnowEffect;
 import com.mygdx.game.themes.exceptions.UnsupportedSpriteException;
 import com.mygdx.game.sprites.frogs.FreezeFrog;
@@ -25,7 +26,7 @@ public class AutumnTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("world3.jpg");
     private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
-    private static SnowEffect clouds=new SnowEffect();
+    private static RainEffect clouds=new RainEffect();
 
     // Blue frog.
     private static final Texture BLUE_FROG_TEXTURE[] = {
