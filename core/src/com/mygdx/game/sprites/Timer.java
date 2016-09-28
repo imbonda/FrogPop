@@ -107,10 +107,10 @@ public class Timer extends Sprite {
           //    batch.setColor(1f,1f,1f,1-((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360f)/360f);}
         // else
       //     {batch.setColor(1f,1f,1f,1f);}
-        if((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360<50) {
-        batch.setColor(1f,1f,1f,((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360f)/50f);}
-        else
-        {batch.setColor(1f,1f,1f,1f);}
+//        if((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360<50) {
+//        batch.setColor(1f,1f,1f,((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360f)/50f);}
+//        else
+//        {batch.setColor(1f,1f,1f,1f);}
     }
 
     private TextureRegion getFrame() {
