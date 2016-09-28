@@ -5,11 +5,9 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.mygdx.game.effects.CloudEffect;
 import com.mygdx.game.effects.SnowEffect;
 import com.mygdx.game.themes.exceptions.UnsupportedSpriteException;
 import com.mygdx.game.sprites.frogs.FreezeFrog;
-import com.mygdx.game.sprites.frogs.ColorfullFrog;
 import com.mygdx.game.sprites.frogs.IllusionFrog;
 import com.mygdx.game.sprites.frogs.HealthFrog;
 import com.mygdx.game.sprites.frogs.RegularFrog;
@@ -26,7 +24,7 @@ public class WinterTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("world4.jpg");
     private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
-    private static SnowEffect snow=new SnowEffect();
+    private static SnowEffect snowEffect = new SnowEffect();
 
     // Blue frog.
     private static final Texture BLUE_FROG_TEXTURE[] = {
@@ -38,17 +36,6 @@ public class WinterTheme implements Theme {
             new Texture("Frog/eye2b.png"),
             new Texture("Frog/eye3b.png"),
             new Texture("Frog/eye4b.png")
-    };
-    // Colorful frog.
-    private static final Texture COLORFUL_FROG_TEXTURE[] = {
-            new Texture("Frog/0p.png"),
-            new Texture("Frog/1r.png"),
-            new Texture("Frog/2b.png"),
-            new Texture("Frog/3y.png"),
-            new Texture("Frog/0p.png"),
-            new Texture("Frog/eye2r.png"),
-            new Texture("Frog/eye3b.png"),
-            new Texture("Frog/eye4y.png")
     };
     // Pink frog.
     private static final Texture PINK_FROG_TEXTURE[] = {
@@ -100,21 +87,22 @@ public class WinterTheme implements Theme {
 
     static {
         SPRITE_CLASS_TO_TEXTURE_MAP.put(FreezeFrog.class, BLUE_FROG_TEXTURE);
-        SPRITE_CLASS_TO_TEXTURE_MAP.put(ColorfullFrog.class, COLORFUL_FROG_TEXTURE);
         SPRITE_CLASS_TO_TEXTURE_MAP.put(IllusionFrog.class, PINK_FROG_TEXTURE);
         SPRITE_CLASS_TO_TEXTURE_MAP.put(HealthFrog.class, RED_FROG_TEXTURE);
         SPRITE_CLASS_TO_TEXTURE_MAP.put(RegularFrog.class, REGULAR_FROG_TEXTURE);
         SPRITE_CLASS_TO_TEXTURE_MAP.put(PoisonFrog.class, YELLOW_FROG_TEXTURE);
     }
+
     @Override
     public void update(float deltaTime) {
-        snow.update(deltaTime);
+        snowEffect.update(deltaTime);
     }
+
     @Override
     public void draw(Batch batch) {
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         batch.draw(BACKGROUND_TEXTURE, 0, 0);
-        snow.draw(batch);
+        snowEffect.draw(batch);
     }
 
     @Override

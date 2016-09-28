@@ -81,7 +81,6 @@ public class Timer extends Sprite {
 
     @Override
     public void draw(Batch batch) {
-
         batch.draw(
                     //getFrame(),
                     this.timerTexture,

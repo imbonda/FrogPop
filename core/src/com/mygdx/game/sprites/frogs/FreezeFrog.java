@@ -64,8 +64,7 @@ public class FreezeFrog extends Frog {
     }
 
     @Override
-        public void onDeath() {
-
+    public void onDeath() {
         if (isKilled()) {
             Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
         }

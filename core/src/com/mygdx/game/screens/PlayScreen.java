@@ -78,7 +78,6 @@ public class PlayScreen implements Screen {
         this.game.batch.begin();
         this.themeController.currentTheme.draw(this.game.batch);
         SpritesDrawer.getInstance().drawSprites();
-
         this.game.batch.end();
         this.hud.draw();
     }

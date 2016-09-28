@@ -6,7 +6,6 @@ import com.mygdx.game.themes.WinterTheme;
 import com.mygdx.game.themes.Theme;
 import com.mygdx.game.themes.SummerTheme;
 import com.mygdx.game.sprites.frogs.FreezeFrog;
-import com.mygdx.game.sprites.frogs.ColorfullFrog;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.sprites.frogs.IllusionFrog;
 import com.mygdx.game.sprites.frogs.HealthFrog;
@@ -26,7 +25,6 @@ public class ClassForName {
     private static final String POISON_FROG = PoisonFrog.class.getCanonicalName();
     private static final String FREEZE_FROG = FreezeFrog.class.getCanonicalName();
     private static final String ILLUSION_FROG = IllusionFrog.class.getCanonicalName();
-    private static final String COLORFUL_FROG = ColorfullFrog.class.getCanonicalName();
     // Theme's class names.
     private static final String SPRING_THEME = SpringTheme.class.getCanonicalName();
     private static final String AUTUMN_THEME = AutumnTheme.class.getCanonicalName();
@@ -57,9 +55,6 @@ public class ClassForName {
         }
         else if (ILLUSION_FROG.equals(classNme)) {
             return IllusionFrog.class;
-        }
-        else if (COLORFUL_FROG.equals(classNme)) {
-            return ColorfullFrog.class;
         }
         throw new ClassNotFoundException("Could not find a frog class with the given name: " +
                     classNme);

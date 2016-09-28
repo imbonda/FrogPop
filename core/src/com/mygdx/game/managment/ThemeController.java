@@ -14,7 +14,6 @@ public class ThemeController {
 
     private static ThemeController ourInstance = new ThemeController();
 
-
     /**
      * Singleton implementation.
      *
@@ -28,7 +27,6 @@ public class ThemeController {
      * Singleton private constructor.
      */
     private ThemeController() {
-
         this.currentTheme = ThemeMetaData.DEFAULT_THEME;
         this.themesMetaData = Config.themesMetaData;
         int sum = 0;
@@ -40,6 +38,7 @@ public class ThemeController {
 
     // The current active game-theme.
     public Theme currentTheme;
+
     private int themesCycle;
     private int nextThemeIndex;
     private int nextThemeLevel;
@@ -58,8 +57,8 @@ public class ThemeController {
             this.nextThemeLevel = LevelController.STARTING_LEVEL;
         }
         setTheme();
+		// todo put elsewhere!!
         this.currentTheme.getMusic().play();
-
     }
 
     /**
@@ -83,6 +82,8 @@ public class ThemeController {
                 break;
             }
         }
+		// todo put elsewhere!!
+        this.currentTheme.getMusic().play();
     }
 
     public void update(float deltaTime) {
