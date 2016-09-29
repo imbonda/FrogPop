@@ -47,16 +47,18 @@ public class LevelController {
     private Array<Integer> levelsToAddFrog;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
+    private ThemeController themeController;
 
 
     /**
      * Initializes the level-controller to it's default configuration.
      */
-    public void init() {
+    public void init(ThemeController themeController) {
         reset();
         this.currentLevel = STARTING_LEVEL;
         this.speed = STARTING_SPEED;
-        ThemeController.getInstance().init();
+        this.themeController = themeController;
+        this.themeController.init();
         setup();
     }
 
@@ -65,10 +67,11 @@ public class LevelController {
      *
      * @param level A level to set the LevelController to.
      */
-    public void init(int level) {
+    public void init(ThemeController themeController, int level) {
         reset();
         this.currentLevel = level;
-        ThemeController.getInstance().init(level);
+        this.themeController = themeController;
+        this.themeController.init(level);
         // TODO (finish function: calculate the speed for the given level..)
         setup();
     }
@@ -136,7 +139,7 @@ public class LevelController {
             this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
             levelUp();
         }
-        ThemeController.getInstance().update(deltaTime);
+        this.themeController.update(deltaTime, this.currentLevel);
     }
 
     /**

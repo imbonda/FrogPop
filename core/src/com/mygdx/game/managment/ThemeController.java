@@ -12,21 +12,15 @@ public class ThemeController {
 
     private static final int INFINITY = -1;
 
-    private static ThemeController ourInstance = new ThemeController();
+    // The current active game-theme.
+    public Theme currentTheme;
+    // Privates.
+    private int themesCycle;
+    private int nextThemeIndex;
+    private int nextThemeLevel;
+    private Array<ThemeMetaData> themesMetaData;
 
-    /**
-     * Singleton implementation.
-     *
-     * @return  The singleton object.
-     */
-    public static ThemeController getInstance() {
-        return ourInstance;
-    }
-
-    /**
-     * Singleton private constructor.
-     */
-    private ThemeController() {
+    public ThemeController() {
         this.currentTheme = ThemeMetaData.DEFAULT_THEME;
         this.themesMetaData = Config.themesMetaData;
         int sum = 0;
@@ -35,15 +29,6 @@ public class ThemeController {
         }
         this.themesCycle = sum;
     }
-
-    // The current active game-theme.
-    public Theme currentTheme;
-
-    private int themesCycle;
-    private int nextThemeIndex;
-    private int nextThemeLevel;
-    private Array<ThemeMetaData> themesMetaData;
-
 
     /**
      * Initializes the singleton instance to the default starting theme.
@@ -82,11 +67,9 @@ public class ThemeController {
         }
     }
 
-    public void update(float deltaTime) {
+    public void update(float deltaTime, int currentLevel) {
         this.currentTheme.update(deltaTime);
-        LevelController levelController = LevelController.getInstance();
-        int level = levelController.getCurrentLevel();
-        if (level == this.nextThemeLevel) {
+        if (currentLevel == this.nextThemeLevel) {
             // Advance to the next theme.
             setTheme();
         }
