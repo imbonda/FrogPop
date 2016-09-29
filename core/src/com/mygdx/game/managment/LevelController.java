@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.config.Config;
 import com.mygdx.game.config.metadata.AddFrogMetaData;
 import com.mygdx.game.config.metadata.LevelMetaData;
+import com.mygdx.game.media.Media;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Timer;
@@ -28,11 +29,13 @@ public class LevelController {
     private Array<Integer> levelsToAddFrog;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
+    private Media media;
     private RuntimeInfo runtimeInfo;
     private ThemeController themeController;
     private FrogManager frogManager;
 
-    private LevelController(RuntimeInfo runtimeInfo) {
+    private LevelController(Media media, RuntimeInfo runtimeInfo) {
+        this.media = media;
         this.runtimeInfo = runtimeInfo;
         this.currentLevel = STARTING_LEVEL;
         this.levelsMetaData = Config.levelsMetaData;
@@ -43,8 +46,8 @@ public class LevelController {
     /**
      * Initializes the level-controller to it's default configuration.
      */
-    public LevelController(RuntimeInfo runtimeInfo, ThemeController themeController) {
-        this(runtimeInfo);
+    public LevelController(Media media, RuntimeInfo runtimeInfo, ThemeController themeController) {
+        this(media, runtimeInfo);
         this.currentLevel = STARTING_LEVEL;
         this.runtimeInfo.gameSpeed = STARTING_SPEED;
         this.themeController = themeController;
@@ -57,8 +60,9 @@ public class LevelController {
      *
      * @param level A level to set the LevelController to.
      */
-    public LevelController(RuntimeInfo runtimeInfo, ThemeController themeController, int level) {
-        this(runtimeInfo);
+    public LevelController(Media media, RuntimeInfo runtimeInfo, ThemeController themeController,
+                            int level) {
+        this(media, runtimeInfo);
         this.currentLevel = level;
         this.themeController = themeController;
         this.themeController.init(level);
@@ -134,6 +138,7 @@ public class LevelController {
         this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
         setCurrentLevel();
         Hud.getInstance().getLevelCounter().advance();
+        this.media.playSound(Media.LEVEL_UP_SOUND);
     }
 
 }

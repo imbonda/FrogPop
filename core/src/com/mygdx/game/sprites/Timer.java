@@ -17,7 +17,6 @@ public class Timer extends Sprite {
 
     private static final float DEFAULT_COUNTDOWN_TIME = 6;
     private static final Vector2 DEFAULT_TIMER_TEXTURE_POSITION = new Vector2(15, 370);
-    private static final Music levelup = Gdx.audio.newMusic(Gdx.files.internal("levelup.wav"));
 
     private static final class TimerHandClockTextureMeta {
         public static int TEXTURE_SRC_X = 0;
@@ -74,7 +73,6 @@ public class Timer extends Sprite {
     }
 
     public void setCountTimeByFactor(float scalingFactor) {
-        levelup.play();
         this.timeToCountDown *= scalingFactor;
         this.timeLeftToCountDown = this.timeToCountDown;
     }

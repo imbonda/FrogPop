@@ -51,7 +51,8 @@ public class PlayScreen implements Screen {
         this.hud = Hud.getInstance();
         this.themeController = new ThemeController();
         RuntimeInfo runtimeInfo = new RuntimeInfo();
-        this.levelController = new LevelController(runtimeInfo, this.themeController);
+        this.levelController = new LevelController(
+                    this.game.media, runtimeInfo, this.themeController);
         Gdx.input.setInputProcessor(new TouchProcessor(gameViewPort, runtimeInfo));
     }
 
