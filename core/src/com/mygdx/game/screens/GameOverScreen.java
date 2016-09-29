@@ -77,7 +77,7 @@ public class GameOverScreen implements Screen {
         Loser.draw(batch, "You Lost",300,400);
         Score.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         Score.draw(batch, "Your score was: "+hud.getScoreCounter().getScore(),300,380);
-        Score.draw(batch, "Highest score: "+ Data.getInstance().getHighScore(),300,360);
+        Score.draw(batch, "Highest score: "+ this.game.data.getHighScore(),300,360);
         Score.draw(batch, "Your level was: "+hud.getLevelCounter().getLevel(),300,340);
 
     }

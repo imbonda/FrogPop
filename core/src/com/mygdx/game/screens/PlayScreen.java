@@ -64,7 +64,7 @@ public class PlayScreen implements Screen {
     }
 
     private void gameOver() {
-        Data.getInstance().updateHighScore(this.hud.getScoreCounter().getScore());
+        this.game.data.updateHighScore(this.hud.getScoreCounter().getScore());
         this.game.setScreen(new GameOverScreen(this.game));
         dispose();
         SpritesDrawer.getInstance().clear();

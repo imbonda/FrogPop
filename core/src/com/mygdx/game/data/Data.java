@@ -13,27 +13,12 @@ public class Data {
     private static final String HIGH_SCORE_KEY = "hs";
     private static final String MUSIC_MUTE_KEY = "mmt";
     private static final String SOUND_MUTE_KEY = "smt";
-
-    private static Data ourInstance = new Data();
-
-    /**
-     * Singleton implementation.
-     *
-     * @return  The singleton object.
-     */
-    public static Data getInstance() {
-        return ourInstance;
-    }
-
-    /**
-     * Singleton private constructor.
-     */
-    private Data() {
-        this.dataManager = new DataManager(PREFERENCES_NAME);
-    }
-
+    // Private members.
     private DataManager dataManager;
 
+    public Data() {
+        this.dataManager = new DataManager(PREFERENCES_NAME);
+    }
 
     /**
      * @return  The highest score achieved so far in the game.
