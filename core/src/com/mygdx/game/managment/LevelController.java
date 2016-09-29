@@ -34,6 +34,10 @@ public class LevelController {
     private ThemeController themeController;
     private FrogManager frogManager;
 
+    /**
+     * @param media A media object for playing music and sounds.
+     * @param runtimeInfo A runtime information regarding the game state.
+     **/
     private LevelController(Media media, RuntimeInfo runtimeInfo) {
         this.media = media;
         this.runtimeInfo = runtimeInfo;
@@ -44,7 +48,9 @@ public class LevelController {
     }
 
     /**
-     * Initializes the level-controller to it's default configuration.
+     * @param media A media object for playing music and sounds.
+     * @param runtimeInfo A runtime information regarding the game state.
+     * @param themeController A theme-controller to use for switching between themes.
      */
     public LevelController(Media media, RuntimeInfo runtimeInfo, ThemeController themeController) {
         this(media, runtimeInfo);
@@ -56,8 +62,9 @@ public class LevelController {
     }
 
     /**
-     * Initializes the singleton instance to a given level.
-     *
+     * @param media A media object for playing music and sounds.
+     * @param runtimeInfo A runtime information regarding the game state.
+     * @param themeController A theme-controller to use for switching between themes.
      * @param level A level to set the LevelController to.
      */
     public LevelController(Media media, RuntimeInfo runtimeInfo, ThemeController themeController,

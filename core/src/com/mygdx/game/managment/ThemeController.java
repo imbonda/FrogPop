@@ -31,7 +31,7 @@ public class ThemeController {
     }
 
     /**
-     * Initializes the singleton instance to the default starting theme.
+     * Default initialization.
      */
     public void init() {
         if (0 == this.themesMetaData.size) {
@@ -45,8 +45,6 @@ public class ThemeController {
     }
 
     /**
-     * Initializes the singleton instance to a theme corresponding to a given level.
-     *
      * @param level A level to set the LevelController to.
      */
     public void init(int level) {
