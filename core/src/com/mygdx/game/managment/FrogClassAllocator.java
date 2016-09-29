@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * This class is a singleton used for generating random frog classes by a variable requested -
+ * This class is used for generating random frog classes by a variable requested -
  *  probability function.
  *
  * Created by MichaelBond on 9/8/2016.
