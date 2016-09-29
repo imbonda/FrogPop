@@ -29,11 +29,4 @@ public interface Theme {
      */
     void draw(Batch batch);
 
-    /**
-     * Returns the sprite's texture suitable for this theme.
-     *
-     * @param sprite    The sprite whose theme's related texture we wish to retrieve.
-     */
-    Texture[] getSpriteTexture(Sprite sprite);
-
 }
