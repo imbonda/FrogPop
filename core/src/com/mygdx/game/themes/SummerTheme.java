@@ -95,7 +95,7 @@ public class SummerTheme implements Theme {
 
     @Override
     public void update(float deltaTime) {
-
+        sun.update(deltaTime);
     }
 
     @Override
