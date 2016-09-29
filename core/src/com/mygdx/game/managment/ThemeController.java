@@ -57,8 +57,6 @@ public class ThemeController {
             this.nextThemeLevel = LevelController.STARTING_LEVEL;
         }
         setTheme();
-		// todo put elsewhere!!
-        this.currentTheme.getMusic().play();
     }
 
     /**
@@ -82,8 +80,6 @@ public class ThemeController {
                 break;
             }
         }
-		// todo put elsewhere!!
-        this.currentTheme.getMusic().play();
     }
 
     public void update(float deltaTime) {
@@ -97,12 +93,9 @@ public class ThemeController {
     }
 
     private void setTheme() {
-     //   this.currentTheme.getMusic().stop();
         this.currentTheme = this.themesMetaData.get(this.nextThemeIndex).theme;
         this.nextThemeLevel += this.themesMetaData.get(this.nextThemeIndex).duration;
         this.nextThemeIndex = (this.nextThemeIndex + 1) % (this.themesMetaData.size);
-        this.currentTheme.getMusic().setLooping(true);
-      //  this.currentTheme.getMusic().play();
     }
 
 }

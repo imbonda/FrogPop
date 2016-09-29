@@ -24,7 +24,6 @@ import java.util.HashMap;
 public class SpringTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("spring.png");
-    private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
     private static SunEffect sun=new SunEffect();
     private static ButterflyEffect but=new ButterflyEffect();
 
@@ -106,11 +105,6 @@ public class SpringTheme implements Theme {
         batch.draw(BACKGROUND_TEXTURE, 0, 0);
         sun.draw(batch);
 		but.draw(batch);
-    }
-
-    @Override
-    public Music getMusic() {
-        return MUSIC;
     }
 
     @Override

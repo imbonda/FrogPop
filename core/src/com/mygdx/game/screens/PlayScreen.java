@@ -64,7 +64,6 @@ public class PlayScreen implements Screen {
     private void gameOver() {
         Data.getInstance().updateHighScore(this.hud.getScoreCounter().getScore());
         this.game.setScreen(new GameOverScreen(this.game));
-        this.themeController.currentTheme.getMusic().stop();
         dispose();
         SpritesDrawer.getInstance().clear();
         Gdx.input.setInputProcessor(null);
@@ -77,7 +76,7 @@ public class PlayScreen implements Screen {
         this.game.batch.setProjectionMatrix(gameViewPort.getCamera().combined);
         this.game.batch.begin();
         this.themeController.currentTheme.draw(this.game.batch);
-        SpritesDrawer.getInstance().drawSprites();
+        SpritesDrawer.getInstance().drawSprites(this.game.batch);
         this.game.batch.end();
         this.hud.draw();
     }

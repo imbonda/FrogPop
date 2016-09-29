@@ -1,7 +1,7 @@
 package com.mygdx.game.sprites;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -28,11 +28,6 @@ public class SpritesDrawer {
 
     private final static Array<Sprite> sprites = new Array<Sprite>();
 
-    private SpriteBatch batch;
-
-    public void setBatch(SpriteBatch batch) {
-        this.batch = batch;
-    }
 
     public void addSprite(Sprite sprite) {
         sprites.add(sprite);
@@ -52,9 +47,9 @@ public class SpritesDrawer {
         sprites.clear();
     }
 
-    public void drawSprites() {
+    public void drawSprites(Batch batch) {
         for (Sprite sprite : sprites) {
-            sprite.draw(this.batch);
+            sprite.draw(batch);
         }
     }
 }

@@ -23,7 +23,6 @@ import java.util.HashMap;
 public class SummerTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("summer.png");
-    private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
     private static SunEffect sun=new SunEffect();
 
     // Blue frog.
@@ -103,11 +102,6 @@ public class SummerTheme implements Theme {
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         batch.draw(BACKGROUND_TEXTURE, 0, 0);
         sun.draw(batch);
-    }
-
-    @Override
-    public Music getMusic() {
-        return MUSIC;
     }
 
     @Override

@@ -23,7 +23,6 @@ import java.util.HashMap;
 public class AutumnTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("world3.jpg");
-    private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
     private static RainEffect rainEffect = new RainEffect();
 
     // Blue frog.
@@ -103,11 +102,6 @@ public class AutumnTheme implements Theme {
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         batch.draw(BACKGROUND_TEXTURE, 0, 0);
         rainEffect.draw(batch);
-    }
-
-    @Override
-    public Music getMusic() {
-        return MUSIC;
     }
 
     @Override

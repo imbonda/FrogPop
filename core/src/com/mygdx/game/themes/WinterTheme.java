@@ -23,7 +23,6 @@ import java.util.HashMap;
 public class WinterTheme implements Theme {
 
     private static final Texture BACKGROUND_TEXTURE = new Texture("world4.jpg");
-    private static final Music MUSIC = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
     private static SnowEffect snowEffect = new SnowEffect();
 
     // Blue frog.
@@ -103,11 +102,6 @@ public class WinterTheme implements Theme {
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         batch.draw(BACKGROUND_TEXTURE, 0, 0);
         snowEffect.draw(batch);
-    }
-
-    @Override
-    public Music getMusic() {
-        return MUSIC;
     }
 
     @Override
