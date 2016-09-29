@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.frogs.Frog;
 
@@ -15,13 +16,13 @@ import com.mygdx.game.sprites.frogs.Frog;
 public class TouchProcessor implements InputProcessor {
 
     private Viewport viewport;
-    private FrogManager frogManager;
+    private RuntimeInfo runtimeInfo;
     private Hud hud;
 
 
-    public TouchProcessor(Viewport viewport) {
+    public TouchProcessor(Viewport viewport, RuntimeInfo runtimeInfo) {
         this.viewport = viewport;
-        this.frogManager = FrogManager.getInstance();
+        this.runtimeInfo = runtimeInfo;
         this.hud = Hud.getInstance();
     }
 
@@ -30,7 +31,7 @@ public class TouchProcessor implements InputProcessor {
         Vector2 touchVector = new Vector2(screenX,screenY);
         touchVector = this.viewport.unproject(touchVector);
 
-        for (Frog frog: this.frogManager.activeFrogs) {
+        for (Frog frog: this.runtimeInfo.activeFrogs) {
             if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
                 frog.touched();
                 return true;

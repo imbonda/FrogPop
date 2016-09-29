@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.screens.PlayScreen;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.sprites.Hole;
@@ -24,45 +25,19 @@ public class FrogManager {
     private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
 
-    private static FrogManager ourInstance = new FrogManager();
-
-    /**
-     * Singleton implementation.
-     *
-     * @return  The singleton object.
-     */
-    public static FrogManager getInstance() {
-        return ourInstance;
-    }
-
-    /**
-     * Singleton private constructor.
-     */
-    private FrogManager() {
-        this.holes = PlayScreen.holes;
-        this.activeFrogs = new Array<Frog>();
-        this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
-        this.unpopulatedHolesIndexes = new Array<Integer>();
-        setUnpopulatedHolesIndexes();
-    }
-
-    public Array<Frog> activeFrogs;
-
-    private final FrogPool frogPool = new FrogPool();
     private Array<Hole> holes;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
+    private FrogPool frogPool;
+    private RuntimeInfo runtimeInfo;
 
-
-    /**
-     * Resets the frog-manager to it's default configuration.
-     */
-    public void reset() {
-        this.frogPool.freeAll(this.activeFrogs);
-        this.activeFrogs.clear();
-        this.frogToHoleIndexMap.clear();
-        this.unpopulatedHolesIndexes.clear();
+    public FrogManager(RuntimeInfo runtimeInfo) {
+        this.holes = PlayScreen.holes;
+        this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
+        this.unpopulatedHolesIndexes = new Array<Integer>();
         setUnpopulatedHolesIndexes();
+        this.runtimeInfo = runtimeInfo;
+        this.frogPool = new FrogPool();
     }
 
     private void setUnpopulatedHolesIndexes() {
@@ -80,8 +55,8 @@ public class FrogManager {
         // Add a new frog positioned at the chosen hole.
         Frog frog = this.frogPool.obtain();
         if (null != frog) {
-            frog.init(frogPosition.x, frogPosition.y);
-            this.activeFrogs.add(frog);
+            frog.init(this.runtimeInfo, frogPosition.x, frogPosition.y);
+            this.runtimeInfo.activeFrogs.add(frog);
             this.frogToHoleIndexMap.put(frog, randomHoleIndex);
             // The hole is now populated.
             this.unpopulatedHolesIndexes.removeValue(randomHoleIndex, true);
@@ -117,7 +92,7 @@ public class FrogManager {
      * @param deltaTime The time passed from the last call to update.
      */
     public void update(float deltaTime) {
-        Iterator<Frog> frogIterator = this.activeFrogs.iterator();
+        Iterator<Frog> frogIterator = this.runtimeInfo.activeFrogs.iterator();
         while (frogIterator.hasNext()) {
             Frog frog = frogIterator.next();
             frog.update(deltaTime);

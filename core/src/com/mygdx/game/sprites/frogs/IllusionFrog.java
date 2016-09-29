@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.managment.LevelController;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.screens.PlayScreen;
 
@@ -73,7 +74,7 @@ public class IllusionFrog extends Frog {
     }
     @Override
     public void update(float deltaTime) {
-        this.lifeTime += deltaTime * LevelController.getInstance().getSpeed();
+        this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed;
         if(rotatedelay%4==0){
         whileUpAbility();}
         rotatedelay++;
@@ -96,8 +97,8 @@ public class IllusionFrog extends Frog {
     }
 
     @Override
-    public void init(float positionX, float positionY) {
-        super.defaultInit(positionX, positionY);
+    public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
+        super.defaultInit(runtimeInfo, positionX, positionY);
         Random rand=new Random();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,

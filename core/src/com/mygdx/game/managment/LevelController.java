@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.config.Config;
 import com.mygdx.game.config.metadata.AddFrogMetaData;
 import com.mygdx.game.config.metadata.LevelMetaData;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Timer;
 
@@ -14,49 +15,38 @@ import com.mygdx.game.sprites.Timer;
  */
 public class LevelController {
 
+    // Public class variables.
     public static final int STARTING_LEVEL = 1;
-
-    private static final float STARTING_SPEED = 1.0f;
+    public static final float STARTING_SPEED = 1.0f;
+    // Private class variables.
     private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.04f;
     private static final float SPEED_SCALE_FACTOR = 1.087f;
 
-    private static LevelController ourInstance = new LevelController();
-
-    /**
-     * Singleton implementation.
-     *
-     * @return  The singleton object.
-     */
-    public static LevelController getInstance() {
-        return ourInstance;
-    }
-
-    /**
-     * Singleton private constructor.
-     */
-    private LevelController() {
-        this.currentLevel = STARTING_LEVEL;
-        this.speed = STARTING_SPEED;
-        this.levelsMetaData = Config.levelsMetaData;
-        this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
-    }
-
+    // Private members.
     private int currentLevel;
-    private float speed;
     private Array<LevelMetaData> levelsMetaData;
     private Array<Integer> levelsToAddFrog;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
+    private RuntimeInfo runtimeInfo;
     private ThemeController themeController;
+    private FrogManager frogManager;
 
+    private LevelController(RuntimeInfo runtimeInfo) {
+        this.runtimeInfo = runtimeInfo;
+        this.currentLevel = STARTING_LEVEL;
+        this.levelsMetaData = Config.levelsMetaData;
+        this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
+        this.frogManager = new FrogManager(runtimeInfo);
+    }
 
     /**
      * Initializes the level-controller to it's default configuration.
      */
-    public void init(ThemeController themeController) {
-        reset();
+    public LevelController(RuntimeInfo runtimeInfo, ThemeController themeController) {
+        this(runtimeInfo);
         this.currentLevel = STARTING_LEVEL;
-        this.speed = STARTING_SPEED;
+        this.runtimeInfo.gameSpeed = STARTING_SPEED;
         this.themeController = themeController;
         this.themeController.init();
         setup();
@@ -67,20 +57,13 @@ public class LevelController {
      *
      * @param level A level to set the LevelController to.
      */
-    public void init(ThemeController themeController, int level) {
-        reset();
+    public LevelController(RuntimeInfo runtimeInfo, ThemeController themeController, int level) {
+        this(runtimeInfo);
         this.currentLevel = level;
         this.themeController = themeController;
         this.themeController.init(level);
-        // TODO (finish function: calculate the speed for the given level..)
+        // TODO (finish function: calculate the this.runtimeInfo.gameSpeed for the given level..)
         setup();
-    }
-
-    /**
-     * Resets the level-controller to allow upcoming initialization.
-     */
-    private void reset() {
-        FrogManager.getInstance().reset();
     }
 
     private void setup() {
@@ -122,7 +105,7 @@ public class LevelController {
         }
         // In case a frog needs to be added, add it.
         while (this.levelsToAddFrog.size > 0 && this.currentLevel >= this.levelsToAddFrog.get(0)) {
-            FrogManager.getInstance().addFrog();
+            this.frogManager.addFrog();
             this.levelsToAddFrog.removeIndex(0);
         }
     }
@@ -134,7 +117,7 @@ public class LevelController {
      */
     public void update(float deltaTime) {
         this.levelTimer.update(deltaTime);
-        FrogManager.getInstance().update(deltaTime);
+        this.frogManager.update(deltaTime);
         if (this.levelTimer.isTimedOut()) {
             this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
             levelUp();
@@ -148,20 +131,9 @@ public class LevelController {
      */
     private void levelUp() {
         this.currentLevel++;
-        scaleSpeed(SPEED_SCALE_FACTOR);
+        this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
         setCurrentLevel();
         Hud.getInstance().getLevelCounter().advance();
     }
 
-    public void scaleSpeed(float scaleFactor) {
-        this.speed *= scaleFactor;
-    }
-
-    public float getSpeed() {
-        return this.speed;
-    }
-
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
 }

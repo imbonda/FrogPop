@@ -13,6 +13,7 @@ import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.managment.ThemeController;
 import com.mygdx.game.managment.TouchProcessor;
 import com.mygdx.game.data.Data;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.Hole;
@@ -49,9 +50,9 @@ public class PlayScreen implements Screen {
         this.game = game;
         this.hud = Hud.getInstance();
         this.themeController = new ThemeController();
-        this.levelController = LevelController.getInstance();
-        this.levelController.init(this.themeController);
-        Gdx.input.setInputProcessor(new TouchProcessor(gameViewPort));
+        RuntimeInfo runtimeInfo = new RuntimeInfo();
+        this.levelController = new LevelController(runtimeInfo, this.themeController);
+        Gdx.input.setInputProcessor(new TouchProcessor(gameViewPort, runtimeInfo));
     }
 
     public void update(float deltaTime) {

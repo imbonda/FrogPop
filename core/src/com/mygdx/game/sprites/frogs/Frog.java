@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.game.managment.LevelController;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.sprites.SpritesDrawer;
 
 /**
@@ -24,6 +25,7 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
     protected Rectangle frogRectangle;
     protected float lifeTime;
     protected boolean isKilled;
+    protected RuntimeInfo runtimeInfo;
 
 
     public Frog() {
@@ -57,10 +59,11 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      * This method should be implemented by each sub-class.
      * Used to initialize the frog object after retrieving it from a Pool.
      *
+     * @param runtimeInfo The game runtime information.
      * @param positionX The x coordinate the the frog new positing.
      * @param positionY The y coordinate the the frog new positing.
      */
-    public abstract void init(float positionX, float positionY);
+    public abstract void init(RuntimeInfo runtimeInfo, float positionX, float positionY);
 
     /**
      * This method should be implemented by each sub-class.
@@ -75,7 +78,8 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      */
     public abstract void dispose();
 
-    public void defaultInit(float positionX, float positionY) {
+    public void defaultInit(RuntimeInfo runtimeInfo, float positionX, float positionY) {
+        this.runtimeInfo = runtimeInfo;
         this.position.set(positionX, positionY);
         this.lifeTime = 0;
         spritesDrawer.addSprite(this);
@@ -88,7 +92,7 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
     }
 
     public void update(float deltaTime) {
-        this.lifeTime += deltaTime * LevelController.getInstance().getSpeed();
+        this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed;
     }
 
     public boolean isLifeTimeExpired() {

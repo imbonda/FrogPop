@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.effects.PoliceEffect;
 import com.mygdx.game.managment.LevelController;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 
 import java.util.Random;
@@ -75,8 +76,8 @@ public class FreezeFrog extends Frog {
     }
 
     @Override
-    public void init(float positionX, float positionY) {
-        super.defaultInit(positionX, positionY);
+    public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
+        super.defaultInit(runtimeInfo, positionX, positionY);
         Random rand=new Random();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
@@ -86,7 +87,7 @@ public class FreezeFrog extends Frog {
     }
 
     private void initAbility() {
-        LevelController.getInstance().scaleSpeed(SLOW_DOWN_FACTOR);
+        this.runtimeInfo.gameSpeed *= SLOW_DOWN_FACTOR;
     }
 
     @Override
@@ -95,7 +96,7 @@ public class FreezeFrog extends Frog {
         Random rand = new Random();
         this.frameKey = 0;
         this.randTextureType = rand.nextInt(1);
-        LevelController.getInstance().scaleSpeed(1 / SLOW_DOWN_FACTOR);
+        this.runtimeInfo.gameSpeed *= (1 / SLOW_DOWN_FACTOR);
     }
 
     @Override
