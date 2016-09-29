@@ -17,6 +17,7 @@ public class RainEffect {
 
     private static final String RAIN_EFFECT_FILE = "effects/rain_effect";
     private static final String RAIN_EFFECT_DIR = "effects";
+    private static final String EMITTER_NAME = "rain";
     private static final Vector2 CLOUD_SPACE [] = {
             new Vector2(50, 480), new Vector2(100, 440), new Vector2(150, 430),
             new Vector2(200, 470), new Vector2(250, 430), new Vector2(300, 460),
@@ -26,18 +27,18 @@ public class RainEffect {
 
     private Random random;
     private int direction;
-    private ParticleEffect snowEffect;
+    private ParticleEffect rainEffect;
     private ParticleEmitter emitter;
     private Array<Cloud> clouds;
 
     public RainEffect() {
         this.random = new Random();
-        this.snowEffect = new ParticleEffect();
-        this.snowEffect.load(
+        this.rainEffect = new ParticleEffect();
+        this.rainEffect.load(
                 Gdx.files.internal(RAIN_EFFECT_FILE),
                 Gdx.files.internal(RAIN_EFFECT_DIR));
-        this.snowEffect.start();
-        this.emitter = this.snowEffect.getEmitters().first();
+        this.rainEffect.start();
+        this.emitter = this.rainEffect.getEmitters().first();
         this.direction = (random.nextInt(2) == 0) ? (-1) : (1);
         setRainParticleRotation();
         setRainAngle();
@@ -86,16 +87,16 @@ public class RainEffect {
         updateClouds(deltaTime);
         Vector2 position = this.clouds.random().getCenter();
         this.emitter.setPosition(position.x, position.y);
-        this.snowEffect.findEmitter("rain").durationTimer = 0;
-        this.snowEffect.update(deltaTime);
-        if (this.snowEffect.isComplete()) {
-            this.snowEffect.reset();
+        this.rainEffect.findEmitter(EMITTER_NAME).durationTimer = 0;
+        this.rainEffect.update(deltaTime);
+        if (this.rainEffect.isComplete()) {
+            this.rainEffect.reset();
         }
     }
 
     public void draw(Batch batch){
-        // Draw snow.
-        this.snowEffect.draw(batch);
+        // Draw rain.
+        this.rainEffect.draw(batch);
         // Draw clouds.
         for (Cloud c : this.clouds) {
             c.draw(batch);

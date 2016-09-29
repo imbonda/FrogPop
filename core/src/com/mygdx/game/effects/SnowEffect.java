@@ -17,6 +17,7 @@ public class SnowEffect {
 
     private static final String SNOW_EFFECT_FILE = "effects/snow_effect";
     private static final String SNOW_EFFECT_DIR = "effects";
+    private static final String EMITTER_NAME = "snow";
     private static final Vector2 CLOUD_SPACE [] = {
             new Vector2(50, 480), new Vector2(100, 440), new Vector2(150, 430),
             new Vector2(200, 470), new Vector2(250, 430), new Vector2(300, 460),
@@ -63,7 +64,7 @@ public class SnowEffect {
         updateClouds(deltaTime);
         Vector2 position = this.clouds.random().getCenter();
         this.emitter.setPosition(position.x, position.y);
-        this.snowEffect.findEmitter("snow").durationTimer = 0;
+        this.snowEffect.findEmitter(EMITTER_NAME).durationTimer = 0;
         this.snowEffect.update(deltaTime);
         if (this.snowEffect.isComplete()) {
             this.snowEffect.reset();
