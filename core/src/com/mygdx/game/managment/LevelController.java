@@ -32,6 +32,7 @@ public class LevelController {
     private Media media;
     private RuntimeInfo runtimeInfo;
     private ThemeController themeController;
+    private FrogClassAllocator frogClassAllocator;
     private FrogManager frogManager;
 
     /**
@@ -44,7 +45,8 @@ public class LevelController {
         this.currentLevel = STARTING_LEVEL;
         this.levelsMetaData = Config.levelsMetaData;
         this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
-        this.frogManager = new FrogManager(runtimeInfo);
+        this.frogClassAllocator = new FrogClassAllocator();
+        this.frogManager = new FrogManager(runtimeInfo, this.frogClassAllocator);
     }
 
     /**
@@ -102,17 +104,16 @@ public class LevelController {
      * This method sets all the data necessary for the current level.
      */
     private void setCurrentLevel() {
-        FrogClassAllocator frogClassAllocator = FrogClassAllocator.getInstance();
         // Look for a level configuration, specific for this level.
         for (LevelMetaData levelMetaData : this.levelsMetaData) {
             if (this.currentLevel >= levelMetaData.id) {
                 this.currentLevelMetaData = levelMetaData;
             }
         }
-        frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
+        this.frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
         // If no specific configuration was found, use the last configuration configured.
         if (this.currentLevelMetaData.id != this.currentLevel) {
-            frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
+            this.frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
         }
         // In case a frog needs to be added, add it.
         while (this.levelsToAddFrog.size > 0 && this.currentLevel >= this.levelsToAddFrog.get(0)) {

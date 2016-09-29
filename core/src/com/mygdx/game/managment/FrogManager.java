@@ -31,13 +31,13 @@ public class FrogManager {
     private FrogPool frogPool;
     private RuntimeInfo runtimeInfo;
 
-    public FrogManager(RuntimeInfo runtimeInfo) {
+    public FrogManager(RuntimeInfo runtimeInfo, FrogClassAllocator frogClassAllocator) {
         this.holes = PlayScreen.holes;
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
         setUnpopulatedHolesIndexes();
         this.runtimeInfo = runtimeInfo;
-        this.frogPool = new FrogPool();
+        this.frogPool = new FrogPool(frogClassAllocator);
     }
 
     private void setUnpopulatedHolesIndexes() {

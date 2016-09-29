@@ -16,9 +16,10 @@ public class FrogPool {
 
     private Array<Frog> allFrogs;
     private HashMap<Class<? extends Frog>, Array<Integer>> classToFreeInstancesIndexesMap;
+    private FrogClassAllocator frogClassAllocator;
 
-
-    public FrogPool() {
+    public FrogPool(FrogClassAllocator frogClassAllocator) {
+        this.frogClassAllocator = frogClassAllocator;
         this.allFrogs = new Array<Frog>();
         this.classToFreeInstancesIndexesMap = new HashMap<Class<? extends Frog>, Array<Integer>>();
     }
@@ -29,7 +30,7 @@ public class FrogPool {
      * instance that has been freed, or generates a new one if could not find any free ones to reuse.
      */
     protected Frog newObject() {
-        Class<? extends Frog> frogClass = FrogClassAllocator.getInstance().allocateRandomFrogClass();
+        Class<? extends Frog> frogClass = this.frogClassAllocator.allocateRandomFrogClass();
         if (null == frogClass) {
             return null;
         }
@@ -77,7 +78,7 @@ public class FrogPool {
         freeInstancesIndexes.insert(0, this.allFrogs.indexOf(frog, true));
         this.classToFreeInstancesIndexesMap.put(frogClass, freeInstancesIndexes);
         frog.reset();
-        FrogClassAllocator.getInstance().deallocate(frogClass);
+        this.frogClassAllocator.deallocate(frogClass);
     }
 
     /**
