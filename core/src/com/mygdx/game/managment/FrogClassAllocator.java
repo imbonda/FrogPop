@@ -1,8 +1,8 @@
 package com.mygdx.game.managment;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.managment.metadata.FrogMetaData;
-import com.mygdx.game.managment.metadata.LevelMetaData;
+import com.mygdx.game.config.metadata.FrogMetaData;
+import com.mygdx.game.config.metadata.LevelMetaData;
 import com.mygdx.game.sprites.frogs.Frog;
 import java.util.HashMap;
 import java.util.Iterator;

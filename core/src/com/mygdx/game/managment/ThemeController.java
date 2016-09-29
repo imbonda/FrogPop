@@ -1,8 +1,8 @@
 package com.mygdx.game.managment;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.managment.config.Config;
-import com.mygdx.game.managment.metadata.ThemeMetaData;
+import com.mygdx.game.config.Config;
+import com.mygdx.game.config.metadata.ThemeMetaData;
 import com.mygdx.game.themes.Theme;
 
 /**

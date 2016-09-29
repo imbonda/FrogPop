@@ -1,10 +1,10 @@
-package com.mygdx.game.managment.config;
+package com.mygdx.game.config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.XmlReader;
-import com.mygdx.game.managment.metadata.ThemeMetaData;
+import com.mygdx.game.config.metadata.ThemeMetaData;
 import com.mygdx.game.themes.Theme;
 
 import java.io.IOException;

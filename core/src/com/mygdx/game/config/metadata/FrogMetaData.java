@@ -1,4 +1,4 @@
-package com.mygdx.game.managment.metadata;
+package com.mygdx.game.config.metadata;
 
 import com.mygdx.game.sprites.frogs.Frog;
 

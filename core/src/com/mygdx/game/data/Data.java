@@ -1,4 +1,4 @@
-package com.mygdx.game.managment.data;
+package com.mygdx.game.data;
 
 /**
  *

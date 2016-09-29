@@ -1,9 +1,9 @@
-package com.mygdx.game.managment.config;
+package com.mygdx.game.config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
-import com.mygdx.game.managment.metadata.AddFrogMetaData;
+import com.mygdx.game.config.metadata.AddFrogMetaData;
 
 import java.io.IOException;
 

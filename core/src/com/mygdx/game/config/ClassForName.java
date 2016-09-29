@@ -1,4 +1,4 @@
-package com.mygdx.game.managment.config;
+package com.mygdx.game.config;
 
 import com.mygdx.game.themes.AutumnTheme;
 import com.mygdx.game.themes.SpringTheme;

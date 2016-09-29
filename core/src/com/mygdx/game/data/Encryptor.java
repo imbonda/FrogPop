@@ -1,4 +1,4 @@
-package com.mygdx.game.managment.data;
+package com.mygdx.game.data;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

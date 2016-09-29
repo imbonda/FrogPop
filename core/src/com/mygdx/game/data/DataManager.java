@@ -1,4 +1,4 @@
-package com.mygdx.game.managment.data;
+package com.mygdx.game.data;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;

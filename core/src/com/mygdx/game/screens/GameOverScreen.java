@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
-import com.mygdx.game.managment.data.Data;
+import com.mygdx.game.data.Data;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Buttons;
 

@@ -113,12 +113,16 @@ active: false
 - Gravity - 
 active: false
 - Tint - 
-colorsCount: 3
-colors0: 0.9882353
-colors1: 0.09019608
+colorsCount: 6
+colors0: 0.81960785
+colors1: 0.078431375
 colors2: 0.015686275
-timelineCount: 1
+colors3: 0.9882353
+colors4: 0.1882353
+colors5: 0.019607844
+timelineCount: 2
 timeline0: 0.0
+timeline1: 1.0
 - Transparency - 
 lowMin: 0.0
 lowMax: 0.0
@@ -126,15 +130,15 @@ highMin: 1.0
 highMax: 1.0
 relative: false
 scalingCount: 4
-scaling0: 0.8820225
-scaling1: 0.96629214
-scaling2: 0.93820226
-scaling3: 0.83146065
+scaling0: 0.47368422
+scaling1: 0.47368422
+scaling2: 0.47368422
+scaling3: 0.45614034
 timelineCount: 4
 timeline0: 0.0
-timeline1: 0.2662835
-timeline2: 0.83716476
-timeline3: 0.99616855
+timeline1: 0.3561644
+timeline2: 0.89726025
+timeline3: 1.0
 - Options - 
 attached: false
 continuous: false

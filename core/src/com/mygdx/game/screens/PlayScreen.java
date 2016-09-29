@@ -12,7 +12,7 @@ import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.managment.ThemeController;
 import com.mygdx.game.managment.TouchProcessor;
-import com.mygdx.game.managment.data.Data;
+import com.mygdx.game.data.Data;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.Hole;

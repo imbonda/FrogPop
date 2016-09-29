@@ -1,9 +1,9 @@
 package com.mygdx.game.managment;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.managment.config.Config;
-import com.mygdx.game.managment.metadata.AddFrogMetaData;
-import com.mygdx.game.managment.metadata.LevelMetaData;
+import com.mygdx.game.config.Config;
+import com.mygdx.game.config.metadata.AddFrogMetaData;
+import com.mygdx.game.config.metadata.LevelMetaData;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Timer;
 

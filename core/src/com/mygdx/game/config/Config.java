@@ -1,10 +1,10 @@
-package com.mygdx.game.managment.config;
+package com.mygdx.game.config;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
-import com.mygdx.game.managment.metadata.AddFrogMetaData;
-import com.mygdx.game.managment.metadata.LevelMetaData;
-import com.mygdx.game.managment.metadata.ThemeMetaData;
+import com.mygdx.game.config.metadata.AddFrogMetaData;
+import com.mygdx.game.config.metadata.LevelMetaData;
+import com.mygdx.game.config.metadata.ThemeMetaData;
 
 /**
  * This class will hold all the configurations necessary for the game.
