@@ -7,6 +7,7 @@ import com.mygdx.game.config.metadata.LevelMetaData;
 import com.mygdx.game.media.Media;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.Timer;
 
 /**
@@ -37,25 +38,30 @@ public class LevelController {
 
     /**
      * @param media A media object for playing music and sounds.
+     * @param spritesDrawer A class that is used to draw queued sprites.
      * @param runtimeInfo A runtime information regarding the game state.
      **/
-    private LevelController(Media media, RuntimeInfo runtimeInfo) {
+    private LevelController(Media media, SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo) {
         this.media = media;
         this.runtimeInfo = runtimeInfo;
         this.currentLevel = STARTING_LEVEL;
         this.levelsMetaData = Config.levelsMetaData;
         this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
         this.frogClassAllocator = new FrogClassAllocator();
-        this.frogManager = new FrogManager(runtimeInfo, this.frogClassAllocator);
+        this.frogManager = new FrogManager(spritesDrawer, runtimeInfo, this.frogClassAllocator);
+        this.levelTimer = new Timer();
+        spritesDrawer.addSprite(this.levelTimer);
     }
 
     /**
      * @param media A media object for playing music and sounds.
+     * @param spritesDrawer A class that is used to draw queued sprites.
      * @param runtimeInfo A runtime information regarding the game state.
      * @param themeController A theme-controller to use for switching between themes.
      */
-    public LevelController(Media media, RuntimeInfo runtimeInfo, ThemeController themeController) {
-        this(media, runtimeInfo);
+    public LevelController(Media media, SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo,
+                            ThemeController themeController) {
+        this(media, spritesDrawer, runtimeInfo);
         this.currentLevel = STARTING_LEVEL;
         this.runtimeInfo.gameSpeed = STARTING_SPEED;
         this.themeController = themeController;
@@ -65,13 +71,14 @@ public class LevelController {
 
     /**
      * @param media A media object for playing music and sounds.
+     * @param spritesDrawer A class that is used to draw queued sprites.
      * @param runtimeInfo A runtime information regarding the game state.
      * @param themeController A theme-controller to use for switching between themes.
      * @param level A level to set the LevelController to.
      */
-    public LevelController(Media media, RuntimeInfo runtimeInfo, ThemeController themeController,
-                            int level) {
-        this(media, runtimeInfo);
+    public LevelController(Media media, SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo,
+                            ThemeController themeController, int level) {
+        this(media, spritesDrawer, runtimeInfo);
         this.currentLevel = level;
         this.themeController = themeController;
         this.themeController.init(level);
@@ -80,7 +87,6 @@ public class LevelController {
     }
 
     private void setup() {
-        this.levelTimer = new Timer();
         setLevelsToAddFrog();
         setCurrentLevel();
     }
