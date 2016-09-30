@@ -17,7 +17,11 @@ import com.mygdx.game.adds.AdsController;
 
 public class AndroidLauncher extends AndroidApplication  implements AdsController {
 
-	private static final String BANNER_AD_UNIT_ID = "ca-app-pub-9580777050562768~5793827338";
+	private static final String BANNER_AD_UNIT_ID = "ca-app-pub-9580777050562768/7512736139";
+	private static final String BANNER_AD_TEST_DEVICE_IDS [] = {
+			"E5DBDD7696804F8E99991CB332E32029",
+			"870C561BBC76ED46228B771081A24D17"
+	};
 	private static final int INTERNET_CONNECTION_TYPES [] = {
 			ConnectivityManager.TYPE_WIFI,
 			ConnectivityManager.TYPE_MOBILE
@@ -94,6 +98,10 @@ public class AndroidLauncher extends AndroidApplication  implements AdsControlle
 			public void run() {
 				bannerAd.setVisibility(View.VISIBLE);
 				AdRequest.Builder builder = new AdRequest.Builder();
+				// Test devices.
+				for (String deviceId : BANNER_AD_TEST_DEVICE_IDS) {
+					builder.addTestDevice(deviceId);
+				}
 				AdRequest ad = builder.build();
 				bannerAd.loadAd(ad);
 			}
