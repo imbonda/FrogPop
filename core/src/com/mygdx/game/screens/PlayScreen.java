@@ -26,33 +26,21 @@ public class PlayScreen implements Screen {
 
     public static Viewport gameViewPort = new FitViewport(
                 FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
-    public static Array<Hole> holes = new Array<Hole>();
-
-    private static final Vector2[] HOLES_POSITIONS = {
-            new Vector2(50, 10), new Vector2(300, 10), new Vector2(50, 135),
-            new Vector2(300, 135), new Vector2(550, 10), new Vector2(550, 135),
-            new Vector2(50, 260), new Vector2(300, 260), new Vector2(550,260)
-    };
-
-    static {
-        for (Vector2 holePosition : HOLES_POSITIONS) {
-            holes.add(new Hole(holePosition.x, holePosition.y));
-        }
-    }
 
     private FrogPop game;
+    private SpritesDrawer spritesDrawer;
     private LevelController levelController;
     private ThemeController themeController;
     private Hud hud;
 
     public PlayScreen(FrogPop game) {
-        SpritesDrawer.getInstance().addSprites(holes);
+        this.spritesDrawer = new SpritesDrawer();
         this.game = game;
         this.hud = Hud.getInstance();
         this.themeController = new ThemeController(this.game.config);
         RuntimeInfo runtimeInfo = new RuntimeInfo();
         this.levelController = new LevelController(
-                    this.game.config, this.game.media, runtimeInfo, this.themeController);
+                    this.game.config, this.game.media, spritesDrawer, runtimeInfo, this.themeController);
         Gdx.input.setInputProcessor(new TouchProcessor(gameViewPort, runtimeInfo));
     }
 
@@ -67,7 +55,7 @@ public class PlayScreen implements Screen {
         this.game.data.updateHighScore(this.hud.getScoreCounter().getScore());
         this.game.setScreen(new GameOverScreen(this.game));
         dispose();
-        SpritesDrawer.getInstance().clear();
+        this.spritesDrawer.clear();
         Gdx.input.setInputProcessor(null);
     }
 
@@ -78,7 +66,7 @@ public class PlayScreen implements Screen {
         this.game.batch.setProjectionMatrix(gameViewPort.getCamera().combined);
         this.game.batch.begin();
         this.themeController.currentTheme.draw(this.game.batch);
-        SpritesDrawer.getInstance().drawSprites(this.game.batch);
+        this.spritesDrawer.drawSprites(this.game.batch);
         this.game.batch.end();
         this.hud.draw();
     }

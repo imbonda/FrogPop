@@ -11,6 +11,7 @@ import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.screens.PlayScreen;
+import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.frogs.Frog;
 import com.mygdx.game.sprites.Hole;
 
@@ -24,15 +25,27 @@ public class FrogManager {
 
     private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
+    private static final Vector2[] HOLES_POSITIONS = {
+            new Vector2(50, 10), new Vector2(300, 10), new Vector2(50, 135),
+            new Vector2(300, 135), new Vector2(550, 10), new Vector2(550, 135),
+            new Vector2(50, 260), new Vector2(300, 260), new Vector2(550,260)
+    };
 
     private Array<Hole> holes;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
     private FrogPool frogPool;
+    private SpritesDrawer spritesDrawer;
     private RuntimeInfo runtimeInfo;
 
-    public FrogManager(RuntimeInfo runtimeInfo, FrogClassAllocator frogClassAllocator) {
-        this.holes = PlayScreen.holes;
+    public FrogManager(SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo,
+                        FrogClassAllocator frogClassAllocator) {
+        this.spritesDrawer = spritesDrawer;
+        this.holes = new Array<Hole>();
+        for (Vector2 holePosition : HOLES_POSITIONS) {
+            holes.add(new Hole(holePosition.x, holePosition.y));
+            this.spritesDrawer.addSprites(holes);
+        }
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
         setUnpopulatedHolesIndexes();
@@ -56,6 +69,7 @@ public class FrogManager {
         Frog frog = this.frogPool.obtain();
         if (null != frog) {
             frog.init(this.runtimeInfo, frogPosition.x, frogPosition.y);
+            this.spritesDrawer.addSprite(frog);
             this.runtimeInfo.activeFrogs.add(frog);
             this.frogToHoleIndexMap.put(frog, randomHoleIndex);
             // The hole is now populated.
@@ -113,6 +127,7 @@ public class FrogManager {
         int frogHoleIndex = this.frogToHoleIndexMap.remove(frog);
         frogIterator.remove();
         this.frogPool.free(frog);
+        this.spritesDrawer.removeSprite(frog);
         addFrog();
         this.unpopulatedHolesIndexes.add(frogHoleIndex);
     }

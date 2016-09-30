@@ -9,25 +9,11 @@ import com.badlogic.gdx.utils.Array;
  */
 public class SpritesDrawer {
 
-    private static SpritesDrawer ourInstance = new SpritesDrawer();
+    private Array<Sprite> sprites;
 
-    /**
-     * Singleton implementation.
-     *
-     * @return  The singleton object.
-     */
-    public static SpritesDrawer getInstance() {
-        return ourInstance;
+    public SpritesDrawer() {
+        this.sprites = new Array<Sprite>();
     }
-
-    /**
-     * Singleton private constructor.
-     */
-    private SpritesDrawer() {
-    }
-
-    private final static Array<Sprite> sprites = new Array<Sprite>();
-
 
     public void addSprite(Sprite sprite) {
         sprites.add(sprite);
