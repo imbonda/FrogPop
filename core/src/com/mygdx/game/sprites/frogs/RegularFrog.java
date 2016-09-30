@@ -114,7 +114,6 @@ public class RegularFrog extends Frog {
             }
             this.frameKey += dir;
         }
-        /////////////////////System.out.print((int)this.frameKey);
         return this.frogTexture[(int)(this.frameKey % 8)];
     }
 
