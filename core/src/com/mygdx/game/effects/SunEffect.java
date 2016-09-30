@@ -10,6 +10,8 @@ import com.mygdx.game.sprites.Cloud;
 
 import java.util.Random;
 
+import sun.security.provider.Sun;
+
 /**
  * Created by nitsa on 27-Sep-16.
  */
@@ -20,27 +22,33 @@ public class SunEffect {
     private static final String EMITTER_NAME = "sun";
     private static final Vector2 SUN_POSITION = new Vector2(380, 470);
 
-    private ParticleEffect sומEffect;
+    private ParticleEffect sunEffect;
+    private ParticleEmitter emitter;
 
     public SunEffect() {
-        this.sומEffect = new ParticleEffect();
-        this.sומEffect.load(
+        this.sunEffect = new ParticleEffect();
+        this.sunEffect.load(
                 Gdx.files.internal(SUN_EFFECT_FILE),
                 Gdx.files.internal(SUN_EFFECT_DIR));
-        this.sומEffect.start();
-        ParticleEmitter emitter = this.sומEffect.getEmitters().first();
-        emitter.setPosition(SUN_POSITION.x, SUN_POSITION.y);
+        this.sunEffect.start();
+        this.emitter = this.sunEffect.getEmitters().first();
+        this.emitter.setPosition(SUN_POSITION.x, SUN_POSITION.y);
+    }
+
+    public SunEffect(float color []) {
+        this();
+        this.emitter.getTint().setColors(color);
     }
 
     public void update(float deltaTime) {
-        this.sומEffect.findEmitter(EMITTER_NAME).durationTimer = 0;
-        this.sומEffect.update(deltaTime);
-        if (this.sומEffect.isComplete()) {
-            this.sומEffect.reset();
+        this.sunEffect.findEmitter(EMITTER_NAME).durationTimer = 0;
+        this.sunEffect.update(deltaTime);
+        if (this.sunEffect.isComplete()) {
+            this.sunEffect.reset();
         }
     }
 
     public void draw(Batch batch){
-        this.sומEffect.draw(batch);
+        this.sunEffect.draw(batch);
     }
 }

@@ -26,7 +26,7 @@ public class AutumnTheme implements Theme {
     private RainEffect rainEffect;
 
     public AutumnTheme() {
-        this.backgroundTexture = new Texture("world3.jpg");
+        this.backgroundTexture = new Texture("autumn.png");
         this.rainEffect = new RainEffect();
     }
 

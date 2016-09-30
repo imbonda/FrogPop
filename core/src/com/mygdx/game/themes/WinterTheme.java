@@ -26,7 +26,7 @@ public class WinterTheme implements Theme {
     private SnowEffect snowEffect;
 
     public WinterTheme() {
-        this.backgroundTexture = new Texture("world4.jpg");
+        this.backgroundTexture = new Texture("winter.png");
         this.snowEffect = new SnowEffect();
     }
 

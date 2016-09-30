@@ -23,19 +23,21 @@ import java.util.HashMap;
  */
 public class SpringTheme implements Theme {
 
+    private static final float SPRING_SUN_COLOR[] = {1f, 1f, 1f};
+
     private Texture backgroundTexture;
     private SunEffect sunEffect;
     private ButterflyEffect butterflyEffect;
 
     public SpringTheme() {
         this.backgroundTexture = new Texture("spring.png");
-        this.sunEffect = new SunEffect();
+        this.sunEffect = new SunEffect(SPRING_SUN_COLOR);
         this.butterflyEffect = new ButterflyEffect();
     }
 
     @Override
     public void update(float deltaTime) {
-
+        this.sunEffect.update(deltaTime);
     }
 
     @Override
