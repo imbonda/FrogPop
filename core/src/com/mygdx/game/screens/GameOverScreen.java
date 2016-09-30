@@ -32,6 +32,9 @@ public class GameOverScreen implements Screen {
     private Viewport viewport;
 
     public GameOverScreen(FrogPop game) {
+        if (game.adsController.isInternetConnected()) {
+            game.adsController.showBannerAd();
+        }
         this.game = game;
         this.hud = Hud.getInstance();
         this.Loser = new BitmapFont(Gdx.files.internal("font.fnt"));

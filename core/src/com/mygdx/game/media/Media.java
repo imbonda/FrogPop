@@ -42,6 +42,14 @@ public class Media {
         // todo
     }
 
+    public void stopMusic() {
+        Music music = this.assetController.get(MUSIC);
+        if (null != music) {
+            music.stop();
+        }
+        // todo
+    }
+
     public void updateMusicVolume() {
         // todo
     }

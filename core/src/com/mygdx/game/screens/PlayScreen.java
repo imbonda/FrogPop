@@ -34,6 +34,7 @@ public class PlayScreen implements Screen {
     private Hud hud;
 
     public PlayScreen(FrogPop game) {
+        game.adsController.hideBannerAd();
         this.spritesDrawer = new SpritesDrawer();
         this.game = game;
         this.hud = Hud.getInstance();

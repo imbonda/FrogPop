@@ -2,12 +2,15 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.adds.AdsController;
 import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.config.Config;
 import com.mygdx.game.data.Data;
 import com.mygdx.game.media.Media;
 import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.screens.IntroScreen;
 import com.mygdx.game.screens.PlayScreen;
+import com.sun.org.apache.bcel.internal.generic.PUSH;
 
 
 /**
@@ -19,12 +22,17 @@ public class FrogPop extends Game {
 	public static final int VIRTUAL_HEIGHT = 530;
 	public static final String LOGGER_TAG = "FrogPopLogging";
 
+	public AdsController adsController;
 	public SpriteBatch batch;
 	public Data data;
 	public Media media;
 	public Config config;
 	private AssetController assetController;
 
+
+	public FrogPop(AdsController adsController) {
+		this.adsController = adsController;
+	}
 
 	@Override
 	public void create () {
@@ -39,6 +47,7 @@ public class FrogPop extends Game {
 		Hud.getInstance().setBatch(this.batch);
 
 		setScreen(new PlayScreen(this));
+		//setScreen(new IntroScreen(this));
 	}
 
 	@Override
