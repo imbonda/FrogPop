@@ -19,10 +19,10 @@ public class SnowEffect {
     private static final String SNOW_EFFECT_DIR = "effects";
     private static final String EMITTER_NAME = "snow";
     private static final Vector2 CLOUD_SPACE [] = {
-            new Vector2(50, 480), new Vector2(100, 440), new Vector2(150, 430),
+            new Vector2(-50, 480), new Vector2(50, 440), new Vector2(150, 430),
             new Vector2(200, 470), new Vector2(250, 430), new Vector2(300, 460),
-            new Vector2(350, 470), new Vector2(400, 450), new Vector2(450, 440),
-            new Vector2(500, 475), new Vector2(600, 425), new Vector2(650, 465)
+            new Vector2(350, 470), new Vector2(400, 450), new Vector2(550, 440),
+            new Vector2(600, 475), new Vector2(750, 425), new Vector2(800, 465)
     };
 
     private Random random;
@@ -47,7 +47,7 @@ public class SnowEffect {
         this.clouds = new Array<Cloud>();
         for (Vector2 position : CLOUD_SPACE) {
             Cloud c = new Cloud();
-            int speed = this.random.nextInt(20) + 20;
+            int speed = this.random.nextInt(10) + 20;
             c.setVelocity(new Vector2(this.direction * speed, 0));
             c.setPosition(position);
             this.clouds.add(c);
