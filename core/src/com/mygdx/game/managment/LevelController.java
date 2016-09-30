@@ -29,6 +29,7 @@ public class LevelController {
     private Array<Integer> levelsToAddFrog;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
+    private Config config;
     private Media media;
     private RuntimeInfo runtimeInfo;
     private ThemeController themeController;
@@ -36,26 +37,29 @@ public class LevelController {
     private FrogManager frogManager;
 
     /**
+     * @param config    The game configuration.
      * @param media A media object for playing music and sounds.
      * @param runtimeInfo A runtime information regarding the game state.
      **/
-    private LevelController(Media media, RuntimeInfo runtimeInfo) {
+    private LevelController(Config config, Media media, RuntimeInfo runtimeInfo) {
+        this.config = config;
         this.media = media;
         this.runtimeInfo = runtimeInfo;
         this.currentLevel = STARTING_LEVEL;
-        this.levelsMetaData = Config.levelsMetaData;
-        this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
+        this.levelsMetaData = config.levelsMetaData;
         this.frogClassAllocator = new FrogClassAllocator();
         this.frogManager = new FrogManager(runtimeInfo, this.frogClassAllocator);
     }
 
     /**
+     * @param config    The game configuration.
      * @param media A media object for playing music and sounds.
      * @param runtimeInfo A runtime information regarding the game state.
      * @param themeController A theme-controller to use for switching between themes.
      */
-    public LevelController(Media media, RuntimeInfo runtimeInfo, ThemeController themeController) {
-        this(media, runtimeInfo);
+    public LevelController(Config config, Media media, RuntimeInfo runtimeInfo,
+                            ThemeController themeController) {
+        this(config, media, runtimeInfo);
         this.currentLevel = STARTING_LEVEL;
         this.runtimeInfo.gameSpeed = STARTING_SPEED;
         this.themeController = themeController;
@@ -64,14 +68,15 @@ public class LevelController {
     }
 
     /**
+     * @param config    The game configuration.
      * @param media A media object for playing music and sounds.
      * @param runtimeInfo A runtime information regarding the game state.
      * @param themeController A theme-controller to use for switching between themes.
      * @param level A level to set the LevelController to.
      */
-    public LevelController(Media media, RuntimeInfo runtimeInfo, ThemeController themeController,
-                            int level) {
-        this(media, runtimeInfo);
+    public LevelController(Config config, Media media, RuntimeInfo runtimeInfo,
+                            ThemeController themeController, int level) {
+        this(config, media, runtimeInfo);
         this.currentLevel = level;
         this.themeController = themeController;
         this.themeController.init(level);
@@ -95,7 +100,7 @@ public class LevelController {
         else {
             this.levelsToAddFrog.clear();
         }
-        for (AddFrogMetaData addFrogMetaData : Config.addFrogsMetaData) {
+        for (AddFrogMetaData addFrogMetaData : this.config.addFrogsMetaData) {
             this.levelsToAddFrog.add(addFrogMetaData.getLevelToAddFrog());
         }
     }

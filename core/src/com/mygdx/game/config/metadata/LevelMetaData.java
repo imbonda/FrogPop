@@ -7,8 +7,6 @@ import com.badlogic.gdx.utils.Array;
  */
 public class LevelMetaData {
 
-    public static LevelMetaData DEFAULT_METADATA = new LevelMetaData(0, null);
-
     public int id;
     public Array<FrogMetaData> levelRelatedFrogs;
 

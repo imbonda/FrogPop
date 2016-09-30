@@ -20,9 +20,8 @@ public class ThemeController {
     private int nextThemeLevel;
     private Array<ThemeMetaData> themesMetaData;
 
-    public ThemeController() {
-        this.currentTheme = ThemeMetaData.DEFAULT_THEME;
-        this.themesMetaData = Config.themesMetaData;
+    public ThemeController(Config config) {
+        this.themesMetaData = config.themesMetaData;
         int sum = 0;
         for (ThemeMetaData meta : this.themesMetaData) {
             sum += meta.duration;

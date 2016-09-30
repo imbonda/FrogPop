@@ -13,27 +13,34 @@ import com.mygdx.game.config.metadata.ThemeMetaData;
  */
 public class Config {
 
-    private static final XmlReader xmlReader = new XmlReader();
-    public static final Array<LevelMetaData> levelsMetaData = new Array<LevelMetaData>();
-    public static final Array<AddFrogMetaData> addFrogsMetaData = new Array<AddFrogMetaData>();
-    public static final Array<ThemeMetaData> themesMetaData = new Array<ThemeMetaData>();
+    public Array<LevelMetaData> levelsMetaData;
+    public Array<AddFrogMetaData> addFrogsMetaData;
+    public Array<ThemeMetaData> themesMetaData;
+    private XmlReader xmlReader;
 
-    static {
+    public Config() {
+        this.xmlReader = new XmlReader();
+        this.levelsMetaData = new Array<LevelMetaData>();
+        this.addFrogsMetaData = new Array<AddFrogMetaData>();
+        this.themesMetaData = new Array<ThemeMetaData>();
+    }
+
+    public void load() {
         loadLevelsMetaData();
         loadAddFrogsMetaData();
         loadThemesMetaData();
     }
 
-    private static void loadLevelsMetaData() {
-        LevelsMetaDataLoader.load(xmlReader, levelsMetaData);
+    private void loadLevelsMetaData() {
+        LevelsMetaDataLoader.load(this.xmlReader, this.levelsMetaData);
     }
 
-    private static void loadAddFrogsMetaData() {
-        AddFrogsMetaDataLoader.load(xmlReader, addFrogsMetaData);
+    private void loadAddFrogsMetaData() {
+        AddFrogsMetaDataLoader.load(this.xmlReader, this.addFrogsMetaData);
     }
 
-    private static void loadThemesMetaData() {
-        ThemesMetaDataLoader.load(xmlReader, themesMetaData);
+    private void loadThemesMetaData() {
+        ThemesMetaDataLoader.load(this.xmlReader, this.themesMetaData);
     }
 
 }

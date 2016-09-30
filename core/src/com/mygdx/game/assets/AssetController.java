@@ -3,6 +3,7 @@ package com.mygdx.game.assets;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.mygdx.game.config.Config;
 import com.mygdx.game.media.Media;
 
 /**
@@ -17,7 +18,9 @@ public class AssetController {
             Media.LEVEL_UP_SOUND
     };
 
-    // The asset manager.
+    // Public members.
+    public Config config;
+    // Private members.
     private AssetManager manager;
 
     public AssetController() {
@@ -30,6 +33,9 @@ public class AssetController {
         loadMusics();
         loadSounds();
         this.manager.finishLoading();
+        // Load config.
+        this.config = new Config();
+        this.config.load();
     }
 
     private void loadMusics() {

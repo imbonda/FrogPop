@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.config.Config;
 import com.mygdx.game.data.Data;
 import com.mygdx.game.media.Media;
 import com.mygdx.game.scenes.Hud;
@@ -21,6 +22,7 @@ public class FrogPop extends Game {
 	public SpriteBatch batch;
 	public Data data;
 	public Media media;
+	public Config config;
 	private AssetController assetController;
 
 
@@ -30,6 +32,7 @@ public class FrogPop extends Game {
 		this.assetController = new AssetController();
 		this.assetController.loadAll();
 		// Assets are now loaded.
+		this.config = this.assetController.config;
 		this.data = new Data();
 		this.media = new Media(this.assetController);
 		this.media.playMusic();

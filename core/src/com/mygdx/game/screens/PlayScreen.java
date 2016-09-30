@@ -49,10 +49,10 @@ public class PlayScreen implements Screen {
         SpritesDrawer.getInstance().addSprites(holes);
         this.game = game;
         this.hud = Hud.getInstance();
-        this.themeController = new ThemeController();
+        this.themeController = new ThemeController(this.game.config);
         RuntimeInfo runtimeInfo = new RuntimeInfo();
         this.levelController = new LevelController(
-                    this.game.media, runtimeInfo, this.themeController);
+                    this.game.config, this.game.media, runtimeInfo, this.themeController);
         Gdx.input.setInputProcessor(new TouchProcessor(gameViewPort, runtimeInfo));
     }
 

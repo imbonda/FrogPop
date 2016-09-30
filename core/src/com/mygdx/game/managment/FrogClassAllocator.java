@@ -112,7 +112,6 @@ public class FrogClassAllocator {
 
     public FrogClassAllocator() {
         this.randomFrogClassGenerator = new RandomFrogClassGenerator(null, 0);
-        this.levelMetaData = LevelMetaData.DEFAULT_METADATA;
         this.frogClassesRuntimeInfo = new HashMap<Class<? extends Frog>, FrogClassRuntimeInfo>();
         this.random = new Random();
     }

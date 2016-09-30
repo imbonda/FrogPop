@@ -7,19 +7,20 @@ import java.util.Random;
  */
 public class AddFrogMetaData {
 
-    private static final Random random = new Random();
-
     private int minLevel;
     private int maxLevel;
+    private Random random;
 
     public AddFrogMetaData(int atLevel) {
         this.minLevel = atLevel;
         this.maxLevel = atLevel;
+        this.random = new Random();
     }
 
     public AddFrogMetaData(int minLevel, int maxLevel) {
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
+        this.random = new Random();
     }
 
     public int getLevelToAddFrog() {
