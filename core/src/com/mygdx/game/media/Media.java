@@ -23,10 +23,10 @@ public class Media {
     private float musicVolume;
     private float soundVolume;
 
-    public Media(AssetController assetController) {
+    public Media(AssetController assetController, float musicVolume, float soundVolume) {
         this.assetController = assetController;
-        this.musicVolume = DEFAULT_MUSIC_VOLUME;
-        this.soundVolume = DEFAULT_SOUND_VOLUME;
+        this.musicVolume = musicVolume;
+        this.soundVolume = soundVolume;
     }
 
     public void playMusic(){

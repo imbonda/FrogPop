@@ -38,10 +38,8 @@ public class FrogPop extends Game {
 		// Assets are now loaded.
 		this.config = this.assetController.config;
 		this.data = new Data();
-		this.media = new Media(this.assetController);
-		if (0 != this.data.getMusicVolume()) {
-			this.media.playMusic();
-		}
+		this.media = new Media(
+					this.assetController, this.data.getMusicVolume(), this.data.getSoundVolume());
 
 		setScreen(new MainMenuScreen(this));
 	}

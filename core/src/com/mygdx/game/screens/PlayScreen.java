@@ -54,10 +54,11 @@ public class PlayScreen implements Screen {
 
     private void gameOver() {
         this.game.data.updateHighScore(this.runtimeInfo.gameScore);
-        this.game.setScreen(new GameOverScreen(this.game, this.runtimeInfo));
-        dispose();
+        this.game.media.stopMusic();
         this.spritesDrawer.clear();
         Gdx.input.setInputProcessor(null);
+        this.game.setScreen(new GameOverScreen(this.game, this.runtimeInfo));
+        dispose();
     }
 
     @Override

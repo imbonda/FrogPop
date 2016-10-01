@@ -46,7 +46,6 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("intro.jpg")));
-        this.game.media.stopMusic();
         this.game.media.playSound(Media.GAME_OVER_SOUND);
         button1=new Buttons(300,355,playgame,pressedplaygame);
         button2=new Buttons(300,275,settings,pressedsettings);
