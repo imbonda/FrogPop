@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.animation.Animation;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.scenes.Hud;
 
 /**
  * This class represents a regular-frog.

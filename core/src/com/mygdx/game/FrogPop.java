@@ -7,9 +7,7 @@ import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.config.Config;
 import com.mygdx.game.data.Data;
 import com.mygdx.game.media.Media;
-import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.screens.MainMenuScreen;
-
 
 /**
  * This class is our game main starting point.

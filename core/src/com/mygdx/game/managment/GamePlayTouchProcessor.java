@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.frogs.active.Frog;
 
 /**

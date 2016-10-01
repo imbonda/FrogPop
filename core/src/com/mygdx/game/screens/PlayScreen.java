@@ -14,7 +14,6 @@ import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
 
-
 /**
  * Created by MichaelBond on 9/1/2016.
  */

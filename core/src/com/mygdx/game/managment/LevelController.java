@@ -6,7 +6,6 @@ import com.mygdx.game.config.metadata.AddFrogMetaData;
 import com.mygdx.game.config.metadata.LevelMetaData;
 import com.mygdx.game.media.Media;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.Timer;
 

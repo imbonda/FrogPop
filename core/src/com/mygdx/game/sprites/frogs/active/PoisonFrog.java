@@ -4,13 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-
-/**
- * Created by nitsa on 11-Sep-16.
- */
 import com.mygdx.game.animation.Animation;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.scenes.Hud;
 
 /**
      * This class represents a regular-frog.
