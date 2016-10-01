@@ -1,7 +1,6 @@
 package com.mygdx.game.scenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,9 +10,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.scenes.panel.LevelCounter;
-import com.mygdx.game.scenes.panel.LifeCounter;
-import com.mygdx.game.scenes.panel.ScoreCounter;
+import com.mygdx.game.scenes.panel.LevelTab;
+import com.mygdx.game.scenes.panel.LifeTab;
+import com.mygdx.game.scenes.panel.ScoreTab;
 
 /**
  * This is a singleton class used to represent the HUD (head-up display) of the game.
@@ -26,9 +25,9 @@ public class Hud implements Disposable {
 
     private final BitmapFont FONT = new BitmapFont(Gdx.files.internal("font.fnt"));
 
-    private ScoreCounter scoreCounter;
-    private LevelCounter levelCounter;
-    private LifeCounter lifeCounter;
+    private ScoreTab scoreTab;
+    private LevelTab levelTab;
+    private LifeTab lifeTab;
     private SpriteBatch batch;
     private RuntimeInfo runtimeInfo;
     private Stage stage;
@@ -49,9 +48,9 @@ public class Hud implements Disposable {
      * Sets the hud's panel.
      */
     private void setPanel() {
-        this.scoreCounter = new ScoreCounter(FONT, this.runtimeInfo.gameScore);
-        this.levelCounter = new LevelCounter(FONT, this.runtimeInfo.gameLevel);
-        this.lifeCounter = new LifeCounter(FONT, this.runtimeInfo.gameLives);
+        this.scoreTab = new ScoreTab(FONT, this.runtimeInfo.gameScore);
+        this.levelTab = new LevelTab(FONT, this.runtimeInfo.gameLevel);
+        this.lifeTab = new LifeTab(FONT, this.runtimeInfo.gameLives);
     }
 
     /**
@@ -64,9 +63,9 @@ public class Hud implements Disposable {
                 FrogPop.VIRTUAL_HEIGHT,
                 new OrthographicCamera());
         this.stage = new Stage(hudViewPort, this.batch);
-        this.stage.addActor(this.scoreCounter);
-        this.stage.addActor(this.levelCounter);
-        this.stage.addActor(this.lifeCounter);
+        this.stage.addActor(this.scoreTab);
+        this.stage.addActor(this.levelTab);
+        this.stage.addActor(this.lifeTab);
     }
 
     /**
@@ -84,9 +83,9 @@ public class Hud implements Disposable {
      * Updates the hud to indicate the most updated game-state.
      */
     public void update() {
-        this.scoreCounter.updateScore(this.runtimeInfo.gameScore);
-        this.levelCounter.updateLevel(this.runtimeInfo.gameLevel);
-        this.lifeCounter.updateLives(this.runtimeInfo.gameLives);
+        this.scoreTab.updateScore(this.runtimeInfo.gameScore);
+        this.levelTab.updateLevel(this.runtimeInfo.gameLevel);
+        this.lifeTab.updateLives(this.runtimeInfo.gameLives);
     }
 
     /**

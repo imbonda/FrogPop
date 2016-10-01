@@ -11,13 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  *
  * Created by MichaelBond on 9/9/2016.
  */
-public class ScoreCounter extends Group {
+public class ScoreTab extends Group {
 
     private static final Vector2 LABEL_POSITION = new Vector2(25, 520);
     // Private members.
     private Label scoreLabel;
 
-    public ScoreCounter(BitmapFont font, int score) {
+    public ScoreTab(BitmapFont font, int score) {
         setTransform(false);
         initScoreLabel(font);
         addActor(this.scoreLabel);

@@ -11,14 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  *
  * Created by MichaelBond on 9/9/2016.
  */
-public class LifeCounter extends Group {
+public class LifeTab extends Group {
 
     private static final Vector2 LABEL_POSITION = new Vector2(720, 510);
     // Private members.
     private Label lifeLabel;
 
 
-    public LifeCounter(BitmapFont font, int lives) {
+    public LifeTab(BitmapFont font, int lives) {
         setTransform(false);
         initLifeLabel(font);
         addActor(this.lifeLabel);

@@ -11,14 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  *
  * Created by MichaelBond on 9/9/2016.
  */
-public class LevelCounter extends Group {
+public class LevelTab extends Group {
 
     private static final Vector2 LABEL_POSITION = new Vector2(25, 495);
     // Private members.
     private Label levelLabel;
 
 
-    public LevelCounter(BitmapFont font, int level) {
+    public LevelTab(BitmapFont font, int level) {
         setTransform(false);
         initLevelLabel(font);
         addActor(this.levelLabel);
