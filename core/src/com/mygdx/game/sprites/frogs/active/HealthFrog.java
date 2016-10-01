@@ -63,11 +63,11 @@ public class HealthFrog extends Frog {
     @Override
     public void onDeath() {
         if (isKilled()) {
-            Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
-            Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PROFIT_VALUE);
+            this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
+            this.runtimeInfo.gameLives += FROG_LIFE_PROFIT_VALUE;
         }
         else {
-            Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PENALTY_VALUE);
+            this.runtimeInfo.gameLives += FROG_LIFE_PENALTY_VALUE;
             Gdx.input.vibrate(500);
         }
     }

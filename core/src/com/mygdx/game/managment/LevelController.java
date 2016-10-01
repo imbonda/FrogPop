@@ -25,7 +25,6 @@ public class LevelController {
     private static final float SPEED_SCALE_FACTOR = 1.087f;
 
     // Private members.
-    private int currentLevel;
     private Array<LevelMetaData> levelsMetaData;
     private Array<Integer> levelsToAddFrog;
     private LevelMetaData currentLevelMetaData;
@@ -47,7 +46,6 @@ public class LevelController {
         this.config = config;
         this.media = media;
         this.runtimeInfo = runtimeInfo;
-        this.currentLevel = STARTING_LEVEL;
         this.levelsMetaData = config.levelsMetaData;
         this.frogClassAllocator = new FrogClassAllocator();
         this.frogManager = new FrogManager(spritesDrawer, runtimeInfo, this.frogClassAllocator);
@@ -65,7 +63,7 @@ public class LevelController {
     public LevelController(Config config, Media media, SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo,
                             ThemeController themeController) {
         this(config, media, spritesDrawer, runtimeInfo);
-        this.currentLevel = STARTING_LEVEL;
+        this.runtimeInfo.gameLevel = STARTING_LEVEL;
         this.runtimeInfo.gameSpeed = STARTING_SPEED;
         this.themeController = themeController;
         this.themeController.init();
@@ -83,7 +81,7 @@ public class LevelController {
     public LevelController(Config config, Media media, SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo,
                             ThemeController themeController, int level) {
         this(config, media, spritesDrawer, runtimeInfo);
-        this.currentLevel = level;
+        this.runtimeInfo.gameLevel = level;
         this.themeController = themeController;
         this.themeController.init(level);
         // TODO (finish function: calculate the this.runtimeInfo.gameSpeed for the given level..)
@@ -116,17 +114,18 @@ public class LevelController {
     private void setCurrentLevel() {
         // Look for a level configuration, specific for this level.
         for (LevelMetaData levelMetaData : this.levelsMetaData) {
-            if (this.currentLevel >= levelMetaData.id) {
+            if (this.runtimeInfo.gameLevel >= levelMetaData.id) {
                 this.currentLevelMetaData = levelMetaData;
             }
         }
         this.frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
         // If no specific configuration was found, use the last configuration configured.
-        if (this.currentLevelMetaData.id != this.currentLevel) {
+        if (this.currentLevelMetaData.id != this.runtimeInfo.gameLevel) {
             this.frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
         }
         // In case a frog needs to be added, add it.
-        while (this.levelsToAddFrog.size > 0 && this.currentLevel >= this.levelsToAddFrog.get(0)) {
+        while (this.levelsToAddFrog.size > 0 &&
+                    this.runtimeInfo.gameLevel >= this.levelsToAddFrog.get(0)) {
             this.frogManager.addFrog();
             this.levelsToAddFrog.removeIndex(0);
         }
@@ -144,7 +143,7 @@ public class LevelController {
             this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
             levelUp();
         }
-        this.themeController.update(deltaTime, this.currentLevel);
+        this.themeController.update(deltaTime, this.runtimeInfo.gameLevel);
     }
 
     /**
@@ -152,10 +151,9 @@ public class LevelController {
      * Making the Level controller to advance to the next level.
      */
     private void levelUp() {
-        this.currentLevel++;
+        this.runtimeInfo.gameLevel++;
         this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
         setCurrentLevel();
-        Hud.getInstance().getLevelCounter().advance();
         this.media.playSound(Media.LEVEL_UP_SOUND);
     }
 

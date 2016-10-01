@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.panel.LevelCounter;
 import com.mygdx.game.scenes.panel.LifeCounter;
 import com.mygdx.game.scenes.panel.ScoreCounter;
@@ -23,38 +24,23 @@ import com.mygdx.game.scenes.panel.ScoreCounter;
  */
 public class Hud implements Disposable {
 
-    public static final BitmapFont FONT = new BitmapFont(Gdx.files.internal("font.fnt"));
-
-    private static Hud ourInstance = new Hud();
-
-    /**
-     * Singleton implementation.
-     *
-     * @return  The singleton object.
-     */
-    public static Hud getInstance() {
-        return ourInstance;
-    }
-
-    /**
-     * Singleton private constructor.
-     */
-    private Hud() {
-    }
+    private final BitmapFont FONT = new BitmapFont(Gdx.files.internal("font.fnt"));
 
     private ScoreCounter scoreCounter;
     private LevelCounter levelCounter;
     private LifeCounter lifeCounter;
     private SpriteBatch batch;
+    private RuntimeInfo runtimeInfo;
     private Stage stage;
 
     /**
-     * Sets tha batch to be used for drawing the hud.
-     *
      * @param batch    The batch object to be used for drawing the hud later on.
+     * @param runtimeInfo The runtime information that is to be used by the hud to draw the -
+     *                    score, the lives and the level.
      */
-    public void setBatch(SpriteBatch batch) {
+    public Hud(SpriteBatch batch, RuntimeInfo runtimeInfo) {
         this.batch = batch;
+        this.runtimeInfo = runtimeInfo;
         setPanel();
         setStage();
     }
@@ -63,9 +49,9 @@ public class Hud implements Disposable {
      * Sets the hud's panel.
      */
     private void setPanel() {
-        this.scoreCounter = new ScoreCounter();
-        this.levelCounter = new LevelCounter();
-        this.lifeCounter = new LifeCounter();
+        this.scoreCounter = new ScoreCounter(FONT, this.runtimeInfo.gameScore);
+        this.levelCounter = new LevelCounter(FONT, this.runtimeInfo.gameLevel);
+        this.lifeCounter = new LifeCounter(FONT, this.runtimeInfo.gameLives);
     }
 
     /**
@@ -77,7 +63,6 @@ public class Hud implements Disposable {
                 FrogPop.VIRTUAL_WIDTH,
                 FrogPop.VIRTUAL_HEIGHT,
                 new OrthographicCamera());
-
         this.stage = new Stage(hudViewPort, this.batch);
         this.stage.addActor(this.scoreCounter);
         this.stage.addActor(this.levelCounter);
@@ -96,20 +81,20 @@ public class Hud implements Disposable {
     }
 
     /**
+     * Updates the hud to indicate the most updated game-state.
+     */
+    public void update() {
+        this.scoreCounter.updateScore(this.runtimeInfo.gameScore);
+        this.levelCounter.updateLevel(this.runtimeInfo.gameLevel);
+        this.lifeCounter.updateLives(this.runtimeInfo.gameLives);
+    }
+
+    /**
      * Draws the hud.
      */
     public void draw() {
         this.batch.setProjectionMatrix(this.stage.getCamera().combined);
         stage.draw();
-    }
-
-    /**
-     * Resets the hud to its default configuration.
-     */
-    public void reset() {
-        this.scoreCounter.reset();
-        this.levelCounter.reset();
-        this.lifeCounter.reset();
     }
 
     /**
@@ -120,19 +105,4 @@ public class Hud implements Disposable {
         this.stage.dispose();
     }
 
-    public BitmapFont getFont() {
-        return FONT;
-    }
-
-    public ScoreCounter getScoreCounter(){
-        return this.scoreCounter;
-    }
-
-    public LifeCounter getLifeCounter() {
-        return this.lifeCounter;
-    }
-
-    public LevelCounter getLevelCounter() {
-        return this.levelCounter;
-    }
 }

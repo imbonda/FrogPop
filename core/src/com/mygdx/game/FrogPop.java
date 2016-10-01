@@ -44,7 +44,6 @@ public class FrogPop extends Game {
 		if (0 != this.data.getMusicVolume()) {
 			this.media.playMusic();
 		}
-		Hud.getInstance().setBatch(this.batch);
 
 		setScreen(new MainMenuScreen(this));
 	}

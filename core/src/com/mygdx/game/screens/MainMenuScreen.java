@@ -26,7 +26,6 @@ import com.mygdx.game.sprites.frogs.idle.IdleRegularFrog;
  */
 public class MainMenuScreen implements Screen {
 
-    private Hud hud;
     private Sprite End;
     private BitmapFont Score;
     private Buttons button1;
@@ -47,7 +46,6 @@ public class MainMenuScreen implements Screen {
             game.adsController.showBannerAd();
         }
         this.game = game;
-        this.hud = Hud.getInstance();
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("intro.jpg")));
         this.game.media.stopMusic();
@@ -93,11 +91,9 @@ public class MainMenuScreen implements Screen {
         Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
         Vector2 touchVector = new Vector2(touches.x,touches.y);
         if (this.button1.isButtonsTouched(touchVector)) {
-            this.hud.reset();
             this.game.setScreen(new PlayScreen(this.game));
         }
         if (this.button2.isButtonsTouched(touchVector)) {
-            this.hud.reset();
             this.game.setScreen(new SettingsScreen(this.game));
         }
     }
@@ -128,7 +124,6 @@ public class MainMenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         this.viewport.update(width, height, true);
-        this.hud.resize(width, height, true);
     }
 
     @Override

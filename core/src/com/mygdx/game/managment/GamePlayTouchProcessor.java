@@ -17,13 +17,11 @@ public class GamePlayTouchProcessor implements InputProcessor {
 
     private Viewport viewport;
     private RuntimeInfo runtimeInfo;
-    private Hud hud;
 
 
     public GamePlayTouchProcessor(Viewport viewport, RuntimeInfo runtimeInfo) {
         this.viewport = viewport;
         this.runtimeInfo = runtimeInfo;
-        this.hud = Hud.getInstance();
     }
 
     @Override
@@ -38,7 +36,7 @@ public class GamePlayTouchProcessor implements InputProcessor {
             }
         }
         Gdx.input.vibrate(500);
-        this.hud.getLifeCounter().addLife(-1);
+        this.runtimeInfo.gameLives -= 1;
         return false;
     }
 

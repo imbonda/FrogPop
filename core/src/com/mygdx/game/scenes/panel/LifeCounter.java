@@ -1,6 +1,7 @@
 package com.mygdx.game.scenes.panel;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,45 +14,28 @@ import com.mygdx.game.scenes.Hud;
  */
 public class LifeCounter extends Group {
 
-    private static final int INITIAL_LIFE = 3;
     private static final Vector2 LABEL_POSITION = new Vector2(720, 510);
-
-    private int life;
+    // Private members.
     private Label lifeLabel;
 
 
-    public LifeCounter() {
+    public LifeCounter(BitmapFont font, int lives) {
         setTransform(false);
-        initLifeLabel();
+        initLifeLabel(font);
         addActor(this.lifeLabel);
-        this.life = INITIAL_LIFE;
-        updateLifeLabel();
+        updateLives(lives);
     }
 
-    private void initLifeLabel() {
+    private void initLifeLabel(BitmapFont font) {
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font = Hud.getInstance().getFont();
+        style.font = font;
         style.fontColor = new Color(0xff0000ff);
         this.lifeLabel = new Label("", style);
         this.lifeLabel.setWidth(260);
         this.lifeLabel.setPosition(LABEL_POSITION.x, LABEL_POSITION.y);
     }
 
-    public int getLife() {
-        return this.life;
-    }
-
-    public void addLife(int value) {
-        this.life += value;
-        updateLifeLabel();
-    }
-
-    public void reset() {
-        this.life = INITIAL_LIFE;
-        updateLifeLabel();
-    }
-
-    private void updateLifeLabel() {
-        this.lifeLabel.setText("Life: " + this.life);
+    public void updateLives(int lives) {
+        this.lifeLabel.setText("Life: " + lives);
     }
 }

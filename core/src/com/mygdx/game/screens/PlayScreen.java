@@ -23,35 +23,39 @@ public class PlayScreen implements Screen {
     public static Viewport gameViewPort = new FitViewport(
                 FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
 
+    private static final int MAX_LIVES = 3;
+
     private FrogPop game;
     private SpritesDrawer spritesDrawer;
     private LevelController levelController;
     private ThemeController themeController;
+    private RuntimeInfo runtimeInfo;
     private Hud hud;
 
     public PlayScreen(FrogPop game) {
         game.adsController.hideBannerAd();
         this.spritesDrawer = new SpritesDrawer();
         this.game = game;
-        this.hud = Hud.getInstance();
         this.themeController = new ThemeController(this.game.config);
-        RuntimeInfo runtimeInfo = new RuntimeInfo();
+        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
         this.levelController = new LevelController(
                     this.game.config, this.game.media, spritesDrawer, runtimeInfo, this.themeController);
+        this.hud = new Hud(this.game.batch, runtimeInfo);
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
         this.game.media.playMusic();
     }
 
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
-        if (this.hud.getLifeCounter().getLife() <= 0) {
+        this.hud.update();
+        if (this.runtimeInfo.gameLives <= 0) {
             gameOver();
         }
     }
 
     private void gameOver() {
-        this.game.data.updateHighScore(this.hud.getScoreCounter().getScore());
-        this.game.setScreen(new GameOverScreen(this.game));
+        this.game.data.updateHighScore(this.runtimeInfo.gameScore);
+        this.game.setScreen(new GameOverScreen(this.game, this.runtimeInfo));
         dispose();
         this.spritesDrawer.clear();
         Gdx.input.setInputProcessor(null);

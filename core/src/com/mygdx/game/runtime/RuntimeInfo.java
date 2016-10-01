@@ -9,10 +9,16 @@ import com.mygdx.game.sprites.frogs.active.Frog;
  */
 public class RuntimeInfo {
 
+    public int gameScore;
+    public int gameLives;
+    public int gameLevel;
     public float gameSpeed;
     public Array<Frog> activeFrogs;
 
-    public RuntimeInfo() {
+    public RuntimeInfo(int score, int lives) {
+        this.gameScore = score;
+        this.gameLives = lives;
+        this.gameLevel = LevelController.STARTING_LEVEL;
         this.gameSpeed = LevelController.STARTING_SPEED;
         this.activeFrogs = new Array<Frog>();
     }
