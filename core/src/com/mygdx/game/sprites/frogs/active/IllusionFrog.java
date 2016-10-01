@@ -1,19 +1,15 @@
-package com.mygdx.game.sprites.frogs;
+package com.mygdx.game.sprites.frogs.active;
 
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.animation.Animation;
-import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.screens.PlayScreen;
-
-import java.util.Random;
 
 /**
  * This class represents a regular-frog.

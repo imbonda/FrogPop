@@ -1,12 +1,9 @@
 package com.mygdx.game.managment;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
-import com.mygdx.game.sprites.frogs.Frog;
 
 /**
  * This class is responsible for all the touch events happening during the game runtime.

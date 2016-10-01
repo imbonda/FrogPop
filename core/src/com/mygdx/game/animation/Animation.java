@@ -8,12 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class Animation {
 
-    private static final float DEFAULT_ANIMATION_FRAME_TIME = 0.12f;
+    private static final float DEFAULT_ANIMATION_FRAME_TIME = 0.07f;
 
     private int frameCount;
     private float maxFrameTime;
     private float currentFrameTime;
     private int currentFrameId;
+    private int increment;
     private Texture frames [];
 
 
@@ -27,13 +28,18 @@ public class Animation {
         this.frameCount = textures.length;
         this.currentFrameId = 0;
         this.currentFrameTime = 0;
+        this.increment = 1;
     }
 
     public void update(float deltaTime) {
         this.currentFrameTime += deltaTime;
         if (this.currentFrameTime >= maxFrameTime) {
             this.currentFrameTime = 0;
-            this.currentFrameId = (this.currentFrameId + 1) % this.frameCount;
+            this.currentFrameId = this.currentFrameId + this.increment;
+            if (currentFrameId == -1 || currentFrameId == this.frameCount) {
+                this.increment = -this.increment;
+                this.currentFrameId = this.currentFrameId + this.increment;
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.mygdx.game.sprites.frogs;
+package com.mygdx.game.sprites.frogs.active;
 
 
 import com.badlogic.gdx.Gdx;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.animation.Animation;
-import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 
@@ -19,41 +18,52 @@ import java.util.Random;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class HealthFrog extends Frog {
+public class RegularFrog extends Frog {
 
-    private static final int FROG_SCORE_PROFIT_VALUE = 2;
-    private static final int FROG_LIFE_PROFIT_VALUE = 1;
+    private static final int FROG_SCORE_PROFIT_VALUE = 1;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
+    // Animations.
+    private static final int TONGUE_ANIMATION = 0;
+    private static final int WINK_ANIMATION = 1;
 
-    private final Texture healthFrogAnimationTextures [] = {
-            new Texture("Frog/0y.png"),
-            new Texture("Frog/1y.png"),
-            new Texture("Frog/2y.png"),
-            new Texture("Frog/3y.png"),
-            new Texture("Frog/0y.png"),
-            new Texture("Frog/eye2y.png"),
-            new Texture("Frog/eye3y.png"),
-            new Texture("Frog/eye4y.png")
+    private final Texture tongueAnimationTextures [] = {
+            new Texture("Frog/0.png"),
+            new Texture("Frog/1.png"),
+            new Texture("Frog/2.png"),
+            new Texture("Frog/3.png"),
+    };
+    private final Texture winkAnimationTextures [] = {
+            new Texture("Frog/0.png"),
+            new Texture("Frog/eye2.png"),
+            new Texture("Frog/eye3.png"),
+            new Texture("Frog/eye4.png")
     };
 
     private Animation animation;
 
 
-    public HealthFrog() {
-        this.animation = new Animation(healthFrogAnimationTextures);
-        setSize(healthFrogAnimationTextures[0].getWidth(), healthFrogAnimationTextures[0].getHeight());
+    public RegularFrog() {
     }
 
-    @Override
-    public void update(float deltaTime) {
-        this.animation.update(deltaTime);
-        this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed * 1.2f;
+    private void generateRandomAnimation() {
+        Random rand = new Random();
+        if (rand.nextInt(2) == TONGUE_ANIMATION) {
+            this.animation = new Animation(tongueAnimationTextures);
+            setSize(tongueAnimationTextures[0].getWidth(), tongueAnimationTextures[0].getHeight());
+        }
+        else {
+            this.animation = new Animation(winkAnimationTextures);
+            setSize(winkAnimationTextures[0].getWidth(), winkAnimationTextures[0].getHeight());
+        }
     }
 
     @Override
     public void dispose() {
         // TODO (check if we want this behavior).
-        for (Texture texture : this.healthFrogAnimationTextures) {
+        for (Texture texture : this.tongueAnimationTextures) {
+            texture.dispose();
+        }
+        for (Texture texture : this.winkAnimationTextures) {
             texture.dispose();
         }
     }
@@ -67,7 +77,6 @@ public class HealthFrog extends Frog {
     public void onDeath() {
         if (isKilled()) {
             Hud.getInstance().getScoreCounter().addScore(FROG_SCORE_PROFIT_VALUE);
-            Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PROFIT_VALUE);
         }
         else {
             Hud.getInstance().getLifeCounter().addLife(FROG_LIFE_PENALTY_VALUE);
@@ -78,6 +87,7 @@ public class HealthFrog extends Frog {
     @Override
     public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
         super.defaultInit(runtimeInfo, positionX, positionY);
+        generateRandomAnimation();
 
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
@@ -88,6 +98,12 @@ public class HealthFrog extends Frog {
     public void reset() {
         super.defaultReset();
         this.animation.reset();
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        this.animation.update(deltaTime);
     }
 
     @Override

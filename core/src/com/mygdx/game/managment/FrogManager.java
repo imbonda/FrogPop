@@ -10,9 +10,8 @@ import java.util.Iterator;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.screens.PlayScreen;
 import com.mygdx.game.sprites.SpritesDrawer;
-import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.frogs.active.Frog;
 import com.mygdx.game.sprites.Hole;
 
 

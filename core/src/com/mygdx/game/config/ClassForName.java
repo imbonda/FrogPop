@@ -5,12 +5,12 @@ import com.mygdx.game.themes.SpringTheme;
 import com.mygdx.game.themes.WinterTheme;
 import com.mygdx.game.themes.Theme;
 import com.mygdx.game.themes.SummerTheme;
-import com.mygdx.game.sprites.frogs.FreezeFrog;
-import com.mygdx.game.sprites.frogs.Frog;
-import com.mygdx.game.sprites.frogs.IllusionFrog;
-import com.mygdx.game.sprites.frogs.HealthFrog;
-import com.mygdx.game.sprites.frogs.RegularFrog;
-import com.mygdx.game.sprites.frogs.PoisonFrog;
+import com.mygdx.game.sprites.frogs.active.FreezeFrog;
+import com.mygdx.game.sprites.frogs.active.Frog;
+import com.mygdx.game.sprites.frogs.active.IllusionFrog;
+import com.mygdx.game.sprites.frogs.active.HealthFrog;
+import com.mygdx.game.sprites.frogs.active.RegularFrog;
+import com.mygdx.game.sprites.frogs.active.PoisonFrog;
 
 /**
  * This class is used to translate a given class-name to it's corresponding class-object.

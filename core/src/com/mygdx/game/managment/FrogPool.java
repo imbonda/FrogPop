@@ -1,7 +1,7 @@
 package com.mygdx.game.managment;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.frogs.active.Frog;
 
 import java.util.HashMap;
 

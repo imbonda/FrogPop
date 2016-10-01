@@ -1,19 +1,9 @@
 package com.mygdx.game.themes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.effects.SunEffect;
-import com.mygdx.game.themes.exceptions.UnsupportedSpriteException;
-import com.mygdx.game.sprites.frogs.FreezeFrog;
-import com.mygdx.game.sprites.frogs.IllusionFrog;
-import com.mygdx.game.sprites.frogs.HealthFrog;
-import com.mygdx.game.sprites.frogs.RegularFrog;
-import com.mygdx.game.sprites.frogs.PoisonFrog;
-
-import java.util.HashMap;
 
 /**
  * TODO This is just an example class, should be removed when actual themes are created !!!

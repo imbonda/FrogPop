@@ -10,13 +10,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
-import com.mygdx.game.effects.GameOverEffect;
 import com.mygdx.game.media.Media;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Buttons;
+import com.mygdx.game.sprites.frogs.idle.IdleFreezeFrog;
+import com.mygdx.game.sprites.frogs.idle.IdleFrog;
 
 
 /**
@@ -32,7 +34,7 @@ public class GameOverScreen implements Screen {
     private Buttons button2;
     private FrogPop game;
     private Viewport viewport;
-    private GameOverEffect over;
+    private Array<IdleFrog> idleFrogs;
     private Texture playAgin=new Texture("buttons/button1.png");
     private Texture pressedplayAgin=new Texture("buttons/button2.png");
     private Texture tomenu=new Texture("buttons/menu.png");
@@ -44,7 +46,6 @@ public class GameOverScreen implements Screen {
         if (game.adsController.isInternetConnected()) {
             game.adsController.showBannerAd();
         }
-        over=new GameOverEffect();
         this.game = game;
         this.hud = Hud.getInstance();
         this.Loser = new BitmapFont(Gdx.files.internal("font.fnt"));
@@ -54,6 +55,13 @@ public class GameOverScreen implements Screen {
         this.game.media.playSound(Media.GAME_OVER_SOUND);
         button1=new Buttons(300,355,playAgin,pressedplayAgin);
         button2=new Buttons(300,275,tomenu,tomenupressed);
+        initIdleFrogs();
+    }
+
+    private void initIdleFrogs() {
+        this.idleFrogs = new Array<IdleFrog>();
+        this.idleFrogs.add(new IdleFreezeFrog(new Vector2(150, 260)));
+        this.idleFrogs.add(new IdleFreezeFrog(new Vector2(520, 260)));
     }
 
     @Override
@@ -66,13 +74,20 @@ public class GameOverScreen implements Screen {
         End.draw(this.game.batch);
         drawGO();
         drawButtons();
-        over.draw(this.game.batch);
+        drawIdleFrogs();
         this.game.batch.end();
     }
 
     public void update(float deltaTime) {
         handleInput();
+        updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
+    }
+
+    private void updateIdleFrogs(float deltaTime) {
+        for (IdleFrog frog : this.idleFrogs) {
+            frog.update(deltaTime);
+        }
     }
 
     public void handleInput() {
@@ -107,6 +122,12 @@ public class GameOverScreen implements Screen {
         Vector2 button2Position = this.button2.getPosition();
         batch.draw(this.button1.getButtonsTexture(), button1Position.x, button1Position.y);
         batch.draw(this.button2.getButtonsTexture(), button2Position.x, button2Position.y);
+    }
+
+    private void drawIdleFrogs() {
+        for (IdleFrog frog : this.idleFrogs) {
+            frog.draw(this.game.batch);
+        }
     }
 
     @Override

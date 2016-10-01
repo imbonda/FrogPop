@@ -2,7 +2,7 @@ package com.mygdx.game.runtime;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.managment.LevelController;
-import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.frogs.active.Frog;
 
 /**
  * Created by MichaelBond on 9/30/2016.

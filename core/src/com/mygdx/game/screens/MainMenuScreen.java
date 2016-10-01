@@ -10,15 +10,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
-import com.mygdx.game.effects.MenuEffect;
-import com.mygdx.game.managment.GamePlayTouchProcessor;
 import com.mygdx.game.media.Media;
-import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Buttons;
+import com.mygdx.game.sprites.frogs.idle.IdleFrog;
+import com.mygdx.game.sprites.frogs.idle.IdleRegularFrog;
 
 
 /**
@@ -33,7 +33,7 @@ public class MainMenuScreen implements Screen {
     private Buttons button2;
     private FrogPop game;
     private Viewport viewport;
-    private MenuEffect menu;
+    private Array<IdleFrog> idleFrogs;
     private Texture playgame=new Texture("buttons/startgame.png");
     private Texture pressedplaygame=new Texture("buttons/startgame2.png");
     private Texture settings=new Texture("buttons/settings.png");
@@ -41,7 +41,6 @@ public class MainMenuScreen implements Screen {
 
 
     public MainMenuScreen(FrogPop game) {
-        menu=new MenuEffect();
         this.viewport = new FitViewport(
                 FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
         if (game.adsController.isInternetConnected()) {
@@ -55,6 +54,13 @@ public class MainMenuScreen implements Screen {
         this.game.media.playSound(Media.GAME_OVER_SOUND);
         button1=new Buttons(300,355,playgame,pressedplaygame);
         button2=new Buttons(300,275,settings,pressedsettings);
+        initIdleFrogs();
+    }
+
+    private void initIdleFrogs() {
+        this.idleFrogs = new Array<IdleFrog>();
+        idleFrogs.add(new IdleRegularFrog(IdleRegularFrog.AnimationType.TONGUE, new Vector2(520, 320)));
+        idleFrogs.add(new IdleRegularFrog(IdleRegularFrog.AnimationType.WINK, new Vector2(150, 320)));
     }
 
     @Override
@@ -67,13 +73,20 @@ public class MainMenuScreen implements Screen {
         End.draw(this.game.batch);
         drawGO();
         drawButtons();
-        menu.draw(this.game.batch);
+        drawIdleFrogs();
         this.game.batch.end();
     }
 
     public void update(float deltaTime) {
         handleInput();
+        updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
+    }
+
+    private void updateIdleFrogs(float deltaTime) {
+        for (IdleFrog frog : this.idleFrogs) {
+            frog.update(deltaTime);
+        }
     }
 
     public void handleInput() {
@@ -104,6 +117,12 @@ public class MainMenuScreen implements Screen {
         Vector2 button2Position = this.button2.getPosition();
         batch.draw(this.button1.getButtonsTexture(), button1Position.x, button1Position.y);
         batch.draw(this.button2.getButtonsTexture(), button2Position.x, button2Position.y);
+    }
+
+    private void drawIdleFrogs() {
+        for (IdleFrog frog : this.idleFrogs) {
+            frog.draw(this.game.batch);
+        }
     }
 
     @Override

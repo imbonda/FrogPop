@@ -1,6 +1,6 @@
 package com.mygdx.game.config.metadata;
 
-import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.frogs.active.Frog;
 
 /**
  * Created by MichaelBond on 9/8/2016.

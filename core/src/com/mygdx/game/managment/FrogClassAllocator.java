@@ -3,7 +3,7 @@ package com.mygdx.game.managment;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.config.metadata.FrogMetaData;
 import com.mygdx.game.config.metadata.LevelMetaData;
-import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.frogs.active.Frog;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;

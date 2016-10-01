@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.game.config.metadata.FrogMetaData;
 import com.mygdx.game.config.metadata.LevelMetaData;
-import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.frogs.active.Frog;
 
 import java.io.IOException;
 
