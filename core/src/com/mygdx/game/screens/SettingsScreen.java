@@ -121,6 +121,11 @@ public class SettingsScreen implements Screen {
         this.soundSliderLabel.setWidth(100);
         this.soundSliderLabel.setColor(1, 1, 1, 1);
 
+        setStage(musicLabel, soundLabel);
+        Gdx.gl.glClearColor(0, 1, 1, 1);
+    }
+
+    private void setStage(Label musicLabel, Label soundLabel) {
         this.stage = new Stage(
                 new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
@@ -131,7 +136,6 @@ public class SettingsScreen implements Screen {
         this.stage.addActor(soundSlider);
         this.stage.addActor(soundSliderLabel);
         Gdx.input.setInputProcessor(this.stage);
-        Gdx.gl.glClearColor(0, 1, 1, 1);
     }
 
     @Override
@@ -148,7 +152,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

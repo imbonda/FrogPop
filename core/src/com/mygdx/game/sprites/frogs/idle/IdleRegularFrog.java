@@ -41,6 +41,11 @@ public class IdleRegularFrog extends IdleFrog {
         }
     }
 
+    public IdleRegularFrog(AnimationType type, Vector2 position, float width, float height) {
+        this(type, position);
+        setSize(width, height);
+    }
+
     @Override
     public void update(float deltaTime) {
         this.animation.update(deltaTime);
@@ -48,6 +53,9 @@ public class IdleRegularFrog extends IdleFrog {
 
     @Override
     public void draw(Batch batch) {
-        batch.draw(this.animation.getFrame(), this.position.x, this.position.y);
+        batch.draw(
+                    this.animation.getFrame(),          // Texture.
+                    this.position.x, this.position.y,   // Position.
+                    getWidth(), getHeight());           // Size.
     }
 }

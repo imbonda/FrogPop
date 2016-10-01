@@ -27,6 +27,11 @@ public class IdleFreezeFrog extends IdleFrog {
         setSize(freezeFrogAnimationTextures[0].getWidth(), freezeFrogAnimationTextures[0].getHeight());
     }
 
+    public IdleFreezeFrog(Vector2 position, float width, float height) {
+        this(position);
+        setSize(width, height);
+    }
+
     @Override
     public void update(float deltaTime) {
         this.animation.update(deltaTime);
@@ -34,6 +39,9 @@ public class IdleFreezeFrog extends IdleFrog {
 
     @Override
     public void draw(Batch batch) {
-        batch.draw(this.animation.getFrame(), this.position.x, this.position.y);
+        batch.draw(
+                this.animation.getFrame(),          // Texture.
+                this.position.x, this.position.y,   // Position.
+                getWidth(), getHeight());           // Size.
     }
 }
