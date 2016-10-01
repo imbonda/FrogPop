@@ -13,6 +13,7 @@ import java.util.Random;
     import com.badlogic.gdx.graphics.Texture;
     import com.badlogic.gdx.graphics.g2d.Batch;
     import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.animation.Animation;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 
@@ -31,7 +32,7 @@ import java.util.Random;
         private static final int FROG_LIFE_PROFIT_VALUE = -1;
         private static final int FROG_LIFE_PENALTY_VALUE = 0;
 
-        private final Texture frogTexture[] = {
+        private final Texture poisonFrogAnimationTextures [] = {
                 new Texture("Frog/0r.png"),
                 new Texture("Frog/1r.png"),
                 new Texture("Frog/2r.png"),
@@ -42,21 +43,18 @@ import java.util.Random;
                 new Texture("Frog/eye4r.png")
         };
 
-        private double frameKey;
-        private int randTextureType;
-        private double dir = 0.25;
+        private Animation animation;
 
 
         public PoisonFrog() {
-            Random rand = new Random();
-            this.randTextureType = rand.nextInt(1);
-            this.frameKey = 0;
+            this.animation = new Animation(poisonFrogAnimationTextures);
+            setSize(poisonFrogAnimationTextures[0].getWidth(), poisonFrogAnimationTextures[0].getHeight());
         }
 
         @Override
         public void dispose() {
             // TODO (check if we want this behavior).
-            for (Texture texture : this.frogTexture) {
+            for (Texture texture : this.poisonFrogAnimationTextures) {
                 texture.dispose();
             }
         }
@@ -81,19 +79,21 @@ import java.util.Random;
         @Override
         public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
             super.defaultInit(runtimeInfo, positionX, positionY);
-            Random rand=new Random();
             this.frogRectangle = new Rectangle(
                     this.position.x-20, this.position.y-35,
-                    this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
-            this.randTextureType = rand.nextInt(2);
+                    getWidth() + 40, getHeight() + 35);
         }
 
         @Override
         public void reset() {
             super.defaultReset();
-            Random rand = new Random();
-            this.frameKey = 0;
-            this.randTextureType = rand.nextInt(2);
+            this.animation.reset();
+        }
+
+        @Override
+        public void update(float deltaTime) {
+            super.update(deltaTime);
+            this.animation.update(deltaTime);
         }
 
         @Override
@@ -103,27 +103,7 @@ import java.util.Random;
         }
 
         public Texture getFrogTexture() {
-            if (this.randTextureType == 0){
-                if (this.frameKey == 0){
-                    this.dir = 0.25;
-                }
-                if (this.frameKey > 3.7){
-                    dir = -0.25;
-                }
-                this.frameKey += dir;}
-            if (this.randTextureType == 1)
-            {
-                if (this.frameKey == 0 || this.frameKey == 4){
-                    this.frameKey = 4;
-                    this.dir = 0.25;
-                }
-                if(this.frameKey>7.7){
-                    dir = -0.25;
-                }
-                this.frameKey += dir;
-            }
-
-            return this.frogTexture[(int)(this.frameKey % 4)];
+            return this.animation.getFrame();
         }
 
     }

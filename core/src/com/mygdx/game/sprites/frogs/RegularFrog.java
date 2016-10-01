@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.animation.Animation;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 
@@ -21,33 +22,49 @@ public class RegularFrog extends Frog {
 
     private static final int FROG_SCORE_PROFIT_VALUE = 1;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
+    // Animations.
+    private static final int TONGUE_ANIMATION = 0;
+    private static final int WINK_ANIMATION = 1;
 
-    private final Texture frogTexture[] = {
+    private final Texture tongueAnimationTextures [] = {
             new Texture("Frog/0.png"),
             new Texture("Frog/1.png"),
             new Texture("Frog/2.png"),
             new Texture("Frog/3.png"),
+            new Texture("Frog/0.png"),
+    };
+    private final Texture winkAnimationTextures [] = {
             new Texture("Frog/0.png"),
             new Texture("Frog/eye2.png"),
             new Texture("Frog/eye3.png"),
             new Texture("Frog/eye4.png")
     };
 
-    private double frameKey;
-    private int randTextureType;
-    private double dir = 0.25;
+    private Animation animation;
 
 
     public RegularFrog() {
+    }
+
+    private void generateRandomAnimation() {
         Random rand = new Random();
-        this.randTextureType = rand.nextInt(2);
-        this.frameKey = 0;
+        if (rand.nextInt(2) == TONGUE_ANIMATION) {
+            this.animation = new Animation(tongueAnimationTextures);
+            setSize(tongueAnimationTextures[0].getWidth(), tongueAnimationTextures[0].getHeight());
+        }
+        else {
+            this.animation = new Animation(winkAnimationTextures);
+            setSize(winkAnimationTextures[0].getWidth(), winkAnimationTextures[0].getHeight());
+        }
     }
 
     @Override
     public void dispose() {
         // TODO (check if we want this behavior).
-        for (Texture texture : this.frogTexture) {
+        for (Texture texture : this.tongueAnimationTextures) {
+            texture.dispose();
+        }
+        for (Texture texture : this.winkAnimationTextures) {
             texture.dispose();
         }
     }
@@ -71,21 +88,23 @@ public class RegularFrog extends Frog {
     @Override
     public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
         super.defaultInit(runtimeInfo, positionX, positionY);
+        generateRandomAnimation();
 
-        Random rand=new Random();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
-                this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
-        this.randTextureType = rand.nextInt(2);
+                getWidth() + 40, getHeight() + 35);
     }
 
     @Override
     public void reset() {
         super.defaultReset();
+        this.animation.reset();
+    }
 
-        Random rand = new Random();
-        this.frameKey = 0;
-        this.randTextureType = rand.nextInt(2);
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        this.animation.update(deltaTime);
     }
 
     @Override
@@ -95,26 +114,7 @@ public class RegularFrog extends Frog {
     }
 
     public Texture getFrogTexture() {
-        if (this.randTextureType == 0){
-            if (this.frameKey == 0){
-                this.dir = 0.25;
-            }
-            if (this.frameKey > 3.7){
-                dir = -0.25;
-            }
-            this.frameKey += dir;}
-        if (this.randTextureType == 1)
-        {
-            if (this.frameKey == 0 || this.frameKey == 4){
-                this.frameKey = 4;
-                this.dir = 0.25;
-            }
-            if(this.frameKey>7.7){
-                dir = -0.25;
-            }
-            this.frameKey += dir;
-        }
-        return this.frogTexture[(int)(this.frameKey % 8)];
+        return this.animation.getFrame();
     }
 
 }

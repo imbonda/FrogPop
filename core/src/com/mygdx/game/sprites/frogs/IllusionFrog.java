@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.animation.Animation;
 import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
@@ -26,7 +27,7 @@ public class IllusionFrog extends Frog {
     private static final int FROG_SCORE_PROFIT_VALUE = 3;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
-    private final Texture frogTexture[] = {
+    private final Texture illusionFrogAnimationTextures [] = {
             new Texture("Frog/0p.png"),
             new Texture("Frog/1p.png"),
             new Texture("Frog/2p.png"),
@@ -37,9 +38,7 @@ public class IllusionFrog extends Frog {
             new Texture("Frog/eye4p.png")
     };
 
-    private double frameKey;
-    private int randTextureType;
-    private double dir = 0.25;
+    private Animation animation;
     private int rotatedirectionB=-1;
     private int rotatedirectionA=-4;
     private int rotatedelay=0;
@@ -48,15 +47,14 @@ public class IllusionFrog extends Frog {
     private Vector3 deafultaxis=new Vector3(0,0,100);
 
     public IllusionFrog() {
-        Random rand = new Random();
-        this.randTextureType = rand.nextInt(1);
-        this.frameKey = 0;
+        this.animation = new Animation(illusionFrogAnimationTextures);
+        setSize(illusionFrogAnimationTextures[0].getWidth(), illusionFrogAnimationTextures[0].getHeight());
     }
 
     @Override
     public void dispose() {
         // TODO (check if we want this behavior).
-        for (Texture texture : this.frogTexture) {
+        for (Texture texture : this.illusionFrogAnimationTextures) {
             texture.dispose();
         }
     }
@@ -74,6 +72,7 @@ public class IllusionFrog extends Frog {
     }
     @Override
     public void update(float deltaTime) {
+        this.animation.update(deltaTime);
         this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed;
         if(rotatedelay%4==0){
         whileUpAbility();}
@@ -99,21 +98,17 @@ public class IllusionFrog extends Frog {
     @Override
     public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
         super.defaultInit(runtimeInfo, positionX, positionY);
-        Random rand=new Random();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
-                this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
-        this.randTextureType = rand.nextInt(1);
+                getWidth() + 40, getHeight() + 35);
     }
 
     @Override
     public void reset() {
         super.defaultReset();
+        this.animation.reset();
         PlayScreen.gameViewPort.getCamera().rotateAround(deafultPosition,deafultaxis,-rotationcontroller);
         PlayScreen.gameViewPort.getCamera().update();
-        Random rand = new Random();
-        this.frameKey = 0;
-        this.randTextureType = rand.nextInt(1);
         rotationcontroller=0;
         rotatedirectionA=-4;
         rotatedelay=0;
@@ -126,26 +121,7 @@ public class IllusionFrog extends Frog {
     }
 
     public Texture getFrogTexture() {
-        if (this.randTextureType == 0){
-            if (this.frameKey == 0){
-                this.dir = 0.25;
-            }
-            if (this.frameKey > 3.7){
-                dir = -0.25;
-            }
-            this.frameKey += dir;}
-        if (this.randTextureType == 1)
-        {
-            if (this.frameKey == 0 || this.frameKey == 4){
-                this.frameKey = 4;
-                this.dir = 0.25;
-            }
-            if(this.frameKey>7.7){
-                dir = -0.25;
-            }
-            this.frameKey += dir;
-        }
-        return this.frogTexture[(int)(this.frameKey % 8)];
+        return this.animation.getFrame();
     }
 
 }

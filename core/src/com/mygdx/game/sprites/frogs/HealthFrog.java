@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.animation.Animation;
 import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
@@ -24,7 +25,7 @@ public class HealthFrog extends Frog {
     private static final int FROG_LIFE_PROFIT_VALUE = 1;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
-    private final Texture frogTexture[] = {
+    private final Texture healthFrogAnimationTextures [] = {
             new Texture("Frog/0y.png"),
             new Texture("Frog/1y.png"),
             new Texture("Frog/2y.png"),
@@ -35,26 +36,24 @@ public class HealthFrog extends Frog {
             new Texture("Frog/eye4y.png")
     };
 
-    private double frameKey;
-    private int randTextureType;
-    private double dir = 0.15;
+    private Animation animation;
 
 
     public HealthFrog() {
-        Random rand = new Random();
-        this.randTextureType = rand.nextInt(1);
-        this.frameKey = 0;
+        this.animation = new Animation(healthFrogAnimationTextures);
+        setSize(healthFrogAnimationTextures[0].getWidth(), healthFrogAnimationTextures[0].getHeight());
     }
 
     @Override
     public void update(float deltaTime) {
+        this.animation.update(deltaTime);
         this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed * 1.2f;
     }
 
     @Override
     public void dispose() {
         // TODO (check if we want this behavior).
-        for (Texture texture : this.frogTexture) {
+        for (Texture texture : this.healthFrogAnimationTextures) {
             texture.dispose();
         }
     }
@@ -80,20 +79,15 @@ public class HealthFrog extends Frog {
     public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
         super.defaultInit(runtimeInfo, positionX, positionY);
 
-        Random rand=new Random();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
-                this.frogTexture[0].getWidth()+40, this.frogTexture[0].getHeight()+35);
-        this.randTextureType = rand.nextInt(2);
+                getWidth() + 40, getHeight() + 35);
     }
 
     @Override
     public void reset() {
         super.defaultReset();
-
-        Random rand = new Random();
-        this.frameKey = 0;
-        this.randTextureType = rand.nextInt(2);
+        this.animation.reset();
     }
 
     @Override
@@ -103,28 +97,7 @@ public class HealthFrog extends Frog {
     }
 
     public Texture getFrogTexture() {
-        if (this.randTextureType == 0){
-            if (this.frameKey < 0.15){
-                this.dir = 0.15;
-            }
-            if (this.frameKey > 3.7){
-                dir = -0.15;
-            }
-            this.frameKey += dir;
-        }
-        if (this.randTextureType == 1)
-        {
-            if (this.frameKey == 0 || this.frameKey == 4){
-                this.frameKey = 4;
-                this.dir = 0.15;
-            }
-            if(this.frameKey>7.7){
-                dir = -0.15;
-            }
-            this.frameKey += dir;
-        }
-
-        return this.frogTexture[(int)(this.frameKey % 4)];
+        return this.animation.getFrame();
     }
 
 }
