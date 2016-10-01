@@ -1,15 +1,10 @@
 package com.mygdx.game.sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.FrogPop;
-import com.mygdx.game.managment.GameOverTouchProcessor;
+
 
 /**
  * Created by MichaelBond on 8/25/2016.
@@ -26,10 +21,6 @@ public class Buttons {
 
 
     public Buttons(float xCord, float yCord,Texture button,Texture PressedButton) {
-       // this.viewport = new FitViewport(
-       //         FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
-      //  gameOverTouchProcessor=new GameOverTouchProcessor(viewport);
-     //   Gdx.input.setInputProcessor(gameOverTouchProcessor);
         this.ButtonPressed=PressedButton;
         this.Button1Texture= button;
         this.TheButtonTexture=button;
