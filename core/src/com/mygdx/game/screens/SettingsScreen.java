@@ -43,13 +43,12 @@ public class SettingsScreen implements Screen {
         this.game = game;
         Skin slideSkin = new Skin(Gdx.files.internal(SKIN_JSON_FILE));
         BitmapFont font = new BitmapFont(Gdx.files.internal(FOND_FILE));
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.BLACK);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.SKY);
 
         // Music label.
         Label musicLabel = new Label(MUSIC, labelStyle);
         musicLabel.setPosition(250, 300);
         musicLabel.setWidth(250);
-        musicLabel.setColor(1, 1, 1, 1);
         // Music slider.
         float musicVolume = game.data.getMusicVolume();
         this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
@@ -90,7 +89,6 @@ public class SettingsScreen implements Screen {
         Label soundLabel = new Label(SOUND, labelStyle);
         soundLabel.setPosition(250, 200);
         soundLabel.setWidth(250);
-        soundLabel.setColor(1, 1, 1, 1);
         // Sound slider.
         float soundVolume = game.data.getSoundVolume();
         this.soundSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
@@ -122,7 +120,6 @@ public class SettingsScreen implements Screen {
         this.soundSliderLabel.setColor(1, 1, 1, 1);
 
         setStage(musicLabel, soundLabel);
-        Gdx.gl.glClearColor(0, 1, 1, 1);
     }
 
     private void setStage(Label musicLabel, Label soundLabel) {
@@ -145,6 +142,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(60 / 256f, 93 / 256f, 117 / 256f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
         this.stage.draw();
