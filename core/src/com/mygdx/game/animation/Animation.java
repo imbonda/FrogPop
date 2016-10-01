@@ -36,6 +36,7 @@ public class Animation {
         if (this.currentFrameTime >= maxFrameTime) {
             this.currentFrameTime = 0;
             this.currentFrameId = this.currentFrameId + this.increment;
+            // In case went out of bound.
             if (currentFrameId == -1 || currentFrameId == this.frameCount) {
                 this.increment = -this.increment;
                 this.currentFrameId = this.currentFrameId + this.increment;

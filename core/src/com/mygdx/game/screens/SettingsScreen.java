@@ -24,18 +24,16 @@ import com.mygdx.game.scenes.events.MessageEventListener;
  */
 public class SettingsScreen implements Screen {
 
-    private static final String MUSIC = "Music";
-    private static final String SOUND = "Sound";
+    private static final String SKIN_JSON_FILE = "skin/uiskin.json";
+    private static final String FOND_FILE = "font.fnt";
+    private static final String MUSIC = "Music :";
+    private static final String SOUND = "Sound :";
     private static final String PERCENTAGE = "%";
     private static final int SLIDER_RANGE = 10;
     private static final int SLIDER_STEP = 1;
 
-//    private Texture musicTexture;
-//    private Texture soundTexture;
-    private Label musicLabel;
-    private Label soundLabel;
-    private Label musicSliderLable;
-    private Label soundSliderLable;
+    private Label musicSliderLabel;
+    private Label soundSliderLabel;
     private FrogPop game;
     private Slider musicSlider;
     private Slider soundSlider;
@@ -43,15 +41,15 @@ public class SettingsScreen implements Screen {
 
     public SettingsScreen(final FrogPop game) {
         this.game = game;
-        Skin slideSkin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+        Skin slideSkin = new Skin(Gdx.files.internal(SKIN_JSON_FILE));
+        BitmapFont font = new BitmapFont(Gdx.files.internal(FOND_FILE));
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.BLACK);
 
         // Music label.
-        this.musicLabel = new Label(MUSIC, labelStyle);
-        this.musicLabel.setPosition(250, 300);
-        this.musicLabel.setWidth(250);
-        this.musicLabel.setColor(1, 1, 1, 1);
+        Label musicLabel = new Label(MUSIC, labelStyle);
+        musicLabel.setPosition(250, 300);
+        musicLabel.setWidth(250);
+        musicLabel.setColor(1, 1, 1, 1);
         // Music slider.
         float musicVolume = game.data.getMusicVolume();
         this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
@@ -78,21 +76,21 @@ public class SettingsScreen implements Screen {
             }
 
             private void updateSliderLabel(float volume) {
-                musicSliderLable.setText(Integer.toString((int)(volume * 100)) + PERCENTAGE);
+                musicSliderLabel.setText(Integer.toString((int)(volume * 100)) + PERCENTAGE);
             }
         });
         // Music-slider label.
-        this.musicSliderLable = new Label(Integer.toString((int)(musicVolume * 100)) + PERCENTAGE,
+        this.musicSliderLabel = new Label(Integer.toString((int)(musicVolume * 100)) + PERCENTAGE,
                     labelStyle);
-        this.musicSliderLable.setPosition(520, 300);
-        this.musicSliderLable.setWidth(100);
-        this.musicSliderLable.setColor(1, 1, 1, 1);
+        this.musicSliderLabel.setPosition(520, 300);
+        this.musicSliderLabel.setWidth(100);
+        this.musicSliderLabel.setColor(1, 1, 1, 1);
 
         // Sound label.
-        this.soundLabel = new Label(SOUND, labelStyle);
-        this.soundLabel.setPosition(250, 200);
-        this.soundLabel.setWidth(250);
-        this.soundLabel.setColor(1, 1, 1, 1);
+        Label soundLabel = new Label(SOUND, labelStyle);
+        soundLabel.setPosition(250, 200);
+        soundLabel.setWidth(250);
+        soundLabel.setColor(1, 1, 1, 1);
         // Sound slider.
         float soundVolume = game.data.getSoundVolume();
         this.soundSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
@@ -113,25 +111,25 @@ public class SettingsScreen implements Screen {
             }
 
             private void updateSliderLabel(float volume) {
-                soundSliderLable.setText(Integer.toString((int)(volume * 100)) + PERCENTAGE);
+                soundSliderLabel.setText(Integer.toString((int)(volume * 100)) + PERCENTAGE);
             }
         });
         // Sound-slider label.
-        this.soundSliderLable = new Label(Integer.toString((int)(soundVolume * 100)) + PERCENTAGE,
+        this.soundSliderLabel = new Label(Integer.toString((int)(soundVolume * 100)) + PERCENTAGE,
                     labelStyle);
-        this.soundSliderLable.setPosition(520, 200);
-        this.soundSliderLable.setWidth(100);
-        this.soundSliderLable.setColor(1, 1, 1, 1);
+        this.soundSliderLabel.setPosition(520, 200);
+        this.soundSliderLabel.setWidth(100);
+        this.soundSliderLabel.setColor(1, 1, 1, 1);
 
         this.stage = new Stage(
                 new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
         this.stage.addActor(musicLabel);
         this.stage.addActor(musicSlider);
-        this.stage.addActor(musicSliderLable);
+        this.stage.addActor(musicSliderLabel);
         this.stage.addActor(soundLabel);
         this.stage.addActor(soundSlider);
-        this.stage.addActor(soundSliderLable);
+        this.stage.addActor(soundSliderLabel);
         Gdx.input.setInputProcessor(this.stage);
         Gdx.gl.glClearColor(0, 1, 1, 1);
     }
