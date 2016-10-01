@@ -1,5 +1,7 @@
 package com.mygdx.game.data;
 
+import com.mygdx.game.media.Media;
+
 /**
  *
  * This class exposes some basic API for manipulating the game saved data and preferences.
@@ -11,8 +13,8 @@ public class Data {
     private static final String PREFERENCES_NAME = "FrogPop-preferences";
     // Keys.
     private static final String HIGH_SCORE_KEY = "hs";
-    private static final String MUSIC_MUTE_KEY = "mmt";
-    private static final String SOUND_MUTE_KEY = "smt";
+    private static final String MUSIC_VOLUME_KEY = "mv";
+    private static final String SOUND_VOLUME_KEY = "sv";
     // Private members.
     private DataManager dataManager;
 
@@ -40,34 +42,37 @@ public class Data {
     }
 
     /**
-     * @return  Whether or not the music preference is mute.
+     * @return  The volume of the music that the user prefers, or 1 in case no prior adjustment
+     *  has been made.
      */
-    public boolean isMusicMuted() {
-        return this.dataManager.getBoolean(MUSIC_MUTE_KEY, false);
+    public float getMusicVolume() {
+        return this.dataManager.getFloat(MUSIC_VOLUME_KEY, Media.DEFAULT_MUSIC_VOLUME);
     }
 
     /**
-     * @return  Whether or not the sound preference is mute.
-     */
-    public boolean isSoundMuted() {
-        return this.dataManager.getBoolean(SOUND_MUTE_KEY, false);
-    }
-
-    /**
-     * Sets music's sound to the given preference.
+     * Sets music's volume to the given value.
      *
-     * @param mute  If true music is to be muted, else to be sound.
+     * @param volume  The volume to set to.
      */
-    public void setMusicMute(boolean mute) {
-        this.dataManager.saveBoolean(MUSIC_MUTE_KEY, mute);
+    public void setMusicVolume(float volume) {
+        this.dataManager.saveFloat(MUSIC_VOLUME_KEY, volume);
     }
 
     /**
-     * Sets sound's sound to the given preference.
-     *
-     * @param mute  If true sound is to be muted, else to be sound.
+     * @return  The volume of the sound that the user prefers, or 1 in case no prior adjustment
+     *  has been made.
      */
-    public void setSoundMuteKey(boolean mute) {
-        this.dataManager.saveBoolean(SOUND_MUTE_KEY, mute);
+    public float getSoundVolume() {
+        return this.dataManager.getFloat(SOUND_VOLUME_KEY, Media.DEFAULT_SOUND_VOLUME);
     }
+
+    /**
+     * Sets sound's volume to the given value.
+     *
+     * @param volume  The volume to set to.
+     */
+    public void setSoundVolume(float volume) {
+        this.dataManager.saveFloat(SOUND_VOLUME_KEY, volume);
+    }
+
 }

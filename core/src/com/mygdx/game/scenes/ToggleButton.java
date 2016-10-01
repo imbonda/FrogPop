@@ -28,8 +28,14 @@ public class ToggleButton extends Group {
         // Setting click listener.
         addListener(new ClickListener(){
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 toggle();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
             }
         });
     }
@@ -48,14 +54,14 @@ public class ToggleButton extends Group {
     public void setState(int state) {
         this.currentState = state;
         if (ON_STATE == state) {
+            removeActor(this.offImage);
             addActor(this.onImage);
             setSize(this.onImage.getWidth(), this.onImage.getHeight());
-            this.offImage.remove();
         }
         else if (OFF_STATE == state) {
+            removeActor(this.onImage);
             addActor(this.offImage);
             setSize(this.offImage.getWidth(), this.offImage.getHeight());
-            this.onImage.remove();
         }
     }
 }
