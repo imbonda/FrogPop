@@ -95,4 +95,27 @@ public class DataManager {
     public boolean getBoolean(String key, boolean defaultValue){
         return this.prefs.getBoolean(key, defaultValue);
     }
+
+    /**
+     * Stores the given float value as association to the given key.
+     *
+     * @param key   The key string to associate the float value to.
+     * @param value The float value to associate with the given key.
+     */
+    public void saveFloat(String key, float value) {
+        this.prefs.putFloat(key, value);
+        this.prefs.flush();
+    }
+
+    /**
+     * Returns the float value association with the given key.
+     *
+     * @param key   The key string to use in search of an associated float value.
+     * @param defaultValue   A default value to use in case no associated value has been found.
+     * @return  The float value associated with the given key, or the given default-value
+     *  in case no association has been found.
+     */
+    public float getFloat(String key, float defaultValue) {
+        return this.prefs.getFloat(key, defaultValue);
+    }
 }

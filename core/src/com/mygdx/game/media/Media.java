@@ -1,11 +1,7 @@
 package com.mygdx.game.media;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.MusicLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.assets.AssetController;
 
 /**
@@ -18,10 +14,10 @@ public class Media {
     // File names.
     public static final String MUSIC = "media/music.ogg";
     public static final String LEVEL_UP_SOUND = "media/level_up.wav";
-    public static final String End_Game_SOUND = "media/endgame.wav";
+    public static final String GAME_OVER_SOUND = "media/endgame.wav";
     // Media default configurations.
-    private static final float DEFAULT_MUSIC_VOLUME = 1;
-    private static final float DEFAULT_SOUND_VOLUME = 1;
+    public static final float DEFAULT_MUSIC_VOLUME = 1;
+    public static final float DEFAULT_SOUND_VOLUME = 1;
 
     private AssetController assetController;
     private float musicVolume;
@@ -40,7 +36,6 @@ public class Media {
             music.setLooping(true);
             music.play();
         }
-        // todo
     }
 
     public void stopMusic() {
@@ -48,11 +43,14 @@ public class Media {
         if (null != music) {
             music.stop();
         }
-        // todo
     }
 
-    public void updateMusicVolume() {
-        // todo
+    public void updateMusicVolume(float volume) {
+        this.musicVolume = volume;
+        Music music = this.assetController.get(MUSIC);
+        if (null != music) {
+            music.setVolume(volume);
+        }
     }
 
     public void playSound(String fileName) {
@@ -61,10 +59,9 @@ public class Media {
             long soundId = sound.play();
             sound.setVolume(soundId, this.soundVolume);
         }
-        // todo
     }
 
-    public void updateSoundVolume(String name) {
-        // todo
+    public void updateSoundVolume(float volume) {
+        this.soundVolume = volume;
     }
 }

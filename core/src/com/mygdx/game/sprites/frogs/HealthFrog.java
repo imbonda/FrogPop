@@ -111,7 +111,7 @@ public class HealthFrog extends Frog {
                 dir = -0.15;
             }
             this.frameKey += dir;
-        System.out.print(frameKey);}
+        }
         if (this.randTextureType == 1)
         {
             if (this.frameKey == 0 || this.frameKey == 4){

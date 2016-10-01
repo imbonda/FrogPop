@@ -16,9 +16,8 @@ public class AssetController {
     };
     private static final String SOUND_FILES [] = {
             Media.LEVEL_UP_SOUND,
-            Media.End_Game_SOUND
+            Media.GAME_OVER_SOUND
     };
-
 
     // Public members.
     public Config config;

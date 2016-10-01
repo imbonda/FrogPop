@@ -23,12 +23,16 @@ import java.util.HashMap;
 public class AutumnTheme implements Theme {
 
     private Texture backgroundTexture;
-    private Texture leaves[]={new Texture("leave.png"),new Texture("leave2.png"),new Texture("leave3.png"),};
     private RainEffect rainEffect;
+    private Texture leaves[];
 
     public AutumnTheme() {
         this.backgroundTexture = new Texture("autumn.png");
-
+        this.leaves = new Texture[] {
+                    new Texture("leave.png"),
+                    new Texture("leave2.png"),
+                    new Texture("leave3.png")
+        };
         this.rainEffect = new RainEffect();
     }
 

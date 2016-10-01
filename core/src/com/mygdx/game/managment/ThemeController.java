@@ -1,6 +1,8 @@
 package com.mygdx.game.managment;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.FrogPop;
 import com.mygdx.game.config.Config;
 import com.mygdx.game.config.metadata.ThemeMetaData;
 import com.mygdx.game.themes.Theme;
@@ -73,9 +75,26 @@ public class ThemeController {
     }
 
     private void setTheme() {
-        this.currentTheme = this.themesMetaData.get(this.nextThemeIndex).theme;
-        this.nextThemeLevel += this.themesMetaData.get(this.nextThemeIndex).duration;
-        this.nextThemeIndex = (this.nextThemeIndex + 1) % (this.themesMetaData.size);
+        Class<? extends Theme> themeClass = this.themesMetaData.get(this.nextThemeIndex).themeClass;
+        try {
+            this.currentTheme = themeClass.newInstance();
+            this.nextThemeLevel += this.themesMetaData.get(this.nextThemeIndex).duration;
+            this.nextThemeIndex = (this.nextThemeIndex + 1) % (this.themesMetaData.size);
+        }
+        catch (InstantiationException e) {
+            e.printStackTrace();
+            // Log this incident.
+            Gdx.app.log(FrogPop.LOGGER_TAG,
+                        "Failed instantiating a theme object of the following class: " +
+                                    themeClass.getSimpleName());
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+            // Log this incident.
+            Gdx.app.log(FrogPop.LOGGER_TAG,
+                    "Failed instantiating a theme object of the following class: " +
+                            themeClass.getSimpleName());
+        }
     }
 
 }

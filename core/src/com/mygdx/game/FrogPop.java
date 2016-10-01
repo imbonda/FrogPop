@@ -9,8 +9,6 @@ import com.mygdx.game.data.Data;
 import com.mygdx.game.media.Media;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.screens.IntroScreen;
-import com.mygdx.game.screens.PlayScreen;
-import com.sun.org.apache.bcel.internal.generic.PUSH;
 
 
 /**
@@ -43,9 +41,11 @@ public class FrogPop extends Game {
 		this.config = this.assetController.config;
 		this.data = new Data();
 		this.media = new Media(this.assetController);
-		//this.media.playMusic();
+		if (0 != this.data.getMusicVolume()) {
+			this.media.playMusic();
+		}
 		Hud.getInstance().setBatch(this.batch);
-		//setScreen(new PlayScreen(this));
+
 		setScreen(new IntroScreen(this));
 	}
 

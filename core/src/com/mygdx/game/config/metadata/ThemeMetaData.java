@@ -1,7 +1,5 @@
 package com.mygdx.game.config.metadata;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.mygdx.game.themes.SpringTheme;
 import com.mygdx.game.themes.Theme;
 
 /**
@@ -9,12 +7,12 @@ import com.mygdx.game.themes.Theme;
  */
 public class ThemeMetaData {
 
-    public Theme theme;
+    public Class<? extends Theme> themeClass;
     public int duration;
 
 
-    public ThemeMetaData(Theme theme, int duration) {
-        this.theme = theme;
+    public ThemeMetaData(Class<? extends Theme> themeClass, int duration) {
+        this.themeClass = themeClass;
         this.duration = duration;
     }
 }
