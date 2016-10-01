@@ -24,7 +24,7 @@ import com.mygdx.game.sprites.Buttons;
 /**
  * Created by MichaelBond on 9/1/2016.
  */
-public class IntroScreen implements Screen {
+public class MainMenuScreen implements Screen {
 
     private Hud hud;
     private Sprite End;
@@ -40,7 +40,7 @@ public class IntroScreen implements Screen {
     private Texture pressedsettings=new Texture("buttons/settings2.png");
 
 
-    public IntroScreen(FrogPop game) {
+    public MainMenuScreen(FrogPop game) {
         menu=new MenuEffect();
         this.viewport = new FitViewport(
                 FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
@@ -85,7 +85,7 @@ public class IntroScreen implements Screen {
         }
         if (this.button2.isButtonsTouched(touchVector)) {
             this.hud.reset();
-            this.game.setScreen(new PlayScreen(this.game));
+            this.game.setScreen(new SettingsScreen(this.game));
         }
     }
 

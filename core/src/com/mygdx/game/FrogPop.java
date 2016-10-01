@@ -8,7 +8,7 @@ import com.mygdx.game.config.Config;
 import com.mygdx.game.data.Data;
 import com.mygdx.game.media.Media;
 import com.mygdx.game.scenes.Hud;
-import com.mygdx.game.screens.IntroScreen;
+import com.mygdx.game.screens.MainMenuScreen;
 
 
 /**
@@ -46,7 +46,7 @@ public class FrogPop extends Game {
 		}
 		Hud.getInstance().setBatch(this.batch);
 
-		setScreen(new IntroScreen(this));
+		setScreen(new MainMenuScreen(this));
 	}
 
 	@Override

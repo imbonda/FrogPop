@@ -33,7 +33,6 @@ public class GameOverEffect {
             dir = -0.1;
         }
         this.framekey += dir;
-        System.out.print((int)framekey);
         batch.draw(this.frogTexture[(int)framekey],Frog1_POSITION.x,Frog1_POSITION.y);
         batch.draw(this.frogTexture[(int)framekey],Frog2_POSITION.x,Frog2_POSITION.y);
 

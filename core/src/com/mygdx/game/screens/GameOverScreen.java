@@ -14,9 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.effects.GameOverEffect;
-import com.mygdx.game.managment.GamePlayTouchProcessor;
 import com.mygdx.game.media.Media;
-import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Buttons;
 
@@ -86,7 +84,7 @@ public class GameOverScreen implements Screen {
             }
         if (this.button2.isButtonsTouched(touchVector)) {
             this.hud.reset();
-            this.game.setScreen(new IntroScreen(this.game));
+            this.game.setScreen(new MainMenuScreen(this.game));
         }
     }
 
