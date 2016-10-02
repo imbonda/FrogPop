@@ -7,13 +7,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.scenes.ToggleButton;
@@ -24,11 +29,16 @@ import com.mygdx.game.scenes.events.MessageEventListener;
  */
 public class SettingsScreen implements Screen {
 
+    // Files
     private static final String SKIN_JSON_FILE = "skin/uiskin.json";
     private static final String FOND_FILE = "font.fnt";
+    private static final String GO_BACK_IMAGE = "icons/back_icon.png";
+    // Label constants.
+    private static final String SETTINGS = "Settings";
     private static final String MUSIC = "Music :";
     private static final String SOUND = "Sound :";
     private static final String PERCENTAGE = "%";
+    // Slider constants.
     private static final int SLIDER_RANGE = 10;
     private static final int SLIDER_STEP = 1;
 
@@ -43,8 +53,26 @@ public class SettingsScreen implements Screen {
         this.game = game;
         Skin slideSkin = new Skin(Gdx.files.internal(SKIN_JSON_FILE));
         BitmapFont font = new BitmapFont(Gdx.files.internal(FOND_FILE));
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.SKY);
 
+        // Go back button.
+        ImageButton backButton = new ImageButton(new SpriteDrawable(new Sprite(new Texture(GO_BACK_IMAGE))));
+        backButton.setPosition(0, 400);
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            }
+        });
+
+        // Header label.
+        Label settingsLabel = new Label(SETTINGS, new Label.LabelStyle(font, Color.WHITE));
+        settingsLabel.setFontScale(2);
+        settingsLabel.setPosition(300, 440);
+        settingsLabel.setHeight(50);
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.LIGHT_GRAY);
         // Music label.
         Label musicLabel = new Label(MUSIC, labelStyle);
         musicLabel.setPosition(250, 300);
@@ -53,6 +81,10 @@ public class SettingsScreen implements Screen {
         float musicVolume = game.data.getMusicVolume();
         this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
         this.musicSlider.setPosition(350, 300);
+        this.musicSlider.getStyle().knob.setMinHeight(50);
+        this.musicSlider.getStyle().knob.setMinWidth(20);
+        this.musicSlider.getStyle().knobDown.setMinHeight(50);
+        this.musicSlider.getStyle().knobDown.setMinWidth(20);
         this.musicSlider.setAnimateDuration(0);
         this.musicSlider.setValue(musicVolume * SLIDER_RANGE);
         this.musicSlider.addListener(new ChangeListener() {
@@ -92,7 +124,7 @@ public class SettingsScreen implements Screen {
         // Sound slider.
         float soundVolume = game.data.getSoundVolume();
         this.soundSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
-        this.soundSlider.setPosition(350, 200);
+        this.soundSlider.setPosition(350, 187);
         this.soundSlider.setAnimateDuration(0);
         this.soundSlider.setValue(soundVolume * SLIDER_RANGE);
         this.soundSlider.addListener(new ChangeListener() {
@@ -119,13 +151,16 @@ public class SettingsScreen implements Screen {
         this.soundSliderLabel.setWidth(100);
         this.soundSliderLabel.setColor(1, 1, 1, 1);
 
-        setStage(musicLabel, soundLabel);
+        setStage(backButton, settingsLabel, musicLabel, soundLabel);
     }
 
-    private void setStage(Label musicLabel, Label soundLabel) {
+    private void setStage(ImageButton backButton, Label settingsLabel,
+                            Label musicLabel, Label soundLabel) {
         this.stage = new Stage(
                 new FitViewport(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
+        this.stage.addActor(backButton);
+        this.stage.addActor(settingsLabel);
         this.stage.addActor(musicLabel);
         this.stage.addActor(musicSlider);
         this.stage.addActor(musicSliderLabel);

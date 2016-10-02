@@ -31,7 +31,7 @@ public class Media {
 
     public void playMusic(){
         Music music = this.assetController.get(MUSIC);
-        if (null != music) {
+        if (null != music && 0 != this.musicVolume) {
             music.setVolume(this.musicVolume);
             music.setLooping(true);
             music.play();
@@ -55,7 +55,7 @@ public class Media {
 
     public void playSound(String fileName) {
         Sound sound = this.assetController.get(fileName);
-        if (null != sound) {
+        if (null != sound && 0 != this.soundVolume) {
             long soundId = sound.play();
             sound.setVolume(soundId, this.soundVolume);
         }
