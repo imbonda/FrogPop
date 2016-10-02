@@ -1,5 +1,7 @@
 package com.mygdx.game.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -14,7 +16,7 @@ import com.badlogic.gdx.utils.Array;
 public class Timer extends Sprite {
 
     private static final float DEFAULT_COUNTDOWN_TIME = 6;
-    private static final Vector2 DEFAULT_TIMER_TEXTURE_POSITION = new Vector2(350, 425);
+    private static final Vector2 DEFAULT_TIMER_TEXTURE_POSITION = new Vector2(15, 370);
 
     private static final class TimerHandClockTextureMeta {
         public static int TEXTURE_SRC_X = 0;
@@ -48,7 +50,6 @@ public class Timer extends Sprite {
         this.timeLeftToCountDown = this.timeToCountDown;
         this.timerState = State.VIBRATING;
         this.stateTimer = 0;
-        SpritesDrawer.getInstance().addSprite(this);
 
         // TODO (consider using animation for clock vibration on timeout)
 //        Texture timerTexture = new Texture("Animation/timer.png");
@@ -99,6 +100,14 @@ public class Timer extends Sprite {
                     TimerHandClockTextureMeta.TEXTURE_SRC_WIDTH,
                     TimerHandClockTextureMeta.TEXTURE_SRC_HEIGHT,
                     false, false);
+          //if((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360>310) {
+          //    batch.setColor(1f,1f,1f,1-((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360f)/360f);}
+        // else
+      //     {batch.setColor(1f,1f,1f,1f);}
+//        if((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360<50) {
+//        batch.setColor(1f,1f,1f,((1 - (1 - this.timeLeftToCountDown / this.timeToCountDown)) * 360f)/50f);}
+//        else
+//        {batch.setColor(1f,1f,1f,1f);}
     }
 
     private TextureRegion getFrame() {

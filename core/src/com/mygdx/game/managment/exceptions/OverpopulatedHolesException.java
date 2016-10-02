@@ -5,10 +5,6 @@ package com.mygdx.game.managment.exceptions;
  */
 public class OverpopulatedHolesException extends IllegalStateException {
 
-    public OverpopulatedHolesException() {
-        super();
-    }
-
     public OverpopulatedHolesException(String message) {
         super(message);
     }

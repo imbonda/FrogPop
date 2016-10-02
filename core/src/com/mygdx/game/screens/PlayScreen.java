@@ -2,22 +2,17 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.managment.LevelController;
-import com.mygdx.game.managment.TouchProcessor;
+import com.mygdx.game.managment.ThemeController;
+import com.mygdx.game.managment.GamePlayTouchProcessor;
+import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
-import com.mygdx.game.sprites.Hole;
-
 
 /**
  * Created by MichaelBond on 9/1/2016.
@@ -26,55 +21,44 @@ public class PlayScreen implements Screen {
 
     public static Viewport gameViewPort = new FitViewport(
                 FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
-    public static Array<Hole> holes = new Array<Hole>();
 
-    private static final Vector2[] HOLES_POSITIONS = {
-            new Vector2(50, 35), new Vector2(300, 35), new Vector2(50, 185),
-            new Vector2(300, 185), new Vector2(550, 35), new Vector2(550, 185),
-            new Vector2(50, 325), new Vector2(300, 325), new Vector2(550,325)
-    };
+    private static final int MAX_LIVES = 3;
 
-    static {
-        for (Vector2 holePosition : HOLES_POSITIONS) {
-            holes.add(new Hole(holePosition.x, holePosition.y));
-        }
-    }
-
-    private Texture[] backgroundTexture;
     private FrogPop game;
+    private SpritesDrawer spritesDrawer;
     private LevelController levelController;
+    private ThemeController themeController;
+    private RuntimeInfo runtimeInfo;
     private Hud hud;
-    private Music music;
 
     public PlayScreen(FrogPop game) {
-        SpritesDrawer.getInstance().addSprites(holes);
+        game.adsController.hideBannerAd();
+        this.spritesDrawer = new SpritesDrawer();
         this.game = game;
-        this.music = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
-        this.music.setLooping(true);
-        this.music.play();
-        this.backgroundTexture = new Texture[4];
-        this.backgroundTexture[0] = new Texture("world.jpg");
-        this.backgroundTexture[1] = new Texture("world2.jpg");
-        this.backgroundTexture[2] = new Texture("world3.jpg");
-        this.backgroundTexture[3] = new Texture("world4.jpg");
-        this.hud = Hud.getInstance();
-        this.levelController = LevelController.getInstance();
-        this.levelController.init();
-        Gdx.input.setInputProcessor(new TouchProcessor(gameViewPort));
+        this.themeController = new ThemeController(this.game.config);
+        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
+        this.levelController = new LevelController(
+                    this.game.config, this.game.media, spritesDrawer, runtimeInfo, this.themeController);
+        this.hud = new Hud(this.game.batch, runtimeInfo);
+        Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
+        this.game.media.playMusic();
     }
 
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
-        if (this.hud.getLifeCounter().getLife() <= 0) {
+        this.hud.update();
+        if (this.runtimeInfo.gameLives <= 0) {
             gameOver();
         }
     }
 
     private void gameOver() {
-        this.game.setScreen(new GameOverScreen(this.game));
-        dispose();
-        SpritesDrawer.getInstance().clear();
+        this.game.data.updateHighScore(this.runtimeInfo.gameScore);
+        this.game.media.stopMusic();
+        this.spritesDrawer.clear();
         Gdx.input.setInputProcessor(null);
+        this.game.setScreen(new GameOverScreen(this.game, this.runtimeInfo));
+        dispose();
     }
 
     @Override
@@ -83,17 +67,10 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.setProjectionMatrix(gameViewPort.getCamera().combined);
         this.game.batch.begin();
-        drawBackground();
-        SpritesDrawer.getInstance().drawSprites();
+        this.themeController.currentTheme.draw(this.game.batch);
+        this.spritesDrawer.drawSprites(this.game.batch);
         this.game.batch.end();
-        this.game.batch.setProjectionMatrix(this.hud.getStage().getCamera().combined);
         this.hud.draw();
-    }
-
-    public void drawBackground() {
-        SpriteBatch batch = this.game.batch;
-        Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
-        batch.draw(this.backgroundTexture[(this.hud.getLevelCounter().getLevel()/10)%4], 0, 0);
     }
 
     @Override
@@ -104,7 +81,6 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.music.dispose();
     }
 
     @Override

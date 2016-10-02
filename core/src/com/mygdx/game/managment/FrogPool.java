@@ -1,8 +1,7 @@
 package com.mygdx.game.managment;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
-import com.mygdx.game.sprites.frogs.Frog;
+import com.mygdx.game.sprites.frogs.active.Frog;
 
 import java.util.HashMap;
 
@@ -17,9 +16,10 @@ public class FrogPool {
 
     private Array<Frog> allFrogs;
     private HashMap<Class<? extends Frog>, Array<Integer>> classToFreeInstancesIndexesMap;
+    private FrogClassAllocator frogClassAllocator;
 
-
-    public FrogPool() {
+    public FrogPool(FrogClassAllocator frogClassAllocator) {
+        this.frogClassAllocator = frogClassAllocator;
         this.allFrogs = new Array<Frog>();
         this.classToFreeInstancesIndexesMap = new HashMap<Class<? extends Frog>, Array<Integer>>();
     }
@@ -30,7 +30,7 @@ public class FrogPool {
      * instance that has been freed, or generates a new one if could not find any free ones to reuse.
      */
     protected Frog newObject() {
-        Class<? extends Frog> frogClass = FrogClassFactory.getInstance().getRandomFrogClass();
+        Class<? extends Frog> frogClass = this.frogClassAllocator.allocateRandomFrogClass();
         if (null == frogClass) {
             return null;
         }
@@ -78,6 +78,7 @@ public class FrogPool {
         freeInstancesIndexes.insert(0, this.allFrogs.indexOf(frog, true));
         this.classToFreeInstancesIndexesMap.put(frogClass, freeInstancesIndexes);
         frog.reset();
+        this.frogClassAllocator.deallocate(frogClass);
     }
 
     /**

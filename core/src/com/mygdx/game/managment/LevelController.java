@@ -1,10 +1,12 @@
 package com.mygdx.game.managment;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.managment.config.Config;
-import com.mygdx.game.managment.metadata.AddFrogMetaData;
-import com.mygdx.game.managment.metadata.LevelMetaData;
-import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.config.Config;
+import com.mygdx.game.config.metadata.AddFrogMetaData;
+import com.mygdx.game.config.metadata.LevelMetaData;
+import com.mygdx.game.media.Media;
+import com.mygdx.game.runtime.RuntimeInfo;
+import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.sprites.Timer;
 
 /**
@@ -14,66 +16,78 @@ import com.mygdx.game.sprites.Timer;
  */
 public class LevelController {
 
-    private static final int STARTING_LEVEL = 1;
-    private static final float STARTING_SPEED = 1.0f;
-    private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.05f;
+    // Public class variables.
+    public static final int STARTING_LEVEL = 1;
+    public static final float STARTING_SPEED = 1.0f;
+    // Private class variables.
+    private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.04f;
     private static final float SPEED_SCALE_FACTOR = 1.087f;
 
-    private static LevelController ourInstance = new LevelController();
-
-    /**
-     * Singleton implementation.
-     *
-     * @return  The singleton object.
-     */
-    public static LevelController getInstance() {
-        return ourInstance;
-    }
-
-    /**
-     * Singleton private constructor.
-     */
-    private LevelController() {
-        this.frogClassFactory = FrogClassFactory.getInstance();
-        this.frogManager = FrogManager.getInstance();
-        this.currentLevel = STARTING_LEVEL;
-        this.speed = STARTING_SPEED;
-        this.levelsMetaData = Config.levelsMetaData;
-        this.currentLevelMetaData = LevelMetaData.DEFAULT_METADATA;
-    }
-
-    private int currentLevel;
-    private float speed;
+    // Private members.
     private Array<LevelMetaData> levelsMetaData;
     private Array<Integer> levelsToAddFrog;
     private LevelMetaData currentLevelMetaData;
     private Timer levelTimer;
-    private FrogClassFactory frogClassFactory;
+    private Config config;
+    private Media media;
+    private RuntimeInfo runtimeInfo;
+    private ThemeController themeController;
+    private FrogClassAllocator frogClassAllocator;
     private FrogManager frogManager;
 
     /**
-     * Initializes the singleton instance to a given level.
-     *
-     * @param level A level to set the LevelController to.
+     * @param config    The game configuration.
+     * @param media A media object for playing music and sounds.
+     * @param spritesDrawer A class that is used to draw queued sprites.
+     * @param runtimeInfo A runtime information regarding the game state.
+     **/
+    private LevelController(Config config, Media media, SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo) {
+        this.config = config;
+        this.media = media;
+        this.runtimeInfo = runtimeInfo;
+        this.levelsMetaData = config.levelsMetaData;
+        this.frogClassAllocator = new FrogClassAllocator();
+        this.frogManager = new FrogManager(spritesDrawer, runtimeInfo, this.frogClassAllocator);
+        this.levelTimer = new Timer();
+        spritesDrawer.addSprite(this.levelTimer);
+    }
+
+    /**
+     * @param config    The game configuration.
+     * @param media A media object for playing music and sounds.
+     * @param spritesDrawer A class that is used to draw queued sprites.
+     * @param runtimeInfo A runtime information regarding the game state.
+     * @param themeController A theme-controller to use for switching between themes.
      */
-    public void init(int level) {
-        this.currentLevel = level;
-        // TODO (finish function: calculate the speed for the given level..)
+    public LevelController(Config config, Media media, SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo,
+                            ThemeController themeController) {
+        this(config, media, spritesDrawer, runtimeInfo);
+        this.runtimeInfo.gameLevel = STARTING_LEVEL;
+        this.runtimeInfo.gameSpeed = STARTING_SPEED;
+        this.themeController = themeController;
+        this.themeController.init();
         setup();
     }
 
     /**
-     * Initializes the singleton instance to a given level.
+     * @param config    The game configuration.
+     * @param media A media object for playing music and sounds.
+     * @param spritesDrawer A class that is used to draw queued sprites.
+     * @param runtimeInfo A runtime information regarding the game state.
+     * @param themeController A theme-controller to use for switching between themes.
+     * @param level A level to set the LevelController to.
      */
-    public void init() {
-        this.currentLevel = STARTING_LEVEL;
-        this.speed = STARTING_SPEED;
+    public LevelController(Config config, Media media, SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo,
+                            ThemeController themeController, int level) {
+        this(config, media, spritesDrawer, runtimeInfo);
+        this.runtimeInfo.gameLevel = level;
+        this.themeController = themeController;
+        this.themeController.init(level);
+        // TODO (finish function: calculate the this.runtimeInfo.gameSpeed for the given level..)
         setup();
     }
 
     private void setup() {
-        this.levelTimer = new Timer();
-        this.frogManager.reset();
         setLevelsToAddFrog();
         setCurrentLevel();
     }
@@ -88,7 +102,7 @@ public class LevelController {
         else {
             this.levelsToAddFrog.clear();
         }
-        for (AddFrogMetaData addFrogMetaData : Config.addFrogsMetaData) {
+        for (AddFrogMetaData addFrogMetaData : this.config.addFrogsMetaData) {
             this.levelsToAddFrog.add(addFrogMetaData.getLevelToAddFrog());
         }
     }
@@ -99,18 +113,18 @@ public class LevelController {
     private void setCurrentLevel() {
         // Look for a level configuration, specific for this level.
         for (LevelMetaData levelMetaData : this.levelsMetaData) {
-            if (levelMetaData.id == this.currentLevel) {
+            if (this.runtimeInfo.gameLevel >= levelMetaData.id) {
                 this.currentLevelMetaData = levelMetaData;
-                this.frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
-                break;
             }
         }
+        this.frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
         // If no specific configuration was found, use the last configuration configured.
-        if (this.currentLevelMetaData.id != this.currentLevel) {
-            this.frogClassFactory.setLevelMetaData(this.currentLevelMetaData);
+        if (this.currentLevelMetaData.id != this.runtimeInfo.gameLevel) {
+            this.frogClassAllocator.setLevelMetaData(this.currentLevelMetaData);
         }
         // In case a frog needs to be added, add it.
-        while (this.levelsToAddFrog.size > 0 && this.currentLevel >= this.levelsToAddFrog.get(0)) {
+        while (this.levelsToAddFrog.size > 0 &&
+                    this.runtimeInfo.gameLevel >= this.levelsToAddFrog.get(0)) {
             this.frogManager.addFrog();
             this.levelsToAddFrog.removeIndex(0);
         }
@@ -128,6 +142,7 @@ public class LevelController {
             this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
             levelUp();
         }
+        this.themeController.update(deltaTime, this.runtimeInfo.gameLevel);
     }
 
     /**
@@ -135,17 +150,10 @@ public class LevelController {
      * Making the Level controller to advance to the next level.
      */
     private void levelUp() {
-        this.currentLevel++;
-        scaleSpeed(SPEED_SCALE_FACTOR);
+        this.runtimeInfo.gameLevel++;
+        this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
         setCurrentLevel();
-        Hud.getInstance().getLevelCounter().advance();
+        this.media.playSound(Media.LEVEL_UP_SOUND);
     }
 
-    public void scaleSpeed(float scaleFactor) {
-        this.speed *= scaleFactor;
-    }
-
-    public float getSpeed() {
-        return this.speed;
-    }
 }

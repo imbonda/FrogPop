@@ -1,0 +1,41 @@
+package com.mygdx.game.themes;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.effects.ButterflyEffect;
+import com.mygdx.game.effects.SunEffect;
+
+/**
+ * This class is the default implementation of the Theme interface.
+ *
+ * Created by MichaelBond on 9/18/2016.
+ */
+public class SpringTheme implements Theme {
+
+    private static final float SPRING_SUN_COLOR[] = {1f, 1f, 1f};
+
+    private Texture backgroundTexture;
+    private SunEffect sunEffect;
+    private ButterflyEffect butterflyEffect;
+
+    public SpringTheme() {
+        this.backgroundTexture = new Texture("spring.png");
+        this.sunEffect = new SunEffect(SPRING_SUN_COLOR);
+        this.butterflyEffect = new ButterflyEffect();
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        this.sunEffect.update(deltaTime);
+    }
+
+    @Override
+    public void draw(Batch batch) {
+        Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
+        batch.draw(this.backgroundTexture, 0, 0);
+        this.sunEffect.draw(batch);
+		this.butterflyEffect.draw(batch);
+    }
+
+}
