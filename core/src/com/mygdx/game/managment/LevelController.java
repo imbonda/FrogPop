@@ -139,10 +139,16 @@ public class LevelController {
         this.levelTimer.update(deltaTime);
         this.frogManager.update(deltaTime);
         if (this.levelTimer.isTimedOut()) {
-            this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
+            setNewTimer();
             levelUp();
         }
         this.themeController.update(deltaTime, this.runtimeInfo.gameLevel);
+    }
+
+    private void setNewTimer() {
+        if (this.runtimeInfo.gameLevel <= 14) {
+            this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
+        }
     }
 
     /**
@@ -151,7 +157,9 @@ public class LevelController {
      */
     private void levelUp() {
         this.runtimeInfo.gameLevel++;
-        this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
+        if(this.runtimeInfo.gameLevel <= 14) {
+            this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
+        }
         setCurrentLevel();
         this.media.playSound(Media.LEVEL_UP_SOUND);
     }

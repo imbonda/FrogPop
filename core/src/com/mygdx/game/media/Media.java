@@ -14,7 +14,7 @@ public class Media {
     // File names.
     public static final String MUSIC = "media/music.ogg";
     public static final String LEVEL_UP_SOUND = "media/level_up.wav";
-    public static final String GAME_OVER_SOUND = "media/endgame.wav";
+    public static final String GAME_OVER_SOUND = "media/endgame.mp3";
     // Media default configurations.
     public static final float DEFAULT_MUSIC_VOLUME = 1;
     public static final float DEFAULT_SOUND_VOLUME = 1;

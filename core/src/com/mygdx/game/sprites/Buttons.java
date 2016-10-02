@@ -47,6 +47,8 @@ public class Buttons {
     public Vector2 getPosition() {
         return position;
     }
+    public Rectangle getButtonRectangle()
+    {return ButtonRectangle;}
 
 
     public boolean isButtonsTouched(Vector2 touchVector) {

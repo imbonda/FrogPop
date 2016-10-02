@@ -24,11 +24,11 @@ import com.mygdx.game.runtime.RuntimeInfo;
                 new Texture("Frog/0r.png"),
                 new Texture("Frog/1r.png"),
                 new Texture("Frog/2r.png"),
-                new Texture("Frog/3r.png"),
+                new Texture("Frog/2r.png"),
                 new Texture("Frog/0r.png"),
-                new Texture("Frog/eye2r.png"),
-                new Texture("Frog/eye3r.png"),
-                new Texture("Frog/eye4r.png")
+                new Texture("Frog/1r.png"),
+                new Texture("Frog/2r.png"),
+                new Texture("Frog/2r.png")
         };
 
         private Animation animation;

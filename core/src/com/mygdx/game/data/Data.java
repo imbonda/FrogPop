@@ -15,6 +15,7 @@ public class Data {
     private static final String HIGH_SCORE_KEY = "hs";
     private static final String MUSIC_VOLUME_KEY = "mv";
     private static final String SOUND_VOLUME_KEY = "sv";
+    private static final String CHOOSE_HERO_KEY = "ch";
     // Private members.
     private DataManager dataManager;
 
@@ -74,5 +75,14 @@ public class Data {
     public void setSoundVolume(float volume) {
         this.dataManager.saveFloat(SOUND_VOLUME_KEY, volume);
     }
+	
+    public float getChoosenHero() {
+        return this.dataManager.getFloat(CHOOSE_HERO_KEY, 0);
+    }
+	
+    public float setChoosenHero() {
+        return this.dataManager.getFloat(CHOOSE_HERO_KEY, 0);
+    }
+
 
 }

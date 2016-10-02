@@ -24,12 +24,12 @@ public class HealthFrog extends Frog {
     private final Texture healthFrogAnimationTextures [] = {
             new Texture("Frog/0y.png"),
             new Texture("Frog/1y.png"),
-            new Texture("Frog/2y.png"),
-            new Texture("Frog/3y.png"),
             new Texture("Frog/0y.png"),
-            new Texture("Frog/eye2y.png"),
-            new Texture("Frog/eye3y.png"),
-            new Texture("Frog/eye4y.png")
+            new Texture("Frog/1y.png"),
+            new Texture("Frog/0y.png"),
+            new Texture("Frog/1y.png"),
+            new Texture("Frog/0y.png"),
+            new Texture("Frog/1y.png")
     };
 
     private Animation animation;

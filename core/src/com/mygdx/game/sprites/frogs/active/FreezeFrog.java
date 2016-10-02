@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.animation.Animation;
 import com.mygdx.game.runtime.RuntimeInfo;
 
+
 /**
  * This class represents a regular-frog.
  * It has no special abilities, and it's profit and penalty values are the default ones:

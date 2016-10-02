@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <levelThemes>
-    <theme class="com.mygdx.game.themes.SummerTheme" duration="1" />
-    <theme class="com.mygdx.game.themes.AutumnTheme" duration="1" />
-    <theme class="com.mygdx.game.themes.WinterTheme" duration="1" />
-    <theme class="com.mygdx.game.themes.SpringTheme" duration="1" />
+    <theme class="com.mygdx.game.themes.SummerTheme" duration="4" />
+    <theme class="com.mygdx.game.themes.AutumnTheme" duration="4" />
+    <theme class="com.mygdx.game.themes.WinterTheme" duration="4" />
+    <theme class="com.mygdx.game.themes.SpringTheme" duration="4" />
 </levelThemes>

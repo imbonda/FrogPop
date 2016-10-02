@@ -118,7 +118,7 @@ public class ButterflyEffect {
             {
                 cloud1pos.y=530;
             }
-            if(cloud2pos.y<00)
+            if(cloud2pos.y<0)
             {
                 cloud2pos.y=530;
             }

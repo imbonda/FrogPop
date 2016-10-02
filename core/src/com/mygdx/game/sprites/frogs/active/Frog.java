@@ -1,15 +1,12 @@
 package com.mygdx.game.sprites.frogs.active;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
-import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.sprites.SpritesDrawer;
 
 /**
  * This class represents an abstract frog.
@@ -18,7 +15,7 @@ import com.mygdx.game.sprites.SpritesDrawer;
  */
 public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
 
-    protected static final float FROG_MAX_LIFE_TIME = 4.0f;
+    protected static final float FROG_MAX_LIFE_TIME = 3.0f;
 
     protected Vector2 position;
     protected Rectangle frogRectangle;

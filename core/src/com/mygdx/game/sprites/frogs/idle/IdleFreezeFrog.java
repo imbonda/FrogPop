@@ -5,16 +5,24 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.animation.Animation;
 
+
 /**
  * Created by MichaelBond on 10/1/2016.
  */
 public class IdleFreezeFrog extends IdleFrog {
+
+    public enum AnimationType { NORMAL, BIG }
 
     private final Texture freezeFrogAnimationTextures [] = {
             new Texture("Frog/0b.png"),
             new Texture("Frog/1b.png"),
             new Texture("Frog/2b.png"),
             new Texture("Frog/2b.png"),
+    };
+    private final Texture bigFreezeFrogAnimationTextures [] = {
+            new Texture("Frog/0bigpol.png"),
+            new Texture("Frog/1bigpol.png"),
+            new Texture("Frog/2bigpol.png")
     };
 
     private Animation animation;
@@ -24,12 +32,25 @@ public class IdleFreezeFrog extends IdleFrog {
     public IdleFreezeFrog(Vector2 position) {
         this.position = position;
         this.animation = new Animation(freezeFrogAnimationTextures);
-        setSize(freezeFrogAnimationTextures[0].getWidth(), freezeFrogAnimationTextures[0].getHeight());
+        setIdleFrogSize();
     }
 
     public IdleFreezeFrog(Vector2 position, float width, float height) {
         this(position);
         setSize(width, height);
+    }
+
+    public IdleFreezeFrog(AnimationType type,Vector2 position) {
+        this.position = position;
+        this.animation = (AnimationType.NORMAL == type) ?
+                    (new Animation(freezeFrogAnimationTextures)) :
+                    (new Animation(bigFreezeFrogAnimationTextures));
+        setIdleFrogSize();
+    }
+
+    private void setIdleFrogSize() {
+        Texture frame = this.animation.getFrame();
+        setSize(frame.getWidth(), frame.getHeight());
     }
 
     @Override

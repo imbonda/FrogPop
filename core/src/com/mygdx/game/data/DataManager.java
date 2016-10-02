@@ -118,4 +118,5 @@ public class DataManager {
     public float getFloat(String key, float defaultValue) {
         return this.prefs.getFloat(key, defaultValue);
     }
+
 }

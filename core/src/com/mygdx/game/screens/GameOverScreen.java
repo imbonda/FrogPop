@@ -51,15 +51,15 @@ public class GameOverScreen implements Screen {
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("end.jpg")));
         this.game.media.playSound(Media.GAME_OVER_SOUND);
-        button1=new Buttons(300,355,playAgin,pressedplayAgin);
-        button2=new Buttons(300,275,tomenu,tomenupressed);
+        button1=new Buttons(600,355,playAgin,pressedplayAgin);
+        button2=new Buttons(600,275,tomenu,tomenupressed);
         initIdleFrogs();
     }
 
     private void initIdleFrogs() {
         this.idleFrogs = new Array<IdleFrog>();
-        this.idleFrogs.add(new IdleFreezeFrog(new Vector2(150, 260)));
-        this.idleFrogs.add(new IdleFreezeFrog(new Vector2(520, 260)));
+        idleFrogs.add(new IdleFreezeFrog(IdleFreezeFrog.AnimationType.BIG, new Vector2(100, 50)));
+        //idleFrogs.add(new IdleFreezeFrog(IdleFreezeFrog.AnimationType.normal, new Vector2(175, 175)));
     }
 
     @Override
@@ -67,7 +67,8 @@ public class GameOverScreen implements Screen {
         update(delta);
         this.game.batch.begin();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClearColor(237/255f, 27/255f, 36/255f, 1);
+       // Gdx.gl.glClearColor(237/255f, 27/255f, 36/255f, 1);
+        Gdx.gl.glClearColor(1/255f, 1/255f, 1/255f, 1);
         this.game.batch.setProjectionMatrix(viewport.getCamera().combined);
         End.draw(this.game.batch);
         drawGO();
@@ -103,11 +104,11 @@ public class GameOverScreen implements Screen {
     {
         SpriteBatch batch = this.game.batch;
         Loser.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        Loser.draw(batch, "You Lost",300,200);
+        Loser.draw(batch, "You Lost",600,200);
         Score.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        Score.draw(batch, "Your score was: " + this.runtimeInfo.gameScore, 300, 180);
-        Score.draw(batch, "Highest score: " + this.game.data.getHighScore(), 300, 160);
-        Score.draw(batch, "Your level was: " + this.runtimeInfo.gameLevel, 300, 140);
+        Score.draw(batch, "Your score was: " + this.runtimeInfo.gameScore, 600, 180);
+        Score.draw(batch, "Highest score: " + this.game.data.getHighScore(), 600, 160);
+        Score.draw(batch, "Your level was: " + this.runtimeInfo.gameLevel, 600, 140);
 
     }
 

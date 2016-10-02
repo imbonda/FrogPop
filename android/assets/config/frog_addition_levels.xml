@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <frogsAddition>
     <addFrog at_level="1" />
-    <addFrog at_level="1" />
-    <addFrog min_level="3" max_level="10" />
-    <addFrog min_level="13" max_level="19" />
-    <addFrog min_level="20" max_level="27" />
+    <addFrog min_level="3" max_level="7" />
+    <addFrog min_level="7" max_level="10" />
+    <addFrog min_level="10" max_level="14" />
+    <addFrog min_level="18" max_level="22" />
     <addFrog min_level="30" max_level="37" />
 </frogsAddition>

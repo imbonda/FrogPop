@@ -9,6 +9,7 @@ import com.mygdx.game.runtime.RuntimeInfo;
 
 import java.util.Random;
 
+
 /**
  * This class represents a regular-frog.
  * It has no special abilities, and it's profit and penalty values are the default ones:
@@ -35,6 +36,24 @@ public class RegularFrog extends Frog {
             new Texture("Frog/eye2.png"),
             new Texture("Frog/eye3.png"),
             new Texture("Frog/eye4.png")
+    };
+    private final Texture britishAnimationTextures [] = {
+            new Texture("Frog/special/britain1.png"),
+            new Texture("Frog/special/britain2.png"),
+            new Texture("Frog/special/britain3.png"),
+            new Texture("Frog/special/britain2.png"),
+    };
+    private final Texture turkAnimationTextures [] = {
+            new Texture("Frog/special/turk1.png"),
+            new Texture("Frog/special/turk2.png"),
+            new Texture("Frog/special/turk3.png"),
+            new Texture("Frog/special/turk2.png"),
+    };
+    private final Texture mexicanAnimationTextures [] = {
+            new Texture("Frog/special/mex1.png"),
+            new Texture("Frog/special/mex2.png"),
+            new Texture("Frog/special/mex1.png"),
+            new Texture("Frog/special/mex2.png"),
     };
 
     private Animation animation;
@@ -86,7 +105,6 @@ public class RegularFrog extends Frog {
     public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
         super.defaultInit(runtimeInfo, positionX, positionY);
         generateRandomAnimation();
-
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 getWidth() + 40, getHeight() + 35);
