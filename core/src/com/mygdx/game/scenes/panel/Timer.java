@@ -1,4 +1,4 @@
-package com.mygdx.game.sprites;
+package com.mygdx.game.scenes.panel;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -8,12 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by MichaelBond on 9/6/2016.
  */
-public class Timer extends Sprite {
+public class Timer extends Actor {
 
     private static final float DEFAULT_COUNTDOWN_TIME = 6;
     private static final Vector2 DEFAULT_TIMER_TEXTURE_POSITION = new Vector2(15, 370);
@@ -77,7 +78,7 @@ public class Timer extends Sprite {
     }
 
     @Override
-    public void draw(Batch batch) {
+    public void draw(Batch batch, float parentAlpha) {
         batch.draw(
                     //getFrame(),
                     this.timerTexture,

@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.config.Config;
 import com.mygdx.game.config.metadata.ThemeMetaData;
+import com.mygdx.game.effects.EffectDrawer;
 import com.mygdx.game.themes.Theme;
 
 /**
@@ -21,9 +22,11 @@ public class ThemeController {
     private int nextThemeIndex;
     private int nextThemeLevel;
     private Array<ThemeMetaData> themesMetaData;
+    private EffectDrawer effectDrawer;
 
-    public ThemeController(Config config) {
+    public ThemeController(Config config, EffectDrawer effectDrawer) {
         this.themesMetaData = config.themesMetaData;
+        this.effectDrawer = effectDrawer;
         int sum = 0;
         for (ThemeMetaData meta : this.themesMetaData) {
             sum += meta.duration;
@@ -75,9 +78,13 @@ public class ThemeController {
     }
 
     private void setTheme() {
+        if (null != this.currentTheme) {
+            this.currentTheme.reset();
+        }
         Class<? extends Theme> themeClass = this.themesMetaData.get(this.nextThemeIndex).themeClass;
         try {
             this.currentTheme = themeClass.newInstance();
+            this.currentTheme.init(this.effectDrawer);
             this.nextThemeLevel += this.themesMetaData.get(this.nextThemeIndex).duration;
             this.nextThemeIndex = (this.nextThemeIndex + 1) % (this.themesMetaData.size);
         }

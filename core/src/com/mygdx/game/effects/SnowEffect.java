@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * Created by MichaelBond on 9/28/2016.
  */
-public class SnowEffect {
+public class SnowEffect implements Effect {
 
     private static final String SNOW_EFFECT_FILE = "effects/snow_effect";
     private static final String SNOW_EFFECT_DIR = "effects";
@@ -60,6 +60,7 @@ public class SnowEffect {
         }
     }
 
+    @Override
     public void update(float deltaTime) {
         updateClouds(deltaTime);
         Vector2 position = this.clouds.random().getCenter();
@@ -71,6 +72,7 @@ public class SnowEffect {
         }
     }
 
+    @Override
     public void draw(Batch batch){
         // Draw snow.
         this.snowEffect.draw(batch);
@@ -79,4 +81,10 @@ public class SnowEffect {
             c.draw(batch);
         }
     }
+
+    @Override
+    public void reset() {
+        this.emitter.reset();
+    }
+
 }

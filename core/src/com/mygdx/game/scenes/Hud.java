@@ -13,6 +13,7 @@ import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.panel.LevelTab;
 import com.mygdx.game.scenes.panel.LifeTab;
 import com.mygdx.game.scenes.panel.ScoreTab;
+import com.mygdx.game.scenes.panel.Timer;
 
 /**
  * This is a singleton class used to represent the HUD (head-up display) of the game.
@@ -30,16 +31,19 @@ public class Hud implements Disposable {
     private LifeTab lifeTab;
     private SpriteBatch batch;
     private RuntimeInfo runtimeInfo;
+    private Timer timer;
     private Stage stage;
 
     /**
      * @param batch    The batch object to be used for drawing the hud later on.
      * @param runtimeInfo The runtime information that is to be used by the hud to draw the -
      *                    score, the lives and the level.
+     * @param timer A timer used for timing the levels.
      */
-    public Hud(SpriteBatch batch, RuntimeInfo runtimeInfo) {
+    public Hud(SpriteBatch batch, RuntimeInfo runtimeInfo, Timer timer) {
         this.batch = batch;
         this.runtimeInfo = runtimeInfo;
+        this.timer = timer;
         setPanel();
         setStage();
     }
@@ -66,6 +70,7 @@ public class Hud implements Disposable {
         this.stage.addActor(this.scoreTab);
         this.stage.addActor(this.levelTab);
         this.stage.addActor(this.lifeTab);
+        this.stage.addActor(this.timer);
     }
 
     /**

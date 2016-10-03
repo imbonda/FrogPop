@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * Created by MichaelBond on 9/28/2016.
  */
-public class RainEffect {
+public class RainEffect implements Effect {
 
     private static final String RAIN_EFFECT_FILE = "effects/rain_effect";
     private static final String RAIN_EFFECT_DIR = "effects";
@@ -83,6 +83,7 @@ public class RainEffect {
         }
     }
 
+    @Override
     public void update(float deltaTime) {
         updateClouds(deltaTime);
         Vector2 position = this.clouds.random().getCenter();
@@ -94,6 +95,7 @@ public class RainEffect {
         }
     }
 
+    @Override
     public void draw(Batch batch){
         // Draw rain.
         this.rainEffect.draw(batch);
@@ -101,5 +103,10 @@ public class RainEffect {
         for (Cloud c : this.clouds) {
             c.draw(batch);
         }
+    }
+
+    @Override
+    public void reset() {
+        this.emitter.reset();
     }
 }

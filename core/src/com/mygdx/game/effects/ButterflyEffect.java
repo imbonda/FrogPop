@@ -8,7 +8,8 @@ import java.util.Random;
 /**
  * Created by nitsa on 27-Sep-16.
  */
-public class ButterflyEffect {
+public class ButterflyEffect implements Effect {
+
     private Texture butter1=new Texture("butter.png");
     private Texture butter2=new Texture("butter2.png");
     private Texture butter3=new Texture("Butter3.png");
@@ -140,16 +141,27 @@ public class ButterflyEffect {
             }}
     }
 
+    @Override
+    public void update(float deltaTime) {
+        // Nothing to update.
+    }
 
+    @Override
     public void draw(Batch batch){
         delay++;
-        if(delay%2==0){
-        postition();}
+        if(delay%2==0) {
+            postition();
+        }
         batch.draw(butter1,cloud1pos.x,cloud1pos.y);
         batch.draw(butter1,cloud2pos.x,cloud2pos.y);
         batch.draw(butter2,cloud3pos.x,cloud3pos.y);
         batch.draw(butter2,cloud4pos.x,cloud4pos.y);
         batch.draw(butter3,cloud5pos.x,cloud5pos.y);
         batch.draw(butter3,cloud6pos.x,cloud6pos.y);
+    }
+
+    @Override
+    public void reset() {
+        // Nothing to reset.
     }
 }

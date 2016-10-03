@@ -15,7 +15,7 @@ import sun.security.provider.Sun;
 /**
  * Created by nitsa on 27-Sep-16.
  */
-public class SunEffect {
+public class SunEffect implements Effect {
 
     private static final String SUN_EFFECT_FILE = "effects/sun_effect";
     private static final String SUN_EFFECT_DIR = "effects";
@@ -40,6 +40,7 @@ public class SunEffect {
         this.emitter.getTint().setColors(color);
     }
 
+    @Override
     public void update(float deltaTime) {
         this.sunEffect.findEmitter(EMITTER_NAME).durationTimer = 0;
         this.sunEffect.update(deltaTime);
@@ -48,7 +49,13 @@ public class SunEffect {
         }
     }
 
+    @Override
     public void draw(Batch batch){
         this.sunEffect.draw(batch);
+    }
+
+    @Override
+    public void reset() {
+        this.emitter.reset();
     }
 }

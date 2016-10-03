@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.effects.EffectDrawer;
 import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.managment.ThemeController;
 import com.mygdx.game.managment.GamePlayTouchProcessor;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.SpritesDrawer;
+import com.mygdx.game.scenes.panel.Timer;
 
 /**
  * Created by MichaelBond on 9/1/2016.
@@ -26,6 +28,7 @@ public class PlayScreen implements Screen {
 
     private FrogPop game;
     private SpritesDrawer spritesDrawer;
+    private EffectDrawer effectDrawer;
     private LevelController levelController;
     private ThemeController themeController;
     private RuntimeInfo runtimeInfo;
@@ -33,13 +36,16 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(FrogPop game) {
         game.adsController.hideBannerAd();
-        this.spritesDrawer = new SpritesDrawer();
         this.game = game;
-        this.themeController = new ThemeController(this.game.config);
+        this.spritesDrawer = new SpritesDrawer();
+        this.effectDrawer = new EffectDrawer();
+        this.themeController = new ThemeController(this.game.config, this.effectDrawer);
         this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
+        Timer timer = new Timer();
         this.levelController = new LevelController(
-                    this.game.config, this.game.media, spritesDrawer, runtimeInfo, this.themeController);
-        this.hud = new Hud(this.game.batch, runtimeInfo);
+                    this.game.config, this.game.media, spritesDrawer, runtimeInfo, timer,
+                    this.themeController);
+        this.hud = new Hud(this.game.batch, runtimeInfo, timer);
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
         this.game.media.playMusic();
     }
@@ -69,6 +75,7 @@ public class PlayScreen implements Screen {
         this.game.batch.begin();
         this.themeController.currentTheme.draw(this.game.batch);
         this.spritesDrawer.drawSprites(this.game.batch);
+        this.effectDrawer.drawEffects(this.game.batch);
         this.game.batch.end();
         this.hud.draw();
     }

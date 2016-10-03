@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.effects.ButterflyEffect;
+import com.mygdx.game.effects.EffectDrawer;
 import com.mygdx.game.effects.SunEffect;
 
 /**
@@ -18,11 +19,19 @@ public class SpringTheme implements Theme {
     private Texture backgroundTexture;
     private SunEffect sunEffect;
     private ButterflyEffect butterflyEffect;
+    private EffectDrawer effectDrawer;
 
     public SpringTheme() {
         this.backgroundTexture = new Texture("spring.png");
         this.sunEffect = new SunEffect(SPRING_SUN_COLOR);
         this.butterflyEffect = new ButterflyEffect();
+    }
+
+    @Override
+    public void init(EffectDrawer effectDrawer) {
+        this.effectDrawer = effectDrawer;
+        this.effectDrawer.addEffect(this.sunEffect);
+        this.effectDrawer.addEffect(this.butterflyEffect);
     }
 
     @Override
@@ -34,8 +43,14 @@ public class SpringTheme implements Theme {
     public void draw(Batch batch) {
         Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
         batch.draw(this.backgroundTexture, 0, 0);
-        this.sunEffect.draw(batch);
-		this.butterflyEffect.draw(batch);
+    }
+
+    @Override
+    public void reset() {
+        this.sunEffect.reset();
+        this.butterflyEffect.reset();
+        this.effectDrawer.removeEffect(this.sunEffect);
+        this.effectDrawer.removeEffect(this.butterflyEffect);
     }
 
 }

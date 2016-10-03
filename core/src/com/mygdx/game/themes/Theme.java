@@ -5,17 +5,22 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.effects.EffectDrawer;
 
 /**
  * This class represents a game's theme.
- * Each theme has a unique:
- *  1) Background
- *  2) Sprites dressing-code.
- *  3) Music.
+ * Each theme has a unique background.
  *
  * Created by MichaelBond on 9/18/2016.
  */
 public interface Theme {
+
+    /**
+     * Initializes the theme.
+     *
+     * @param effectDrawer  An effect drawer to be used in case the theme is using some effects.
+     */
+    void init (EffectDrawer effectDrawer);
 
     /**
      * Updates the theme with regard to the time passed since the last call to 'update'.
@@ -25,8 +30,13 @@ public interface Theme {
     void update(float deltaTime);
 
     /**
-     * Returns the theme's background texture.
+     * Draws the theme on to the screen.
      */
     void draw(Batch batch);
+
+    /**
+     * Resets the theme.
+     */
+    void reset();
 
 }
