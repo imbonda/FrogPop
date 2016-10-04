@@ -52,14 +52,14 @@ public class BirdsEffect implements Effect {
             int direction = (this.random.nextInt(2) == 0) ? (-1) : (1);
             if (type == BirdType.NORMAL) {
                 Vector2 velocity = new Vector2(
-                            25 * direction * (this.random.nextInt(3) + 2),
-                            25 * direction);
+                            20 * direction * (this.random.nextInt(3) + 2),
+                            20 * direction);
                 bird.setVelocity(velocity);
             }
             else {
                 Vector2 velocity = new Vector2(
-                        25 * direction * (this.random.nextInt(6) + 2),
-                        25 * (this.random.nextInt(2) - 1));
+                        20 * direction * (this.random.nextInt(6) + 2),
+                        20 * (this.random.nextInt(2) - 1));
                 bird.setVelocity(velocity);
             }
             bird.setPosition(position);
