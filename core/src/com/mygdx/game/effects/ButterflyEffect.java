@@ -8,7 +8,8 @@ import java.util.Random;
 /**
  * Created by nitsa on 27-Sep-16.
  */
-public class ButterflyEffect {
+public class ButterflyEffect implements Effect {
+
     private static final float UPDATE_SPEED=0.05f;
     private static final int RIGHT_PARAMETER=5;
     private static final int LEFT_PARAMETER=2;
@@ -143,8 +144,9 @@ public class ButterflyEffect {
         // speed5.scl(3,3);
         // speed6.scl(3,3);
         System.out.println(speed1.x);
-
     }
+
+    @Override
     public void update(float deltaTime) {
         speed+=deltaTime;
         butterfly1pos.add(speed1.x,speed1.y);
@@ -158,6 +160,7 @@ public class ButterflyEffect {
             speed=0;
         }}
 
+    @Override
     public void draw(Batch batch){
         batch.draw(butterfly[0],butterfly1pos.x,butterfly1pos.y);
         batch.draw(butterfly[1],butterfly2pos.x,butterfly2pos.y);
@@ -165,5 +168,10 @@ public class ButterflyEffect {
         batch.draw(butterfly[0],butterfly4pos.x,butterfly4pos.y);
         batch.draw(butterfly[1],butterfly5pos.x,butterfly5pos.y);
         batch.draw(butterfly[2],butterfly6pos.x,butterfly6pos.y);
+    }
+
+    @Override
+    public void reset() {
+        // Nothing to reset.
     }
 }
