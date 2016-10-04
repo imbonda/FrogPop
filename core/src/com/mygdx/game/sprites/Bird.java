@@ -4,38 +4,38 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-
+import com.mygdx.game.animation.Animation;
 
 /**
- * Created by MichaelBond on 9/28/2016.
+ * Created by MichaelBond on 10/5/2016.
  */
-public class Cloud extends Sprite {
+public class Bird extends Sprite {
 
-    private final String CLOUD_TEXTURE_NAME = "cloud.png";
+    private final Texture BIRD_TEXTURES [] = {
+            new Texture("bird1n.png"),
+            new Texture("bird2n.png"),
+            new Texture("bird3n.png")
+    };
 
     private Vector2 position;
     private Vector2 velocity;
     private Vector2 boxBottomLeft;
     private Vector2 boxTopRight;
-    private Texture cloudTexture;
+    private Animation birdAnimation;
 
 
-    public Cloud() {
-        this.cloudTexture = new Texture(CLOUD_TEXTURE_NAME);
+    public Bird() {
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
         this.boxBottomLeft = new Vector2(0, 0);
         this.boxTopRight = new Vector2(0, 0);
-    }
-
-    public Cloud(Vector2 position, Vector2 velocity) {
-        this();
-        setPosition(position);
-        setVelocity(velocity);
+        this.birdAnimation = new Animation(this.BIRD_TEXTURES);
+        Texture frame = this.birdAnimation.getFrame();
+        setSize(frame.getWidth(), frame.getHeight());
     }
 
     /**
-     * The cloud will always be contained inside the given box.
+     * The bird will always be contained inside the given box.
      */
     public void setBox(Vector2 bottomLeft, Vector2 topRight) {
         this.boxBottomLeft.set(bottomLeft);
@@ -50,22 +50,8 @@ public class Cloud extends Sprite {
         this.velocity.set(velocity);
     }
 
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public Vector2 getCenter() {
-        Vector2 center = this.position.cpy();
-        center.add(this.cloudTexture.getWidth() / 2, this.cloudTexture.getHeight() / 2);
-        return center;
-    }
-
-    /**
-     * Updates the cloud with regard to the time passed from the last call to 'update'.
-     *
-     * @param deltaTime The time passed from the last call.
-     */
     public void update(float deltaTime) {
+        this.birdAnimation.update(deltaTime);
         this.velocity.scl(deltaTime);
         this.position.add(this.velocity);
         containInsideBox();
@@ -73,31 +59,40 @@ public class Cloud extends Sprite {
     }
 
     private void containInsideBox() {
-        float boxWidth = this.boxTopRight.x - this.boxBottomLeft.x;
         // Contain "width-wise".
         if (this.position.x > this.boxTopRight.x) {
-            this.position.add(-boxWidth - this.cloudTexture.getWidth(), this.velocity.y);
+            this.velocity.set(-this.velocity.x, this.velocity.y);
+            this.position.add(this.velocity);
         }
-        else if (this.position.x + this.cloudTexture.getWidth() < this.boxBottomLeft.x) {
-            this.position.add(boxWidth + this.cloudTexture.getWidth(), this.velocity.y);
+        else if (this.position.x + getWidth() < this.boxBottomLeft.x) {
+            this.velocity.set(-this.velocity.x, this.velocity.y);
+            this.position.add(this.velocity);
         }
         // Contain "height-wise".
         if (this.position.y > this.boxTopRight.y) {
             this.velocity.set(this.velocity.x, -this.velocity.y);
             this.position.add(this.velocity);
         }
-        else if (this.position.y + this.cloudTexture.getHeight() < this.boxBottomLeft.y) {
+        else if (this.position.y + getHeight() < this.boxBottomLeft.y) {
             this.velocity.set(this.velocity.x, -this.velocity.y);
             this.position.add(this.velocity);
         }
     }
 
     /**
-     * This method is responsible for drawing the cloud properly.
+     * This method is responsible for drawing the bird properly.
      */
     @Override
     public void draw(Batch batch) {
-        batch.draw(this.cloudTexture, this.position.x, this.position.y);
+        Texture frame = this.birdAnimation.getFrame();
+        boolean isFlipX = (this.velocity.x >= 0);
+        batch.draw(
+                    frame,
+                    this.position.x, this.position.y,
+                    30,30,1,1,
+                    frame.getWidth(), frame.getHeight(),
+                    isFlipX,
+                    false);
     }
 
 }

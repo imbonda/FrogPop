@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.FrogPop;
 import com.mygdx.game.sprites.Cloud;
 
 import java.util.Random;
@@ -70,6 +71,7 @@ public class RainEffect implements Effect {
         this.clouds = new Array<Cloud>();
         for (Vector2 position : CLOUD_SPACE) {
             Cloud c = new Cloud();
+            c.setBox(new Vector2(0, 0), new Vector2(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT));
             int speed = this.random.nextInt(13) + 20;
             c.setVelocity(new Vector2(this.direction * speed, 0));
             c.setPosition(position);
