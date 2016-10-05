@@ -42,7 +42,7 @@ public class Buttons {
         if(which==2) {
             TheButtonTexture=ButtonPressed;
         }
-        }
+    }
 
     public Vector2 getPosition() {
         return position;
@@ -58,13 +58,16 @@ public class Buttons {
         }
         if ((!(this.ButtonRectangle.contains(touchVector)))){
             checker=0;
-        setButtonTexture(1);
+            setButtonTexture(1);
         }
         if((checker==1)&&(Gdx.input.isTouched()==false))
         {
+            setButtonTexture(1);
+            checker=0;
             return true;
         }
+
         return false;
-   }
+    }
 
 }
