@@ -22,6 +22,7 @@ public class LevelController {
     // Private class variables.
     private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.04f;
     private static final float SPEED_SCALE_FACTOR = 1.087f;
+    private static final int MAX_DIFFICALITY_LEVEL = 14;
 
     // Private members.
     private Array<LevelMetaData> levelsMetaData;
@@ -150,8 +151,11 @@ public class LevelController {
     }
 
     private void setNewTimer() {
-        if (this.runtimeInfo.gameLevel <= 14) {
+        if (this.runtimeInfo.gameLevel <= MAX_DIFFICALITY_LEVEL) {
             this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
+        }
+        else {
+            this.levelTimer.setCountTimeByFactor(1);
         }
     }
 
@@ -161,7 +165,7 @@ public class LevelController {
      */
     private void levelUp() {
         this.runtimeInfo.gameLevel++;
-        if(this.runtimeInfo.gameLevel <= 14) {
+        if(this.runtimeInfo.gameLevel <= MAX_DIFFICALITY_LEVEL) {
             this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
         }
         setCurrentLevel();
