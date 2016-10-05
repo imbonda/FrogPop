@@ -1,177 +1,105 @@
 package com.mygdx.game.effects;
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.FrogPop;
+import com.mygdx.game.sprites.Butterfly;
 
+import java.util.HashMap;
 import java.util.Random;
+
 
 /**
  * Created by nitsa on 27-Sep-16.
  */
 public class ButterflyEffect implements Effect {
 
-    private static final float UPDATE_SPEED=0.05f;
-    private static final int RIGHT_PARAMETER=5;
-    private static final int LEFT_PARAMETER=2;
-    private float speed=0;
-    private Texture[] butterfly={new Texture("butter.png"),new Texture("butter2.png"),new Texture("butter3.png")};
-    private Random rand = new Random();
-    private Vector2 butterfly1pos=new Vector2(70,465);
-    private Vector2 butterfly2pos=new Vector2(200,340);
-    private Vector2 butterfly3pos=new Vector2(300,520);
-    private Vector2 butterfly4pos=new Vector2(450,200);
-    private Vector2 butterfly5pos=new Vector2(570,170);
-    private Vector2 butterfly6pos=new Vector2(640,80);
-    private Vector2 speed1 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-    private Vector2 speed2 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-    private Vector2 speed3 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-    private Vector2 speed4 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-    private Vector2 speed5 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-    private Vector2 speed6 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
+    private enum ButterflyType { TYPE1, TYPE2, TYPE3 }
+
+    private class ButterflyConfig {
+        public Vector2 position;
+        public ButterflyType type;
+
+        ButterflyConfig (Vector2 position, ButterflyType type) {
+            this.position = position;
+            this.type = type;
+        }
+    }
+
+    private final ButterflyConfig BUTTERFLIES_CONFIG [] = {
+            new ButterflyConfig(new Vector2(100, 365), ButterflyType.TYPE1),
+            new ButterflyConfig(new Vector2(500, 365), ButterflyType.TYPE1),
+            new ButterflyConfig(new Vector2(200, 365), ButterflyType.TYPE2),
+            new ButterflyConfig(new Vector2(300, 365), ButterflyType.TYPE2),
+            new ButterflyConfig(new Vector2(400, 365), ButterflyType.TYPE3),
+            new ButterflyConfig(new Vector2(660, 365), ButterflyType.TYPE3)
+    };
+
+    private Random random;
+    private Array<Butterfly> butterflies;
+    private HashMap<Butterfly, ButterflyConfig> butterflyToConfigMap;
+
 
     public ButterflyEffect() {
+        this.random = new Random();
+        initializeButterflies();
     }
-    private void postition(){
-        Random rand = new Random();
-        speed1 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-        speed2 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-        speed3 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-        speed4 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-        speed5 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-        speed6 =new Vector2(rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER,rand.nextInt(RIGHT_PARAMETER)-LEFT_PARAMETER);
-        if(butterfly1pos.x>770)
-        {
-            speed1.x=-1*speed1.x;
-        }
-        if(butterfly2pos.x>770)
-        {
-            speed2.x=-1*speed2.x;
-        }
-        if(butterfly3pos.x>770)
-        {
-            speed3.x=-1*speed3.x;
-        }
-        if(butterfly4pos.x>770)
-        {
-            speed4.x=-1*speed4.x;
-        }
-        if(butterfly5pos.x>770)
-        {
-            speed5.x=-1*speed5.x;
-        }
-        if(butterfly6pos.x>770)
-        {
-            speed6.x=-1*speed6.x;
-        }
 
-        if(butterfly1pos.x<0)
-        {
-            speed1.x=-1*speed1.x;
+    public void initializeButterflies() {
+        this.butterflies = new Array<Butterfly>();
+        this.butterflyToConfigMap = new HashMap<Butterfly, ButterflyConfig>();
+        for (ButterflyConfig butterflyConfig : BUTTERFLIES_CONFIG) {
+            Vector2 position = butterflyConfig.position;
+            ButterflyType type = butterflyConfig.type;
+            Butterfly butterfly = new Butterfly();
+            butterfly.setBox(
+                    new Vector2(0, 0),    // Bottom left.
+                    new Vector2(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT)); // Top right.
+            butterfly.setPosition(position);
+            this.butterflies.add(butterfly);
+            this.butterflyToConfigMap.put(butterfly, butterflyConfig);
         }
-        if(butterfly2pos.x<0)
-        {
-            speed2.x=-1*speed2.x;
-        }
-        if(butterfly3pos.x<0)
-        {
-            speed3.x=-1*speed3.x;
-        }
-        if(butterfly4pos.x<0)
-        {
-            speed4.x=-1*speed4.x;
-        }
-        if(butterfly5pos.x<0)
-        {
-            speed5.x=-1*speed5.x;
-        }
-        if(butterfly6pos.x<0)
-        {
-            speed6.x=-1*speed6.x;
-        }
-
-        if(butterfly1pos.y>530)
-        {
-            speed1.y=-1*speed1.y;
-        }
-        if(butterfly2pos.y>530)
-        {
-            speed2.y=-1*speed2.y;
-        }
-        if(butterfly3pos.y>530)
-        {
-            speed3.y=-1*speed3.y;
-        }
-        if(butterfly4pos.y>530)
-        {
-            speed4.y=-1*speed4.y;
-        }
-        if(butterfly5pos.y>530)
-        {
-            speed5.y=-1*speed5.y;
-        }
-        if(butterfly6pos.y>530)
-        {
-            speed6.y=-1*speed6.y;
-        }
-        if(butterfly1pos.y<0)
-        {
-            speed1.y=-1*speed1.y;
-        }
-        if(butterfly2pos.y<0)
-        {
-            speed2.y=-1*speed2.y;
-        }
-        if(butterfly3pos.y<0)
-        {
-            speed3.y=-1*speed3.y;
-        }
-        if(butterfly4pos.y<0)
-        {
-            speed4.y=-1*speed4.y;
-        }
-        if(butterfly5pos.y<0)
-        {
-            speed5.y=-1*speed5.y;
-        }
-        if(butterfly6pos.y<0)
-        {
-            speed6.y=-1*speed6.y;
-        }
-        // speed1.scl(3,3f);
-        // speed2.scl(3,3);
-        // speed3.scl(3,3);
-        // speed4.scl(3,3);
-        // speed5.scl(3,3);
-        // speed6.scl(3,3);
-        System.out.println(speed1.x);
     }
 
     @Override
     public void update(float deltaTime) {
-        speed+=deltaTime;
-        butterfly1pos.add(speed1.x,speed1.y);
-        butterfly2pos.add(speed2.x,speed2.y);
-        butterfly3pos.add(speed3.x,speed3.y);
-        butterfly4pos.add(speed4.x,speed4.y);
-        butterfly5pos.add(speed5.x,speed5.y);
-        butterfly6pos.add(speed6.x,speed6.y);
-        if(speed>UPDATE_SPEED){
-            postition();
-            speed=0;
-        }}
+        // Nothing to update.
+        for (Butterfly butterfly : this.butterflies) {
+            ButterflyConfig config = this.butterflyToConfigMap.get(butterfly);
+
+            if (config.type == ButterflyType.TYPE1) {
+                Vector2 velocity = new Vector2(
+                        20 * (this.random.nextInt(4) - 2),
+                        20 * (this.random.nextInt(8) - 2));
+                butterfly.setVelocity(velocity);
+            }
+            else if (config.type == ButterflyType.TYPE2) {
+                Vector2 velocity = new Vector2(
+                        20 * (this.random.nextInt(4) - 2),
+                        20 * (this.random.nextInt(4) - 2));
+                butterfly.setVelocity(velocity);
+            }
+            else {
+                Vector2 velocity = new Vector2(
+                        20 * (this.random.nextInt(6) - 2),
+                        20 * (this.random.nextInt(6) - 4));
+                butterfly.setVelocity(velocity);
+            }
+            butterfly.update(deltaTime);
+        }
+    }
 
     @Override
     public void draw(Batch batch){
-        batch.draw(butterfly[0],butterfly1pos.x,butterfly1pos.y);
-        batch.draw(butterfly[1],butterfly2pos.x,butterfly2pos.y);
-        batch.draw(butterfly[2],butterfly3pos.x,butterfly3pos.y);
-        batch.draw(butterfly[0],butterfly4pos.x,butterfly4pos.y);
-        batch.draw(butterfly[1],butterfly5pos.x,butterfly5pos.y);
-        batch.draw(butterfly[2],butterfly6pos.x,butterfly6pos.y);
+        for (Butterfly butterfly : this.butterflies) {
+            butterfly.draw(batch);
+        }
     }
 
     @Override
     public void reset() {
-        // Nothing to reset.
+        this.butterflies.clear();
+        this.butterflyToConfigMap.clear();
     }
 }

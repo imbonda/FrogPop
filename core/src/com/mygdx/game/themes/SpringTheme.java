@@ -37,6 +37,7 @@ public class SpringTheme implements Theme {
     @Override
     public void update(float deltaTime) {
         this.sunEffect.update(deltaTime);
+        this.butterflyEffect.update(deltaTime);
     }
 
     @Override

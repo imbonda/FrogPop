@@ -83,6 +83,6 @@ public class BirdsEffect implements Effect {
 
     @Override
     public void reset() {
-        // Nothing to reset.
+        this.birds.clear();
     }
 }
