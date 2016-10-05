@@ -9,12 +9,15 @@ import com.badlogic.gdx.graphics.Texture;
 public class Animation {
 
     private static final float DEFAULT_ANIMATION_FRAME_TIME = 0.07f;
+    private static final int INFINITE_ANIMATION = -1;
 
     private int frameCount;
     private float maxFrameTime;
     private float currentFrameTime;
     private int currentFrameId;
     private int increment;
+    private int limitCycles;
+    private int cycleCount;
     private Texture frames [];
 
 
@@ -29,23 +32,41 @@ public class Animation {
         this.currentFrameId = 0;
         this.currentFrameTime = 0;
         this.increment = 1;
+        this.cycleCount = 0;
+        this.limitCycles = INFINITE_ANIMATION;
+    }
+
+    public Animation(Texture textures[], int limitCycles) {
+        this(textures, DEFAULT_ANIMATION_FRAME_TIME, limitCycles);
+    }
+
+    public Animation(Texture textures[], float frameTime, int limitCycles) {
+        this(textures, frameTime);
+        this.limitCycles = limitCycles;
     }
 
     public void update(float deltaTime) {
         this.currentFrameTime += deltaTime;
-        if (this.currentFrameTime >= maxFrameTime) {
+        if (!isCompleted() && this.currentFrameTime >= maxFrameTime) {
             this.currentFrameTime = 0;
             this.currentFrameId = this.currentFrameId + this.increment;
             // In case went out of bound.
-            if (currentFrameId == -1 || currentFrameId == this.frameCount) {
+            if (this.currentFrameId == -1 || this.currentFrameId == this.frameCount) {
                 this.increment = -this.increment;
                 this.currentFrameId = this.currentFrameId + this.increment;
+            }
+            if (0 == this.currentFrameId) {
+                this.cycleCount += 1;
             }
         }
     }
 
     public Texture getFrame() {
         return this.frames[currentFrameId];
+    }
+
+    public boolean isCompleted() {
+        return this.limitCycles != INFINITE_ANIMATION && this.limitCycles == this.cycleCount;
     }
 
     public void reset() {
