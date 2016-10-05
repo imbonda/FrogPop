@@ -11,27 +11,44 @@ import com.mygdx.game.animation.Animation;
  */
 public class Butterfly extends Sprite {
 
-    private final Texture BUTTERFLY_TEXTURES [] = {
-            new Texture("butter.png"),
-            new Texture("butter2.png"),
-            new Texture("Butter3.png")
-    };
+    public enum Color { ORANGE, PURPLE, RED }
+
+    private static final String ORANGE_BUTTERFLY_TEXTURE_NAME = "butter.png";
+    private static final String PURPLE_BUTTERFLY_TEXTURE_NAME = "butter2.png";
+    private static final String RED_BUTTERFLY_TEXTURE_NAME = "Butter3.png";
 
     private Vector2 position;
     private Vector2 velocity;
     private Vector2 boxBottomLeft;
     private Vector2 boxTopRight;
-    private Animation butterflyAnimation;
+    private Texture butterflyTexture;
 
 
-    public Butterfly() {
+    private Butterfly() {
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
         this.boxBottomLeft = new Vector2(0, 0);
         this.boxTopRight = new Vector2(0, 0);
-        this.butterflyAnimation = new Animation(this.BUTTERFLY_TEXTURES);
-        Texture frame = this.butterflyAnimation.getFrame();
-        setSize(frame.getWidth(), frame.getHeight());
+    }
+
+    public Butterfly(Color type) {
+        this();
+        switch (type) {
+            case ORANGE:
+                this.butterflyTexture = new Texture(ORANGE_BUTTERFLY_TEXTURE_NAME);
+                setSize(this.butterflyTexture.getWidth(), this.butterflyTexture.getHeight());
+                break;
+            case PURPLE:
+                this.butterflyTexture = new Texture(PURPLE_BUTTERFLY_TEXTURE_NAME);
+                setSize(this.butterflyTexture.getWidth(), this.butterflyTexture.getHeight());
+                break;
+            case RED:
+                this.butterflyTexture = new Texture(RED_BUTTERFLY_TEXTURE_NAME);
+                setSize(this.butterflyTexture.getWidth(), this.butterflyTexture.getHeight());
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -51,7 +68,6 @@ public class Butterfly extends Sprite {
     }
 
     public void update(float deltaTime) {
-        this.butterflyAnimation.update(deltaTime);
         this.velocity.scl(deltaTime);
         this.position.add(this.velocity);
         containInsideBox();
@@ -82,9 +98,8 @@ public class Butterfly extends Sprite {
      */
     @Override
     public void draw(Batch batch) {
-        Texture frame = this.butterflyAnimation.getFrame();
         batch.draw(
-                frame,
+                this.butterflyTexture,
                 this.position.x, this.position.y);
     }
 
