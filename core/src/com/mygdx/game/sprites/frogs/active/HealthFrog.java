@@ -38,7 +38,7 @@ public class HealthFrog extends Frog {
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION);
+        this.animation = this.assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION, 0.15f);
         Texture frame = getFrogTexture();
         setSize(frame.getWidth(), frame.getHeight());
     }

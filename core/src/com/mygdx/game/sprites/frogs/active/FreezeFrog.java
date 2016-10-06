@@ -41,7 +41,7 @@ public class FreezeFrog extends Frog {
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION);
+        this.animation = this.assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION, 0.15f);
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
     }

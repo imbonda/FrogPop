@@ -38,7 +38,7 @@ public class EvilFrog extends Frog {
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.EVIL_FROG_ANIMATION);
+        this.animation = this.assetController.getAnimation(Assets.EVIL_FROG_ANIMATION, 0.1f);
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
     }
