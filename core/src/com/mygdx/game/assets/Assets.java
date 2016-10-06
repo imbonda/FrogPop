@@ -193,7 +193,11 @@ public final class Assets {
     };
     public static final String HERO_MEXICAN_ANIMATION [] = {
             HERO_MEXICAN1,
-            HERO_MEXICAN2
+            HERO_MEXICAN2,
+            HERO_MEXICAN1,
+            HERO_MEXICAN2,
+            HERO_MEXICAN2,
+            HERO_MEXICAN1
     };
     public static final String HERO_BRITISH_ANIMATION [] = {
             HERO_BRITISH1,
