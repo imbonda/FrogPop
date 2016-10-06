@@ -3,6 +3,7 @@ package com.mygdx.game.assets;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.config.Config;
 import com.mygdx.game.media.Media;
 
@@ -10,14 +11,6 @@ import com.mygdx.game.media.Media;
  * Created by MichaelBond on 9/27/2016.
  */
 public class AssetController {
-
-    private static final String MUSIC_FILES [] = {
-            Media.MUSIC
-    };
-    private static final String SOUND_FILES [] = {
-            Media.LEVEL_UP_SOUND,
-            Media.GAME_OVER_SOUND
-    };
 
     // Public members.
     public Config config;
@@ -33,6 +26,7 @@ public class AssetController {
         // todo
         loadMusics();
         loadSounds();
+        loadTextures();
         this.manager.finishLoading();
         // Load config.
         this.config = new Config();
@@ -40,14 +34,20 @@ public class AssetController {
     }
 
     private void loadMusics() {
-        for (String fileName : MUSIC_FILES) {
+        for (String fileName : Assets.MUSIC_FILES) {
             this.manager.load(fileName, Music.class);
         }
     }
 
     private void loadSounds() {
-        for (String fileName : SOUND_FILES) {
+        for (String fileName : Assets.SOUND_FILES) {
             this.manager.load(fileName, Sound.class);
+        }
+    }
+
+    private void loadTextures() {
+        for (String fileName : Assets.TEXTURE_FILES) {
+            this.manager.load(fileName, Texture.class);
         }
     }
 

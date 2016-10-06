@@ -3,7 +3,7 @@ package com.mygdx.game.assets;
 /**
  * Created by MichaelBond on 10/6/2016.
  */
-public class Assets {
+public final class Assets {
 
     /**
      * Media.
@@ -12,7 +12,7 @@ public class Assets {
     public static final String GAME_PLAY_MUSIC = "media/music.ogg";
     // Sound.
     public static final String LEVEL_UP_SOUND = "media/level_up.wav";
-    public static final String GAME_OVER_SOUND = "media/endgame.mp3";
+    public static final String GAME_OVER_SOUND = "media/game_over.mp3";
 
     public static final String MUSIC_FILES [] = {
             GAME_PLAY_MUSIC

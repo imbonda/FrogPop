@@ -23,7 +23,7 @@ public class FrogPop extends Game {
 	public Data data;
 	public Media media;
 	public Config config;
-	private AssetController assetController;
+	public AssetController assetController;
 
 
 	public FrogPop(AdsController adsController) {
