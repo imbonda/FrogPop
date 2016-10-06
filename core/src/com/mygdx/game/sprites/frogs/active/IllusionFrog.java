@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.animation.CAnimation;
+import com.mygdx.game.animation.Animation;
 import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.screens.PlayScreen;
 
@@ -22,18 +23,7 @@ public class IllusionFrog extends Frog {
     private static final int FROG_SCORE_PROFIT_VALUE = 3;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
-    private final Texture illusionFrogAnimationTextures [] = {
-            new Texture("Frog/0p.png"),
-            new Texture("Frog/1p.png"),
-            new Texture("Frog/2p.png"),
-            new Texture("Frog/3p.png"),
-            new Texture("Frog/0p.png"),
-            new Texture("Frog/eye2p.png"),
-            new Texture("Frog/eye3p.png"),
-            new Texture("Frog/eye4p.png")
-    };
-
-    private CAnimation animation;
+    private Animation animation;
     private int rotatedirectionB=-1;
     private int rotatedirectionA=-4;
     private int rotatedelay=0;
@@ -42,28 +32,46 @@ public class IllusionFrog extends Frog {
     private Vector3 deafultaxis=new Vector3(0,0,100);
 
     public IllusionFrog() {
-        this.animation = new CAnimation(illusionFrogAnimationTextures);
-        setSize(illusionFrogAnimationTextures[0].getWidth(), illusionFrogAnimationTextures[0].getHeight());
     }
 
-    private void whileUpAbility()
-    {
-        if((rotatedelay>16)&&((rotationcontroller>=16)||(rotationcontroller<=-16))){
+    @Override
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
+        super.defaultInit(assetController, runtimeInfo, positionX, positionY);
+        setAnimation();
+        this.frogRectangle = new Rectangle(
+                this.position.x-20, this.position.y-35,
+                getWidth() + 40, getHeight() + 35);
+    }
+
+    private void setAnimation() {
+        this.animation = this.assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION);
+        Texture frame = this.animation.getFrame();
+        setSize(frame.getWidth(), frame.getHeight());
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        updateAnimation(deltaTime);
+        this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed;
+        if(rotatedelay%4==0){
+        whileUpAbility();}
+        rotatedelay++;
+    }
+
+    private void updateAnimation(float deltaTime) {
+        this.animation.update(deltaTime);
+        Texture frame = this.animation.getFrame();
+        setSize(frame.getWidth(), frame.getHeight());
+    }
+
+    private void whileUpAbility() {
+        if((rotatedelay>16)&&((rotationcontroller>=16)||(rotationcontroller<=-16))) {
             rotatedelay=0;
             this.rotatedirectionA=this.rotatedirectionB*rotatedirectionA;
         }
         rotationcontroller=rotatedirectionA+rotationcontroller;
         PlayScreen.gameViewPort.getCamera().rotateAround(deafultPosition,deafultaxis,rotatedirectionA);
         PlayScreen.gameViewPort.getCamera().update();
-
-    }
-    @Override
-    public void update(float deltaTime) {
-        this.animation.update(deltaTime);
-        this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed;
-        if(rotatedelay%4==0){
-        whileUpAbility();}
-        rotatedelay++;
     }
 
     @Override
@@ -83,11 +91,13 @@ public class IllusionFrog extends Frog {
     }
 
     @Override
-    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
-        super.defaultInit(assetController, runtimeInfo, positionX, positionY);
-        this.frogRectangle = new Rectangle(
-                this.position.x-20, this.position.y-35,
-                getWidth() + 40, getHeight() + 35);
+    public void draw(Batch batch) {
+        batch.draw(
+                    this.animation.getFrame(),
+                    this.position.x, this.position.y,
+                    0, 0,
+                    (int)getWidth(), (int)getHeight() -
+                        (int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
     }
 
     @Override
@@ -99,16 +109,6 @@ public class IllusionFrog extends Frog {
         rotationcontroller=0;
         rotatedirectionA=-4;
         rotatedelay=0;
-    }
-
-    @Override
-    public void draw(Batch batch) {
-        batch.draw(getFrogTexture(), this.position.x, this.position.y,
-                0, 0, 100, 100-(int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
-    }
-
-    public Texture getFrogTexture() {
-        return this.animation.getFrame();
     }
 
 }

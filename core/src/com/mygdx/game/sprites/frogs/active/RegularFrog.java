@@ -74,6 +74,10 @@ public class RegularFrog extends Frog {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        updateAnimation(deltaTime);
+    }
+
+    private void updateAnimation(float deltaTime) {
         this.animation.update(deltaTime);
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
