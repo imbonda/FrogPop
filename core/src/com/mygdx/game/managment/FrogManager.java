@@ -45,7 +45,7 @@ public class FrogManager {
         this.spritesDrawer = spritesDrawer;
         this.holes = new Array<Hole>();
         for (Vector2 holePosition : HOLES_POSITIONS) {
-            holes.add(new Hole(holePosition.x, holePosition.y));
+            holes.add(new Hole(this.assetController, holePosition.x, holePosition.y));
             this.spritesDrawer.addSprites(holes);
         }
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();

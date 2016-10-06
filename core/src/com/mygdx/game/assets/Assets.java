@@ -34,6 +34,7 @@ public final class Assets {
     // Sprites.
     public static final String TIMER = "images/timer.png";
     public static final String CLOUD = "images/cloud.png";
+    public static final String HOLE = "images/hole.png";
     // Butterflies.
     public static final String BUTTERFLY_ORANGE = "images/butterflies/orange.png";
     public static final String BUTTERFLY_PURPLE = "images/butterflies/purple.png";
@@ -96,6 +97,7 @@ public final class Assets {
         // Sprites
             TIMER,
             CLOUD,
+            HOLE,
             BUTTERFLY_ORANGE,
             BUTTERFLY_PURPLE,
             BUTTERFLY_RED,

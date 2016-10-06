@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 
 /**
  * Created by MichaelBond on 8/25/2016.
@@ -13,8 +15,8 @@ public class Hole extends Sprite {
     private Texture holeTexture;
     private Vector2 position;
 
-    public Hole(float xCord, float yCord) {
-        this.holeTexture = new Texture("holen.png");
+    public Hole(AssetController assetController, float xCord, float yCord) {
+        this.holeTexture = assetController.get(Assets.HOLE);
         this.position = new Vector2(xCord, yCord);
     }
 
