@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.animation.Animation;
-import com.mygdx.game.animation.CAnimation;
 import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.assets.Assets;
+
 
 /**
  * Created by MichaelBond on 10/1/2016.

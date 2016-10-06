@@ -7,18 +7,11 @@ import com.mygdx.game.animation.Animation;
 import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.assets.Assets;
 
+
 /**
  * Created by MichaelBond on 10/1/2016.
  */
 public class IdlePoisonFrog extends IdleFrog {
-
-//    private final Texture tongueAnimationTextures [] = {
-//            new Texture("Frog/0r.png"),
-//            new Texture("Frog/1r.png"),
-//            new Texture("Frog/2r.png"),
-//
-//    };
-
 
     private Animation animation;
     private Vector2 position;

@@ -67,7 +67,7 @@ public class MainMenuScreen implements Screen {
                     IdleRegularFrog.AnimationType.TONGUE, new Vector2(415, 125)));
         idleFrogs.add(new IdleRegularFrog(this.game.assetController,
                     IdleRegularFrog.AnimationType.WINK, new Vector2(255, 125)));
-        idleFrogs.add(new IdleBritishFrog(IdleBritishFrog.AnimationType.TONGUE, new Vector2(340, 70)));
+        idleFrogs.add(new IdleBritishFrog(this.game.assetController, new Vector2(340, 70)));
         idleFrogs.add(new IdleMexicanFrog(IdleMexicanFrog.AnimationType.TONGUE, new Vector2(170, 180)));
         idleFrogs.add(new IdleTurkishFrog(IdleTurkishFrog.AnimationType.TONGUE, new Vector2(500, 180)));
         idleFrogs.add(new IdlePoisonFrog(this.game.assetController, new Vector2(50, 150)));

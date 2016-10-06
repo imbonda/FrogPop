@@ -201,7 +201,8 @@ public final class Assets {
             HERO_BRITISH3,
             HERO_BRITISH2,
             HERO_BRITISH3,
-            HERO_BRITISH2
+            HERO_BRITISH2,
+            HERO_BRITISH1
     };
 
 }
