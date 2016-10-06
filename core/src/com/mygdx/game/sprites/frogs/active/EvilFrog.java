@@ -29,7 +29,18 @@ public class EvilFrog extends Frog {
     }
 
     @Override
-    public void dispose() {
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
+        super.defaultInit(assetController, runtimeInfo, positionX, positionY);
+        setAnimation();
+        this.frogRectangle = new Rectangle(
+                this.position.x-20, this.position.y-35,
+                getWidth() + 40, getHeight() + 35);
+    }
+
+    private void setAnimation() {
+        this.animation = this.assetController.getAnimation(Assets.EVIL_FROG_ANIMATION);
+        Texture frame = this.animation.getFrame();
+        setSize(frame.getWidth(), frame.getHeight());
     }
 
     @Override
@@ -50,27 +61,6 @@ public class EvilFrog extends Frog {
     }
 
     @Override
-    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
-        super.defaultInit(assetController, runtimeInfo, positionX, positionY);
-        setAnimation();
-        this.frogRectangle = new Rectangle(
-                this.position.x-20, this.position.y-35,
-                getWidth() + 40, getHeight() + 35);
-    }
-
-    private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.EVIL_FROG_ANIMATION);
-        Texture frame = this.animation.getFrame();
-        setSize(frame.getWidth(), frame.getHeight());
-    }
-
-    @Override
-    public void reset() {
-        super.defaultReset();
-        this.animation.reset();
-    }
-
-    @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         this.animation.update(deltaTime);
@@ -80,14 +70,18 @@ public class EvilFrog extends Frog {
 
     @Override
     public void draw(Batch batch) {
-        batch.draw(getFrogTexture(), this.position.x, this.position.y,
-                0, 0,
-                (int)getWidth(), (int)getHeight() -
+        batch.draw(
+                    this.animation.getFrame(),
+                    this.position.x, this.position.y,
+                    0, 0,
+                    (int)getWidth(), (int)getHeight() -
                         (int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
     }
 
-    public Texture getFrogTexture() {
-        return this.animation.getFrame();
+    @Override
+    public void reset() {
+        super.defaultReset();
+        this.animation.reset();
     }
 
 }

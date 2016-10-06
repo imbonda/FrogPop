@@ -38,14 +38,6 @@ public class FreezeFrog extends Frog {
     }
 
     @Override
-    public void dispose() {
-        // TODO (check if we want this behavior).
-        for (Texture texture : this.freezeFrogAnimationTextures) {
-            texture.dispose();
-        }
-    }
-
-    @Override
     public void touched() {
         this.isKilled = true;
     }
@@ -76,13 +68,6 @@ public class FreezeFrog extends Frog {
     }
 
     @Override
-    public void reset() {
-        super.defaultReset();
-        this.animation.reset();
-        this.runtimeInfo.gameSpeed *= (1 / SLOW_DOWN_FACTOR);
-    }
-
-    @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         this.animation.update(deltaTime);
@@ -90,13 +75,20 @@ public class FreezeFrog extends Frog {
 
     @Override
     public void draw(Batch batch) {
-        batch.draw(getFrogTexture(), this.position.x, this.position.y,
-                0, 0, 100, 100-(int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
+        batch.draw(
+                    this.animation.getFrame(),
+                    this.position.x, this.position.y,
+                    0, 0,
+                    100, 100 -
+                        (int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
 
     }
 
-    public Texture getFrogTexture() {
-        return this.animation.getFrame();
+    @Override
+    public void reset() {
+        super.defaultReset();
+        this.animation.reset();
+        this.runtimeInfo.gameSpeed *= (1 / SLOW_DOWN_FACTOR);
     }
 
 }

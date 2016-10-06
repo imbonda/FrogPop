@@ -46,14 +46,6 @@ public class IllusionFrog extends Frog {
         setSize(illusionFrogAnimationTextures[0].getWidth(), illusionFrogAnimationTextures[0].getHeight());
     }
 
-    @Override
-    public void dispose() {
-        // TODO (check if we want this behavior).
-        for (Texture texture : this.illusionFrogAnimationTextures) {
-            texture.dispose();
-        }
-    }
-
     private void whileUpAbility()
     {
         if((rotatedelay>16)&&((rotationcontroller>=16)||(rotationcontroller<=-16))){

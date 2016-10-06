@@ -14,7 +14,7 @@ import com.mygdx.game.runtime.RuntimeInfo;
  *
  * Created by MichaelBond on 8/25/2016.
  */
-public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
+public abstract class Frog extends Sprite implements Pool.Poolable {
 
     protected static final float FROG_MAX_LIFE_TIME = 3.0f;
 
@@ -71,12 +71,6 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      */
     @Override
     public abstract void reset();
-
-    /**
-     * This method should be implemented by each sub-class.
-     * Used to dispose all the resources the frog has used, and should be disposed.
-     */
-    public abstract void dispose();
 
     public void defaultInit(AssetController assetController, RuntimeInfo runtimeInfo,
                                 float positionX, float positionY) {
