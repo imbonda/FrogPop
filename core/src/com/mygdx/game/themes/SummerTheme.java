@@ -23,12 +23,12 @@ public class SummerTheme implements Theme {
 
     public SummerTheme() {
         this.sunEffect = new SunEffect();
-        this.birdsEffect = new BirdsEffect();
     }
 
     @Override
     public void init(AssetController assetController, EffectDrawer effectDrawer) {
         this.backgroundTexture = assetController.get(Assets.SUMMER_THEME);
+        this.birdsEffect = new BirdsEffect(assetController);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.sunEffect);
         this.effectDrawer.addEffect(this.birdsEffect);

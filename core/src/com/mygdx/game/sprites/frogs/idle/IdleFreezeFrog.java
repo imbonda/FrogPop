@@ -3,7 +3,7 @@ package com.mygdx.game.sprites.frogs.idle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.animation.Animation;
+import com.mygdx.game.animation.CAnimation;
 
 
 /**
@@ -25,13 +25,13 @@ public class IdleFreezeFrog extends IdleFrog {
             new Texture("Frog/2bigpol.png")
     };
 
-    private Animation animation;
+    private CAnimation animation;
     private Vector2 position;
 
 
     public IdleFreezeFrog(Vector2 position) {
         this.position = position;
-        this.animation = new Animation(freezeFrogAnimationTextures);
+        this.animation = new CAnimation(freezeFrogAnimationTextures);
         setIdleFrogSize();
     }
 
@@ -43,8 +43,8 @@ public class IdleFreezeFrog extends IdleFrog {
     public IdleFreezeFrog(AnimationType type,Vector2 position) {
         this.position = position;
         this.animation = (AnimationType.NORMAL == type) ?
-                    (new Animation(freezeFrogAnimationTextures)) :
-                    (new Animation(bigFreezeFrogAnimationTextures));
+                    (new CAnimation(freezeFrogAnimationTextures)) :
+                    (new CAnimation(bigFreezeFrogAnimationTextures));
         setIdleFrogSize();
     }
 

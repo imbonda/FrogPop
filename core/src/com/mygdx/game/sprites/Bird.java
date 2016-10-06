@@ -5,17 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.animation.Animation;
+import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 
 /**
  * Created by MichaelBond on 10/5/2016.
  */
 public class Bird extends Sprite {
-
-    private final Texture BIRD_TEXTURES [] = {
-            new Texture("bird1n.png"),
-            new Texture("bird2n.png"),
-            new Texture("bird3n.png")
-    };
 
     private Vector2 position;
     private Vector2 velocity;
@@ -24,12 +20,12 @@ public class Bird extends Sprite {
     private Animation birdAnimation;
 
 
-    public Bird() {
+    public Bird(AssetController assetController) {
+        this.birdAnimation = assetController.getAnimation(Assets.BIRD_ANIMATION);
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
         this.boxBottomLeft = new Vector2(0, 0);
         this.boxTopRight = new Vector2(0, 0);
-        this.birdAnimation = new Animation(this.BIRD_TEXTURES);
     }
 
     /**

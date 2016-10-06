@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.animation.Animation;
+import com.mygdx.game.animation.CAnimation;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.screens.PlayScreen;
 
@@ -32,7 +32,7 @@ public class IllusionFrog extends Frog {
             new Texture("Frog/eye4p.png")
     };
 
-    private Animation animation;
+    private CAnimation animation;
     private int rotatedirectionB=-1;
     private int rotatedirectionA=-4;
     private int rotatedelay=0;
@@ -41,7 +41,7 @@ public class IllusionFrog extends Frog {
     private Vector3 deafultaxis=new Vector3(0,0,100);
 
     public IllusionFrog() {
-        this.animation = new Animation(illusionFrogAnimationTextures);
+        this.animation = new CAnimation(illusionFrogAnimationTextures);
         setSize(illusionFrogAnimationTextures[0].getWidth(), illusionFrogAnimationTextures[0].getHeight());
     }
 

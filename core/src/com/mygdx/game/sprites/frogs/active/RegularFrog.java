@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.animation.Animation;
+import com.mygdx.game.animation.CAnimation;
 import com.mygdx.game.runtime.RuntimeInfo;
 
 import java.util.Random;
@@ -56,7 +56,7 @@ public class RegularFrog extends Frog {
             new Texture("Frog/special/mex2.png"),
     };
 
-    private Animation animation;
+    private CAnimation animation;
 
 
     public RegularFrog() {
@@ -65,11 +65,11 @@ public class RegularFrog extends Frog {
     private void generateRandomAnimation() {
         Random rand = new Random();
         if (rand.nextInt(2) == TONGUE_ANIMATION) {
-            this.animation = new Animation(tongueAnimationTextures);
+            this.animation = new CAnimation(tongueAnimationTextures);
             setSize(tongueAnimationTextures[0].getWidth(), tongueAnimationTextures[0].getHeight());
         }
         else {
-            this.animation = new Animation(winkAnimationTextures);
+            this.animation = new CAnimation(winkAnimationTextures);
             setSize(winkAnimationTextures[0].getWidth(), winkAnimationTextures[0].getHeight());
         }
     }

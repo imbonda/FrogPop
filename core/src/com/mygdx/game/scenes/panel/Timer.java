@@ -53,12 +53,12 @@ public class Timer extends Actor {
         this.stateTimer = 0;
 
         // TODO (consider using animation for clock vibration on timeout)
-//        Texture timerTexture = new Texture("Animation/timer.png");
+//        Texture timerTexture = new Texture("CAnimation/timer.png");
 //        Array<TextureRegion> frames = new Array<TextureRegion>();
 //        for(int i = 0; i < 6; ++i) {
 //            frames.add(new TextureRegion(timerTexture, i * 128, 0, 128, 128));
 //        }
-//        this.timerVibrate = new Animation(0.1f, frames);
+//        this.timerVibrate = new CAnimation(0.1f, frames);
 //        frames.clear();
     }
 

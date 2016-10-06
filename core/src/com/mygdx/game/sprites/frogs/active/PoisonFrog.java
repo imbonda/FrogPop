@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.animation.Animation;
+import com.mygdx.game.animation.CAnimation;
 import com.mygdx.game.runtime.RuntimeInfo;
 
 /**
@@ -31,11 +31,11 @@ import com.mygdx.game.runtime.RuntimeInfo;
                 new Texture("Frog/2r.png")
         };
 
-        private Animation animation;
+        private CAnimation animation;
 
 
         public PoisonFrog() {
-            this.animation = new Animation(poisonFrogAnimationTextures);
+            this.animation = new CAnimation(poisonFrogAnimationTextures);
             setSize(poisonFrogAnimationTextures[0].getWidth(), poisonFrogAnimationTextures[0].getHeight());
         }
 

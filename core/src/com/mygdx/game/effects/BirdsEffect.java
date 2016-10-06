@@ -3,6 +3,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.sprites.Bird;
 
 import java.util.Random;
@@ -35,17 +36,17 @@ public class BirdsEffect implements Effect {
     private Array<Bird> birds;
 
 
-    public BirdsEffect() {
+    public BirdsEffect(AssetController assetController) {
         this.random = new Random();
-        initializeBirds();
+        initializeBirds(assetController);
     }
 
-    public void initializeBirds() {
+    public void initializeBirds(AssetController assetController) {
         this.birds = new Array<Bird>();
         for (BirdConfig birdConfig : BIRDS_CONFIG) {
             Vector2 position = birdConfig.position;
             BirdType type = birdConfig.type;
-            Bird bird = new Bird();
+            Bird bird = new Bird(assetController);
             bird.setBox(
                         new Vector2(0, 430),    // Bottom left.
                         new Vector2(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT)); // Top right.

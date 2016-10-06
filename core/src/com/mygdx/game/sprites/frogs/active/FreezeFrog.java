@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.animation.Animation;
+import com.mygdx.game.animation.CAnimation;
 import com.mygdx.game.runtime.RuntimeInfo;
 
 
@@ -28,11 +28,11 @@ public class FreezeFrog extends Frog {
         new Texture("Frog/2b.png"),
     };
 
-    private Animation animation;
+    private CAnimation animation;
 
 
     public FreezeFrog() {
-        this.animation = new Animation(freezeFrogAnimationTextures);
+        this.animation = new CAnimation(freezeFrogAnimationTextures);
         setSize(freezeFrogAnimationTextures[0].getWidth(), freezeFrogAnimationTextures[0].getHeight());
     }
 

@@ -3,7 +3,7 @@ package com.mygdx.game.sprites.frogs.idle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.animation.Animation;
+import com.mygdx.game.animation.CAnimation;
 
 /**
  * Created by MichaelBond on 10/1/2016.
@@ -20,14 +20,14 @@ public class IdleMexicanFrog extends IdleFrog {
     };
 
 
-    private Animation animation;
+    private CAnimation animation;
     private Vector2 position;
 
 
     public IdleMexicanFrog(AnimationType type, Vector2 position) {
         this.position = position;
         if (AnimationType.TONGUE == type) {
-            this.animation = new Animation(tongueAnimationTextures,0.2f);
+            this.animation = new CAnimation(tongueAnimationTextures,0.2f);
             setSize(tongueAnimationTextures[0].getWidth(), tongueAnimationTextures[0].getHeight());
         }
 

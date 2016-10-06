@@ -4,8 +4,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.animation.Animation;
 import com.mygdx.game.config.Config;
-import com.mygdx.game.media.Media;
 
 /**
  * Created by MichaelBond on 9/27/2016.
@@ -53,6 +54,23 @@ public class AssetController {
 
     public <T> T get(String fileName) {
         return this.manager.get(fileName);
+    }
+
+    public Animation getAnimation(String [] animationTexturesNames) {
+        return new Animation(getFrames(animationTexturesNames));
+    }
+
+    public Animation getAnimation(String [] animationTexturesNames, float frameTime) {
+        return new Animation(getFrames(animationTexturesNames), frameTime);
+    }
+
+    private Array<Texture> getFrames(String [] animationTexturesNames) {
+        Array<Texture> frames = new Array<Texture>();
+        for (String textureName : animationTexturesNames) {
+            Texture frame = get(textureName);
+            frames.add(frame);
+        }
+        return frames;
     }
 
     public void unload(String fileName) {
