@@ -14,13 +14,12 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
-import com.mygdx.game.media.Media;
 import com.mygdx.game.sprites.Buttons;
 import com.mygdx.game.sprites.frogs.idle.IdleBritishFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleHealthFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleMexicanFrog;
-import com.mygdx.game.sprites.frogs.idle.IdlePoisonFrog;
+import com.mygdx.game.sprites.frogs.idle.IdleEvilFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleRegularFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleTurkishFrog;
 
@@ -70,7 +69,7 @@ public class MainMenuScreen implements Screen {
         idleFrogs.add(new IdleBritishFrog(this.game.assetController, new Vector2(340, 70)));
         idleFrogs.add(new IdleMexicanFrog(this.game.assetController, new Vector2(170, 180)));
         idleFrogs.add(new IdleTurkishFrog(this.game.assetController, new Vector2(500, 180)));
-        idleFrogs.add(new IdlePoisonFrog(this.game.assetController, new Vector2(50, 150)));
+        idleFrogs.add(new IdleEvilFrog(this.game.assetController, new Vector2(50, 150)));
         idleFrogs.add(new IdleHealthFrog(this.game.assetController, new Vector2(620, 150)));
     }
 

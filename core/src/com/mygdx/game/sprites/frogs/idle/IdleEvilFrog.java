@@ -11,13 +11,13 @@ import com.mygdx.game.assets.Assets;
 /**
  * Created by MichaelBond on 10/1/2016.
  */
-public class IdlePoisonFrog extends IdleFrog {
+public class IdleEvilFrog extends IdleFrog {
 
     private Animation animation;
     private Vector2 position;
 
 
-    public IdlePoisonFrog(AssetController assetController, Vector2 position) {
+    public IdleEvilFrog(AssetController assetController, Vector2 position) {
         this.animation = assetController.getAnimation(Assets.EVIL_FROG_ANIMATION);
         this.position = position;
     }

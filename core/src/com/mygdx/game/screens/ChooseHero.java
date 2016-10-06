@@ -15,18 +15,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.media.Media;
-import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.sprites.Buttons;
 import com.mygdx.game.sprites.frogs.idle.IdleBritishFrog;
-import com.mygdx.game.sprites.frogs.idle.IdleFreezeFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleFrog;
-import com.mygdx.game.sprites.frogs.idle.IdleHealthFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleMexicanFrog;
-import com.mygdx.game.sprites.frogs.idle.IdlePoisonFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleRegularFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleTurkishFrog;
-
-import java.util.Iterator;
 
 /**
  * Created by MichaelBond on 9/1/2016.

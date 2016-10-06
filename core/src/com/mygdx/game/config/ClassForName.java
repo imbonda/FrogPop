@@ -10,7 +10,7 @@ import com.mygdx.game.sprites.frogs.active.Frog;
 import com.mygdx.game.sprites.frogs.active.IllusionFrog;
 import com.mygdx.game.sprites.frogs.active.HealthFrog;
 import com.mygdx.game.sprites.frogs.active.RegularFrog;
-import com.mygdx.game.sprites.frogs.active.PoisonFrog;
+import com.mygdx.game.sprites.frogs.active.EvilFrog;
 
 /**
  * This class is used to translate a given class-name to it's corresponding class-object.
@@ -22,7 +22,7 @@ public class ClassForName {
     // Frog's class names.
     private static final String REGULAR_FROG = RegularFrog.class.getCanonicalName();
     private static final String HEALTH_FROG = HealthFrog.class.getCanonicalName();
-    private static final String POISON_FROG = PoisonFrog.class.getCanonicalName();
+    private static final String EVIL_FROG = EvilFrog.class.getCanonicalName();
     private static final String FREEZE_FROG = FreezeFrog.class.getCanonicalName();
     private static final String ILLUSION_FROG = IllusionFrog.class.getCanonicalName();
     // Theme's class names.
@@ -47,8 +47,8 @@ public class ClassForName {
         else if (HEALTH_FROG.equals(classNme)) {
             return HealthFrog.class;
         }
-        else if (POISON_FROG.equals(classNme)) {
-            return PoisonFrog.class;
+        else if (EVIL_FROG.equals(classNme)) {
+            return EvilFrog.class;
         }
         else if (FREEZE_FROG.equals(classNme)) {
             return FreezeFrog.class;
