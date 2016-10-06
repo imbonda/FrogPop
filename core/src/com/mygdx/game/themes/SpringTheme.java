@@ -3,6 +3,8 @@ package com.mygdx.game.themes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.effects.ButterflyEffect;
 import com.mygdx.game.effects.EffectDrawer;
 import com.mygdx.game.effects.SunEffect;
@@ -22,13 +24,13 @@ public class SpringTheme implements Theme {
     private EffectDrawer effectDrawer;
 
     public SpringTheme() {
-        this.backgroundTexture = new Texture("spring.png");
         this.sunEffect = new SunEffect(SPRING_SUN_COLOR);
         this.butterflyEffect = new ButterflyEffect();
     }
 
     @Override
-    public void init(EffectDrawer effectDrawer) {
+    public void init(AssetController assetController, EffectDrawer effectDrawer) {
+        this.backgroundTexture = assetController.get(Assets.SPRING_THEME);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.sunEffect);
         this.effectDrawer.addEffect(this.butterflyEffect);

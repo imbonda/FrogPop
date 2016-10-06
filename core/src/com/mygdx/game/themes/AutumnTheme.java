@@ -3,6 +3,8 @@ package com.mygdx.game.themes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.effects.EffectDrawer;
 import com.mygdx.game.effects.RainEffect;
 
@@ -18,12 +20,12 @@ public class AutumnTheme implements Theme {
     private EffectDrawer effectDrawer;
 
     public AutumnTheme() {
-        this.backgroundTexture = new Texture("autumn.png");
         this.rainEffect = new RainEffect();
     }
 
     @Override
-    public void init(EffectDrawer effectDrawer) {
+    public void init(AssetController assetController, EffectDrawer effectDrawer) {
+        this.backgroundTexture = assetController.get(Assets.AUTUMN_THEME);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.rainEffect);
     }

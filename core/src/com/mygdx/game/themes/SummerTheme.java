@@ -3,6 +3,8 @@ package com.mygdx.game.themes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.effects.BirdsEffect;
 import com.mygdx.game.effects.EffectDrawer;
 import com.mygdx.game.effects.SunEffect;
@@ -20,13 +22,13 @@ public class SummerTheme implements Theme {
     private EffectDrawer effectDrawer;
 
     public SummerTheme() {
-        this.backgroundTexture = new Texture("summer.png");
         this.sunEffect = new SunEffect();
         this.birdsEffect = new BirdsEffect();
     }
 
     @Override
-    public void init(EffectDrawer effectDrawer) {
+    public void init(AssetController assetController, EffectDrawer effectDrawer) {
+        this.backgroundTexture = assetController.get(Assets.SUMMER_THEME);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.sunEffect);
         this.effectDrawer.addEffect(this.birdsEffect);
