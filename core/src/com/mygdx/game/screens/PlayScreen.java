@@ -42,7 +42,7 @@ public class PlayScreen implements Screen {
         this.themeController = new ThemeController(this.game.config, this.game.assetController,
                     this.effectDrawer);
         this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
-        Timer timer = new Timer();
+        Timer timer = new Timer(this.game.assetController);
         this.levelController = new LevelController(
                     this.game.config, this.game.assetController, this.game.media, spritesDrawer,
                     this.runtimeInfo, timer, this.themeController);

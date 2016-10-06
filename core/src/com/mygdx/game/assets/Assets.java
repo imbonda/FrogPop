@@ -32,7 +32,8 @@ public final class Assets {
     public static final String WINTER_THEME = "images/themes/winter.png";
     public static final String SPRING_THEME = "images/themes/spring.png";
     // Sprites.
-    public static final String TIMER = "images/timer.png";
+    public static final String TIMER = "images/timer/timer.png";
+    public static final String TIMER_HAND = "images/timer/hand.png";
     public static final String CLOUD = "images/cloud.png";
     public static final String HOLE = "images/hole.png";
     // Butterflies.
@@ -96,6 +97,7 @@ public final class Assets {
             SPRING_THEME,
         // Sprites
             TIMER,
+            TIMER_HAND,
             CLOUD,
             HOLE,
             BUTTERFLY_ORANGE,

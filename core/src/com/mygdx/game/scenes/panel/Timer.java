@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 
 /**
  * Created by MichaelBond on 9/6/2016.
@@ -35,17 +37,17 @@ public class Timer extends Actor {
     private Animation timerVibrate;
     private float stateTimer;
 
-    private TextureRegion timerTexture;
-    private TextureRegion clockHandTexture;
+    private Texture timerTexture;
+    private Texture clockHandTexture;
     private Vector2 timerTexturePosition;
 
     private float timeToCountDown;
     private float timeLeftToCountDown;
 
 
-    public Timer() {
-        this.timerTexture = new TextureRegion(new Texture("timer.png"));
-        this.clockHandTexture = new TextureRegion(new Texture("0c.png"));
+    public Timer(AssetController assetController) {
+        this.timerTexture = assetController.get(Assets.TIMER);
+        this.clockHandTexture = assetController.get(Assets.TIMER_HAND);
         this.timerTexturePosition = DEFAULT_TIMER_TEXTURE_POSITION;
         this.timeToCountDown = DEFAULT_COUNTDOWN_TIME;
         this.timeLeftToCountDown = this.timeToCountDown;
@@ -84,15 +86,16 @@ public class Timer extends Actor {
                     this.timerTexture,
                     DEFAULT_TIMER_TEXTURE_POSITION.x,
                     DEFAULT_TIMER_TEXTURE_POSITION.y);
-        batch.draw(this.clockHandTexture.getTexture(),
-                    this.timerTexturePosition.x + this.timerTexture.getRegionWidth() / 2 +
+        batch.draw(
+                    this.clockHandTexture,
+                    this.timerTexturePosition.x + this.timerTexture.getWidth() / 2 +
                                 TimerHandClockTextureMeta.TEXTURE_OFFSET_X,
-                    this.timerTexturePosition.y + this.timerTexture.getRegionHeight() / 2 +
+                    this.timerTexturePosition.y + this.timerTexture.getHeight() / 2 +
                                 TimerHandClockTextureMeta.TEXTURE_OFFSET_Y,
-                    this.clockHandTexture.getRegionWidth() / 2,
+                    this.clockHandTexture.getWidth() / 2,
                     0,
-                    this.clockHandTexture.getRegionWidth(),
-                    this.clockHandTexture.getRegionHeight() / 2,
+                    this.clockHandTexture.getWidth(),
+                    this.clockHandTexture.getHeight() / 2,
                     TimerHandClockTextureMeta.TEXTURE_SCALE_X,
                     TimerHandClockTextureMeta.TEXTURE_SCALE_Y,
                     getClockHandRotation(),
