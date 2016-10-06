@@ -122,7 +122,9 @@ public final class Assets {
             BIRD1,
             BIRD2,
             BIRD3,
-            BIRD2
+            BIRD3,
+            BIRD2,
+            BIRD1
     };
     public static final String HEALTH_FROG_ANIMATION [] = {
             HEALTH_FROG1,
