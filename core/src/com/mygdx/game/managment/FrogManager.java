@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.managment.exceptions.OverpopulatedHolesException;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.sprites.SpritesDrawer;
@@ -34,11 +35,13 @@ public class FrogManager {
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
     private FrogPool frogPool;
+    private AssetController assetController;
     private SpritesDrawer spritesDrawer;
     private RuntimeInfo runtimeInfo;
 
-    public FrogManager(SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo,
-                        FrogClassAllocator frogClassAllocator) {
+    public FrogManager(AssetController assetController, SpritesDrawer spritesDrawer,
+                       RuntimeInfo runtimeInfo, FrogClassAllocator frogClassAllocator) {
+        this.assetController = assetController;
         this.spritesDrawer = spritesDrawer;
         this.holes = new Array<Hole>();
         for (Vector2 holePosition : HOLES_POSITIONS) {
@@ -67,7 +70,7 @@ public class FrogManager {
         // Add a new frog positioned at the chosen hole.
         Frog frog = this.frogPool.obtain();
         if (null != frog) {
-            frog.init(this.runtimeInfo, frogPosition.x, frogPosition.y);
+            frog.init(this.assetController, this.runtimeInfo, frogPosition.x, frogPosition.y);
             this.spritesDrawer.addSprite(frog);
             this.runtimeInfo.activeFrogs.add(frog);
             this.frogToHoleIndexMap.put(frog, randomHoleIndex);

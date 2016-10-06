@@ -44,8 +44,8 @@ public class PlayScreen implements Screen {
         this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
         Timer timer = new Timer();
         this.levelController = new LevelController(
-                    this.game.config, this.game.media, spritesDrawer, runtimeInfo, timer,
-                    this.themeController);
+                    this.game.config, this.game.assetController, this.game.media, spritesDrawer,
+                    this.runtimeInfo, timer, this.themeController);
         this.hud = new Hud(this.game.batch, runtimeInfo, timer);
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
         this.game.media.playMusic();

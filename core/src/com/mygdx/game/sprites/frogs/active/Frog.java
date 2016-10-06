@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
+import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.runtime.RuntimeInfo;
 
 /**
@@ -21,6 +22,7 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
     protected Rectangle frogRectangle;
     protected float lifeTime;
     protected boolean isKilled;
+    protected AssetController assetController;
     protected RuntimeInfo runtimeInfo;
 
 
@@ -55,11 +57,13 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      * This method should be implemented by each sub-class.
      * Used to initialize the frog object after retrieving it from a Pool.
      *
+     * @param assetController   An asset controller instance for retrieving the loaded assets.
      * @param runtimeInfo The game runtime information.
      * @param positionX The x coordinate the the frog new positing.
      * @param positionY The y coordinate the the frog new positing.
      */
-    public abstract void init(RuntimeInfo runtimeInfo, float positionX, float positionY);
+    public abstract void init(AssetController assetController, RuntimeInfo runtimeInfo,
+                                float positionX, float positionY);
 
     /**
      * This method should be implemented by each sub-class.
@@ -74,7 +78,9 @@ public abstract class Frog extends Sprite implements Pool.Poolable, Disposable {
      */
     public abstract void dispose();
 
-    public void defaultInit(RuntimeInfo runtimeInfo, float positionX, float positionY) {
+    public void defaultInit(AssetController assetController, RuntimeInfo runtimeInfo,
+                                float positionX, float positionY) {
+        this.assetController = assetController;
         this.runtimeInfo = runtimeInfo;
         this.position.set(positionX, positionY);
         this.lifeTime = 0;

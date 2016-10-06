@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.animation.CAnimation;
+import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.screens.PlayScreen;
 
@@ -90,8 +91,8 @@ public class IllusionFrog extends Frog {
     }
 
     @Override
-    public void init(RuntimeInfo runtimeInfo, float positionX, float positionY) {
-        super.defaultInit(runtimeInfo, positionX, positionY);
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
+        super.defaultInit(assetController, runtimeInfo, positionX, positionY);
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 getWidth() + 40, getHeight() + 35);
