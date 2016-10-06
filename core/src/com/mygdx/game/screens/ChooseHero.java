@@ -52,7 +52,6 @@ public class ChooseHero implements Screen {
         this.game = game;
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("intro2.jpg")));
-        this.game.media.playSound(Media.GAME_OVER_SOUND);
         button1=new Buttons(570,355,mainMenu,pressedMainMenu);
         button2=new Buttons(570,275,next,nextpressed);
         this.idleFrogs= new Array<IdleFrog>();

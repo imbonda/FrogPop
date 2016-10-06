@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.effects.EffectDrawer;
 import com.mygdx.game.managment.LevelController;
 import com.mygdx.game.managment.ThemeController;
@@ -48,7 +49,7 @@ public class PlayScreen implements Screen {
                     this.runtimeInfo, timer, this.themeController);
         this.hud = new Hud(this.game.batch, runtimeInfo, timer);
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
-        this.game.media.playMusic();
+        this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
     }
 
     public void update(float deltaTime) {
@@ -61,7 +62,8 @@ public class PlayScreen implements Screen {
 
     private void gameOver() {
         this.game.data.updateHighScore(this.runtimeInfo.gameScore);
-        this.game.media.stopMusic();
+        this.game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
+        this.game.media.playSound(Assets.GAME_OVER_SOUND);
         this.spritesDrawer.clear();
         Gdx.input.setInputProcessor(null);
         this.game.setScreen(new GameOverScreen(this.game, this.runtimeInfo));

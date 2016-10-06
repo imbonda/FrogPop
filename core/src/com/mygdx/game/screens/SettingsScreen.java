@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.scenes.ToggleButton;
 import com.mygdx.game.scenes.events.MessageEventListener;
 
@@ -99,10 +100,10 @@ public class SettingsScreen implements Screen {
                 game.data.setMusicVolume(volume);
                 game.media.updateMusicVolume(volume);
                 if (0 == volume) {
-                    game.media.stopMusic();
+                    game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
                 }
                 else {
-                    game.media.playMusic();
+                    game.media.playMusic(Assets.GAME_PLAY_MUSIC);
                 }
             }
 

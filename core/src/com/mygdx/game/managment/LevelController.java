@@ -2,6 +2,7 @@ package com.mygdx.game.managment;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.config.Config;
 import com.mygdx.game.config.metadata.AddFrogMetaData;
 import com.mygdx.game.config.metadata.LevelMetaData;
@@ -175,7 +176,7 @@ public class LevelController {
             this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
         }
         setCurrentLevel();
-        this.media.playSound(Media.LEVEL_UP_SOUND);
+        this.media.playSound(Assets.LEVEL_UP_SOUND);
     }
 
 }

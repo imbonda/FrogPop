@@ -50,7 +50,6 @@ public class GameOverScreen implements Screen {
         this.Loser = new BitmapFont(Gdx.files.internal("font.fnt"));
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("end.jpg")));
-        this.game.media.playSound(Media.GAME_OVER_SOUND);
         button1=new Buttons(600,355,playAgin,pressedplayAgin);
         button2=new Buttons(600,275,tomenu,tomenupressed);
         initIdleFrogs();

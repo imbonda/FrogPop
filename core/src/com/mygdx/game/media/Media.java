@@ -3,6 +3,7 @@ package com.mygdx.game.media;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 
 /**
  * This class exposes some basic API for using the game media.
@@ -11,10 +12,6 @@ import com.mygdx.game.assets.AssetController;
  */
 public class Media {
 
-    // File names.
-    public static final String MUSIC = "media/music.ogg";
-    public static final String LEVEL_UP_SOUND = "media/level_up.wav";
-    public static final String GAME_OVER_SOUND = "media/game_over.mp3";
     // Media default configurations.
     public static final float DEFAULT_MUSIC_VOLUME = 1;
     public static final float DEFAULT_SOUND_VOLUME = 1;
@@ -29,8 +26,8 @@ public class Media {
         this.soundVolume = soundVolume;
     }
 
-    public void playMusic(){
-        Music music = this.assetController.get(MUSIC);
+    public void playMusic(String name){
+        Music music = this.assetController.get(name);
         if (null != music && 0 != this.musicVolume) {
             music.setVolume(this.musicVolume);
             music.setLooping(true);
@@ -38,8 +35,8 @@ public class Media {
         }
     }
 
-    public void stopMusic() {
-        Music music = this.assetController.get(MUSIC);
+    public void stopMusic(String name) {
+        Music music = this.assetController.get(name);
         if (null != music) {
             music.stop();
         }
@@ -47,14 +44,16 @@ public class Media {
 
     public void updateMusicVolume(float volume) {
         this.musicVolume = volume;
-        Music music = this.assetController.get(MUSIC);
-        if (null != music) {
-            music.setVolume(volume);
+        for (String name : Assets.MUSIC_FILES) {
+            Music music = this.assetController.get(name);
+            if (null != music) {
+                music.setVolume(volume);
+            }
         }
     }
 
-    public void playSound(String fileName) {
-        Sound sound = this.assetController.get(fileName);
+    public void playSound(String name) {
+        Sound sound = this.assetController.get(name);
         if (null != sound && 0 != this.soundVolume) {
             long soundId = sound.play();
             sound.setVolume(soundId, this.soundVolume);
