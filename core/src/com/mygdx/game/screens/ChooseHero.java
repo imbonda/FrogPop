@@ -71,7 +71,7 @@ public class ChooseHero implements Screen {
                     IdleRegularFrog.AnimationType.TONGUE, new Vector2(400, 200)));
         idleFrogs.add(new IdleBritishFrog(this.game.assetController, new Vector2(400, 200)));
         idleFrogs.add(new IdleMexicanFrog(this.game.assetController, new Vector2(400, 200)));
-        idleFrogs.add(new IdleTurkishFrog(IdleTurkishFrog.AnimationType.TONGUE, new Vector2(400, 200)));
+        idleFrogs.add(new IdleTurkishFrog(this.game.assetController, new Vector2(400, 200)));
     }
 
     @Override

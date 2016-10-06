@@ -189,7 +189,8 @@ public final class Assets {
             HERO_TURKISH3,
             HERO_TURKISH2,
             HERO_TURKISH3,
-            HERO_TURKISH2
+            HERO_TURKISH2,
+            HERO_TURKISH1
     };
     public static final String HERO_MEXICAN_ANIMATION [] = {
             HERO_MEXICAN1,
