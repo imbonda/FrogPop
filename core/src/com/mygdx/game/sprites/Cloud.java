@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 
 
 /**
  * Created by MichaelBond on 9/28/2016.
  */
 public class Cloud extends Sprite {
-
-    private final String CLOUD_TEXTURE_NAME = "cloud.png";
 
     private Vector2 position;
     private Vector2 velocity;
@@ -20,16 +20,17 @@ public class Cloud extends Sprite {
     private Texture cloudTexture;
 
 
-    public Cloud() {
-        this.cloudTexture = new Texture(CLOUD_TEXTURE_NAME);
+    public Cloud(AssetController assetController) {
+        this.cloudTexture = assetController.get(Assets.CLOUD);
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
         this.boxBottomLeft = new Vector2(0, 0);
         this.boxTopRight = new Vector2(0, 0);
+        setSize(this.cloudTexture.getWidth(), this.cloudTexture.getHeight());
     }
 
-    public Cloud(Vector2 position, Vector2 velocity) {
-        this();
+    public Cloud(AssetController assetController, Vector2 position, Vector2 velocity) {
+        this(assetController);
         setPosition(position);
         setVelocity(velocity);
     }
@@ -56,7 +57,7 @@ public class Cloud extends Sprite {
 
     public Vector2 getCenter() {
         Vector2 center = this.position.cpy();
-        center.add(this.cloudTexture.getWidth() / 2, this.cloudTexture.getHeight() / 2);
+        center.add(getWidth() / 2, getHeight() / 2);
         return center;
     }
 
@@ -76,17 +77,17 @@ public class Cloud extends Sprite {
         float boxWidth = this.boxTopRight.x - this.boxBottomLeft.x;
         // Contain "width-wise".
         if (this.position.x > this.boxTopRight.x) {
-            this.position.add(-boxWidth - this.cloudTexture.getWidth(), this.velocity.y);
+            this.position.add(-boxWidth - getWidth(), this.velocity.y);
         }
-        else if (this.position.x + this.cloudTexture.getWidth() < this.boxBottomLeft.x) {
-            this.position.add(boxWidth + this.cloudTexture.getWidth(), this.velocity.y);
+        else if (this.position.x + getWidth() < this.boxBottomLeft.x) {
+            this.position.add(boxWidth + getWidth(), this.velocity.y);
         }
         // Contain "height-wise".
         if (this.position.y > this.boxTopRight.y) {
             this.velocity.set(this.velocity.x, -this.velocity.y);
             this.position.add(this.velocity);
         }
-        else if (this.position.y + this.cloudTexture.getHeight() < this.boxBottomLeft.y) {
+        else if (this.position.y + getHeight() < this.boxBottomLeft.y) {
             this.velocity.set(this.velocity.x, -this.velocity.y);
             this.position.add(this.velocity);
         }

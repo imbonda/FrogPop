@@ -20,12 +20,12 @@ public class WinterTheme implements Theme {
     private EffectDrawer effectDrawer;
 
     public WinterTheme() {
-        this.snowEffect = new SnowEffect();
     }
 
     @Override
     public void init(AssetController assetController, EffectDrawer effectDrawer) {
         this.backgroundTexture = assetController.get(Assets.WINTER_THEME);
+        this.snowEffect = new SnowEffect(assetController);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.snowEffect);
     }

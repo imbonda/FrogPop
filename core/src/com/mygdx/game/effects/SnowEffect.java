@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.sprites.Cloud;
 
 import java.util.Random;
@@ -32,7 +33,7 @@ public class SnowEffect implements Effect {
     private ParticleEmitter emitter;
     private Array<Cloud> clouds;
 
-    public SnowEffect() {
+    public SnowEffect(AssetController assetController) {
         this.random = new Random();
         this.snowEffect = new ParticleEffect();
         this.snowEffect.load(
@@ -41,13 +42,13 @@ public class SnowEffect implements Effect {
         this.snowEffect.start();
         this.emitter = this.snowEffect.getEmitters().first();
         this.direction = (random.nextInt(2) == 0) ? (-1) : (1);
-        initializeClouds();
+        initializeClouds(assetController);
     }
 
-    public void initializeClouds() {
+    public void initializeClouds(AssetController assetController) {
         this.clouds = new Array<Cloud>();
         for (Vector2 position : CLOUD_SPACE) {
-            Cloud c = new Cloud();
+            Cloud c = new Cloud(assetController);
             c.setBox(new Vector2(0, 0), new Vector2(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT));
             int speed = this.random.nextInt(10) + 20;
             c.setVelocity(new Vector2(this.direction * speed, 0));

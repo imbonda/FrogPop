@@ -20,12 +20,12 @@ public class AutumnTheme implements Theme {
     private EffectDrawer effectDrawer;
 
     public AutumnTheme() {
-        this.rainEffect = new RainEffect();
     }
 
     @Override
     public void init(AssetController assetController, EffectDrawer effectDrawer) {
         this.backgroundTexture = assetController.get(Assets.AUTUMN_THEME);
+        this.rainEffect = new RainEffect(assetController);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.rainEffect);
     }
