@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.animation.Animation;
 import com.mygdx.game.config.Config;
@@ -28,6 +29,7 @@ public class AssetController {
         loadMusics();
         loadSounds();
         loadTextures();
+        loadParticleEffects();
         this.manager.finishLoading();
         // Load config.
         this.config = new Config();
@@ -49,6 +51,12 @@ public class AssetController {
     private void loadTextures() {
         for (String fileName : Assets.TEXTURE_FILES) {
             this.manager.load(fileName, Texture.class);
+        }
+    }
+
+    private void loadParticleEffects() {
+        for (Assets.EffectMeta effect : Assets.PARTICLE_EFFECTS) {
+            this.manager.load(effect.fileName, ParticleEffect.class);
         }
     }
 

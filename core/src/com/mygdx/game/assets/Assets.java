@@ -22,6 +22,35 @@ public final class Assets {
             GAME_OVER_SOUND
     };
 
+    /**
+     * Effects.
+     */
+    public static class EffectMeta {
+        public String name;
+        public String fileName;
+        public String dirName;
+
+        public EffectMeta(String name, String fileName, String dirName) {
+            this.name = name;
+            this.fileName = fileName;
+            this.dirName = dirName;
+        }
+    }
+    // Rain effect.
+    public static final EffectMeta RAIN_EFFECT =
+                new EffectMeta("rain", "effects/rain_effect", "effects/");
+    // Snow effect.
+    public static final EffectMeta SNOW_EFFECT =
+            new EffectMeta("snow", "effects/snow_effect", "effects/");
+    // Sun effect.
+    public static final EffectMeta SUN_EFFECT =
+            new EffectMeta("sun", "effects/sun_effect", "effects/");
+
+    public static final EffectMeta PARTICLE_EFFECTS [] = {
+            RAIN_EFFECT,
+            SNOW_EFFECT,
+            SUN_EFFECT
+    };
 
     /**
      * Textures.

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.sprites.Cloud;
 
 import java.util.Random;
@@ -17,15 +18,14 @@ import java.util.Random;
  */
 public class RainEffect implements Effect {
 
-    private static final String RAIN_EFFECT_FILE = "effects/rain_effect";
-    private static final String RAIN_EFFECT_DIR = "effects";
-    private static final String EMITTER_NAME = "rain";
     private static final Vector2 CLOUD_SPACE [] = {
             new Vector2(-50, 480), new Vector2(50, 440), new Vector2(150, 430),
             new Vector2(200, 470), new Vector2(250, 430), new Vector2(300, 460),
             new Vector2(350, 470), new Vector2(400, 450), new Vector2(550, 440),
             new Vector2(600, 475), new Vector2(750, 425), new Vector2(800, 465)
     };
+
+    private enum AngleState { ON, OFF }
 
     private Random random;
     private int direction;
@@ -35,15 +35,12 @@ public class RainEffect implements Effect {
 
     public RainEffect(AssetController assetController) {
         this.random = new Random();
-        this.rainEffect = new ParticleEffect();
-        this.rainEffect.load(
-                Gdx.files.internal(RAIN_EFFECT_FILE),
-                Gdx.files.internal(RAIN_EFFECT_DIR));
+        this.rainEffect = assetController.get(Assets.RAIN_EFFECT.fileName);
         this.rainEffect.start();
         this.emitter = this.rainEffect.getEmitters().first();
         this.direction = (random.nextInt(2) == 0) ? (-1) : (1);
         setRainParticleRotation();
-        setRainAngle();
+        setRainAngle(AngleState.ON);
         initializeClouds(assetController);
     }
 
@@ -57,13 +54,16 @@ public class RainEffect implements Effect {
         rotation.setHigh(highMin * this.direction, highMax * this.direction);
     }
 
-    public void setRainAngle() {
+    public void setRainAngle(AngleState state) {
         ParticleEmitter.ScaledNumericValue angle = this.emitter.getAngle();
         float lowMin = angle.getLowMin();
         float lowMax = angle.getLowMax();
         float highMin = angle.getHighMin();
         float highMax = angle.getHighMax();
         float angleAddFactor = this.direction * 20;
+        if (AngleState.OFF == state) {
+            angleAddFactor *= -1;
+        }
         angle.setLow(lowMin + angleAddFactor, lowMax + angleAddFactor);
         angle.setHigh(highMin + angleAddFactor, highMax + angleAddFactor);
     }
@@ -91,7 +91,7 @@ public class RainEffect implements Effect {
         updateClouds(deltaTime);
         Vector2 position = this.clouds.random().getCenter();
         this.emitter.setPosition(position.x, position.y);
-        this.rainEffect.findEmitter(EMITTER_NAME).durationTimer = 0;
+        this.rainEffect.findEmitter(Assets.RAIN_EFFECT.name).durationTimer = 0;
         this.rainEffect.update(deltaTime);
         if (this.rainEffect.isComplete()) {
             this.rainEffect.reset();
@@ -111,5 +111,6 @@ public class RainEffect implements Effect {
     @Override
     public void reset() {
         this.emitter.reset();
+        setRainAngle(AngleState.OFF);
     }
 }
