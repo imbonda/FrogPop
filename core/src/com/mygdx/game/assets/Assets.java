@@ -169,16 +169,20 @@ public final class Assets {
             HERO_REGULAR_TONGUE2,
             HERO_REGULAR_TONGUE3,
             HERO_REGULAR_TONGUE4,
+            HERO_REGULAR_TONGUE4,
             HERO_REGULAR_TONGUE3,
-            HERO_REGULAR_TONGUE2
+            HERO_REGULAR_TONGUE2,
+            HERO_REGULAR_TONGUE1
     };
     public static final String HERO_REGULAR_WINK_ANIMATION [] = {
             HERO_REGULAR_WINK1,
             HERO_REGULAR_WINK2,
             HERO_REGULAR_WINK3,
             HERO_REGULAR_WINK4,
+            HERO_REGULAR_WINK4,
             HERO_REGULAR_WINK3,
             HERO_REGULAR_WINK2,
+            HERO_REGULAR_WINK1
     };
     public static final String HERO_TURKISH_ANIMATION [] = {
             HERO_TURKISH1,
