@@ -70,7 +70,7 @@ public class MainMenuScreen implements Screen {
         idleFrogs.add(new IdleBritishFrog(IdleBritishFrog.AnimationType.TONGUE, new Vector2(340, 70)));
         idleFrogs.add(new IdleMexicanFrog(IdleMexicanFrog.AnimationType.TONGUE, new Vector2(170, 180)));
         idleFrogs.add(new IdleTurkishFrog(IdleTurkishFrog.AnimationType.TONGUE, new Vector2(500, 180)));
-        idleFrogs.add(new IdlePoisonFrog(IdlePoisonFrog.AnimationType.TONGUE, new Vector2(50, 150)));
+        idleFrogs.add(new IdlePoisonFrog(this.game.assetController, new Vector2(50, 150)));
         idleFrogs.add(new IdleHealthFrog(this.game.assetController, new Vector2(620, 150)));
     }
 

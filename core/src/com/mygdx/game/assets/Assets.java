@@ -133,7 +133,6 @@ public final class Assets {
     public static final String EVIL_FROG_ANIMATION [] = {
             EVIL_FROG1,
             EVIL_FROG2,
-            EVIL_FROG3,
             EVIL_FROG3
     };
     public static final String FREEZE_FROG_ANIMATION [] = {

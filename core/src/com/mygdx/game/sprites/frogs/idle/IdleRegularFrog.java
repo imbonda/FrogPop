@@ -20,13 +20,13 @@ public class IdleRegularFrog extends IdleFrog {
 
 
     public IdleRegularFrog(AssetController assetController, AnimationType type, Vector2 position) {
-        this.position = position;
         if (AnimationType.TONGUE == type) {
             this.animation = assetController.getAnimation(Assets.HERO_REGULAR_TONGUE_ANIMATION);
         }
         else {
             this.animation = assetController.getAnimation(Assets.HERO_REGULAR_WINK_ANIMATION);
         }
+        this.position = position;
     }
 
     @Override
