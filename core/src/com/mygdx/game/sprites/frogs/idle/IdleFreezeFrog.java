@@ -15,26 +15,14 @@ public class IdleFreezeFrog extends IdleFrog {
 
     public enum AnimationType { NORMAL, BIG }
 
-//    private final Texture freezeFrogAnimationTextures [] = {
-//            new Texture("Frog/0b.png"),
-//            new Texture("Frog/1b.png"),
-//            new Texture("Frog/2b.png"),
-//            new Texture("Frog/2b.png"),
-//    };
-//    private final Texture bigFreezeFrogAnimationTextures [] = {
-//            new Texture("Frog/0bigpol.png"),
-//            new Texture("Frog/1bigpol.png"),
-//            new Texture("Frog/2bigpol.png")
-//    };
-
     private Animation animation;
     private Vector2 position;
 
 
     public IdleFreezeFrog(AssetController assetController, AnimationType type,Vector2 position) {
         this.animation = (AnimationType.NORMAL == type) ?
-                (assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION)) :
-                (assetController.getAnimation(Assets.FREEZE_FROG_BIG_ANIMATION));
+                (assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION, 0.15f)) :
+                (assetController.getAnimation(Assets.FREEZE_FROG_BIG_ANIMATION, 0.15f));
         this.position = position;
     }
 
