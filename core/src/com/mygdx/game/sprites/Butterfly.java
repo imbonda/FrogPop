@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 
 /**
  * Created by MichaelBond on 10/5/2016.
@@ -11,10 +13,6 @@ import com.badlogic.gdx.math.Vector2;
 public class Butterfly extends Sprite {
 
     public enum Color { ORANGE, PURPLE, RED }
-
-    private static final String ORANGE_BUTTERFLY_TEXTURE_NAME = "butter.png";
-    private static final String PURPLE_BUTTERFLY_TEXTURE_NAME = "butter2.png";
-    private static final String RED_BUTTERFLY_TEXTURE_NAME = "Butter3.png";
 
     private Vector2 position;
     private Vector2 velocity;
@@ -30,19 +28,19 @@ public class Butterfly extends Sprite {
         this.boxTopRight = new Vector2(0, 0);
     }
 
-    public Butterfly(Color type) {
+    public Butterfly(AssetController assetController, Color type) {
         this();
         switch (type) {
             case ORANGE:
-                this.butterflyTexture = new Texture(ORANGE_BUTTERFLY_TEXTURE_NAME);
+                this.butterflyTexture = assetController.get(Assets.BUTTERFLY_ORANGE);
                 setSize(this.butterflyTexture.getWidth(), this.butterflyTexture.getHeight());
                 break;
             case PURPLE:
-                this.butterflyTexture = new Texture(PURPLE_BUTTERFLY_TEXTURE_NAME);
+                this.butterflyTexture = assetController.get(Assets.BUTTERFLY_PURPLE);
                 setSize(this.butterflyTexture.getWidth(), this.butterflyTexture.getHeight());
                 break;
             case RED:
-                this.butterflyTexture = new Texture(RED_BUTTERFLY_TEXTURE_NAME);
+                this.butterflyTexture = assetController.get(Assets.BUTTERFLY_RED);
                 setSize(this.butterflyTexture.getWidth(), this.butterflyTexture.getHeight());
                 break;
             default:

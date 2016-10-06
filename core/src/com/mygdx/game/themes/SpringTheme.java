@@ -25,12 +25,12 @@ public class SpringTheme implements Theme {
 
     public SpringTheme() {
         this.sunEffect = new SunEffect(SPRING_SUN_COLOR);
-        this.butterflyEffect = new ButterflyEffect();
     }
 
     @Override
     public void init(AssetController assetController, EffectDrawer effectDrawer) {
         this.backgroundTexture = assetController.get(Assets.SPRING_THEME);
+        this.butterflyEffect = new ButterflyEffect(assetController);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.sunEffect);
         this.effectDrawer.addEffect(this.butterflyEffect);

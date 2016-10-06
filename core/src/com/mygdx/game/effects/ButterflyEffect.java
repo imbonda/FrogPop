@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.assets.AssetController;
 import com.mygdx.game.sprites.Butterfly;
 
 import java.util.HashMap;
@@ -43,17 +44,17 @@ public class ButterflyEffect implements Effect {
     private HashMap<Butterfly, ButterflyConfig> butterflyToConfigMap;
 
 
-    public ButterflyEffect() {
+    public ButterflyEffect(AssetController assetController) {
         this.random = new Random();
-        initializeButterflies();
+        initializeButterflies(assetController);
     }
 
-    public void initializeButterflies() {
+    public void initializeButterflies(AssetController assetController) {
         this.butterflies = new Array<Butterfly>();
         this.butterflyToConfigMap = new HashMap<Butterfly, ButterflyConfig>();
         for (ButterflyConfig config : BUTTERFLIES_CONFIG) {
             Vector2 position = config.position;
-            Butterfly butterfly = new Butterfly(config.color);
+            Butterfly butterfly = new Butterfly(assetController, config.color);
             butterfly.setBox(
                     new Vector2(0, 0),    // Bottom left.
                     new Vector2(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT)); // Top right.
