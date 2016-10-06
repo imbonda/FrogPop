@@ -147,7 +147,9 @@ public final class Assets {
             FREEZE_FROG_BIG1,
             FREEZE_FROG_BIG2,
             FREEZE_FROG_BIG3,
-            FREEZE_FROG_BIG2
+            FREEZE_FROG_BIG3,
+            FREEZE_FROG_BIG2,
+            FREEZE_FROG_BIG1
     };
     public static final String ILLUSION_FROG_ANIMATION [] = {
             ILLUSION_FROG1,

@@ -58,7 +58,8 @@ public class GameOverScreen implements Screen {
 
     private void initIdleFrogs() {
         this.idleFrogs = new Array<IdleFrog>();
-        idleFrogs.add(new IdleFreezeFrog(IdleFreezeFrog.AnimationType.BIG, new Vector2(100, 50)));
+        idleFrogs.add(new IdleFreezeFrog(this.game.assetController,
+                    IdleFreezeFrog.AnimationType.BIG, new Vector2(100, 50)));
         //idleFrogs.add(new IdleFreezeFrog(IdleFreezeFrog.AnimationType.normal, new Vector2(175, 175)));
     }
 
