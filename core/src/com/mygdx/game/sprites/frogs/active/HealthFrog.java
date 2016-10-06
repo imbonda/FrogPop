@@ -47,6 +47,8 @@ public class HealthFrog extends Frog {
     public void update(float deltaTime) {
         this.animation.update(deltaTime);
         this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed * 1.2f;
+        Texture frame = getFrogTexture();
+        setSize(frame.getWidth(), frame.getHeight());
     }
 
     @Override

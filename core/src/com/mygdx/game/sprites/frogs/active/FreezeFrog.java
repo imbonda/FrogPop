@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.animation.CAnimation;
+import com.mygdx.game.animation.Animation;
 import com.mygdx.game.assets.AssetController;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.runtime.RuntimeInfo;
 
 
@@ -22,19 +23,31 @@ public class FreezeFrog extends Frog {
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
     private static final float SLOW_DOWN_FACTOR = 0.3f;
 
-    private final Texture freezeFrogAnimationTextures [] = {
-        new Texture("Frog/0b.png"),
-        new Texture("Frog/1b.png"),
-        new Texture("Frog/2b.png"),
-        new Texture("Frog/2b.png"),
-    };
-
-    private CAnimation animation;
+    private Animation animation;
 
 
     public FreezeFrog() {
-        this.animation = new CAnimation(freezeFrogAnimationTextures);
-        setSize(freezeFrogAnimationTextures[0].getWidth(), freezeFrogAnimationTextures[0].getHeight());
+    }
+
+    @Override
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo,
+                     float positionX, float positionY) {
+        super.defaultInit(assetController, runtimeInfo, positionX, positionY);
+        setAnimation();
+        this.frogRectangle = new Rectangle(
+                this.position.x-20, this.position.y-35,
+                getWidth() + 40, getHeight() + 35);
+        initAbility();
+    }
+
+    private void setAnimation() {
+        this.animation = this.assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION);
+        Texture frame = this.animation.getFrame();
+        setSize(frame.getWidth(), frame.getHeight());
+    }
+
+    private void initAbility() {
+        this.runtimeInfo.gameSpeed *= SLOW_DOWN_FACTOR;
     }
 
     @Override
@@ -54,23 +67,11 @@ public class FreezeFrog extends Frog {
     }
 
     @Override
-    public void init(AssetController assetController, RuntimeInfo runtimeInfo,
-                        float positionX, float positionY) {
-        super.defaultInit(assetController, runtimeInfo, positionX, positionY);
-        this.frogRectangle = new Rectangle(
-                this.position.x-20, this.position.y-35,
-                getWidth() + 40, getHeight() + 35);
-        initAbility();
-    }
-
-    private void initAbility() {
-        this.runtimeInfo.gameSpeed *= SLOW_DOWN_FACTOR;
-    }
-
-    @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         this.animation.update(deltaTime);
+        Texture frame = this.animation.getFrame();
+        setSize(frame.getWidth(), frame.getHeight());
     }
 
     @Override
