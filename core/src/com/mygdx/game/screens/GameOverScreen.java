@@ -14,9 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
-import com.mygdx.game.media.Media;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.scenes.TransactionScreen;
 import com.mygdx.game.sprites.Buttons;
 import com.mygdx.game.sprites.frogs.idle.IdleFreezeFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleFrog;
@@ -39,7 +37,7 @@ public class GameOverScreen implements Screen {
     private Texture pressedplayAgin=new Texture("buttons/button2.png");
     private Texture tomenu=new Texture("buttons/menu.png");
     private Texture tomenupressed=new Texture("buttons/menu2.png");
-    private TransactionScreen transactionScreen;
+    private TransitionController transitionController;
 
     public GameOverScreen(FrogPop game, RuntimeInfo runtimeInfo) {
         this.viewport = new FitViewport(
@@ -55,7 +53,7 @@ public class GameOverScreen implements Screen {
         button1=new Buttons(600,355,playAgin,pressedplayAgin);
         button2=new Buttons(600,275,tomenu,tomenupressed);
         initIdleFrogs();
-        transactionScreen=new TransactionScreen(this.game);
+        transitionController =new TransitionController(this.game);
     }
 
     private void initIdleFrogs() {
@@ -81,7 +79,7 @@ public class GameOverScreen implements Screen {
     }
 
     public void update(float deltaTime) {
-        transactionScreen.update(deltaTime);
+        transitionController.update(deltaTime);
         handleInput();
         updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
@@ -97,10 +95,10 @@ public class GameOverScreen implements Screen {
             Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
             Vector2 touchVector = new Vector2(touches.x,touches.y);
             if (this.button1.isButtonsTouched(touchVector)) {
-                this.transactionScreen.setNextScreen(new PlayScreen(this.game));
+                this.transitionController.setNextScreen(new PlayScreen(this.game));
             }
         if (this.button2.isButtonsTouched(touchVector)) {
-            this.transactionScreen.setNextScreen(new MainMenuScreen(this.game));
+            this.transitionController.setNextScreen(new MainMenuScreen(this.game));
         }
     }
 

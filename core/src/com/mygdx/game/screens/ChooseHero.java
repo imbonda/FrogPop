@@ -14,8 +14,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
-import com.mygdx.game.media.Media;
-import com.mygdx.game.scenes.TransactionScreen;
 import com.mygdx.game.sprites.Buttons;
 import com.mygdx.game.sprites.frogs.idle.IdleBritishFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleFrog;
@@ -40,7 +38,7 @@ public class ChooseHero implements Screen {
     private Texture nextpressed=new Texture("buttons/choosehero2.png");
     private  IdleFrog frog;
     private int index=0;
-    private TransactionScreen transactionScreen;
+    private TransitionController transitionController;
 
 
     public ChooseHero(FrogPop game) {
@@ -57,7 +55,7 @@ public class ChooseHero implements Screen {
         this.idleFrogs= new Array<IdleFrog>();
         initIdleFrogs();
         frog=idleFrogs.get(index);
-        transactionScreen=new TransactionScreen(this.game);
+        transitionController =new TransitionController(this.game);
     }
 
     private void initIdleFrogs() {
@@ -83,7 +81,7 @@ public class ChooseHero implements Screen {
     }
 
     public void update(float deltaTime) {
-        transactionScreen.update(deltaTime);
+        transitionController.update(deltaTime);
         handleInput();
         updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
@@ -99,7 +97,7 @@ public class ChooseHero implements Screen {
         Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
         Vector2 touchVector = new Vector2(touches.x,touches.y);
         if (this.button1.isButtonsTouched(touchVector)) {
-            this.transactionScreen.setNextScreen(new MainMenuScreen(this.game));
+            this.transitionController.setNextScreen(new MainMenuScreen(this.game));
         }
         if (this.button2.isButtonsTouched(touchVector)){
             index++;

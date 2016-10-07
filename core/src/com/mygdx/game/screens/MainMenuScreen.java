@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
-import com.mygdx.game.scenes.TransactionScreen;
 import com.mygdx.game.sprites.Buttons;
 import com.mygdx.game.sprites.frogs.idle.IdleBritishFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleFrog;
@@ -43,7 +42,7 @@ public class MainMenuScreen implements Screen {
     private Texture pressedsettings=new Texture("buttons/settings2.png");
     private Texture chooseHeroIcon=new Texture("buttons/choosehero.png");
     private Texture pressedChooseHeroIcon=new Texture("buttons/choosehero2.png");
-    private TransactionScreen transactionScreen;
+    private TransitionController transitionController;
 
 
     public MainMenuScreen(FrogPop game) {
@@ -60,7 +59,7 @@ public class MainMenuScreen implements Screen {
         button2=new Buttons(300,315,settings,pressedsettings);
         chooseHero=new Buttons(300,235,chooseHeroIcon,pressedChooseHeroIcon);
         initIdleFrogs();
-        transactionScreen=new TransactionScreen(this.game);
+        transitionController =new TransitionController(this.game);
     }
 
     private void initIdleFrogs() {
@@ -91,7 +90,7 @@ public class MainMenuScreen implements Screen {
     }
 
     public void update(float deltaTime) {
-        transactionScreen.update(deltaTime);
+        transitionController.update(deltaTime);
         handleInput();
         updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
@@ -107,13 +106,13 @@ public class MainMenuScreen implements Screen {
         Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
         Vector2 touchVector = new Vector2(touches.x,touches.y);
         if (this.button1.isButtonsTouched(touchVector)) {
-            this.transactionScreen.setNextScreen(new PlayScreen(this.game));
+            this.transitionController.setNextScreen(new PlayScreen(this.game));
         }
         if (this.button2.isButtonsTouched(touchVector)) {
-            this.transactionScreen.setNextScreen(new SettingsScreen(this.game));
+            this.transitionController.setNextScreen(new SettingsScreen(this.game));
         }
         if (this.chooseHero.isButtonsTouched(touchVector)) {
-            this.transactionScreen.setNextScreen(new ChooseHero(this.game));
+            this.transitionController.setNextScreen(new ChooseHero(this.game));
         }
     }
 
