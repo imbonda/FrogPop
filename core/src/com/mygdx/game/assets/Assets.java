@@ -38,13 +38,13 @@ public final class Assets {
     }
     // Rain effect.
     public static final EffectMeta RAIN_EFFECT =
-                new EffectMeta("rain", "effects/rain_effect", "effects/");
+                new EffectMeta("rain", "effects/rain/rain_effect", "effects/rain/");
     // Snow effect.
     public static final EffectMeta SNOW_EFFECT =
-            new EffectMeta("snow", "effects/snow_effect", "effects/");
+            new EffectMeta("snow", "effects/snow/snow_effect", "effects/snow/");
     // Sun effect.
     public static final EffectMeta SUN_EFFECT =
-            new EffectMeta("sun", "effects/sun_effect", "effects/");
+            new EffectMeta("sun", "effects/sun/sun_effect", "effects/sun/");
 
     public static final EffectMeta PARTICLE_EFFECTS [] = {
             RAIN_EFFECT,
