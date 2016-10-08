@@ -51,9 +51,11 @@ public class PlayScreen implements Screen {
                     this.runtimeInfo, timer, this.themeController);
         this.hud = new Hud(this.game.batch, runtimeInfo, timer);
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
-        this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
         this.transitionController = new TransitionController(this.game);
         this.isAlreadyOver = false;
+        // Play music.
+        this.game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
+        this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
     }
 
     public void update(float deltaTime) {

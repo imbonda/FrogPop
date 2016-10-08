@@ -102,18 +102,16 @@ public class GameOverScreen implements Screen {
         }
     }
 
-    private void drawGO()
-    {
+    private void drawGO() {
         SpriteBatch batch = this.game.batch;
         Loser.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         Loser.getData().setScale(0.2f);
         Loser.draw(batch, "You Lost",600,200);
         Score.setColor(0.0f, 0.0f, 0.0f, 1.0f);
         Score.getData().setScale(0.2f);
-        Score.draw(batch, "Your score was: " + this.runtimeInfo.gameScore, 600, 180);
+        Score.draw(batch, "Your score: " + this.runtimeInfo.gameScore, 600, 180);
         Score.draw(batch, "Highest score: " + this.game.data.getHighScore(), 600, 160);
-        Score.draw(batch, "Your level was: " + this.runtimeInfo.gameLevel, 600, 140);
-
+        Score.draw(batch, "Your level: " + this.runtimeInfo.gameLevel, 600, 140);
     }
 
     private void drawButtons()

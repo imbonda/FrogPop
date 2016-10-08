@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
+import com.mygdx.game.assets.Assets;
 import com.mygdx.game.sprites.Buttons;
 import com.mygdx.game.sprites.frogs.idle.IdleBritishFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleFrog;
@@ -54,12 +55,13 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
         End=new Sprite(new Texture(Gdx.files.internal("intro2.jpg")));
-       // this.game.media.playSound(Media.GAME_OVER_SOUND);
         button1=new Buttons(300,395,playgame,pressedplaygame);
         button2=new Buttons(300,315,settings,pressedsettings);
         chooseHero=new Buttons(300,235,chooseHeroIcon,pressedChooseHeroIcon);
         initIdleFrogs();
         transitionController =new TransitionController(this.game);
+        // Play music.
+        this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
     }
 
     private void initIdleFrogs() {
@@ -112,7 +114,7 @@ public class MainMenuScreen implements Screen {
             this.transitionController.setNextScreen(new SettingsScreen(this.game));
         }
         if (this.chooseHero.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new ChooseHero(this.game));
+            this.transitionController.setNextScreen(new ChooseHeroScreen(this.game));
         }
     }
 

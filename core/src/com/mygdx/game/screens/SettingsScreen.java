@@ -54,6 +54,7 @@ public class SettingsScreen implements Screen {
         this.game = game;
         Skin slideSkin = new Skin(Gdx.files.internal(SKIN_JSON_FILE));
         BitmapFont font = new BitmapFont(Gdx.files.internal(FOND_FILE));
+        font.getData().setScale(0.2f);
 
         // Go back button.
         ImageButton backButton = new ImageButton(new SpriteDrawable(new Sprite(new Texture(GO_BACK_IMAGE))));
@@ -100,10 +101,10 @@ public class SettingsScreen implements Screen {
                 game.data.setMusicVolume(volume);
                 game.media.updateMusicVolume(volume);
                 if (0 == volume) {
-                    game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
+                    game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
                 }
                 else {
-                    game.media.playMusic(Assets.GAME_PLAY_MUSIC);
+                    game.media.playMusic(Assets.MAIN_MENU_MUSIC);
                 }
             }
 

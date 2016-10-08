@@ -24,7 +24,7 @@ import com.mygdx.game.sprites.frogs.idle.IdleTurkishFrog;
 /**
  * Created by MichaelBond on 9/1/2016.
  */
-public class ChooseHero implements Screen {
+public class ChooseHeroScreen implements Screen {
     private Sprite End;
     private BitmapFont Score;
     private Buttons button1;
@@ -41,7 +41,7 @@ public class ChooseHero implements Screen {
     private TransitionController transitionController;
 
 
-    public ChooseHero(FrogPop game) {
+    public ChooseHeroScreen(FrogPop game) {
         this.viewport = new FitViewport(
                 FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT, new OrthographicCamera());
         if (game.adsController.isInternetConnected()) {
@@ -49,6 +49,7 @@ public class ChooseHero implements Screen {
         }
         this.game = game;
         this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
+        this.Score.getData().setScale(0.2f);
         End=new Sprite(new Texture(Gdx.files.internal("intro2.jpg")));
         button1=new Buttons(570,355,mainMenu,pressedMainMenu);
         button2=new Buttons(570,275,next,nextpressed);
