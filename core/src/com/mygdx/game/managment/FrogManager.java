@@ -109,6 +109,7 @@ public class FrogManager {
      * @param deltaTime The time passed from the last call to update.
      */
     public void update(float deltaTime) {
+        // Updating frogs.
         Iterator<Frog> frogIterator = this.runtimeInfo.activeFrogs.iterator();
         while (frogIterator.hasNext()) {
             Frog frog = frogIterator.next();
@@ -118,12 +119,14 @@ public class FrogManager {
                 recycleDeadFrog(frogIterator, frog);
             }
         }
-        Iterator<FrogsDeathGhostEffect> ghostEffectIterator=frogsDeathGhostEffects.iterator();
-        while (ghostEffectIterator.hasNext()) {
-            FrogsDeathGhostEffect frogsDeathGhostEffect = ghostEffectIterator.next();
+        // Updating ghosts.
+        Iterator<FrogsDeathGhostEffect> iterator = this.frogsDeathGhostEffects.iterator();
+        while (iterator.hasNext()) {
+            FrogsDeathGhostEffect frogsDeathGhostEffect = iterator.next();
             frogsDeathGhostEffect.update(deltaTime);
-            if (frogsDeathGhostEffect.timeUp==true) {
-           spritesDrawer.removeSprite(frogsDeathGhostEffect);
+            if (frogsDeathGhostEffect.isTimedUp()) {
+                this.spritesDrawer.removeSprite(frogsDeathGhostEffect);
+                iterator.remove();
             }
         }
     }
