@@ -32,7 +32,6 @@ public class Timer extends Actor {
         public static float TEXTURE_SCALE_Y = 0.8f;
         public static int TEXTURE_OFFSET_X = 0;
         public static int TEXTURE_OFFSET_Y = -3;
-
     }
 
     private enum State {STATIC, VIBRATING}

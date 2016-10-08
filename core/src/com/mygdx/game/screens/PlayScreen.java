@@ -14,7 +14,6 @@ import com.mygdx.game.managment.ThemeController;
 import com.mygdx.game.managment.GamePlayTouchProcessor;
 import com.mygdx.game.runtime.RuntimeInfo;
 import com.mygdx.game.scenes.Hud;
-import com.mygdx.game.scenes.TransactionScreen;
 import com.mygdx.game.sprites.SpritesDrawer;
 import com.mygdx.game.scenes.panel.Timer;
 
@@ -28,6 +27,7 @@ public class PlayScreen implements Screen {
 
     private static final int MAX_LIVES = 3;
 
+    private boolean isAlreadyOver;
     private FrogPop game;
     private SpritesDrawer spritesDrawer;
     private EffectDrawer effectDrawer;
@@ -35,8 +35,7 @@ public class PlayScreen implements Screen {
     private ThemeController themeController;
     private RuntimeInfo runtimeInfo;
     private Hud hud;
-    private TransactionScreen transactionScreen;
-    private boolean gameOverFlag=false;
+    private TransitionController transitionController;
 
     public PlayScreen(FrogPop game) {
         game.adsController.hideBannerAd();
@@ -53,21 +52,22 @@ public class PlayScreen implements Screen {
         this.hud = new Hud(this.game.batch, runtimeInfo, timer);
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
         this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
-        transactionScreen=new TransactionScreen(this.game);
+        this.transitionController = new TransitionController(this.game);
+        this.isAlreadyOver = false;
     }
 
     public void update(float deltaTime) {
-        transactionScreen.update(deltaTime);
+        this.transitionController.update(deltaTime);
         this.levelController.update(deltaTime);
         this.hud.update();
-        if ((this.runtimeInfo.gameLives <= 0)&&(gameOverFlag==false)) {
-            gameOverFlag=true;
+        if (this.runtimeInfo.gameLives <= 0 && !this.isAlreadyOver) {
+            this.isAlreadyOver = true;
             gameOver();
         }
     }
 
     private void gameOver() {
-        this.transactionScreen.setNextScreen(new GameOverScreen(this.game, this.runtimeInfo));
+        this.transitionController.setNextScreen(new GameOverScreen(this.game, this.runtimeInfo));
         this.game.data.updateHighScore(this.runtimeInfo.gameScore);
         this.game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
         this.game.media.playSound(Assets.GAME_OVER_SOUND);
@@ -83,8 +83,8 @@ public class PlayScreen implements Screen {
         this.game.batch.setProjectionMatrix(gameViewPort.getCamera().combined);
         this.game.batch.begin();
         this.themeController.currentTheme.draw(this.game.batch);
-        this.effectDrawer.drawEffects(this.game.batch);
         this.spritesDrawer.drawSprites(this.game.batch);
+        this.effectDrawer.drawEffects(this.game.batch);
         this.game.batch.end();
         this.hud.draw();
     }

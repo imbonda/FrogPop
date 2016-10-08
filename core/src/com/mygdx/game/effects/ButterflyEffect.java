@@ -40,7 +40,6 @@ public class ButterflyEffect implements Effect {
     };
 
     private Random random;
-    private Array<Butterfly> butterflies;
     private HashMap<Butterfly, ButterflyConfig> butterflyToConfigMap;
 
 
@@ -50,7 +49,6 @@ public class ButterflyEffect implements Effect {
     }
 
     public void initializeButterflies(AssetController assetController) {
-        this.butterflies = new Array<Butterfly>();
         this.butterflyToConfigMap = new HashMap<Butterfly, ButterflyConfig>();
         for (ButterflyConfig config : BUTTERFLIES_CONFIG) {
             Vector2 position = config.position;
@@ -59,7 +57,6 @@ public class ButterflyEffect implements Effect {
                     new Vector2(0, 0),    // Bottom left.
                     new Vector2(FrogPop.VIRTUAL_WIDTH, FrogPop.VIRTUAL_HEIGHT)); // Top right.
             butterfly.setPosition(position);
-            this.butterflies.add(butterfly);
             this.butterflyToConfigMap.put(butterfly, config);
         }
     }
@@ -67,7 +64,7 @@ public class ButterflyEffect implements Effect {
     @Override
     public void update(float deltaTime) {
         // Nothing to update.
-        for (Butterfly butterfly : this.butterflies) {
+        for (Butterfly butterfly : this.butterflyToConfigMap.keySet()) {
             ButterflyConfig config = this.butterflyToConfigMap.get(butterfly);
 
             if (config.speedType == ButterflySpeedType.TYPE1) {
@@ -94,14 +91,13 @@ public class ButterflyEffect implements Effect {
 
     @Override
     public void draw(Batch batch){
-        for (Butterfly butterfly : this.butterflies) {
+        for (Butterfly butterfly : this.butterflyToConfigMap.keySet()) {
             butterfly.draw(batch);
         }
     }
 
     @Override
     public void reset() {
-        this.butterflies.clear();
         this.butterflyToConfigMap.clear();
     }
 }

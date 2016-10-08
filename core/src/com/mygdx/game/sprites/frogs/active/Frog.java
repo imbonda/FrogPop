@@ -100,6 +100,8 @@ public abstract class Frog extends Sprite implements Pool.Poolable {
     public boolean isFrogTouched(Vector2 touchVector) {
         return this.frogRectangle.contains(touchVector.x,touchVector.y);
     }
-    public Vector2 getPosition()
-    {return position;}
+    
+	public Vector2 getPosition() {
+		return position;
+	}
 }

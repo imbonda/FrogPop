@@ -42,6 +42,7 @@ public class RegularFrog extends Frog {
                 this.position.x-20, this.position.y-35,
                 getWidth() + 40, getHeight() + 35);
     }
+
     private void generateRandomAnimation() {
         Random rand = new Random();
         if (rand.nextInt(2) == TONGUE_ANIMATION) {

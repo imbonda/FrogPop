@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.animation.Animation;
 import com.mygdx.game.config.Config;
 
+import java.util.HashMap;
+
 /**
  * Created by MichaelBond on 9/27/2016.
  */
@@ -18,9 +20,12 @@ public class AssetController {
     public Config config;
     // Private members.
     private AssetManager manager;
+    // Animations frames.
+    private HashMap<String[], Array<Texture>> animationFramesHashMap;
 
     public AssetController() {
         this.manager = new AssetManager();
+        this.animationFramesHashMap = new HashMap<String[], Array<Texture>>();
     }
 
 
@@ -73,12 +78,18 @@ public class AssetController {
     }
 
     private Array<Texture> getFrames(String [] animationTexturesNames) {
-        Array<Texture> frames = new Array<Texture>();
-        for (String textureName : animationTexturesNames) {
-            Texture frame = get(textureName);
-            frames.add(frame);
+        if (this.animationFramesHashMap.containsKey(animationTexturesNames)) {
+            return this.animationFramesHashMap.get(animationTexturesNames);
         }
-        return frames;
+        else {
+            Array<Texture> frames = new Array<Texture>();
+            for (String textureName : animationTexturesNames) {
+                Texture frame = get(textureName);
+                frames.add(frame);
+            }
+            this.animationFramesHashMap.put(animationTexturesNames, frames);
+            return frames;
+        }
     }
 
     public void unload(String fileName) {
@@ -87,5 +98,6 @@ public class AssetController {
 
     public void clearAll() {
         this.manager.clear();
+        this.animationFramesHashMap.clear();
     }
 }

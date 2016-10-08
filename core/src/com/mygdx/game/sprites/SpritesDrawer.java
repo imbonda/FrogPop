@@ -38,8 +38,4 @@ public class SpritesDrawer {
             sprite.draw(batch);
         }
     }
-    public Array<Sprite> getSprites()
-    {
-        return sprites;
-    }
 }

@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FrogPop;
 import com.mygdx.game.runtime.RuntimeInfo;
-import com.mygdx.game.scenes.TransactionScreen;
 import com.mygdx.game.sprites.Buttons;
 import com.mygdx.game.sprites.frogs.idle.IdleFreezeFrog;
 import com.mygdx.game.sprites.frogs.idle.IdleFrog;
@@ -38,7 +37,7 @@ public class GameOverScreen implements Screen {
     private Texture pressedplayAgin=new Texture("buttons/button2.png");
     private Texture tomenu=new Texture("buttons/menu.png");
     private Texture tomenupressed=new Texture("buttons/menu2.png");
-    private TransactionScreen transactionScreen;
+    private TransitionController transitionController;
 
     public GameOverScreen(FrogPop game, RuntimeInfo runtimeInfo) {
         this.viewport = new FitViewport(
@@ -54,13 +53,13 @@ public class GameOverScreen implements Screen {
         button1=new Buttons(600,355,playAgin,pressedplayAgin);
         button2=new Buttons(600,275,tomenu,tomenupressed);
         initIdleFrogs();
-        transactionScreen=new TransactionScreen(this.game);
+        transitionController =new TransitionController(this.game);
     }
 
     private void initIdleFrogs() {
         this.idleFrogs = new Array<IdleFrog>();
         idleFrogs.add(new IdleFreezeFrog(this.game.assetController,
-                    IdleFreezeFrog.AnimationType.BIG, new Vector2(100, 50)));
+                IdleFreezeFrog.AnimationType.BIG, new Vector2(100, 50)));
         //idleFrogs.add(new IdleFreezeFrog(IdleFreezeFrog.AnimationType.normal, new Vector2(175, 175)));
     }
 
@@ -69,7 +68,7 @@ public class GameOverScreen implements Screen {
         update(delta);
         this.game.batch.begin();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-       // Gdx.gl.glClearColor(237/255f, 27/255f, 36/255f, 1);
+        // Gdx.gl.glClearColor(237/255f, 27/255f, 36/255f, 1);
         Gdx.gl.glClearColor(1/255f, 1/255f, 1/255f, 1);
         this.game.batch.setProjectionMatrix(viewport.getCamera().combined);
         End.draw(this.game.batch);
@@ -80,7 +79,7 @@ public class GameOverScreen implements Screen {
     }
 
     public void update(float deltaTime) {
-        transactionScreen.update(deltaTime);
+        transitionController.update(deltaTime);
         handleInput();
         updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
@@ -93,13 +92,13 @@ public class GameOverScreen implements Screen {
     }
 
     public void handleInput() {
-            Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
-            Vector2 touchVector = new Vector2(touches.x,touches.y);
-            if (this.button1.isButtonsTouched(touchVector)) {
-                this.transactionScreen.setNextScreen(new PlayScreen(this.game));
-            }
+        Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
+        Vector2 touchVector = new Vector2(touches.x,touches.y);
+        if (this.button1.isButtonsTouched(touchVector)) {
+            this.transitionController.setNextScreen(new PlayScreen(this.game));
+        }
         if (this.button2.isButtonsTouched(touchVector)) {
-            this.transactionScreen.setNextScreen(new MainMenuScreen(this.game));
+            this.transitionController.setNextScreen(new MainMenuScreen(this.game));
         }
     }
 
