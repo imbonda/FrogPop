@@ -70,7 +70,7 @@ public class SettingsScreen implements Screen {
 
         // Header label.
         Label settingsLabel = new Label(SETTINGS, new Label.LabelStyle(font, Color.WHITE));
-        settingsLabel.setFontScale(2);
+        settingsLabel.setFontScale(0.6f);
         settingsLabel.setPosition(300, 440);
         settingsLabel.setHeight(50);
 
