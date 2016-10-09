@@ -115,7 +115,8 @@ public class AndroidPlayServices implements PlayServices {
     @Override
     public void showScore() {
         if (isSignedIn()) {
-            this.mainActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
+            this.mainActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
+                    this.gameHelper.getApiClient(),
                     this.mainActivity.getString(R.string.leaderboard_highest)), REQUEST_CODE);
         }
         else {
@@ -125,7 +126,7 @@ public class AndroidPlayServices implements PlayServices {
 
     @Override
     public boolean isSignedIn() {
-        return gameHelper.isSignedIn();
+        return this.gameHelper.isSignedIn();
     }
 
 }

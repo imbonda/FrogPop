@@ -21,10 +21,18 @@ import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleMexicanFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleRegularFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleTurkishFrog;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.TweenCallback;
+
+
 /**
  * Created by MichaelBond on 9/1/2016.
  */
-public class ChooseHeroScreen implements Screen {
+public class ChooseHeroScreen extends FadingScreen {
+
+    private static final float FADE_OUT_TIME = 1f;
+    private static final float FADE_IN_TIME = 1f;
+
     private Sprite End;
     private BitmapFont Score;
     private Buttons button1;
@@ -38,10 +46,10 @@ public class ChooseHeroScreen implements Screen {
     private Texture nextpressed=new Texture("buttons/choosehero2.png");
     private IdleFrog frog;
     private int index=0;
-    private TransitionController transitionController;
 
 
     public ChooseHeroScreen(PoppingFrog game) {
+        super(game.batch, game.transitionController);
         this.viewport = new FitViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
         if (game.adsController.isInternetConnected()) {
@@ -56,7 +64,6 @@ public class ChooseHeroScreen implements Screen {
         this.idleFrogs= new Array<IdleFrog>();
         initIdleFrogs();
         frog=idleFrogs.get(index);
-        transitionController =new TransitionController(this.game);
     }
 
     private void initIdleFrogs() {
@@ -69,10 +76,11 @@ public class ChooseHeroScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         update(delta);
         this.game.batch.begin();
+        Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClearColor(1/255f, 1/255f, 1/255f, 1);
         this.game.batch.setProjectionMatrix(viewport.getCamera().combined);
         End.draw(this.game.batch);
         drawGO();
@@ -82,7 +90,6 @@ public class ChooseHeroScreen implements Screen {
     }
 
     public void update(float deltaTime) {
-        transitionController.update(deltaTime);
         handleInput();
         updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
@@ -98,7 +105,14 @@ public class ChooseHeroScreen implements Screen {
         Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
         Vector2 touchVector = new Vector2(touches.x,touches.y);
         if (this.button1.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new MainMenuScreen(this.game));
+            this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        FadingScreen screen = new MainMenuScreen(game);
+                        game.setScreen(screen);
+                        game.transitionController.fadeInScreen(screen, FADE_IN_TIME, null);
+                    }
+            });
         }
         if (this.button2.isButtonsTouched(touchVector)){
             index++;

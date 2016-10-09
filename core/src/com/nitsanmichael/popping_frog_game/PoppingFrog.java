@@ -8,7 +8,10 @@ import com.nitsanmichael.popping_frog_game.data.Data;
 import com.nitsanmichael.popping_frog_game.adds.AdsController;
 import com.nitsanmichael.popping_frog_game.media.Media;
 import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
+import com.nitsanmichael.popping_frog_game.screens.FadingScreen;
 import com.nitsanmichael.popping_frog_game.screens.MainMenuScreen;
+import com.nitsanmichael.popping_frog_game.transitions.TransitionController;
+
 
 /**
  * This class is our game main starting point.
@@ -27,6 +30,7 @@ public class PoppingFrog extends Game {
 	public Media media;
 	public Config config;
 	public AssetController assetController;
+	public TransitionController transitionController;
 
 
 	public PoppingFrog(AdsController adsController, PlayServices playServices) {
@@ -44,8 +48,10 @@ public class PoppingFrog extends Game {
 		this.data = new Data();
 		this.media = new Media(
 					this.assetController, this.data.getMusicVolume(), this.data.getSoundVolume());
-
-		setScreen(new MainMenuScreen(this));
+		this.transitionController = new TransitionController();
+		FadingScreen screen = new MainMenuScreen(PoppingFrog.this);
+		setScreen(screen);
+		this.transitionController.fadeInScreen(screen, 1, null);
 	}
 
 	@Override

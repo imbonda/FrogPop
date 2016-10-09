@@ -24,10 +24,17 @@ import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleEvilFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleRegularFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleTurkishFrog;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.TweenCallback;
+
+
 /**
  * Created by MichaelBond on 9/1/2016.
  */
-public class MainMenuScreen implements Screen {
+public class MainMenuScreen extends FadingScreen {
+
+    private static final float FADE_OUT_TIME = 1f;
+    private static final float FADE_IN_TIME = 1f;
 
     private Sprite End;
     private BitmapFont Score;
@@ -43,10 +50,10 @@ public class MainMenuScreen implements Screen {
     private Texture pressedsettings=new Texture("buttons/settings2.png");
     private Texture chooseHeroIcon=new Texture("buttons/choosehero.png");
     private Texture pressedChooseHeroIcon=new Texture("buttons/choosehero2.png");
-    private TransitionController transitionController;
 
 
     public MainMenuScreen(PoppingFrog game) {
+        super(game.batch, game.transitionController);
         this.viewport = new FitViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
         if (game.adsController.isInternetConnected()) {
@@ -59,7 +66,6 @@ public class MainMenuScreen implements Screen {
         button2=new Buttons(300,315,settings,pressedsettings);
         chooseHero=new Buttons(300,235,chooseHeroIcon,pressedChooseHeroIcon);
         initIdleFrogs();
-        transitionController =new TransitionController(this.game);
         // Play music.
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
         this.game.playServices.signIn();
@@ -80,6 +86,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
@@ -93,7 +100,6 @@ public class MainMenuScreen implements Screen {
     }
 
     public void update(float deltaTime) {
-        transitionController.update(deltaTime);
         handleInput();
         updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
@@ -109,13 +115,27 @@ public class MainMenuScreen implements Screen {
         Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
         Vector2 touchVector = new Vector2(touches.x,touches.y);
         if (this.button1.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new PlayScreen(this.game));
+            this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        FadingScreen screen = new PlayScreen(game);
+                        game.setScreen(screen);
+                        game.transitionController.fadeInScreen(screen, 0.3f, null);
+                    }
+            });
         }
         if (this.button2.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new SettingsScreen(this.game));
+            this.game.setScreen(new SettingsScreen(game, MainMenuScreen.this));
         }
         if (this.chooseHero.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new ChooseHeroScreen(this.game));
+            this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        FadingScreen screen = new ChooseHeroScreen(game);
+                        game.setScreen(screen);
+                        game.transitionController.fadeInScreen(screen, FADE_IN_TIME, null);
+                    }
+            });
         }
     }
 

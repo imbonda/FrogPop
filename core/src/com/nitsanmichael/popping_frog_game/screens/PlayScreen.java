@@ -21,14 +21,19 @@ import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
 import com.nitsanmichael.popping_frog_game.managment.GamePlayTouchProcessor;
 import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.TweenCallback;
+
 /**
  * Created by MichaelBond on 9/1/2016.
  */
-public class PlayScreen implements Screen {
+public class PlayScreen extends FadingScreen {
 
     public static Viewport gameViewPort = new FitViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
 
+    private static final float FADE_OUT_TIME = 0.1f;
+    private static final float FADE_IN_TIME = 1f;
     private static final int MAX_LIVES = 3;
 
     private boolean isAlreadyOver;
@@ -39,10 +44,10 @@ public class PlayScreen implements Screen {
     private ThemeController themeController;
     private RuntimeInfo runtimeInfo;
     private Hud hud;
-    private TransitionController transitionController;
     private PopupDrawer popupDrawer;
 
     public PlayScreen(PoppingFrog game) {
+        super(game.batch, game.transitionController);
         game.adsController.hideBannerAd();
         this.game = game;
         this.spritesDrawer = new SpritesDrawer();
@@ -57,7 +62,6 @@ public class PlayScreen implements Screen {
         this.hud = new Hud(this.game.batch, runtimeInfo, timer);
         this.popupDrawer = new PopupDrawer();
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
-        this.transitionController = new TransitionController(this.game);
         this.isAlreadyOver = false;
         // Play music.
         this.game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
@@ -65,7 +69,6 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float deltaTime) {
-        this.transitionController.update(deltaTime);
         this.levelController.update(deltaTime);
         this.hud.update();
         if (this.runtimeInfo.gameLives <= 0 && !this.isAlreadyOver) {
@@ -82,11 +85,19 @@ public class PlayScreen implements Screen {
         this.spritesDrawer.clear();
         Gdx.input.setInputProcessor(null);
         dispose();
-        this.transitionController.setNextScreen(new GameOverScreen(this.game, this.runtimeInfo));
+        this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                FadingScreen screen = new GameOverScreen(game, runtimeInfo);
+                game.setScreen(screen);
+                game.transitionController.fadeInScreen(screen, FADE_IN_TIME, null);
+            }
+        });
     }
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.setProjectionMatrix(gameViewPort.getCamera().combined);

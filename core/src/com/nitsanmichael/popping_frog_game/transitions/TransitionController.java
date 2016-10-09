@@ -1,12 +1,8 @@
 package com.nitsanmichael.popping_frog_game.transitions;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.nitsanmichael.popping_frog_game.PoppingFrog;
-import com.nitsanmichael.popping_frog_game.transitions.accessors.BatchAccessor;
+import com.nitsanmichael.popping_frog_game.screens.FadingScreen;
+import com.nitsanmichael.popping_frog_game.transitions.accessors.FadingScreenAccessor;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -17,12 +13,6 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public class TransitionController {
 
-    public interface Callback {
-        void call();
-    }
-
-    private static final Color DEFAULT_CLEAN_COLOR = Color.BLACK;
-
     private TweenManager manager;
 
 
@@ -32,25 +22,32 @@ public class TransitionController {
     }
 
     private void registerAccessors() {
-        Tween.registerAccessor(SpriteBatch.class, new BatchAccessor());
+        Tween.registerAccessor(FadingScreen.class, new FadingScreenAccessor());
     }
 
-    public void screenTransition(PoppingFrog game, TweenCallback callback) {
-        screenTransition(game, callback, DEFAULT_CLEAN_COLOR);
+    public void update(float deltaTime) {
+        this.manager.update(deltaTime);
     }
 
-    public void screenTransition(PoppingFrog game, TweenCallback callback, Color cleanColor) {
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        Gdx.gl.glClearColor(cleanColor.r, cleanColor.g, cleanColor.b, cleanColor.a);
-        Tween.set(game.batch, BatchAccessor.ALPHA_TYPE).target(0).start(this.manager);
+    public void fadeInScreen(FadingScreen screen, float duration, TweenCallback callback) {
+        Tween.set(screen, FadingScreenAccessor.ALPHA_TYPE).target(0).start(this.manager);
         if (null != callback) {
-            Tween.to(game.batch, BatchAccessor.ALPHA_TYPE, 2).target(1).repeatYoyo(1, 2).
+            Tween.to(screen, FadingScreenAccessor.ALPHA_TYPE, duration).target(1).
+                        setCallback(callback).start(this.manager);
+        }
+        else {
+            Tween.to(screen, FadingScreenAccessor.ALPHA_TYPE, duration).target(1).start(this.manager);
+        }
+    }
+
+    public void fadeOutScreen(FadingScreen screen, float duration, TweenCallback callback) {
+        Tween.set(screen, FadingScreenAccessor.ALPHA_TYPE).target(1).start(this.manager);
+        if (null != callback) {
+            Tween.to(screen, FadingScreenAccessor.ALPHA_TYPE, duration).target(0).
                     setCallback(callback).start(this.manager);
         }
         else {
-            Tween.to(game.batch, BatchAccessor.ALPHA_TYPE, 2).target(1).repeatYoyo(1, 2).
-                    start(this.manager);
+            Tween.to(screen, FadingScreenAccessor.ALPHA_TYPE, duration).target(0).start(this.manager);
         }
-        // todo
     }
 }

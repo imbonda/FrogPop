@@ -1,7 +1,6 @@
 package com.nitsanmichael.popping_frog_game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,10 +17,17 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.Buttons;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFreezeFrog;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.TweenCallback;
+
+
 /**
  * Created by MichaelBond on 9/1/2016.
  */
-public class GameOverScreen implements Screen {
+public class GameOverScreen extends FadingScreen {
+
+    private static final float FADE_OUT_TIME = 1f;
+    private static final float FADE_IN_TIME = 1f;
 
     private Sprite End;
     private BitmapFont Loser;
@@ -36,9 +42,10 @@ public class GameOverScreen implements Screen {
     private Texture pressedplayAgin=new Texture("buttons/button2.png");
     private Texture tomenu=new Texture("buttons/menu.png");
     private Texture tomenupressed=new Texture("buttons/menu2.png");
-    private TransitionController transitionController;
+
 
     public GameOverScreen(PoppingFrog game, RuntimeInfo runtimeInfo) {
+        super(game.batch, game.transitionController);
         this.viewport = new FitViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
         if (game.adsController.isInternetConnected()) {
@@ -52,7 +59,6 @@ public class GameOverScreen implements Screen {
         button1=new Buttons(600,355,playAgin,pressedplayAgin);
         button2=new Buttons(600,275,tomenu,tomenupressed);
         initIdleFrogs();
-        transitionController = new TransitionController(this.game);
         this.game.playServices.showScore();
     }
 
@@ -65,10 +71,10 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         update(delta);
         this.game.batch.begin();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // Gdx.gl.glClearColor(237/255f, 27/255f, 36/255f, 1);
         Gdx.gl.glClearColor(1/255f, 1/255f, 1/255f, 1);
         this.game.batch.setProjectionMatrix(viewport.getCamera().combined);
         End.draw(this.game.batch);
@@ -79,7 +85,6 @@ public class GameOverScreen implements Screen {
     }
 
     public void update(float deltaTime) {
-        transitionController.update(deltaTime);
         handleInput();
         updateIdleFrogs(deltaTime);
         this.viewport.getCamera().update();
@@ -95,10 +100,24 @@ public class GameOverScreen implements Screen {
         Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
         Vector2 touchVector = new Vector2(touches.x,touches.y);
         if (this.button1.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new PlayScreen(this.game));
+            this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        FadingScreen screen = new PlayScreen(game);
+                        game.setScreen(screen);
+                        game.transitionController.fadeInScreen(screen, FADE_IN_TIME, null);
+                    }
+            });
         }
         if (this.button2.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new MainMenuScreen(this.game));
+            this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        FadingScreen screen = new MainMenuScreen(game);
+                        game.setScreen(screen);
+                        game.transitionController.fadeInScreen(screen, FADE_IN_TIME, null);
+                    }
+            });
         }
     }
 
