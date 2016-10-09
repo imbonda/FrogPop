@@ -35,6 +35,7 @@ public class MainMenuScreen extends FadingScreen {
 
     private static final float FADE_OUT_TIME = 1f;
     private static final float FADE_IN_TIME = 1f;
+    private static final float GAME_FADE_IN = 0.3f;
 
     private Sprite End;
     private BitmapFont Score;
@@ -120,7 +121,7 @@ public class MainMenuScreen extends FadingScreen {
                     public void onEvent(int type, BaseTween<?> source) {
                         FadingScreen screen = new PlayScreen(game);
                         game.setScreen(screen);
-                        game.transitionController.fadeInScreen(screen, 0.3f, null);
+                        game.transitionController.fadeInScreen(screen, GAME_FADE_IN, null);
                     }
             });
         }
