@@ -2,8 +2,11 @@ package com.nitsanmichael.popping_frog_game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
@@ -13,6 +16,7 @@ import com.nitsanmichael.popping_frog_game.managment.LevelController;
 import com.nitsanmichael.popping_frog_game.managment.ThemeController;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.Hud;
+import com.nitsanmichael.popping_frog_game.scenes.PopupDrawer;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
 import com.nitsanmichael.popping_frog_game.managment.GamePlayTouchProcessor;
 import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
@@ -36,6 +40,7 @@ public class PlayScreen implements Screen {
     private RuntimeInfo runtimeInfo;
     private Hud hud;
     private TransitionController transitionController;
+    private PopupDrawer popupDrawer;
 
     public PlayScreen(PoppingFrog game) {
         game.adsController.hideBannerAd();
@@ -44,12 +49,13 @@ public class PlayScreen implements Screen {
         this.effectDrawer = new EffectDrawer();
         this.themeController = new ThemeController(this.game.config, this.game.assetController,
                     this.effectDrawer);
-        this.runtimeInfo = new com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo(0, MAX_LIVES);
+        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
         Timer timer = new Timer(this.game.assetController);
         this.levelController = new LevelController(
                     this.game.config, this.game.assetController, this.game.media, spritesDrawer,
                     this.runtimeInfo, timer, this.themeController);
-        this.hud = new com.nitsanmichael.popping_frog_game.scenes.Hud(this.game.batch, runtimeInfo, timer);
+        this.hud = new Hud(this.game.batch, runtimeInfo, timer);
+        this.popupDrawer = new PopupDrawer();
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
         this.transitionController = new TransitionController(this.game);
         this.isAlreadyOver = false;
@@ -69,13 +75,14 @@ public class PlayScreen implements Screen {
     }
 
     private void gameOver() {
-        this.transitionController.setNextScreen(new com.nitsanmichael.popping_frog_game.screens.GameOverScreen(this.game, this.runtimeInfo));
         this.game.data.updateHighScore(this.runtimeInfo.gameScore);
+        this.game.playServices.submitScore(this.game.data.getHighScore());
         this.game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
         this.game.media.playSound(Assets.GAME_OVER_SOUND);
         this.spritesDrawer.clear();
         Gdx.input.setInputProcessor(null);
         dispose();
+        this.transitionController.setNextScreen(new GameOverScreen(this.game, this.runtimeInfo));
     }
 
     @Override
@@ -87,6 +94,13 @@ public class PlayScreen implements Screen {
         this.themeController.currentTheme.draw(this.game.batch);
         this.spritesDrawer.drawSprites(this.game.batch);
         this.effectDrawer.drawEffects(this.game.batch);
+        if (this.levelController.isLeveledUp()) {
+            this.popupDrawer.register(PopupDrawer.Popup.LEVEL_UP);
+        }
+        else {
+            this.popupDrawer.unregister(PopupDrawer.Popup.LEVEL_UP);
+        }
+        this.popupDrawer.drawPopups(this.game.batch);
         this.game.batch.end();
         this.hud.draw();
     }

@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.managment.exceptions.OverpopulatedHolesException;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.FrogGhost;
 import com.nitsanmichael.popping_frog_game.sprites.Hole;
@@ -93,7 +94,7 @@ public class FrogManager {
     private int getRandomUnpopulatedHoleIndex() {
         Integer unpopulatedHoleIndex = this.unpopulatedHolesIndexes.random();
         if (null == unpopulatedHolesIndexes) {
-            throw new com.nitsanmichael.popping_frog_game.managment.exceptions.OverpopulatedHolesException("There are no free holes to populate");
+            throw new OverpopulatedHolesException("There are no free holes to populate");
         }
         return unpopulatedHoleIndex;
     }

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_id">804982883752</string>
     <string name="number_guesses_leaderboard">CgkIqIvg5bYXEAIQCA</string>
+    <string name="leaderboard_highest">CgkIqIvg5bYXEAIQCA</string>
+
 </resources>

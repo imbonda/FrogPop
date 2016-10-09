@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.sprites.Cloud;
 
 import java.util.Random;
 
@@ -28,9 +30,9 @@ public class RainEffect implements Effect {
     private int direction;
     private ParticleEffect rainEffect;
     private ParticleEmitter emitter;
-    private Array<com.nitsanmichael.popping_frog_game.sprites.Cloud> clouds;
+    private Array<Cloud> clouds;
 
-    public RainEffect(com.nitsanmichael.popping_frog_game.assets.AssetController assetController) {
+    public RainEffect(AssetController assetController) {
         this.random = new Random();
         this.rainEffect = assetController.get(Assets.RAIN_EFFECT.fileName);
         this.rainEffect.start();
@@ -65,10 +67,10 @@ public class RainEffect implements Effect {
         angle.setHigh(highMin + angleAddFactor, highMax + angleAddFactor);
     }
 
-    public void initializeClouds(com.nitsanmichael.popping_frog_game.assets.AssetController assetController) {
-        this.clouds = new Array<com.nitsanmichael.popping_frog_game.sprites.Cloud>();
+    public void initializeClouds(AssetController assetController) {
+        this.clouds = new Array<Cloud>();
         for (Vector2 position : CLOUD_SPACE) {
-            com.nitsanmichael.popping_frog_game.sprites.Cloud c = new com.nitsanmichael.popping_frog_game.sprites.Cloud(assetController);
+            Cloud c = new Cloud(assetController);
             c.setBox(new Vector2(0, 0), new Vector2(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT));
             int speed = this.random.nextInt(13) + 20;
             c.setVelocity(new Vector2(this.direction * speed, 0));
@@ -78,7 +80,7 @@ public class RainEffect implements Effect {
     }
 
     public void updateClouds(float deltaTime) {
-        for (com.nitsanmichael.popping_frog_game.sprites.Cloud c : this.clouds) {
+        for (Cloud c : this.clouds) {
             c.update(deltaTime);
         }
     }
@@ -100,7 +102,7 @@ public class RainEffect implements Effect {
         // Draw rain.
         this.rainEffect.draw(batch);
         // Draw clouds.
-        for (com.nitsanmichael.popping_frog_game.sprites.Cloud c : this.clouds) {
+        for (Cloud c : this.clouds) {
             c.draw(batch);
         }
     }

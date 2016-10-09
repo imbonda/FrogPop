@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		config.width = 1366;
 		config.height = 768;
 		config.title = PoppingFrog.GAME_TITLE;
-		new LwjglApplication(new PoppingFrog(new DummyAdsController()), config);
+		new LwjglApplication(new PoppingFrog(new DummyAdsController(), new DummyPlayServices()),
+					config);
 	}
 }

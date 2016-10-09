@@ -62,6 +62,7 @@ public class MainMenuScreen implements Screen {
         transitionController =new TransitionController(this.game);
         // Play music.
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
+        this.game.playServices.signIn();
     }
 
     private void initIdleFrogs() {
@@ -108,13 +109,13 @@ public class MainMenuScreen implements Screen {
         Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
         Vector2 touchVector = new Vector2(touches.x,touches.y);
         if (this.button1.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new com.nitsanmichael.popping_frog_game.screens.PlayScreen(this.game));
+            this.transitionController.setNextScreen(new PlayScreen(this.game));
         }
         if (this.button2.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new com.nitsanmichael.popping_frog_game.screens.SettingsScreen(this.game));
+            this.transitionController.setNextScreen(new SettingsScreen(this.game));
         }
         if (this.chooseHero.isButtonsTouched(touchVector)) {
-            this.transitionController.setNextScreen(new com.nitsanmichael.popping_frog_game.screens.ChooseHeroScreen(this.game));
+            this.transitionController.setNextScreen(new ChooseHeroScreen(this.game));
         }
     }
 

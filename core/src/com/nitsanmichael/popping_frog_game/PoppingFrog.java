@@ -7,6 +7,8 @@ import com.nitsanmichael.popping_frog_game.config.Config;
 import com.nitsanmichael.popping_frog_game.data.Data;
 import com.nitsanmichael.popping_frog_game.adds.AdsController;
 import com.nitsanmichael.popping_frog_game.media.Media;
+import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
+import com.nitsanmichael.popping_frog_game.screens.MainMenuScreen;
 
 /**
  * This class is our game main starting point.
@@ -19,6 +21,7 @@ public class PoppingFrog extends Game {
 	public static final String LOGGER_TAG = "PoppingFrogLogging";
 
 	public AdsController adsController;
+	public PlayServices playServices;
 	public SpriteBatch batch;
 	public Data data;
 	public Media media;
@@ -26,8 +29,9 @@ public class PoppingFrog extends Game {
 	public AssetController assetController;
 
 
-	public PoppingFrog(AdsController adsController) {
+	public PoppingFrog(AdsController adsController, PlayServices playServices) {
 		this.adsController = adsController;
+		this.playServices = playServices;
 	}
 
 	@Override
@@ -41,7 +45,7 @@ public class PoppingFrog extends Game {
 		this.media = new Media(
 					this.assetController, this.data.getMusicVolume(), this.data.getSoundVolume());
 
-		setScreen(new com.nitsanmichael.popping_frog_game.screens.MainMenuScreen(this));
+		setScreen(new MainMenuScreen(this));
 	}
 
 	@Override

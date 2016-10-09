@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.XmlReader;
+import com.nitsanmichael.popping_frog_game.config.metadata.FrogMetaData;
+import com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData;
 
 import java.io.IOException;
 
@@ -16,7 +18,7 @@ import java.io.IOException;
  */
 public class LevelsMetaDataLoader {
 
-    public static void load(XmlReader xmlReader, Array<com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData> levelsMetaData) {
+    public static void load(XmlReader xmlReader, Array<LevelMetaData> levelsMetaData) {
         Array<XmlReader.Element> levelElements = null;
         try {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal(
@@ -54,19 +56,19 @@ public class LevelsMetaDataLoader {
      * @throws IllegalStateException   In case of one or more malformed attributes -
      *  inside this element or one of it's children.
      */
-    private static com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData createLevelMetaData(XmlReader.Element levelElement)
+    private static LevelMetaData createLevelMetaData(XmlReader.Element levelElement)
                 throws ClassNotFoundException, IllegalStateException {
         String idString = levelElement.getAttribute("id");
         int levelId = Integer.parseInt(idString);
 
-        Array<com.nitsanmichael.popping_frog_game.config.metadata.FrogMetaData> frogsMetaData = new Array<com.nitsanmichael.popping_frog_game.config.metadata.FrogMetaData>();
+        Array<FrogMetaData> frogsMetaData = new Array<FrogMetaData>();
         for (XmlReader.Element frog : levelElement.getChildrenByName("frog")) {
             frogsMetaData.add(createFrogMetaData(frog));
         }
-        return new com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData(levelId, frogsMetaData);
+        return new LevelMetaData(levelId, frogsMetaData);
     }
 
-    private static com.nitsanmichael.popping_frog_game.config.metadata.FrogMetaData createFrogMetaData(XmlReader.Element frogElement)
+    private static FrogMetaData createFrogMetaData(XmlReader.Element frogElement)
                 throws ClassNotFoundException, IllegalStateException {
         try {
             String className = frogElement.getAttribute("class");
@@ -82,7 +84,7 @@ public class LevelsMetaDataLoader {
             if (null != maxParallelString) {
                 maxParallel = Integer.parseInt(maxParallelString);
             }
-            return new com.nitsanmichael.popping_frog_game.config.metadata.FrogMetaData(
+            return new FrogMetaData(
                         getFrogClassByName(className), spawnProbability, maxAllowed, maxParallel);
         }
         catch (GdxRuntimeException e) {

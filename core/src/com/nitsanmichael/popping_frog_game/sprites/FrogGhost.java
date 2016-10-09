@@ -15,7 +15,7 @@ public class FrogGhost extends Sprite {
     private static final float SPEED = 50f;
     private static final float MAX_UP_TIME = 1.0f;
     private static final float POSITION_OFFSET_X = 15f;
-    private static final float POSITION_OFFSET_Y = -25f;
+    private static final float POSITION_OFFSET_Y = -40f;
 
     private float currentUptime;
 

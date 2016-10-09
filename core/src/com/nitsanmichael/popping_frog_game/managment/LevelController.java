@@ -24,6 +24,7 @@ public class LevelController {
     private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.04f;
     private static final float SPEED_SCALE_FACTOR = 1.087f;
     private static final int MAX_DIFFICALITY_LEVEL = 14;
+    private static final float LEVEL_UP_POPUP_TIME = 1f;
 
     // Private members.
     private Array<LevelMetaData> levelsMetaData;
@@ -36,6 +37,7 @@ public class LevelController {
     private ThemeController themeController;
     private FrogClassAllocator frogClassAllocator;
     private FrogManager frogManager;
+    private float timeSinceLastLevelUp;
 
     /**
      * @param config    The game configuration.
@@ -55,6 +57,7 @@ public class LevelController {
         this.frogManager = new FrogManager(assetController, spritesDrawer, runtimeInfo,
                     this.frogClassAllocator);
         this.levelTimer = timer;
+        this.timeSinceLastLevelUp = 0;
     }
 
     /**
@@ -147,6 +150,7 @@ public class LevelController {
      * @param deltaTime The time passed from the last update call.
      */
     public void update(float deltaTime) {
+        this.timeSinceLastLevelUp += deltaTime;
         this.levelTimer.update(deltaTime);
         this.frogManager.update(deltaTime);
         if (this.levelTimer.isTimedOut()) {
@@ -170,12 +174,18 @@ public class LevelController {
      * Making the Level controller to advance to the next level.
      */
     private void levelUp() {
+        this.timeSinceLastLevelUp = 0;
         this.runtimeInfo.gameLevel++;
         if(this.runtimeInfo.gameLevel <= MAX_DIFFICALITY_LEVEL) {
             this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
         }
         setCurrentLevel();
         this.media.playSound(Assets.LEVEL_UP_SOUND);
+    }
+
+    public boolean isLeveledUp() {
+        return this.runtimeInfo.gameLevel > STARTING_LEVEL &&
+                    this.timeSinceLastLevelUp < LEVEL_UP_POPUP_TIME;
     }
 
 }

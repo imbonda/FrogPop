@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.sprites.Bird;
 
 import java.util.Random;
 
@@ -32,7 +33,7 @@ public class BirdsEffect implements Effect {
     };
 
     private Random random;
-    private Array<com.nitsanmichael.popping_frog_game.sprites.Bird> birds;
+    private Array<Bird> birds;
 
 
     public BirdsEffect(AssetController assetController) {
@@ -41,11 +42,11 @@ public class BirdsEffect implements Effect {
     }
 
     public void initializeBirds(AssetController assetController) {
-        this.birds = new Array<com.nitsanmichael.popping_frog_game.sprites.Bird>();
+        this.birds = new Array<Bird>();
         for (BirdConfig birdConfig : BIRDS_CONFIG) {
             Vector2 position = birdConfig.position;
             BirdType type = birdConfig.type;
-            com.nitsanmichael.popping_frog_game.sprites.Bird bird = new com.nitsanmichael.popping_frog_game.sprites.Bird(assetController);
+            Bird bird = new Bird(assetController);
             bird.setBox(
                         new Vector2(0, 430),    // Bottom left.
                         new Vector2(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT)); // Top right.
@@ -69,14 +70,14 @@ public class BirdsEffect implements Effect {
 
     @Override
     public void update(float deltaTime) {
-        for (com.nitsanmichael.popping_frog_game.sprites.Bird bird : this.birds) {
+        for (Bird bird : this.birds) {
             bird.update(deltaTime);
         }
     }
 
     @Override
     public void draw(Batch batch){
-        for (com.nitsanmichael.popping_frog_game.sprites.Bird bird : this.birds) {
+        for (Bird bird : this.birds) {
             bird.draw(batch);
         }
     }

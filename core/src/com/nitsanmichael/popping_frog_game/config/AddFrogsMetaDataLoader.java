@@ -3,6 +3,7 @@ package com.nitsanmichael.popping_frog_game.config;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
+import com.nitsanmichael.popping_frog_game.config.metadata.AddFrogMetaData;
 
 import java.io.IOException;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
  */
 public class AddFrogsMetaDataLoader {
 
-    public static void load(XmlReader xmlReader, Array<com.nitsanmichael.popping_frog_game.config.metadata.AddFrogMetaData> addFrogsMetaData) {
+    public static void load(XmlReader xmlReader, Array<AddFrogMetaData> addFrogsMetaData) {
         Array<XmlReader.Element> addFrogElements = null;
         try {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal(
@@ -46,12 +47,12 @@ public class AddFrogsMetaDataLoader {
      * @param addFrogElement    The xml-element to read from.
      * @return  A AddFrogMetaData object that holds the xml-element object's data.
      */
-    private static com.nitsanmichael.popping_frog_game.config.metadata.AddFrogMetaData createAddFrogMetaData(XmlReader.Element addFrogElement) {
+    private static AddFrogMetaData createAddFrogMetaData(XmlReader.Element addFrogElement) {
         if (null != addFrogElement.getAttribute("at_level", null)) {
             //..
             String atLevelString = addFrogElement.getAttribute("at_level");
             int atLevel = Integer.parseInt(atLevelString);
-            return new com.nitsanmichael.popping_frog_game.config.metadata.AddFrogMetaData(atLevel);
+            return new AddFrogMetaData(atLevel);
         }
         else if (null != addFrogElement.getAttribute("min_level", null) &&
                 null != addFrogElement.getAttribute("max_level", null)){
@@ -59,7 +60,7 @@ public class AddFrogsMetaDataLoader {
             String maxLevelString = addFrogElement.getAttribute("max_level");
             int minLevel = Integer.parseInt(minLevelString);
             int maxLevel = Integer.parseInt(maxLevelString);
-            return new com.nitsanmichael.popping_frog_game.config.metadata.AddFrogMetaData(minLevel, maxLevel);
+            return new AddFrogMetaData(minLevel, maxLevel);
         }
         return null;
     }

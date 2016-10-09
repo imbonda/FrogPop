@@ -52,7 +52,8 @@ public class GameOverScreen implements Screen {
         button1=new Buttons(600,355,playAgin,pressedplayAgin);
         button2=new Buttons(600,275,tomenu,tomenupressed);
         initIdleFrogs();
-        transitionController =new TransitionController(this.game);
+        transitionController = new TransitionController(this.game);
+        this.game.playServices.showScore();
     }
 
     private void initIdleFrogs() {
