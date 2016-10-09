@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.panel.LevelTab;
 import com.nitsanmichael.popping_frog_game.scenes.panel.LifeTab;
@@ -24,8 +26,7 @@ import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
  */
 public class Hud implements Disposable {
 
-    private final BitmapFont FONT = new BitmapFont(Gdx.files.internal("font.fnt"));
-
+    private BitmapFont font;
     private ScoreTab scoreTab;
     private LevelTab levelTab;
     private LifeTab lifeTab;
@@ -35,13 +36,16 @@ public class Hud implements Disposable {
     private Stage stage;
 
     /**
+     * @param assetController   An asset controller instance for retrieving the loaded assets.
      * @param batch    The batch object to be used for drawing the hud later on.
      * @param runtimeInfo The runtime information that is to be used by the hud to draw the -
      *                    score, the lives and the level.
      * @param timer A timer used for timing the levels.
      */
-    public Hud(SpriteBatch batch, RuntimeInfo runtimeInfo, Timer timer) {
-        FONT.getData().setScale(0.2f);
+    public Hud(AssetController assetController, SpriteBatch batch, RuntimeInfo runtimeInfo,
+                Timer timer) {
+        this.font = assetController.get(Assets.GAME_FONT);
+        this.font.getData().setScale(0.2f);
         this.batch = batch;
         this.runtimeInfo = runtimeInfo;
         this.timer = timer;
@@ -53,9 +57,9 @@ public class Hud implements Disposable {
      * Sets the hud's panel.
      */
     private void setPanel() {
-        this.scoreTab = new ScoreTab(FONT, this.runtimeInfo.gameScore);
-        this.levelTab = new LevelTab(FONT, this.runtimeInfo.gameLevel);
-        this.lifeTab = new LifeTab(FONT, this.runtimeInfo.gameLives);
+        this.scoreTab = new ScoreTab(this.font, this.runtimeInfo.gameScore);
+        this.levelTab = new LevelTab(this.font, this.runtimeInfo.gameLevel);
+        this.lifeTab = new LifeTab(this.font, this.runtimeInfo.gameLives);
     }
 
     /**

@@ -16,6 +16,7 @@ import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.Buttons;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFreezeFrog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -26,7 +27,7 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class GameOverScreen extends FadingScreen {
 
-    private static final float FADE_OUT_TIME = 1f;
+    private static final float FADE_OUT_TIME = 0.3f;
     private static final float FADE_IN_TIME = 1f;
     private static final float GAME_FADE_IN = 0.3f;
 
@@ -38,7 +39,7 @@ public class GameOverScreen extends FadingScreen {
     private PoppingFrog game;
     private RuntimeInfo runtimeInfo;
     private Viewport viewport;
-    private Array<com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog> idleFrogs;
+    private Array<IdleFrog> idleFrogs;
     private Texture playAgin=new Texture("buttons/button1.png");
     private Texture pressedplayAgin=new Texture("buttons/button2.png");
     private Texture tomenu=new Texture("buttons/menu.png");
@@ -64,10 +65,9 @@ public class GameOverScreen extends FadingScreen {
     }
 
     private void initIdleFrogs() {
-        this.idleFrogs = new Array<com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog>();
-        idleFrogs.add(new IdleFreezeFrog(this.game.assetController,
+        this.idleFrogs = new Array<IdleFrog>();
+        this.idleFrogs.add(new IdleFreezeFrog(this.game.assetController,
                 IdleFreezeFrog.AnimationType.BIG, new Vector2(100, 50)));
-        //idleFrogs.add(new IdleFreezeFrog(IdleFreezeFrog.AnimationType.normal, new Vector2(175, 175)));
     }
 
     @Override

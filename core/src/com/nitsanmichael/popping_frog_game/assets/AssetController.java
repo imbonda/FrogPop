@@ -4,7 +4,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.config.Config;
@@ -33,6 +35,8 @@ public class AssetController {
         // todo
         loadMusics();
         loadSounds();
+        loadFonts();
+        loadSkins();
         loadTextures();
         loadParticleEffects();
         this.manager.finishLoading();
@@ -50,6 +54,18 @@ public class AssetController {
     private void loadSounds() {
         for (String fileName : Assets.SOUND_FILES) {
             this.manager.load(fileName, Sound.class);
+        }
+    }
+
+    private void loadFonts() {
+        for (String fileName : Assets.FONT_FILES) {
+            this.manager.load(fileName, BitmapFont.class);
+        }
+    }
+
+    private void loadSkins() {
+        for (String fileName : Assets.SKIN_FILES) {
+            this.manager.load(fileName, Skin.class);
         }
     }
 

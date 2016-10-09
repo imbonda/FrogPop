@@ -20,16 +20,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
 
 /**
  * Created by MichaelBond on 9/29/2016.
  */
 public class SettingsScreen implements Screen {
 
-    // Files
-    private static final String SKIN_JSON_FILE = "skin/uiskin.json";
-    private static final String FOND_FILE = "font.fnt";
-    private static final String GO_BACK_IMAGE = "icons/back_icon.png";
     // Label constants.
     private static final String SETTINGS = "Settings";
     private static final String MUSIC = "Music :";
@@ -48,12 +45,13 @@ public class SettingsScreen implements Screen {
 
     public SettingsScreen(final PoppingFrog game, final Screen screenToReturnTo) {
         this.game = game;
-        Skin slideSkin = new Skin(Gdx.files.internal(SKIN_JSON_FILE));
-        BitmapFont font = new BitmapFont(Gdx.files.internal(FOND_FILE));
+        Skin slideSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
+        BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
         font.getData().setScale(0.2f);
 
         // Go back button.
-        ImageButton backButton = new ImageButton(new SpriteDrawable(new Sprite(new Texture(GO_BACK_IMAGE))));
+        Texture returnIcon = this.game.assetController.get(Assets.RETURN_ICON);
+        ImageButton backButton = new ImageButton(new SpriteDrawable(new Sprite(returnIcon)));
         backButton.setPosition(0, 400);
         backButton.addListener(new ClickListener() {
             @Override
@@ -80,9 +78,9 @@ public class SettingsScreen implements Screen {
         this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
         this.musicSlider.setPosition(350, 300);
         this.musicSlider.getStyle().knob.setMinHeight(50);
-        this.musicSlider.getStyle().knob.setMinWidth(20);
+        this.musicSlider.getStyle().knob.setMinWidth(40);
         this.musicSlider.getStyle().knobDown.setMinHeight(50);
-        this.musicSlider.getStyle().knobDown.setMinWidth(20);
+        this.musicSlider.getStyle().knobDown.setMinWidth(40);
         this.musicSlider.setAnimateDuration(0);
         this.musicSlider.setValue(musicVolume * SLIDER_RANGE);
         this.musicSlider.addListener(new ChangeListener() {

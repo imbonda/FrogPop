@@ -1,12 +1,8 @@
 package com.nitsanmichael.popping_frog_game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
@@ -23,6 +19,7 @@ import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
+
 
 /**
  * Created by MichaelBond on 9/1/2016.
@@ -59,7 +56,7 @@ public class PlayScreen extends FadingScreen {
         this.levelController = new LevelController(
                     this.game.config, this.game.assetController, this.game.media, spritesDrawer,
                     this.runtimeInfo, timer, this.themeController);
-        this.hud = new Hud(this.game.batch, runtimeInfo, timer);
+        this.hud = new Hud(this.game.assetController, this.game.batch, runtimeInfo, timer);
         this.popupDrawer = new PopupDrawer();
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
         this.isAlreadyOver = false;

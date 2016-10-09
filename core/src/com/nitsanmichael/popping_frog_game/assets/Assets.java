@@ -25,6 +25,24 @@ public final class Assets {
     };
 
     /**
+     * Fonts.
+     */
+    public static final String GAME_FONT = "font/font.fnt";
+
+    public static final String FONT_FILES [] = {
+            GAME_FONT
+    };
+
+    /**
+     * Skins.
+     */
+    public static final String SLIDER_SKIN = "skin/uiskin.json";
+
+    public static final String SKIN_FILES [] = {
+            SLIDER_SKIN
+    };
+
+    /**
      * Effects.
      */
     public static class EffectMeta {
@@ -57,6 +75,8 @@ public final class Assets {
     /**
      * Textures.
      */
+    // Icons.
+    public static final String RETURN_ICON = "icons/back_icon.png";
     // Themes.
     public static final String SUMMER_THEME = "images/themes/summer.png";
     public static final String AUTUMN_THEME = "images/themes/autumn.png";
@@ -123,6 +143,8 @@ public final class Assets {
     public static final String HERO_BRITISH3 = "images/frogs/hero/british/frog3.png";
 
     public static final String TEXTURE_FILES [] = {
+        // Icons
+            RETURN_ICON,
         // Themes
             SUMMER_THEME,
             AUTUMN_THEME,
