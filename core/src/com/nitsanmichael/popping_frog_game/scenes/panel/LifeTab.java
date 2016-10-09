@@ -35,6 +35,10 @@ public class LifeTab extends Group {
     }
 
     public void updateLives(int lives) {
+        if (0 >= lives) {
+            // Minimal live count is 0.
+            lives = 0;
+        }
         this.lifeLabel.setText("Life: " + lives);
     }
 }
