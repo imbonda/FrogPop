@@ -18,6 +18,8 @@ import java.util.HashMap;
  */
 public class PopupDrawer {
 
+    private static final String LEVEL_UP_MESSAGE = "Level up !";
+    
     public enum Popup { LEVEL_UP }
 
     private interface PopupPerformer {
@@ -35,7 +37,7 @@ public class PopupDrawer {
             Label.LabelStyle style = new Label.LabelStyle();
             style.font = font;
             style.fontColor = Color.FIREBRICK;
-            this.levelUpLabel = new Label("Level up ! ", style);
+            this.levelUpLabel = new Label(LEVEL_UP_MESSAGE, style);
             this.levelUpLabel.setFontScale(0.3f);
             this.levelUpLabel.setPosition(320, 400);
         }
