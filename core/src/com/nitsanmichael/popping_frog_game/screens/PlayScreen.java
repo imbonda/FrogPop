@@ -44,7 +44,7 @@ public class PlayScreen extends FadingScreen {
     private PopupDrawer popupDrawer;
 
     public PlayScreen(PoppingFrog game) {
-        super(game.batch, game.transitionController);
+        super(game.batch, game.tweenController);
         game.adsController.hideBannerAd();
         this.game = game;
         this.spritesDrawer = new SpritesDrawer();
@@ -80,14 +80,15 @@ public class PlayScreen extends FadingScreen {
         this.game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
         this.game.media.playSound(Assets.GAME_OVER_SOUND);
         this.spritesDrawer.clear();
+        this.themeController.reset();
         Gdx.input.setInputProcessor(null);
         dispose();
-        this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+        this.game.tweenController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 FadingScreen screen = new GameOverScreen(game, runtimeInfo);
                 game.setScreen(screen);
-                game.transitionController.fadeInScreen(screen, FADE_IN_TIME, null);
+                game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
             }
         });
     }

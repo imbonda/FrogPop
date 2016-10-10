@@ -1,7 +1,7 @@
-package com.nitsanmichael.popping_frog_game.transitions;
+package com.nitsanmichael.popping_frog_game.tweens;
 
 import com.nitsanmichael.popping_frog_game.screens.FadingScreen;
-import com.nitsanmichael.popping_frog_game.transitions.accessors.FadingScreenAccessor;
+import com.nitsanmichael.popping_frog_game.tweens.accessors.FadingScreenAccessor;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -10,12 +10,12 @@ import aurelienribon.tweenengine.TweenManager;
 /**
  * Created by MichaelBond on 10/9/2016.
  */
-public class TransitionController {
+public class TweenController {
 
     private TweenManager manager;
 
 
-    public TransitionController() {
+    public TweenController() {
         this.manager = new TweenManager();
         registerAccessors();
     }

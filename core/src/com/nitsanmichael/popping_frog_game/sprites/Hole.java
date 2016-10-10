@@ -31,4 +31,8 @@ public class Hole extends Sprite {
         batch.draw(this.holeTexture, this.position.x, this.position.y);
     }
 
+    public void shuffleOn() {
+
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.nitsanmichael.popping_frog_game.transitions.accessors;
+package com.nitsanmichael.popping_frog_game.tweens.accessors;
 
 import com.badlogic.gdx.graphics.Color;
 import com.nitsanmichael.popping_frog_game.screens.FadingScreen;

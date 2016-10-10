@@ -47,7 +47,7 @@ public class GameOverScreen extends FadingScreen {
 
 
     public GameOverScreen(PoppingFrog game, RuntimeInfo runtimeInfo) {
-        super(game.batch, game.transitionController);
+        super(game.batch, game.tweenController);
         this.viewport = new FitViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
         if (game.adsController.isInternetConnected()) {
@@ -101,22 +101,22 @@ public class GameOverScreen extends FadingScreen {
         Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
         Vector2 touchVector = new Vector2(touches.x,touches.y);
         if (this.button1.isButtonsTouched(touchVector)) {
-            this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+            this.game.tweenController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
                         FadingScreen screen = new PlayScreen(game);
                         game.setScreen(screen);
-                        game.transitionController.fadeInScreen(screen, GAME_FADE_IN, null);
+                        game.tweenController.fadeInScreen(screen, GAME_FADE_IN, null);
                     }
             });
         }
         if (this.button2.isButtonsTouched(touchVector)) {
-            this.game.transitionController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+            this.game.tweenController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
                         FadingScreen screen = new MainMenuScreen(game);
                         game.setScreen(screen);
-                        game.transitionController.fadeInScreen(screen, FADE_IN_TIME, null);
+                        game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
                     }
             });
         }

@@ -82,9 +82,7 @@ public class ThemeController {
     }
 
     private void setTheme() {
-        if (null != this.currentTheme) {
-            this.currentTheme.reset();
-        }
+        reset();
         Class<? extends Theme> themeClass = this.themesMetaData.get(this.nextThemeIndex).themeClass;
         try {
             this.currentTheme = themeClass.newInstance();
@@ -105,6 +103,15 @@ public class ThemeController {
             Gdx.app.log(PoppingFrog.LOGGER_TAG,
                     "Failed instantiating a theme object of the following class: " +
                             themeClass.getSimpleName());
+        }
+    }
+
+    /**
+     * Resets the current theme to its original state.
+     */
+    public void reset() {
+        if (null != this.currentTheme) {
+            this.currentTheme.reset();
         }
     }
 

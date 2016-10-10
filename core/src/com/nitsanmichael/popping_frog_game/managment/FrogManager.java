@@ -32,34 +32,33 @@ public class FrogManager {
             new Vector2(50, 260), new Vector2(300, 260), new Vector2(550,260)
     };
 
-    private Array<Hole> holes;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
     private FrogPool frogPool;
     private AssetController assetController;
     private SpritesDrawer spritesDrawer;
     private RuntimeInfo runtimeInfo;
-    private Array<FrogGhost> frogsDeathGhostEffects;
+    private Array<FrogGhost> frogGhosts;
 
     public FrogManager(AssetController assetController, SpritesDrawer spritesDrawer,
                        RuntimeInfo runtimeInfo, FrogClassAllocator frogClassAllocator) {
         this.assetController = assetController;
         this.spritesDrawer = spritesDrawer;
-        this.holes = new Array<Hole>();
+        this.runtimeInfo = runtimeInfo;
         for (Vector2 holePosition : HOLES_POSITIONS) {
-            holes.add(new Hole(this.assetController, holePosition.x, holePosition.y));
-            this.spritesDrawer.addSprites(holes);
+            this.runtimeInfo.holes.add(new Hole(
+                        this.assetController, holePosition.x, holePosition.y));
+            this.spritesDrawer.addSprites(this.runtimeInfo.holes);
         }
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
         setUnpopulatedHolesIndexes();
-        this.runtimeInfo = runtimeInfo;
         this.frogPool = new FrogPool(frogClassAllocator);
-        frogsDeathGhostEffects=new Array<FrogGhost>();
+        this.frogGhosts = new Array<FrogGhost>();
     }
 
     private void setUnpopulatedHolesIndexes() {
-        for (int i = 0; i < holes.size; ++i) {
+        for (int i = 0; i < this.runtimeInfo.holes.size; ++i) {
             this.unpopulatedHolesIndexes.add(i);
         }
     }
@@ -100,7 +99,7 @@ public class FrogManager {
     }
 
     private Vector2 getFrogPlacementPosition(int holeIndex) {
-        Vector2 holePosition = this.holes.get(holeIndex).getPosition();
+        Vector2 holePosition = this.runtimeInfo.holes.get(holeIndex).getPosition();
         return new Vector2(
                 holePosition.x + FROG_OFFSET_X, holePosition.y + FROG_OFFSET_Y);
     }
@@ -122,7 +121,7 @@ public class FrogManager {
             }
         }
         // Updating ghosts.
-        Iterator<FrogGhost> iterator = this.frogsDeathGhostEffects.iterator();
+        Iterator<FrogGhost> iterator = this.frogGhosts.iterator();
         while (iterator.hasNext()) {
             FrogGhost frogGhost = iterator.next();
             frogGhost.update(deltaTime);
@@ -140,9 +139,11 @@ public class FrogManager {
      * @param frog  The frog to be removed from the screen.
      */
     private void recycleDeadFrog(Iterator<Frog> frogIterator, Frog frog) {
-        if(frog.isKilled()){
-        frogsDeathGhostEffects.add(new FrogGhost(this.assetController, frog.getPosition()));
-        this.spritesDrawer.addSprite(frogsDeathGhostEffects.peek());}
+        if (frog.isKilled()) {
+            FrogGhost ghost = new FrogGhost(this.assetController, frog.getPosition());
+            this.frogGhosts.add(ghost);
+            this.spritesDrawer.addSprite(ghost);
+        }
         int frogHoleIndex = this.frogToHoleIndexMap.remove(frog);
         frogIterator.remove();
         this.frogPool.free(frog);
