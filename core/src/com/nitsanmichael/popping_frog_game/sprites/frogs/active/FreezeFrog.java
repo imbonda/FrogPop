@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 
 /**
@@ -27,7 +30,7 @@ public class FreezeFrog extends Frog {
     }
 
     @Override
-    public void init(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo runtimeInfo,
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo,
                      float positionX, float positionY) {
         super.defaultInit(assetController, runtimeInfo, positionX, positionY);
         setAnimation();
@@ -38,7 +41,7 @@ public class FreezeFrog extends Frog {
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(com.nitsanmichael.popping_frog_game.assets.Assets.FREEZE_FROG_ANIMATION, 0.15f);
+        this.animation = this.assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION, 0.15f);
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
     }

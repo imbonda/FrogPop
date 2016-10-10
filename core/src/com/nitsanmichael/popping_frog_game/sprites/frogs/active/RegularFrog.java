@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 import java.util.Random;
 
@@ -33,7 +35,7 @@ public class RegularFrog extends Frog {
     }
 
     @Override
-    public void init(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo runtimeInfo, float positionX, float positionY) {
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
         super.defaultInit(assetController, runtimeInfo, positionX, positionY);
         generateRandomAnimation();
         this.frogRectangle = new Rectangle(

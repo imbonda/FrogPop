@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 /**
  * This class represents a regular-frog.
@@ -26,7 +29,7 @@ public class HealthFrog extends Frog {
     }
 
     @Override
-    public void init(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo runtimeInfo, float positionX, float positionY) {
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
         super.defaultInit(assetController, runtimeInfo, positionX, positionY);
         setAnimation();
         this.frogRectangle = new Rectangle(
@@ -35,7 +38,7 @@ public class HealthFrog extends Frog {
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(com.nitsanmichael.popping_frog_game.assets.Assets.HEALTH_FROG_ANIMATION, 0.15f);
+        this.animation = this.assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION, 0.15f);
         Texture frame = getFrogTexture();
         setSize(frame.getWidth(), frame.getHeight());
     }

@@ -19,6 +19,7 @@ import com.nitsanmichael.popping_frog_game.sprites.Buttons;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleBritishFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleHealthFrog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleIllusionFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleMexicanFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleEvilFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleRegularFrog;
@@ -74,8 +75,9 @@ public class MainMenuScreen extends FadingScreen {
 
     private void initIdleFrogs() {
         this.idleFrogs = new Array<IdleFrog>();
-        idleFrogs.add(new IdleRegularFrog(this.game.assetController,
-                    IdleRegularFrog.AnimationType.TONGUE, new Vector2(415, 125)));
+//        idleFrogs.add(new IdleRegularFrog(this.game.assetController,
+//                    IdleRegularFrog.AnimationType.TONGUE, new Vector2(415, 125)));
+        idleFrogs.add(new IdleIllusionFrog(this.game.assetController, new Vector2(415, 125)));
         idleFrogs.add(new IdleRegularFrog(this.game.assetController,
                     IdleRegularFrog.AnimationType.WINK, new Vector2(255, 125)));
         idleFrogs.add(new IdleBritishFrog(this.game.assetController, new Vector2(340, 70)));

@@ -118,9 +118,6 @@ public final class Assets {
     public static final String ILLUSION_FROG2 = "images/frogs/illusion/frog2.png";
     public static final String ILLUSION_FROG3 = "images/frogs/illusion/frog3.png";
     public static final String ILLUSION_FROG4 = "images/frogs/illusion/frog4.png";
-    public static final String ILLUSION_FROG5 = "images/frogs/illusion/frog5.png";
-    public static final String ILLUSION_FROG6 = "images/frogs/illusion/frog6.png";
-    public static final String ILLUSION_FROG7 = "images/frogs/illusion/frog7.png";
     // Regular hero.
     public static final String HERO_REGULAR_TONGUE1 = "images/frogs/hero/regular/tongue1.png";
     public static final String HERO_REGULAR_TONGUE2 = "images/frogs/hero/regular/tongue2.png";
@@ -166,7 +163,6 @@ public final class Assets {
             FREEZE_FROG1, FREEZE_FROG2, FREEZE_FROG3,   // Freeze frog
             FREEZE_FROG_BIG1, FREEZE_FROG_BIG2, FREEZE_FROG_BIG3,   // Big freeze frog
             ILLUSION_FROG1, ILLUSION_FROG2, ILLUSION_FROG3, ILLUSION_FROG4, // Illusion frog
-            ILLUSION_FROG5, ILLUSION_FROG6, ILLUSION_FROG7,
             HERO_REGULAR_TONGUE1, HERO_REGULAR_TONGUE2, HERO_REGULAR_TONGUE3, HERO_REGULAR_TONGUE4,
             HERO_REGULAR_WINK1, HERO_REGULAR_WINK2, HERO_REGULAR_WINK3, HERO_REGULAR_WINK4,
             HERO_TURKISH1, HERO_TURKISH2, HERO_TURKISH3,    // Turkish hero
@@ -216,15 +212,7 @@ public final class Assets {
             ILLUSION_FROG1,
             ILLUSION_FROG2,
             ILLUSION_FROG3,
-            ILLUSION_FROG4,
-            ILLUSION_FROG3,
-            ILLUSION_FROG2,
-            ILLUSION_FROG1,
-            ILLUSION_FROG5,
-            ILLUSION_FROG6,
-            ILLUSION_FROG7,
-            ILLUSION_FROG6,
-            ILLUSION_FROG5
+            ILLUSION_FROG4
     };
     public static final String HERO_REGULAR_TONGUE_ANIMATION [] = {
             HERO_REGULAR_TONGUE1,

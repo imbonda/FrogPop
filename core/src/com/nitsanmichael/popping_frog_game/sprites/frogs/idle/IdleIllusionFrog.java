@@ -7,22 +7,17 @@ import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 
-
 /**
- * Created by MichaelBond on 10/1/2016.
+ * Created by MichaelBond on 10/10/2016.
  */
-public class IdleFreezeFrog extends IdleFrog {
-
-    public enum AnimationType { NORMAL, BIG }
+public class IdleIllusionFrog extends IdleFrog {
 
     private Animation animation;
     private Vector2 position;
 
 
-    public IdleFreezeFrog(AssetController assetController, AnimationType type, Vector2 position) {
-        this.animation = (AnimationType.NORMAL == type) ?
-                (assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION, 0.15f)) :
-                (assetController.getAnimation(Assets.FREEZE_FROG_BIG_ANIMATION, 0.15f));
+    public IdleIllusionFrog(AssetController assetController, Vector2 position) {
+        this.animation = assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION, 0.15f);
         this.position = position;
     }
 
@@ -35,9 +30,6 @@ public class IdleFreezeFrog extends IdleFrog {
 
     @Override
     public void draw(Batch batch) {
-        batch.draw(
-                this.animation.getFrame(),          // Texture.
-                this.position.x, this.position.y,   // Position.
-                getWidth(), getHeight());           // Size.
+        batch.draw(this.animation.getFrame(), this.position.x, this.position.y);
     }
 }

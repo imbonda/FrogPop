@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
 
 
 /**
@@ -15,8 +17,8 @@ public class IdleHealthFrog extends IdleFrog {
     private Vector2 position;
 
 
-    public IdleHealthFrog(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, Vector2 position) {
-        this.animation = assetController.getAnimation(com.nitsanmichael.popping_frog_game.assets.Assets.HEALTH_FROG_ANIMATION, 0.15f);
+    public IdleHealthFrog(AssetController assetController, Vector2 position) {
+        this.animation = assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION, 0.15f);
         this.position = position;
     }
 

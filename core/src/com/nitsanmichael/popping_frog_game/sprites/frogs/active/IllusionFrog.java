@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 /**
  * This class represents a regular-frog.
@@ -31,7 +34,7 @@ public class IllusionFrog extends Frog {
     }
 
     @Override
-    public void init(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo runtimeInfo, float positionX, float positionY) {
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
         super.defaultInit(assetController, runtimeInfo, positionX, positionY);
         setAnimation();
         this.frogRectangle = new Rectangle(
@@ -40,7 +43,7 @@ public class IllusionFrog extends Frog {
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(com.nitsanmichael.popping_frog_game.assets.Assets.ILLUSION_FROG_ANIMATION);
+        this.animation = this.assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION);
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
     }

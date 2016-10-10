@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
 
 
 /**
@@ -17,12 +19,12 @@ public class IdleRegularFrog extends IdleFrog {
     private Vector2 position;
 
 
-    public IdleRegularFrog(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, AnimationType type, Vector2 position) {
+    public IdleRegularFrog(AssetController assetController, AnimationType type, Vector2 position) {
         if (AnimationType.TONGUE == type) {
-            this.animation = assetController.getAnimation(com.nitsanmichael.popping_frog_game.assets.Assets.HERO_REGULAR_TONGUE_ANIMATION);
+            this.animation = assetController.getAnimation(Assets.HERO_REGULAR_TONGUE_ANIMATION);
         }
         else {
-            this.animation = assetController.getAnimation(com.nitsanmichael.popping_frog_game.assets.Assets.HERO_REGULAR_WINK_ANIMATION);
+            this.animation = assetController.getAnimation(Assets.HERO_REGULAR_WINK_ANIMATION);
         }
         this.position = position;
     }
