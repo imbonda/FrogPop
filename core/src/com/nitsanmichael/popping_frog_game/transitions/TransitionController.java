@@ -1,6 +1,5 @@
 package com.nitsanmichael.popping_frog_game.transitions;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.nitsanmichael.popping_frog_game.screens.FadingScreen;
 import com.nitsanmichael.popping_frog_game.transitions.accessors.FadingScreenAccessor;
 

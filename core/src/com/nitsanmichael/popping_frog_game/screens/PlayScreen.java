@@ -57,7 +57,7 @@ public class PlayScreen extends FadingScreen {
                     this.game.config, this.game.assetController, this.game.media, spritesDrawer,
                     this.runtimeInfo, timer, this.themeController);
         this.hud = new Hud(this.game.assetController, this.game.batch, runtimeInfo, timer);
-        this.popupDrawer = new PopupDrawer();
+        this.popupDrawer = new PopupDrawer(gameViewPort, this.game.batch, this.game.assetController);
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
         this.isAlreadyOver = false;
         // Play music.
@@ -108,8 +108,8 @@ public class PlayScreen extends FadingScreen {
         else {
             this.popupDrawer.unregister(PopupDrawer.Popup.LEVEL_UP);
         }
-        this.popupDrawer.drawPopups(this.game.batch);
         this.game.batch.end();
+        this.popupDrawer.drawPopups();
         this.hud.draw();
     }
 
