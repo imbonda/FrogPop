@@ -37,7 +37,7 @@ public class PopupDrawer {
             style.fontColor = Color.FIREBRICK;
             this.levelUpLabel = new Label("Level up ! ", style);
             this.levelUpLabel.setFontScale(0.3f);
-            this.levelUpLabel.setPosition(320, 440);
+            this.levelUpLabel.setPosition(320, 400);
         }
 
         @Override
