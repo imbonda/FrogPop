@@ -1,6 +1,5 @@
 package com.nitsanmichael.popping_frog_game.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,13 +12,14 @@ import com.nitsanmichael.popping_frog_game.assets.Assets;
 
 import java.util.HashMap;
 
+
 /**
  * Created by MichaelBond on 10/9/2016.
  */
 public class PopupDrawer {
 
     private static final String LEVEL_UP_MESSAGE = "Level up !";
-    
+
     public enum Popup { LEVEL_UP }
 
     private interface PopupPerformer {

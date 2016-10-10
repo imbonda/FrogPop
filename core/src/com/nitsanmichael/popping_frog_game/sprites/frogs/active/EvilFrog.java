@@ -72,12 +72,13 @@ public class EvilFrog extends Frog {
 
     @Override
     public void draw(Batch batch) {
+        float fromPeekFraction = Math.abs(FROG_MAX_LIFE_TIME / 2 - this.lifeTime) /
+                (FROG_MAX_LIFE_TIME / 2);
         batch.draw(
-                    this.animation.getFrame(),
-                    this.position.x, this.position.y,
-                    0, 0,
-                    (int)getWidth(), (int)getHeight() -
-                        (int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
+                this.animation.getFrame(),
+                this.position.x, this.position.y,
+                0, 0,
+                (int)getWidth(), (int)(getHeight() * (1 - fromPeekFraction)));
     }
 
     @Override
