@@ -140,7 +140,7 @@ public class FrogManager {
      */
     private void recycleDeadFrog(Iterator<Frog> frogIterator, Frog frog) {
         if (frog.isKilled()) {
-            FrogGhost ghost = new FrogGhost(this.assetController, frog.getPosition());
+            FrogGhost ghost = new FrogGhost(this.assetController, frog.getCenterPosition());
             this.frogGhosts.add(ghost);
             this.spritesDrawer.addSprite(ghost);
         }

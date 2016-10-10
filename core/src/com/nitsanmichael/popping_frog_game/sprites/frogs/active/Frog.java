@@ -100,10 +100,11 @@ public abstract class Frog extends Sprite implements Pool.Poolable {
         return this.frogRectangle.contains(touchVector.x,touchVector.y);
     }
     
-	public Vector2 getPosition() {
+	public Vector2 getCenterPosition() {
+        float fromPeekFraction = Math.abs(FROG_MAX_LIFE_TIME / 2 - this.lifeTime) /
+                (FROG_MAX_LIFE_TIME / 2);
         Vector2 center = this.position.cpy();
-        center.add(0, (int)getHeight() -
-                (int)(((FROG_MAX_LIFE_TIME - this.lifeTime)*100)/(FROG_MAX_LIFE_TIME)));
+        center.add(0, (int)(getHeight() * (1 - fromPeekFraction)));
         return center;
 	}
 }
