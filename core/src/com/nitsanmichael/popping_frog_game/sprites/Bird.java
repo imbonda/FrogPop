@@ -29,7 +29,7 @@ public class Bird extends Sprite {
     }
 
     /**
-     * The bird will always be contained inside the given box.
+     * The bird can move only within the boundaries of the given box descriptions.
      */
     public void setBox(Vector2 bottomLeft, Vector2 topRight) {
         this.boxBottomLeft.set(bottomLeft);

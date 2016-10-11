@@ -36,7 +36,7 @@ public class Cloud extends Sprite {
     }
 
     /**
-     * The cloud will always be contained inside the given box.
+     * The cloud can move only within the boundaries of the given box descriptions.
      */
     public void setBox(Vector2 bottomLeft, Vector2 topRight) {
         this.boxBottomLeft.set(bottomLeft);

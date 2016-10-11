@@ -3,6 +3,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.math.Vector2;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
 
 
 /**
@@ -16,14 +18,14 @@ public class SunEffect implements Effect {
     private ParticleEmitter emitter;
     private float[] oldTintColor;
 
-    public SunEffect(com.nitsanmichael.popping_frog_game.assets.AssetController assetController) {
-        this.sunEffect = assetController.get(com.nitsanmichael.popping_frog_game.assets.Assets.SUN_EFFECT.fileName);
+    public SunEffect(AssetController assetController) {
+        this.sunEffect = assetController.get(Assets.SUN_EFFECT.fileName);
         this.sunEffect.start();
         this.emitter = this.sunEffect.getEmitters().first();
         this.emitter.setPosition(SUN_POSITION.x, SUN_POSITION.y);
     }
 
-    public SunEffect(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, float color []) {
+    public SunEffect(AssetController assetController, float color []) {
         this(assetController);
         this.oldTintColor = this.emitter.getTint().getColor(1).clone();
         this.emitter.getTint().setColors(color);
@@ -31,7 +33,7 @@ public class SunEffect implements Effect {
 
     @Override
     public void update(float deltaTime) {
-        this.sunEffect.findEmitter(com.nitsanmichael.popping_frog_game.assets.Assets.SUN_EFFECT.name).durationTimer = 0;
+        this.sunEffect.findEmitter(Assets.SUN_EFFECT.name).durationTimer = 0;
         this.sunEffect.update(deltaTime);
         if (this.sunEffect.isComplete()) {
             this.sunEffect.reset();

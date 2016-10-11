@@ -9,6 +9,8 @@ import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
+import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
+import com.nitsanmichael.popping_frog_game.sprites.Hole;
 
 /**
  * This class represents a regular-frog.
@@ -40,10 +42,13 @@ public class IllusionFrog extends Frog {
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 getWidth() + 40, getHeight() + 35);
+        for (Hole hole : this.runtimeInfo.holes) {
+            hole.shuffleOn();
+        }
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION);
+        this.animation = this.assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION, 0.1f);
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
     }
@@ -64,13 +69,13 @@ public class IllusionFrog extends Frog {
     }
 
     private void whileUpAbility() {
-        if((rotatedelay>16)&&((rotationcontroller>=16)||(rotationcontroller<=-16))) {
-            rotatedelay=0;
-            this.rotatedirectionA=this.rotatedirectionB*rotatedirectionA;
-        }
-        rotationcontroller=rotatedirectionA+rotationcontroller;
-        com.nitsanmichael.popping_frog_game.screens.PlayScreen.gameViewPort.getCamera().rotateAround(deafultPosition,deafultaxis,rotatedirectionA);
-        com.nitsanmichael.popping_frog_game.screens.PlayScreen.gameViewPort.getCamera().update();
+//        if((rotatedelay>16)&&((rotationcontroller>=16)||(rotationcontroller<=-16))) {
+//            rotatedelay=0;
+//            this.rotatedirectionA=this.rotatedirectionB*rotatedirectionA;
+//        }
+//        rotationcontroller=rotatedirectionA+rotationcontroller;
+//        PlayScreen.gameViewPort.getCamera().rotateAround(deafultPosition,deafultaxis,rotatedirectionA);
+//        PlayScreen.gameViewPort.getCamera().update();
     }
 
     @Override
@@ -86,6 +91,9 @@ public class IllusionFrog extends Frog {
         else {
             this.runtimeInfo.gameLives += FROG_LIFE_PENALTY_VALUE;
             Gdx.input.vibrate(500);
+        }
+        for (Hole hole : this.runtimeInfo.holes) {
+            hole.shuffleOn();
         }
     }
 
@@ -104,8 +112,8 @@ public class IllusionFrog extends Frog {
     public void reset() {
         super.defaultReset();
         this.animation.reset();
-        com.nitsanmichael.popping_frog_game.screens.PlayScreen.gameViewPort.getCamera().rotateAround(deafultPosition,deafultaxis,-rotationcontroller);
-        com.nitsanmichael.popping_frog_game.screens.PlayScreen.gameViewPort.getCamera().update();
+        PlayScreen.gameViewPort.getCamera().update();
+        PlayScreen.gameViewPort.getCamera().rotateAround(deafultPosition,deafultaxis,-rotationcontroller);
         rotationcontroller=0;
         rotatedirectionA=-4;
         rotatedelay=0;

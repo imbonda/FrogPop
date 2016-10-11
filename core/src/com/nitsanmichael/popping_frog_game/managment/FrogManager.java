@@ -12,7 +12,6 @@ import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.managment.exceptions.OverpopulatedHolesException;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.FrogGhost;
-import com.nitsanmichael.popping_frog_game.sprites.Hole;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
 import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
 
@@ -26,12 +25,8 @@ public class FrogManager {
 
     private static final int FROG_OFFSET_X = 55;
     private static final int FROG_OFFSET_Y = 20;
-    private static final Vector2[] HOLES_POSITIONS = {
-            new Vector2(50, 10), new Vector2(300, 10), new Vector2(50, 135),
-            new Vector2(300, 135), new Vector2(550, 10), new Vector2(550, 135),
-            new Vector2(50, 260), new Vector2(300, 260), new Vector2(550,260)
-    };
 
+    private HolesManager holesManager;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
     private FrogPool frogPool;
@@ -40,16 +35,13 @@ public class FrogManager {
     private RuntimeInfo runtimeInfo;
     private Array<FrogGhost> frogGhosts;
 
+
     public FrogManager(AssetController assetController, SpritesDrawer spritesDrawer,
                        RuntimeInfo runtimeInfo, FrogClassAllocator frogClassAllocator) {
+        this.holesManager = new HolesManager(assetController, spritesDrawer, runtimeInfo);
         this.assetController = assetController;
         this.spritesDrawer = spritesDrawer;
         this.runtimeInfo = runtimeInfo;
-        for (Vector2 holePosition : HOLES_POSITIONS) {
-            this.runtimeInfo.holes.add(new Hole(
-                        this.assetController, holePosition.x, holePosition.y));
-            this.spritesDrawer.addSprites(this.runtimeInfo.holes);
-        }
         this.frogToHoleIndexMap = new HashMap<Frog, Integer>();
         this.unpopulatedHolesIndexes = new Array<Integer>();
         setUnpopulatedHolesIndexes();
@@ -99,7 +91,7 @@ public class FrogManager {
     }
 
     private Vector2 getFrogPlacementPosition(int holeIndex) {
-        Vector2 holePosition = this.runtimeInfo.holes.get(holeIndex).getPosition();
+        Vector2 holePosition = this.runtimeInfo.holes.get(holeIndex).position;
         return new Vector2(
                 holePosition.x + FROG_OFFSET_X, holePosition.y + FROG_OFFSET_Y);
     }
@@ -110,6 +102,7 @@ public class FrogManager {
      * @param deltaTime The time passed from the last call to update.
      */
     public void update(float deltaTime) {
+        this.holesManager.update(deltaTime);
         // Updating frogs.
         Iterator<Frog> frogIterator = this.runtimeInfo.activeFrogs.iterator();
         while (frogIterator.hasNext()) {

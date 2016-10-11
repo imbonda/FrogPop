@@ -49,7 +49,7 @@ public class Butterfly extends Sprite {
     }
 
     /**
-     * The butterfly will always be contained inside the given box.
+     * The butterfly can move only within the boundaries of the given box descriptions.
      */
     public void setBox(Vector2 bottomLeft, Vector2 topRight) {
         this.boxBottomLeft.set(bottomLeft);

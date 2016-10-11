@@ -37,11 +37,12 @@ public class PlayScreen extends FadingScreen {
     private PoppingFrog game;
     private SpritesDrawer spritesDrawer;
     private EffectDrawer effectDrawer;
-    private LevelController levelController;
-    private ThemeController themeController;
     private RuntimeInfo runtimeInfo;
+    private ThemeController themeController;
+    private LevelController levelController;
     private Hud hud;
     private PopupDrawer popupDrawer;
+
 
     public PlayScreen(PoppingFrog game) {
         super(game.batch, game.tweenController);
@@ -49,9 +50,9 @@ public class PlayScreen extends FadingScreen {
         this.game = game;
         this.spritesDrawer = new SpritesDrawer();
         this.effectDrawer = new EffectDrawer();
+        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
         this.themeController = new ThemeController(this.game.config, this.game.assetController,
                     this.effectDrawer);
-        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
         Timer timer = new Timer(this.game.assetController);
         this.levelController = new LevelController(
                     this.game.config, this.game.assetController, this.game.media, spritesDrawer,
