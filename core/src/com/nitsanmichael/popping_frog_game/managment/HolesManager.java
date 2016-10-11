@@ -26,15 +26,15 @@ public class HolesManager {
     }
 
     private static final HoleConfig HOLE_CONFIGS [] = {
-            new HoleConfig(new Vector2(50, 10), new Vector2(5, 5), new Vector2(295, 130)),
-            new HoleConfig(new Vector2(300, 10), new Vector2(0,0), new Vector2(0,0)),
-            new HoleConfig(new Vector2(50, 135), new Vector2(0,0), new Vector2(0,0)),
-            new HoleConfig(new Vector2(300, 135), new Vector2(0,0), new Vector2(0,0)),
-            new HoleConfig(new Vector2(550, 10), new Vector2(0,0), new Vector2(0,0)),
-            new HoleConfig(new Vector2(550, 135), new Vector2(0,0), new Vector2(0,0)),
-            new HoleConfig(new Vector2(50, 260), new Vector2(0,0), new Vector2(0,0)),
-            new HoleConfig(new Vector2(300, 260), new Vector2(0,0), new Vector2(0,0)),
-            new HoleConfig(new Vector2(550,260), new Vector2(0,0), new Vector2(0,0))
+            new HoleConfig(new Vector2(50, 10), new Vector2(5, 5), new Vector2(295, 125)),
+            new HoleConfig(new Vector2(300, 10), new Vector2(295, 5), new Vector2(545, 125)),
+            new HoleConfig(new Vector2(550, 10), new Vector2(545, 5), new Vector2(795, 125)),
+            new HoleConfig(new Vector2(50, 130), new Vector2(5, 125), new Vector2(295, 245)),
+            new HoleConfig(new Vector2(300, 130), new Vector2(295, 125), new Vector2(545, 245)),
+            new HoleConfig(new Vector2(550, 130), new Vector2(545, 125), new Vector2(795, 245)),
+            new HoleConfig(new Vector2(50, 250), new Vector2(5, 245), new Vector2(295, 350)),
+            new HoleConfig(new Vector2(300, 250), new Vector2(295, 245), new Vector2(545, 350)),
+            new HoleConfig(new Vector2(550, 250), new Vector2(545, 245), new Vector2(795, 350))
     };
 
     private RuntimeInfo runtimeInfo;

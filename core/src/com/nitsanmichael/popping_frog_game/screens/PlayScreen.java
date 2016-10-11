@@ -26,15 +26,13 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class PlayScreen extends FadingScreen {
 
-    public static Viewport gameViewPort = new FitViewport(
-                PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
-
     private static final float FADE_OUT_TIME = 0.1f;
     private static final float FADE_IN_TIME = 1f;
     private static final int MAX_LIVES = 3;
 
     private boolean isAlreadyOver;
     private PoppingFrog game;
+    private Viewport gameViewPort;
     private SpritesDrawer spritesDrawer;
     private EffectDrawer effectDrawer;
     private RuntimeInfo runtimeInfo;
@@ -48,6 +46,8 @@ public class PlayScreen extends FadingScreen {
         super(game.batch, game.tweenController);
         game.adsController.hideBannerAd();
         this.game = game;
+        this.gameViewPort = new FitViewport(
+                    PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
         this.spritesDrawer = new SpritesDrawer();
         this.effectDrawer = new EffectDrawer();
         this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);

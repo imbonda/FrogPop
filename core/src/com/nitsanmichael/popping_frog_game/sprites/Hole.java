@@ -15,19 +15,20 @@ import java.util.Random;
  */
 public class Hole extends Sprite {
 
-    private static final Vector2 SHUFFLE_ON_SPEED = new Vector2(15f, 15f);
-    private static final Vector2 SHUFFLE_OFF_SPEED = new Vector2(15f, 15f);
-
-    public Vector2 position;
+    private static final Vector2 SHUFFLE_ON_SPEED = new Vector2(30f, 15f);
+    private static final Vector2 SHUFFLE_OFF_SPEED = new Vector2(60f, 60f);
+    private static final Vector2 FROG_POSITION_OFFSET = new Vector2(55, 20);
 
     private enum State { STATIC, SHUFFLE_ON, SHUFFLE_OFF }
 
     private State state;
     private Random random;
     private Vector2 origin;
+    private Vector2 position;
     private Vector2 velocity;
     private Vector2 boxBottomLeft;
     private Vector2 boxTopRight;
+    private Vector2 frogPlacementPosition;
     private Texture holeTexture;
 
 
@@ -40,7 +41,19 @@ public class Hole extends Sprite {
         this.velocity = new Vector2(0 ,0);
         this.boxBottomLeft = new Vector2(0 ,0);
         this.boxTopRight = new Vector2(0 ,0);
+        this.frogPlacementPosition = new Vector2(0, 0);
+        updateFrogPlacementPosition();
         setSize(this.holeTexture.getWidth(), this.holeTexture.getHeight());
+    }
+
+    private void updateFrogPlacementPosition() {
+        this.frogPlacementPosition.set(
+                this.position.x + FROG_POSITION_OFFSET.x,
+                this.position.y + FROG_POSITION_OFFSET.y);
+    }
+
+    public Vector2 getFrogPlacementPosition() {
+        return this.frogPlacementPosition;
     }
 
     /**
@@ -52,18 +65,22 @@ public class Hole extends Sprite {
     }
 
     public void shuffleOn() {
-        int directionX = (this.random.nextInt(2) == 0) ? (-1) : 1;
-        int directionY = (this.random.nextInt(2) == 0) ? (-1) : 1;
-        this.velocity.set(directionX * SHUFFLE_ON_SPEED.x, directionY * SHUFFLE_ON_SPEED.y);
-        this.state = State.SHUFFLE_ON;
+        if (State.SHUFFLE_ON != this.state) {
+            int directionX = (this.random.nextInt(2) == 0) ? (-1) : 1;
+            int directionY = (this.random.nextInt(2) == 0) ? (-1) : 1;
+            this.velocity.set(directionX * SHUFFLE_ON_SPEED.x, directionY * SHUFFLE_ON_SPEED.y);
+            this.state = State.SHUFFLE_ON;
+        }
     }
 
     public void shuffleOff() {
-        Vector2 toOrigin = new Vector2(
+        if (State.SHUFFLE_ON == this.state) {
+            Vector2 toOrigin = new Vector2(
                     this.origin.x - this.position.x,
                     this.origin.y - this.position.y).nor();
-        this.velocity.set(toOrigin.x * SHUFFLE_OFF_SPEED.x, toOrigin.y * SHUFFLE_OFF_SPEED.y);
-        this.state = State.SHUFFLE_OFF;
+            this.velocity.set(toOrigin.x * SHUFFLE_OFF_SPEED.x, toOrigin.y * SHUFFLE_OFF_SPEED.y);
+            this.state = State.SHUFFLE_OFF;
+        }
     }
 
     public void update(float deltaTime) {
@@ -74,10 +91,12 @@ public class Hole extends Sprite {
             case SHUFFLE_ON:
                 this.position.add(this.velocity);
                 containInsideBox();
+                updateFrogPlacementPosition();
                 break;
             case SHUFFLE_OFF:
                 this.velocity.clamp(0, this.position.dst(this.origin));
                 this.position.add(this.velocity);
+                updateFrogPlacementPosition();
                 if (this.position.equals(this.origin)) {
                     this.velocity.set(0, 0);
                     this.state = State.STATIC;

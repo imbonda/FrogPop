@@ -23,9 +23,6 @@ import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
  */
 public class FrogManager {
 
-    private static final int FROG_OFFSET_X = 55;
-    private static final int FROG_OFFSET_Y = 20;
-
     private HolesManager holesManager;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
@@ -64,7 +61,7 @@ public class FrogManager {
         // Add a new frog positioned at the chosen hole.
         Frog frog = this.frogPool.obtain();
         if (null != frog) {
-            frog.init(this.assetController, this.runtimeInfo, frogPosition.x, frogPosition.y);
+            frog.init(this.assetController, this.runtimeInfo, frogPosition);
             this.spritesDrawer.addSprite(frog);
             this.runtimeInfo.activeFrogs.add(frog);
             this.frogToHoleIndexMap.put(frog, randomHoleIndex);
@@ -91,9 +88,7 @@ public class FrogManager {
     }
 
     private Vector2 getFrogPlacementPosition(int holeIndex) {
-        Vector2 holePosition = this.runtimeInfo.holes.get(holeIndex).position;
-        return new Vector2(
-                holePosition.x + FROG_OFFSET_X, holePosition.y + FROG_OFFSET_Y);
+        return this.runtimeInfo.holes.get(holeIndex).getFrogPlacementPosition();
     }
 
     /**

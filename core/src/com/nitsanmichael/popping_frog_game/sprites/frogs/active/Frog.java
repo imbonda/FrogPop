@@ -28,7 +28,7 @@ public abstract class Frog extends Sprite implements Pool.Poolable {
     public Frog() {
         this.lifeTime = 0;
         this.isKilled = false;
-        this.position = new Vector2(0, 0);
+        this.position = Vector2.Zero;
     }
 
     /**
@@ -58,11 +58,10 @@ public abstract class Frog extends Sprite implements Pool.Poolable {
      *
      * @param assetController   An asset controller instance for retrieving the loaded assets.
      * @param runtimeInfo The game runtime information.
-     * @param positionX The x coordinate the the frog new positing.
-     * @param positionY The y coordinate the the frog new positing.
+     * @param position The position of the frog.
      */
     public abstract void init(AssetController assetController, RuntimeInfo runtimeInfo,
-                              float positionX, float positionY);
+                                Vector2 position);
 
     /**
      * This method should be implemented by each sub-class.
@@ -72,16 +71,16 @@ public abstract class Frog extends Sprite implements Pool.Poolable {
     public abstract void reset();
 
     public void defaultInit(AssetController assetController, RuntimeInfo runtimeInfo,
-                            float positionX, float positionY) {
+                                Vector2 position) {
         this.assetController = assetController;
         this.runtimeInfo = runtimeInfo;
-        this.position.set(positionX, positionY);
+        this.position = position;
         this.lifeTime = 0;
     }
 
     public void defaultReset() {
         this.isKilled = false;
-        this.position.set(0, 0);
+        this.position = Vector2.Zero;
     }
 
     public void update(float deltaTime) {

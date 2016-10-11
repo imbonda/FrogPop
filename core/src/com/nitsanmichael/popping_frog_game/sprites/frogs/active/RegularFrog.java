@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
@@ -35,8 +36,8 @@ public class RegularFrog extends Frog {
     }
 
     @Override
-    public void init(AssetController assetController, RuntimeInfo runtimeInfo, float positionX, float positionY) {
-        super.defaultInit(assetController, runtimeInfo, positionX, positionY);
+    public void init(AssetController assetController, RuntimeInfo runtimeInfo, Vector2 position) {
+        super.defaultInit(assetController, runtimeInfo, position);
         generateRandomAnimation();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
