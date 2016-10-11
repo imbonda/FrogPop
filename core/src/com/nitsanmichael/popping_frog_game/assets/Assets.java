@@ -76,7 +76,10 @@ public final class Assets {
      * Textures.
      */
     // Icons.
-    public static final String RETURN_ICON = "icons/back_icon.png";
+    public static final String RETURN_ICON = "images/icons/return.png";
+    public static final String RESTART_ICON = "images/icons/restart.png";
+    public static final String HOME_ICON = "images/icons/home.png";
+    public static final String RANK_ICON = "images/icons/rank.png";
     // Themes.
     public static final String SUMMER_THEME = "images/themes/summer.png";
     public static final String AUTUMN_THEME = "images/themes/autumn.png";
@@ -142,6 +145,9 @@ public final class Assets {
     public static final String TEXTURE_FILES [] = {
         // Icons
             RETURN_ICON,
+            RESTART_ICON,
+            HOME_ICON,
+            RANK_ICON,
         // Themes
             SUMMER_THEME,
             AUTUMN_THEME,
