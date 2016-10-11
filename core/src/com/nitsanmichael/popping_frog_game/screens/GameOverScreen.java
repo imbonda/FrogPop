@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -54,8 +55,8 @@ public class GameOverScreen extends FadingScreen {
         // Restart button.
         Texture restartIcon = this.game.assetController.get(Assets.RESTART_ICON);
         ImageButton restartButton = new ImageButton(new SpriteDrawable(new Sprite(restartIcon)));
-        restartButton.setSize(110, 110);
-        restartButton.setPosition(600, 200);
+        restartButton.setSize(120, 120);
+        restartButton.setPosition(530, 200);
         restartButton.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -77,7 +78,7 @@ public class GameOverScreen extends FadingScreen {
         Texture homeIcon = this.game.assetController.get(Assets.HOME_ICON);
         ImageButton homeButton = new ImageButton(new SpriteDrawable(new Sprite(homeIcon)));
         homeButton.setSize(120, 120);
-        homeButton.setPosition(600, 50);
+        homeButton.setPosition(670, 200);
         homeButton.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -95,11 +96,11 @@ public class GameOverScreen extends FadingScreen {
                 dispose();
             }
         });
-        // Home button.
+        // Rank button.
         Texture rankIcon = this.game.assetController.get(Assets.RANK_ICON);
         ImageButton rankButton = new ImageButton(new SpriteDrawable(new Sprite(rankIcon)));
-        rankButton.setSize(70, 70);
-        rankButton.setPosition(700, 140);
+        rankButton.setSize(120, 120);
+        rankButton.setPosition(605, 60);
         rankButton.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -153,6 +154,15 @@ public class GameOverScreen extends FadingScreen {
         this.stage.addActor(homeButton);
         this.stage.addActor(rankButton);
         Gdx.input.setInputProcessor(this.stage);
+    }
+
+    @Override
+    public void setScreenColor(float r, float g, float b, float a) {
+        super.setScreenColor(r, g, b, a);
+        for (Actor actor : this.stage.getActors()) {
+            Color color = actor.getColor();
+            actor.setColor(color.r, color.g, color.b, a);
+        }
     }
 
     @Override
