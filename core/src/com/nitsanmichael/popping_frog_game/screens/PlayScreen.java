@@ -30,7 +30,6 @@ public class PlayScreen extends FadingScreen {
     private static final float FADE_IN_TIME = 1f;
     private static final int MAX_LIVES = 3;
 
-    private boolean isAlreadyOver;
     private PoppingFrog game;
     private Viewport gameViewPort;
     private SpritesDrawer spritesDrawer;
@@ -60,7 +59,6 @@ public class PlayScreen extends FadingScreen {
         this.hud = new Hud(this.game.assetController, this.game.batch, runtimeInfo, timer);
         this.popupDrawer = new PopupDrawer(gameViewPort, this.game.batch, this.game.assetController);
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
-        this.isAlreadyOver = false;
         // Play music.
         this.game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
         this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
@@ -69,8 +67,7 @@ public class PlayScreen extends FadingScreen {
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
         this.hud.update();
-        if (this.runtimeInfo.gameLives <= 0 && !this.isAlreadyOver) {
-            this.isAlreadyOver = true;
+        if (this.runtimeInfo.gameLives <= 0) {
             gameOver();
         }
     }
