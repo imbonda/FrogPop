@@ -39,6 +39,7 @@ public class PlayScreen extends FadingScreen {
     private LevelController levelController;
     private Hud hud;
     private PopupDrawer popupDrawer;
+    private boolean isAlreadyOver;
 
 
     public PlayScreen(PoppingFrog game) {
@@ -58,6 +59,7 @@ public class PlayScreen extends FadingScreen {
         this.levelController = new LevelController(
                     this.game.config, this.game.assetController, this.game.media, this.spritesDrawer,
                     this.popupDrawer, this.runtimeInfo, timer, this.themeController);
+        this.isAlreadyOver = false;
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(this.gameViewPort, this.runtimeInfo));
         // Play music.
         this.game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
@@ -70,7 +72,8 @@ public class PlayScreen extends FadingScreen {
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
         this.hud.update();
-        if (this.runtimeInfo.gameLives <= 0) {
+        if (this.runtimeInfo.gameLives <= 0 && !this.isAlreadyOver) {
+            this.isAlreadyOver = true;
             gameOver();
         }
     }
