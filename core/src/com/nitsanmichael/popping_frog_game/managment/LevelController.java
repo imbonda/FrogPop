@@ -1,11 +1,13 @@
 package com.nitsanmichael.popping_frog_game.managment;
 
 import com.badlogic.gdx.utils.Array;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.config.Config;
 import com.nitsanmichael.popping_frog_game.config.metadata.AddFrogMetaData;
 import com.nitsanmichael.popping_frog_game.media.Media;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
+import com.nitsanmichael.popping_frog_game.scenes.PopupDrawer;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
 import com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData;
 import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
@@ -24,7 +26,6 @@ public class LevelController {
     private static final float LEVEL_TIMER_INCREMENTAL_FACTOR = 1.04f;
     private static final float SPEED_SCALE_FACTOR = 1.087f;
     private static final int MAX_DIFFICALITY_LEVEL = 14;
-    private static final float LEVEL_UP_POPUP_TIME = 1f;
 
     // Private members.
     private Array<LevelMetaData> levelsMetaData;
@@ -33,31 +34,33 @@ public class LevelController {
     private Timer levelTimer;
     private Config config;
     private Media media;
+    private PopupDrawer popupDrawer;
     private RuntimeInfo runtimeInfo;
     private ThemeController themeController;
     private FrogClassAllocator frogClassAllocator;
     private FrogManager frogManager;
-    private float timeSinceLastLevelUp;
 
     /**
      * @param config    The game configuration.
      * @param assetController   An asset controller instance for retrieving the loaded assets.
      * @param media A media object for playing music and sounds.
      * @param spritesDrawer A class that is used to draw queued sprites.
+     * @param popupDrawer A class that is used to draw popups to the screen (level up).
      * @param runtimeInfo A runtime information regarding the game state.
      * @param timer A timer to be used for timing the levels.
      **/
-    private LevelController(Config config, com.nitsanmichael.popping_frog_game.assets.AssetController assetController, Media media,
-                            SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo, Timer timer) {
+    private LevelController(Config config, AssetController assetController, Media media,
+                            SpritesDrawer spritesDrawer, PopupDrawer popupDrawer,
+                            RuntimeInfo runtimeInfo, Timer timer) {
         this.config = config;
         this.media = media;
+        this.popupDrawer = popupDrawer;
         this.runtimeInfo = runtimeInfo;
         this.levelsMetaData = config.levelsMetaData;
         this.frogClassAllocator = new FrogClassAllocator();
         this.frogManager = new FrogManager(assetController, spritesDrawer, runtimeInfo,
                     this.frogClassAllocator);
         this.levelTimer = timer;
-        this.timeSinceLastLevelUp = 0;
     }
 
     /**
@@ -65,14 +68,15 @@ public class LevelController {
      * @param assetController   An asset controller instance for retrieving the loaded assets.
      * @param media A media object for playing music and sounds.
      * @param spritesDrawer A class that is used to draw queued sprites.
+     * @param popupDrawer A class that is used to draw popups to the screen (level up).
      * @param runtimeInfo A runtime information regarding the game state.
      * @param timer A timer to be used for timing the levels.
      * @param themeController A theme-controller to use for switching between themes.
      */
-    public LevelController(Config config, com.nitsanmichael.popping_frog_game.assets.AssetController assetController, Media media,
-                           SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo, Timer timer,
-                           ThemeController themeController) {
-        this(config, assetController, media, spritesDrawer, runtimeInfo, timer);
+    public LevelController(Config config, AssetController assetController, Media media,
+                           SpritesDrawer spritesDrawer, PopupDrawer popupDrawer,
+                           RuntimeInfo runtimeInfo, Timer timer, ThemeController themeController) {
+        this(config, assetController, media, spritesDrawer, popupDrawer, runtimeInfo, timer);
         this.runtimeInfo.gameLevel = STARTING_LEVEL;
         this.runtimeInfo.gameSpeed = STARTING_SPEED;
         this.themeController = themeController;
@@ -90,10 +94,11 @@ public class LevelController {
      * @param themeController A theme-controller to use for switching between themes.
      * @param level A level to set the LevelController to.
      */
-    public LevelController(Config config, com.nitsanmichael.popping_frog_game.assets.AssetController assetController, Media media,
-                           SpritesDrawer spritesDrawer, RuntimeInfo runtimeInfo, Timer timer,
-                           ThemeController themeController, int level) {
-        this(config, assetController, media, spritesDrawer, runtimeInfo, timer);
+    public LevelController(Config config, AssetController assetController, Media media,
+                           SpritesDrawer spritesDrawer, PopupDrawer popupDrawer,
+                           RuntimeInfo runtimeInfo, Timer timer, ThemeController themeController,
+                           int level) {
+        this(config, assetController, media, spritesDrawer, popupDrawer, runtimeInfo, timer);
         this.runtimeInfo.gameLevel = level;
         this.themeController = themeController;
         this.themeController.init(level);
@@ -150,12 +155,13 @@ public class LevelController {
      * @param deltaTime The time passed from the last update call.
      */
     public void update(float deltaTime) {
-        this.timeSinceLastLevelUp += deltaTime;
-        this.levelTimer.update(deltaTime);
-        this.frogManager.update(deltaTime);
-        if (this.levelTimer.isTimedOut()) {
-            setNewTimer();
-            levelUp();
+        if (this.runtimeInfo.gameStarted) {
+            this.levelTimer.update(deltaTime);
+            this.frogManager.update(deltaTime);
+            if (this.levelTimer.isTimedOut()) {
+                setNewTimer();
+                levelUp();
+            }
         }
         this.themeController.update(deltaTime, this.runtimeInfo.gameLevel);
     }
@@ -174,18 +180,13 @@ public class LevelController {
      * Making the Level controller to advance to the next level.
      */
     private void levelUp() {
-        this.timeSinceLastLevelUp = 0;
         this.runtimeInfo.gameLevel++;
         if(this.runtimeInfo.gameLevel <= MAX_DIFFICALITY_LEVEL) {
             this.runtimeInfo.gameSpeed *= SPEED_SCALE_FACTOR;
         }
         setCurrentLevel();
         this.media.playSound(Assets.LEVEL_UP_SOUND);
-    }
-
-    public boolean isLeveledUp() {
-        return this.runtimeInfo.gameLevel > STARTING_LEVEL &&
-                    this.timeSinceLastLevelUp < LEVEL_UP_POPUP_TIME;
+        this.popupDrawer.register(PopupDrawer.PopupType.LEVEL_UP);
     }
 
 }

@@ -1,16 +1,15 @@
 package com.nitsanmichael.popping_frog_game.scenes;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
-
-import java.util.HashMap;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
+import com.nitsanmichael.popping_frog_game.scenes.popups.CountdownPopup;
+import com.nitsanmichael.popping_frog_game.scenes.popups.LevelUpPopup;
+import com.nitsanmichael.popping_frog_game.tweens.TweenController;
 
 
 /**
@@ -18,71 +17,31 @@ import java.util.HashMap;
  */
 public class PopupDrawer {
 
-    private static final String LEVEL_UP_MESSAGE = "Level up !";
-
-    public enum Popup { LEVEL_UP }
-
-    private interface PopupPerformer {
-
-        void addToStage();
-
-        void removeFromStage();
-    }
-
-    private class LevelUpPopup implements PopupPerformer {
-
-        private Label levelUpLabel;
-
-        public LevelUpPopup(BitmapFont font) {
-            Label.LabelStyle style = new Label.LabelStyle();
-            style.font = font;
-            style.fontColor = Color.FIREBRICK;
-            this.levelUpLabel = new Label(LEVEL_UP_MESSAGE, style);
-            this.levelUpLabel.setFontScale(0.3f);
-            this.levelUpLabel.setPosition(320, 400);
-        }
-
-        @Override
-        public void addToStage() {
-            stage.addActor(this.levelUpLabel);
-        }
-
-        @Override
-        public void removeFromStage() {
-            this.levelUpLabel.remove();
-        }
-    }
+    public enum PopupType { LEVEL_UP, COUNTDOWN }
 
     private LevelUpPopup levelUpPopup;
-    private HashMap<Popup, PopupPerformer> popupToPerformerMap;
-    private Array<Popup> registeredPopups;
+    private CountdownPopup countdownPopup;
     private Stage stage;
 
 
-    public PopupDrawer(Viewport viewport, Batch batch, AssetController assetController) {
+    public PopupDrawer(Viewport viewport, Batch batch, AssetController assetController,
+                        TweenController tweenController, RuntimeInfo runtimeInfo) {
         this.stage = new Stage(viewport, batch);
         BitmapFont font = assetController.get(Assets.GAME_FONT);
-        this.levelUpPopup = new LevelUpPopup(font);
-        initPopupsToPerformersMap();
-        this.registeredPopups = new Array<Popup>();
+        this.levelUpPopup = new LevelUpPopup(this.stage, tweenController, font);
+        this.countdownPopup = new CountdownPopup(tweenController, runtimeInfo, this.stage, font);
     }
 
-    private void initPopupsToPerformersMap() {
-        this.popupToPerformerMap = new HashMap<Popup, PopupPerformer>();
-        this.popupToPerformerMap.put(Popup.LEVEL_UP, this.levelUpPopup);
-    }
-
-    public void register(Popup popup) {
-        if (!this.registeredPopups.contains(Popup.LEVEL_UP, true)) {
-            this.registeredPopups.add(popup);
-            this.popupToPerformerMap.get(popup).addToStage();
-        }
-    }
-
-    public void unregister(Popup popup) {
-        if (this.registeredPopups.contains(Popup.LEVEL_UP, true)) {
-            this.registeredPopups.removeValue(popup, true);
-            this.popupToPerformerMap.get(popup).removeFromStage();
+    public void register(PopupType popup) {
+        switch (popup) {
+            case LEVEL_UP:
+                this.levelUpPopup.perform();
+                break;
+            case COUNTDOWN:
+                this.countdownPopup.perform();
+                break;
+            default:
+                break;
         }
     }
 

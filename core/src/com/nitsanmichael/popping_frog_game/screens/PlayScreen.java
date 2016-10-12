@@ -43,25 +43,28 @@ public class PlayScreen extends FadingScreen {
 
     public PlayScreen(PoppingFrog game) {
         super(game.batch, game.tweenController);
-        game.adsController.hideBannerAd();
         this.game = game;
         this.gameViewPort = new FitViewport(
                     PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
         this.spritesDrawer = new SpritesDrawer();
         this.effectDrawer = new EffectDrawer();
-        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
         this.themeController = new ThemeController(this.game.config, this.game.assetController,
                     this.effectDrawer);
+        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
         Timer timer = new Timer(this.game.assetController);
-        this.levelController = new LevelController(
-                    this.game.config, this.game.assetController, this.game.media, spritesDrawer,
-                    this.runtimeInfo, timer, this.themeController);
         this.hud = new Hud(this.game.assetController, this.game.batch, runtimeInfo, timer);
-        this.popupDrawer = new PopupDrawer(gameViewPort, this.game.batch, this.game.assetController);
-        Gdx.input.setInputProcessor(new GamePlayTouchProcessor(gameViewPort, runtimeInfo));
+        this.popupDrawer = new PopupDrawer(this.gameViewPort, this.game.batch,
+                this.game.assetController, this.game.tweenController, this.runtimeInfo);
+        this.levelController = new LevelController(
+                    this.game.config, this.game.assetController, this.game.media, this.spritesDrawer,
+                    this.popupDrawer, this.runtimeInfo, timer, this.themeController);
+        Gdx.input.setInputProcessor(new GamePlayTouchProcessor(this.gameViewPort, this.runtimeInfo));
         // Play music.
         this.game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
         this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
+        game.adsController.hideBannerAd();
+
+        popupDrawer.register(PopupDrawer.PopupType.COUNTDOWN);
     }
 
     public void update(float deltaTime) {
@@ -96,17 +99,11 @@ public class PlayScreen extends FadingScreen {
         super.render(delta);
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.game.batch.setProjectionMatrix(gameViewPort.getCamera().combined);
+        this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
         this.game.batch.begin();
         this.themeController.currentTheme.draw(this.game.batch);
         this.spritesDrawer.drawSprites(this.game.batch);
         this.effectDrawer.drawEffects(this.game.batch);
-        if (this.levelController.isLeveledUp()) {
-            this.popupDrawer.register(PopupDrawer.Popup.LEVEL_UP);
-        }
-        else {
-            this.popupDrawer.unregister(PopupDrawer.Popup.LEVEL_UP);
-        }
         this.game.batch.end();
         this.popupDrawer.drawPopups();
         this.hud.draw();
@@ -114,7 +111,7 @@ public class PlayScreen extends FadingScreen {
 
     @Override
     public void resize(int width, int height) {
-        gameViewPort.update(width, height, true);
+        this.gameViewPort.update(width, height, true);
         this.hud.resize(width, height, true);
     }
 
