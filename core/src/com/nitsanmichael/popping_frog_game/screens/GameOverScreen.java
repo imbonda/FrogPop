@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
+import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFreezeFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
 
@@ -54,12 +56,22 @@ public class GameOverScreen extends FadingScreen {
 
         // Restart button.
         Texture restartIcon = this.game.assetController.get(Assets.RESTART_ICON);
-        ImageButton restartButton = new ImageButton(new SpriteDrawable(new Sprite(restartIcon)));
+        Texture restartPressedIcon = this.game.assetController.get(Assets.RESTART_PRESSED_ICON);
+        final ToggleButton restartButton = new ToggleButton(
+                    new Image(restartIcon), new Image(restartPressedIcon));
         restartButton.setSize(120, 120);
         restartButton.setPosition(530, 200);
         restartButton.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                restartButton.setState(ToggleButton.OFF_STATE);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                restartButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = GameOverScreen.this.game;
                 game.tweenController.fadeOutScreen(GameOverScreen.this, FADE_OUT_TIME,
@@ -76,12 +88,21 @@ public class GameOverScreen extends FadingScreen {
         });
         // Home button.
         Texture homeIcon = this.game.assetController.get(Assets.HOME_ICON);
-        ImageButton homeButton = new ImageButton(new SpriteDrawable(new Sprite(homeIcon)));
+        Texture homePressedIcon = this.game.assetController.get(Assets.HOME_PRESSED_ICON);
+        final ToggleButton homeButton = new ToggleButton(new Image(homeIcon), new Image(homePressedIcon));
         homeButton.setSize(120, 120);
         homeButton.setPosition(670, 200);
         homeButton.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                homeButton.setState(ToggleButton.OFF_STATE);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                homeButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = GameOverScreen.this.game;
                 game.tweenController.fadeOutScreen(GameOverScreen.this, FADE_OUT_TIME,
@@ -98,12 +119,21 @@ public class GameOverScreen extends FadingScreen {
         });
         // Rank button.
         Texture rankIcon = this.game.assetController.get(Assets.RANK_ICON);
-        ImageButton rankButton = new ImageButton(new SpriteDrawable(new Sprite(rankIcon)));
+        Texture rankPressedIcon = this.game.assetController.get(Assets.RANK_PRESSED_ICON);
+        final ToggleButton rankButton = new ToggleButton(new Image(rankIcon), new Image(rankPressedIcon));
         rankButton.setSize(120, 120);
         rankButton.setPosition(605, 60);
         rankButton.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                rankButton.setState(ToggleButton.OFF_STATE);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                rankButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 GameOverScreen.this.game.playServices.showScore();
             }
@@ -143,7 +173,7 @@ public class GameOverScreen extends FadingScreen {
     }
 
     private void setStage(Label levelLabel, Label scoreLabel, Label highestScoreLabel,
-                            ImageButton restartButton, ImageButton homeButton, ImageButton rankButton) {
+                            ToggleButton restartButton, ToggleButton homeButton, ToggleButton rankButton) {
         this.stage = new Stage(new FitViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);

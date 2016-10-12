@@ -63,4 +63,11 @@ public class ToggleButton extends Group {
             setSize(this.offImage.getWidth(), this.offImage.getHeight());
         }
     }
+
+    @Override
+    public void setSize(float width, float height) {
+        super.setSize(width, height);
+        this.onImage.setSize(width, height);
+        this.offImage.setSize(width, height);
+    }
 }
