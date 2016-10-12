@@ -83,6 +83,14 @@ public final class Assets {
     public static final String HOME_PRESSED_ICON = "images/icons/home_pressed.png";
     public static final String RANK_ICON = "images/icons/rank.png";
     public static final String RANK_PRESSED_ICON = "images/icons/rank_pressed.png";
+    public static final String PLAY_ICON = "images/icons/play.png";
+    public static final String PLAY_PRESSED_ICON = "images/icons/play_pressed.png";
+    public static final String SETTINGS_ICON = "images/icons/settings.png";
+    public static final String SETTINGS_PRESSED_ICON = "images/icons/settings_pressed.png";
+    public static final String HERO_ICON = "images/icons/hero.png";
+    public static final String HERO_PRESSED_ICON = "images/icons/hero_pressed.png";
+    // Backgrounds.
+    public static final String MENU_BACKGROUND = "images/backgrounds/menu.jpg";
     // Themes.
     public static final String SUMMER_THEME = "images/themes/summer.png";
     public static final String AUTUMN_THEME = "images/themes/autumn.png";
@@ -154,6 +162,14 @@ public final class Assets {
             HOME_PRESSED_ICON,
             RANK_ICON,
             RANK_PRESSED_ICON,
+            PLAY_ICON,
+            PLAY_PRESSED_ICON,
+            SETTINGS_ICON,
+            SETTINGS_PRESSED_ICON,
+            HERO_ICON,
+            HERO_PRESSED_ICON,
+        // Backgrounds
+            MENU_BACKGROUND,
         // Themes
             SUMMER_THEME,
             AUTUMN_THEME,

@@ -1,6 +1,7 @@
 package com.nitsanmichael.popping_frog_game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,11 +10,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.sprites.Buttons;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleBritishFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
@@ -36,40 +44,133 @@ public class MainMenuScreen extends FadingScreen {
     private static final float FADE_OUT_TIME = 1f;
     private static final float FADE_IN_TIME = 1f;
     private static final float GAME_FADE_IN = 0.3f;
+    private static final String HIGHEST_SCORE = "Highest score: ";
+    private static final String GAME_TITLE = "Popping Frog";
 
-    private Sprite End;
-    private BitmapFont Score;
-    private Buttons button1;
-    private Buttons button2;
-    private Buttons chooseHero;
     private PoppingFrog game;
-    private Viewport viewport;
+    private Texture backgroundTexture;
     private Array<IdleFrog> idleFrogs;
-    private Texture playgame=new Texture("buttons/startgamen.png");
-    private Texture pressedplaygame=new Texture("buttons/startgame2n.png");
-    private Texture settings=new Texture("buttons/settings.png");
-    private Texture pressedsettings=new Texture("buttons/settings2.png");
-    private Texture chooseHeroIcon=new Texture("buttons/choosehero.png");
-    private Texture pressedChooseHeroIcon=new Texture("buttons/choosehero2.png");
+
+    private Stage stage;
 
 
     public MainMenuScreen(PoppingFrog game) {
         super(game.batch, game.tweenController);
-        this.viewport = new FitViewport(
-                PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
+        this.game = game;
+        BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
+
+        // Play button.
+        Texture playIcon = this.game.assetController.get(Assets.PLAY_ICON);
+        Texture playPressedIcon = this.game.assetController.get(Assets.PLAY_PRESSED_ICON);
+        final ToggleButton playButton = new ToggleButton(
+                    new Image(playIcon), new Image(playPressedIcon));
+        playButton.setSize(100, 100);
+        playButton.setPosition(340, 300);
+        playButton.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                playButton.setState(ToggleButton.OFF_STATE);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                playButton.setState(ToggleButton.ON_STATE);
+                super.touchUp(event, x, y, pointer, button);
+                final PoppingFrog game = MainMenuScreen.this.game;
+                game.tweenController.fadeOutScreen(MainMenuScreen.this, FADE_OUT_TIME,
+                        new TweenCallback() {
+                            @Override
+                            public void onEvent(int type, BaseTween<?> source) {
+                                dispose();
+                                FadingScreen screen = new PlayScreen(game);
+                                game.setScreen(screen);
+                                game.tweenController.fadeInScreen(screen, GAME_FADE_IN, null);
+                            }
+                });
+            }
+        });
+        // Settings button.
+        Texture settingsIcon = this.game.assetController.get(Assets.SETTINGS_ICON);
+        Texture settingsPressedIcon = this.game.assetController.get(Assets.SETTINGS_PRESSED_ICON);
+        final ToggleButton settingsButton = new ToggleButton(
+                    new Image(settingsIcon), new Image(settingsPressedIcon));
+        settingsButton.setSize(100, 100);
+        settingsButton.setPosition(200, 300);
+        settingsButton.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                settingsButton.setState(ToggleButton.OFF_STATE);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                settingsButton.setState(ToggleButton.ON_STATE);
+                super.touchUp(event, x, y, pointer, button);
+                dispose();
+                final PoppingFrog game = MainMenuScreen.this.game;
+                game.setScreen(new SettingsScreen(game));
+            }
+        });
+        // Hero button.
+        Texture heroIcon = this.game.assetController.get(Assets.HERO_ICON);
+        Texture heroPressedIcon = this.game.assetController.get(Assets.HERO_PRESSED_ICON);
+        final ToggleButton heroButton = new ToggleButton(
+                    new Image(heroIcon), new Image(heroPressedIcon));
+        heroButton.setSize(100, 100);
+        heroButton.setPosition(480, 300);
+        heroButton.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                heroButton.setState(ToggleButton.OFF_STATE);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                heroButton.setState(ToggleButton.ON_STATE);
+                super.touchUp(event, x, y, pointer, button);
+                final PoppingFrog game = MainMenuScreen.this.game;
+                game.tweenController.fadeOutScreen(MainMenuScreen.this, FADE_OUT_TIME,
+                        new TweenCallback() {
+                            @Override
+                            public void onEvent(int type, BaseTween<?> source) {
+                                dispose();
+                                FadingScreen screen = new ChooseHeroScreen(game);
+                                game.setScreen(screen);
+                                game.tweenController.fadeInScreen(screen, GAME_FADE_IN, null);
+                            }
+                });
+            }
+        });
+
+        // Game title.
+        Label titleLabel = new Label(GAME_TITLE, new Label.LabelStyle(font, Color.LIME));
+        titleLabel.setFontScale(0.5f);
+        titleLabel.setPosition(230, 450); //300,50
+        titleLabel.setHeight(50);
+
+        // Highest score label.
+        Label highestScoreLabel = new Label("",//HIGHEST_SCORE + this.game.data.getHighScore(),
+                new Label.LabelStyle(font, Color.WHITE));
+        highestScoreLabel.setFontScale(0.2f);
+        highestScoreLabel.setPosition(560, 450); //300,50
+        highestScoreLabel.setHeight(50);
+
+        this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
+        initIdleFrogs();
+        setStage(titleLabel, highestScoreLabel, playButton, settingsButton, heroButton);
+        // Play music.
+        this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
+
+        this.game.playServices.signIn();
         if (game.adsController.isInternetConnected()) {
             game.adsController.showBannerAd();
         }
-        this.game = game;
-        this.Score = new BitmapFont(Gdx.files.internal("font.fnt"));
-        End=new Sprite(new Texture(Gdx.files.internal("intro2.jpg")));
-        button1=new Buttons(300,395,playgame,pressedplaygame);
-        button2=new Buttons(300,315,settings,pressedsettings);
-        chooseHero=new Buttons(300,235,chooseHeroIcon,pressedChooseHeroIcon);
-        initIdleFrogs();
-        // Play music.
-        this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
-        this.game.playServices.signIn();
     }
 
     private void initIdleFrogs() {
@@ -86,78 +187,50 @@ public class MainMenuScreen extends FadingScreen {
         idleFrogs.add(new IdleHealthFrog(this.game.assetController, new Vector2(620, 150)));
     }
 
+    private void setStage(Label titleLabel, Label highestScoreLabel, ToggleButton playButton,
+                            ToggleButton settingsButton, ToggleButton heroButton) {
+        this.stage = new Stage(new FitViewport(
+                    PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
+                    this.game.batch);
+        this.stage.addActor(titleLabel);
+        this.stage.addActor(highestScoreLabel);
+        this.stage.addActor(playButton);
+        this.stage.addActor(settingsButton);
+        this.stage.addActor(heroButton);
+        Gdx.input.setInputProcessor(this.stage);
+    }
+
+    @Override
+    public void setScreenColor(float r, float g, float b, float a) {
+        super.setScreenColor(r, g, b, a);
+        for (Actor actor : this.stage.getActors()) {
+            Color color = actor.getColor();
+            actor.setColor(color.r, color.g, color.b, a);
+        }
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
-        this.game.batch.setProjectionMatrix(viewport.getCamera().combined);
+        this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
         this.game.batch.begin();
-        End.draw(this.game.batch);
-        drawGO();
-        drawButtons();
+        this.game.batch.draw(this.backgroundTexture, 0, 0);
         drawIdleFrogs();
         this.game.batch.end();
+        this.stage.draw();
     }
 
     public void update(float deltaTime) {
-        handleInput();
         updateIdleFrogs(deltaTime);
-        this.viewport.getCamera().update();
     }
 
     private void updateIdleFrogs(float deltaTime) {
         for (IdleFrog frog : this.idleFrogs) {
             frog.update(deltaTime);
         }
-    }
-
-    public void handleInput() {
-        Vector3 touches=viewport.unproject( new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
-        Vector2 touchVector = new Vector2(touches.x,touches.y);
-        if (this.button1.isButtonsTouched(touchVector)) {
-            this.game.tweenController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
-                    @Override
-                    public void onEvent(int type, BaseTween<?> source) {
-                        FadingScreen screen = new PlayScreen(game);
-                        game.setScreen(screen);
-                        game.tweenController.fadeInScreen(screen, GAME_FADE_IN, null);
-                    }
-            });
-        }
-        if (this.button2.isButtonsTouched(touchVector)) {
-            this.game.setScreen(new SettingsScreen(game, MainMenuScreen.this));
-        }
-        if (this.chooseHero.isButtonsTouched(touchVector)) {
-            this.game.tweenController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
-                    @Override
-                    public void onEvent(int type, BaseTween<?> source) {
-                        FadingScreen screen = new ChooseHeroScreen(game);
-                        game.setScreen(screen);
-                        game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
-                    }
-            });
-        }
-    }
-
-    private void drawGO()
-    {
-        SpriteBatch batch = this.game.batch;
-        Score.getData().setScale(0.2f);
-        Score.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-        Score.draw(batch, "Highest score: "+ this.game.data.getHighScore(),300,50);
-
-    }
-
-    private void drawButtons()
-    {
-        SpriteBatch batch = this.game.batch;
-        Vector2 button1Position = this.button1.getPosition();
-        Vector2 button2Position = this.button2.getPosition();
-        batch.draw(this.button1.getButtonsTexture(), button1Position.x, button1Position.y);
-        batch.draw(this.button2.getButtonsTexture(), button2Position.x, button2Position.y);
-        batch.draw(this.chooseHero.getButtonsTexture(), chooseHero.getPosition().x, chooseHero.getPosition().y);
     }
 
     private void drawIdleFrogs() {
@@ -168,12 +241,13 @@ public class MainMenuScreen extends FadingScreen {
 
     @Override
     public void resize(int width, int height) {
-        this.viewport.update(width, height, true);
+        this.stage.getViewport().update(width, height, true);
     }
 
     @Override
     public void dispose() {
-        End.getTexture().dispose();
+        Gdx.input.setInputProcessor(null);
+        this.stage.dispose();
     }
 
     @Override

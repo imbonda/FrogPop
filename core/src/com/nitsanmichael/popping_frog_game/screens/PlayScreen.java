@@ -64,9 +64,10 @@ public class PlayScreen extends FadingScreen {
         // Play music.
         this.game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
         this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
-        game.adsController.hideBannerAd();
-        
+        // Begin countdown.
         this.popupDrawer.register(PopupDrawer.PopupType.COUNTDOWN);
+
+        game.adsController.hideBannerAd();
     }
 
     public void update(float deltaTime) {
@@ -85,8 +86,6 @@ public class PlayScreen extends FadingScreen {
         this.game.media.playSound(Assets.GAME_OVER_SOUND);
         this.spritesDrawer.clear();
         this.themeController.reset();
-        this.hud.dispose();
-        this.popupDrawer.dispose();
         dispose();
         this.game.tweenController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
             @Override
@@ -122,6 +121,8 @@ public class PlayScreen extends FadingScreen {
     @Override
     public void dispose() {
         Gdx.input.setInputProcessor(null);
+        this.hud.dispose();
+        this.popupDrawer.dispose();
     }
 
     @Override

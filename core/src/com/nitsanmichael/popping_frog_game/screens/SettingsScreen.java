@@ -43,7 +43,7 @@ public class SettingsScreen implements Screen {
     private Slider soundSlider;
     private Stage stage;
 
-    public SettingsScreen(final PoppingFrog game, final Screen screenToReturnTo) {
+    public SettingsScreen(final PoppingFrog game) {
         this.game = game;
         Skin slideSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
@@ -57,8 +57,8 @@ public class SettingsScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                game.setScreen(screenToReturnTo);
                 dispose();
+                game.setScreen(new MainMenuScreen(game));
             }
         });
 
@@ -182,6 +182,7 @@ public class SettingsScreen implements Screen {
     @Override
     public void dispose() {
         Gdx.input.setInputProcessor(null);
+        this.stage.dispose();
     }
 
     @Override

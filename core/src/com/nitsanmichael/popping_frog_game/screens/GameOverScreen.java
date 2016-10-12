@@ -78,12 +78,12 @@ public class GameOverScreen extends FadingScreen {
                         new TweenCallback() {
                             @Override
                             public void onEvent(int type, BaseTween<?> source) {
+                                dispose();
                                 FadingScreen screen = new PlayScreen(game);
                                 game.setScreen(screen);
                                 game.tweenController.fadeInScreen(screen, GAME_FADE_IN, null);
                             }
                         });
-                dispose();
             }
         });
         // Home button.
@@ -109,12 +109,12 @@ public class GameOverScreen extends FadingScreen {
                         new TweenCallback() {
                             @Override
                             public void onEvent(int type, BaseTween<?> source) {
+                                dispose();
                                 FadingScreen screen = new MainMenuScreen(game);
                                 game.setScreen(screen);
                                 game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
                             }
                 });
-                dispose();
             }
         });
         // Rank button.
@@ -232,6 +232,7 @@ public class GameOverScreen extends FadingScreen {
     @Override
     public void dispose() {
         Gdx.input.setInputProcessor(null);
+        this.stage.dispose();
     }
 
     @Override
