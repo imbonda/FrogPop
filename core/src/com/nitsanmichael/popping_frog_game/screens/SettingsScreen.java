@@ -53,7 +53,6 @@ public class SettingsScreen implements Screen {
         font.getData().setScale(0.2f);
 
         // Go back button.
-        // Settings button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
         Texture backPressedIcon = this.game.assetController.get(Assets.BACK_PRESSED_ICON);
         final ToggleButton backButton = new ToggleButton(
@@ -79,8 +78,8 @@ public class SettingsScreen implements Screen {
 
         // Header label.
         Label settingsLabel = new Label(SETTINGS, new Label.LabelStyle(font, Color.LIME));
-        settingsLabel.setFontScale(0.6f);
-        settingsLabel.setPosition(300, 440);
+        settingsLabel.setFontScale(0.5f);
+        settingsLabel.setPosition(230, 450);
         settingsLabel.setHeight(50);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);

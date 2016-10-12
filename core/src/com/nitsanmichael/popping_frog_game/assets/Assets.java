@@ -90,6 +90,8 @@ public final class Assets {
     public static final String SETTINGS_PRESSED_ICON = "images/icons/settings_pressed.png";
     public static final String HERO_ICON = "images/icons/hero.png";
     public static final String HERO_PRESSED_ICON = "images/icons/hero_pressed.png";
+    public static final String NEXT_ICON = "images/icons/next.png";
+    public static final String NEXT_PRESSED_ICON = "images/icons/next_pressed.png";
     // Backgrounds.
     public static final String MENU_BACKGROUND = "images/backgrounds/menu.jpg";
     // Themes.
@@ -170,6 +172,8 @@ public final class Assets {
             SETTINGS_PRESSED_ICON,
             HERO_ICON,
             HERO_PRESSED_ICON,
+            NEXT_ICON,
+            NEXT_PRESSED_ICON,
         // Backgrounds
             MENU_BACKGROUND,
         // Themes

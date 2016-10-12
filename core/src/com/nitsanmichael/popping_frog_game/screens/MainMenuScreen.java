@@ -150,7 +150,7 @@ public class MainMenuScreen extends FadingScreen {
         // Game title.
         Label titleLabel = new Label(GAME_TITLE, new Label.LabelStyle(font, Color.LIME));
         titleLabel.setFontScale(0.5f);
-        titleLabel.setPosition(230, 450); //300,50
+        titleLabel.setPosition(230, 450);
         titleLabel.setHeight(50);
 
         initIdleFrogs();
@@ -167,16 +167,14 @@ public class MainMenuScreen extends FadingScreen {
 
     private void initIdleFrogs() {
         this.idleFrogs = new Array<IdleFrog>();
-//        idleFrogs.add(new IdleRegularFrog(this.game.assetController,
-//                    IdleRegularFrog.AnimationType.TONGUE, new Vector2(415, 125)));
-        idleFrogs.add(new IdleIllusionFrog(this.game.assetController, new Vector2(415, 125)));
-        idleFrogs.add(new IdleRegularFrog(this.game.assetController,
+        this.idleFrogs.add(new IdleIllusionFrog(this.game.assetController, new Vector2(415, 125)));
+        this.idleFrogs.add(new IdleRegularFrog(this.game.assetController,
                     IdleRegularFrog.AnimationType.WINK, new Vector2(255, 125)));
-        idleFrogs.add(new IdleBritishFrog(this.game.assetController, new Vector2(340, 70)));
-        idleFrogs.add(new IdleMexicanFrog(this.game.assetController, new Vector2(170, 180)));
-        idleFrogs.add(new IdleTurkishFrog(this.game.assetController, new Vector2(500, 180)));
-        idleFrogs.add(new IdleEvilFrog(this.game.assetController, new Vector2(50, 150)));
-        idleFrogs.add(new IdleHealthFrog(this.game.assetController, new Vector2(620, 150)));
+        this.idleFrogs.add(new IdleBritishFrog(this.game.assetController, new Vector2(340, 70)));
+        this.idleFrogs.add(new IdleMexicanFrog(this.game.assetController, new Vector2(170, 180)));
+        this.idleFrogs.add(new IdleTurkishFrog(this.game.assetController, new Vector2(500, 180)));
+        this.idleFrogs.add(new IdleEvilFrog(this.game.assetController, new Vector2(50, 150)));
+        this.idleFrogs.add(new IdleHealthFrog(this.game.assetController, new Vector2(620, 150)));
     }
 
     private void setStage(Label titleLabel, ToggleButton playButton, ToggleButton settingsButton,
