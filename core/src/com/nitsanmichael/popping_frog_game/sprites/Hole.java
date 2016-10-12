@@ -29,6 +29,7 @@ public class Hole extends Sprite {
     private Vector2 boxBottomLeft;
     private Vector2 boxTopRight;
     private Vector2 frogPlacementPosition;
+    private int shuffleRequestCounter;
     private Texture holeTexture;
 
 
@@ -42,6 +43,7 @@ public class Hole extends Sprite {
         this.boxBottomLeft = new Vector2(0 ,0);
         this.boxTopRight = new Vector2(0 ,0);
         this.frogPlacementPosition = new Vector2(0, 0);
+        this.shuffleRequestCounter = 0;
         updateFrogPlacementPosition();
         setSize(this.holeTexture.getWidth(), this.holeTexture.getHeight());
     }
@@ -71,10 +73,12 @@ public class Hole extends Sprite {
             this.velocity.set(directionX * SHUFFLE_ON_SPEED.x, directionY * SHUFFLE_ON_SPEED.y);
             this.state = State.SHUFFLE_ON;
         }
+        this.shuffleRequestCounter += 1;
     }
 
     public void shuffleOff() {
-        if (State.SHUFFLE_ON == this.state) {
+        this.shuffleRequestCounter -= 1;
+        if (State.SHUFFLE_ON == this.state && 0 == this.shuffleRequestCounter) {
             Vector2 toOrigin = new Vector2(
                     this.origin.x - this.position.x,
                     this.origin.y - this.position.y).nor();
