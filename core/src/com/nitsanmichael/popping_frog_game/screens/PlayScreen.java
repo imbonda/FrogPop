@@ -63,8 +63,8 @@ public class PlayScreen extends FadingScreen {
         this.game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
         this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
         game.adsController.hideBannerAd();
-
-        popupDrawer.register(PopupDrawer.PopupType.COUNTDOWN);
+        
+        this.popupDrawer.register(PopupDrawer.PopupType.COUNTDOWN);
     }
 
     public void update(float deltaTime) {
@@ -82,14 +82,15 @@ public class PlayScreen extends FadingScreen {
         this.game.media.playSound(Assets.GAME_OVER_SOUND);
         this.spritesDrawer.clear();
         this.themeController.reset();
-        Gdx.input.setInputProcessor(null);
+        this.hud.dispose();
+        this.popupDrawer.dispose();
         dispose();
         this.game.tweenController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 FadingScreen screen = new GameOverScreen(game, runtimeInfo);
-                game.setScreen(screen);
                 game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
+                game.setScreen(screen);
             }
         });
     }
@@ -117,6 +118,7 @@ public class PlayScreen extends FadingScreen {
 
     @Override
     public void dispose() {
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
