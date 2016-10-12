@@ -23,7 +23,7 @@ public class CountdownPopup implements Popup {
     private static final String COUNTDOWN_GO = "TAP 'em !";
     // Font.
     private static final float INITIAL_FONT_SCALE = 0.7f;
-    private static final Color GREEN = Color.LIME;
+    private static final Color GREEN_LIME = new Color(0x32cd32ff);
     private static final Vector2 SRC_FONT_SCALE = new Vector2(0.9f, 0.1f);
     private static final Vector2 DST_FONT_SCALE = new Vector2(0.9f, 0.9f);
     private static final Vector2 POSITION_COUNT = new Vector2(370, 270);
@@ -42,7 +42,7 @@ public class CountdownPopup implements Popup {
         this.tweenController = tweenController;
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = font;
-        style.fontColor = GREEN;
+        style.fontColor = GREEN_LIME;
         this.countDownLabel = new Label("", style);
         this.countDownLabel.setPosition(POSITION_COUNT.x, POSITION_COUNT.y);
         this.countDownLabel.setFontScale(INITIAL_FONT_SCALE);

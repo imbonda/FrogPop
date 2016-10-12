@@ -154,16 +154,9 @@ public class MainMenuScreen extends FadingScreen {
         titleLabel.setPosition(230, 450); //300,50
         titleLabel.setHeight(50);
 
-        // Highest score label.
-        Label highestScoreLabel = new Label("",//HIGHEST_SCORE + this.game.data.getHighScore(),
-                new Label.LabelStyle(font, Color.WHITE));
-        highestScoreLabel.setFontScale(0.2f);
-        highestScoreLabel.setPosition(560, 450); //300,50
-        highestScoreLabel.setHeight(50);
-
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
         initIdleFrogs();
-        setStage(titleLabel, highestScoreLabel, playButton, settingsButton, heroButton);
+        setStage(titleLabel, playButton, settingsButton, heroButton);
         // Play music.
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
 
@@ -187,13 +180,12 @@ public class MainMenuScreen extends FadingScreen {
         idleFrogs.add(new IdleHealthFrog(this.game.assetController, new Vector2(620, 150)));
     }
 
-    private void setStage(Label titleLabel, Label highestScoreLabel, ToggleButton playButton,
-                            ToggleButton settingsButton, ToggleButton heroButton) {
+    private void setStage(Label titleLabel, ToggleButton playButton, ToggleButton settingsButton,
+                            ToggleButton heroButton) {
         this.stage = new Stage(new FitViewport(
                     PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                     this.game.batch);
         this.stage.addActor(titleLabel);
-        this.stage.addActor(highestScoreLabel);
         this.stage.addActor(playButton);
         this.stage.addActor(settingsButton);
         this.stage.addActor(heroButton);
