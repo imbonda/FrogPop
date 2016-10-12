@@ -62,7 +62,7 @@ public class PlayScreen extends FadingScreen {
         this.isAlreadyOver = false;
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(this.gameViewPort, this.runtimeInfo));
         // Play music.
-        this.game.media.stopMusic(Assets.MAIN_MENU_MUSIC);
+        this.game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
         this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
         // Begin countdown.
         this.popupDrawer.register(PopupDrawer.PopupType.COUNTDOWN);

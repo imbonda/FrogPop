@@ -110,10 +110,10 @@ public class SettingsScreen implements Screen {
                 game.data.setMusicVolume(volume);
                 game.media.updateMusicVolume(volume);
                 if (0 == volume) {
-                    game.media.stopMusic(com.nitsanmichael.popping_frog_game.assets.Assets.MAIN_MENU_MUSIC);
+                    game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
                 }
                 else {
-                    game.media.playMusic(com.nitsanmichael.popping_frog_game.assets.Assets.MAIN_MENU_MUSIC);
+                    game.media.playMusic(Assets.MAIN_MENU_MUSIC);
                 }
             }
 

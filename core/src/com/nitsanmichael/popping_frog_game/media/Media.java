@@ -42,6 +42,13 @@ public class Media {
         }
     }
 
+    public void pauseMusic(String name) {
+        Music music = this.assetController.get(name);
+        if (null != music) {
+            music.pause();
+        }
+    }
+
     public void updateMusicVolume(float volume) {
         this.musicVolume = volume;
         for (String name : Assets.MUSIC_FILES) {

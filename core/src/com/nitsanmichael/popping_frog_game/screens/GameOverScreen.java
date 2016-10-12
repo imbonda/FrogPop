@@ -161,6 +161,8 @@ public class GameOverScreen extends FadingScreen {
         initIdleFrogs();
         setStage(levelLabel, scoreLabel, highestScoreLabel, restartButton, homeButton, rankButton);
 
+        this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
+
         if (game.adsController.isInternetConnected()) {
             game.adsController.showBannerAd();
         }
