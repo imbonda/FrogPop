@@ -44,7 +44,6 @@ public class MainMenuScreen extends FadingScreen {
     private static final float FADE_OUT_TIME = 1f;
     private static final float FADE_IN_TIME = 1f;
     private static final float GAME_FADE_IN = 0.3f;
-    private static final String HIGHEST_SCORE = "Highest score: ";
     private static final String GAME_TITLE = "Popping Frog";
 
     private PoppingFrog game;
@@ -142,7 +141,7 @@ public class MainMenuScreen extends FadingScreen {
                                 dispose();
                                 FadingScreen screen = new ChooseHeroScreen(game);
                                 game.setScreen(screen);
-                                game.tweenController.fadeInScreen(screen, GAME_FADE_IN, null);
+                                game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
                             }
                 });
             }
@@ -154,9 +153,9 @@ public class MainMenuScreen extends FadingScreen {
         titleLabel.setPosition(230, 450); //300,50
         titleLabel.setHeight(50);
 
-        this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
         initIdleFrogs();
         setStage(titleLabel, playButton, settingsButton, heroButton);
+        this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
         // Play music.
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
 

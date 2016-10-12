@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 
 /**
  * Created by MichaelBond on 9/29/2016.
@@ -41,6 +43,7 @@ public class SettingsScreen implements Screen {
     private PoppingFrog game;
     private Slider musicSlider;
     private Slider soundSlider;
+    private Texture backgroundTexture;
     private Stage stage;
 
     public SettingsScreen(final PoppingFrog game) {
@@ -50,12 +53,24 @@ public class SettingsScreen implements Screen {
         font.getData().setScale(0.2f);
 
         // Go back button.
-        Texture returnIcon = this.game.assetController.get(Assets.RETURN_ICON);
-        ImageButton backButton = new ImageButton(new SpriteDrawable(new Sprite(returnIcon)));
-        backButton.setPosition(0, 400);
+        // Settings button.
+        Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
+        Texture backPressedIcon = this.game.assetController.get(Assets.BACK_PRESSED_ICON);
+        final ToggleButton backButton = new ToggleButton(
+                new Image(backIcon), new Image(backPressedIcon));
+        backButton.setSize(100, 100);
+        backButton.setPosition(20, 400);
         backButton.addListener(new ClickListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                backButton.setState(ToggleButton.OFF_STATE);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                backButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 dispose();
                 game.setScreen(new MainMenuScreen(game));
@@ -63,12 +78,12 @@ public class SettingsScreen implements Screen {
         });
 
         // Header label.
-        Label settingsLabel = new Label(SETTINGS, new Label.LabelStyle(font, Color.WHITE));
+        Label settingsLabel = new Label(SETTINGS, new Label.LabelStyle(font, Color.LIME));
         settingsLabel.setFontScale(0.6f);
         settingsLabel.setPosition(300, 440);
         settingsLabel.setHeight(50);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.LIGHT_GRAY);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         // Music label.
         Label musicLabel = new Label(MUSIC, labelStyle);
         musicLabel.setPosition(250, 300);
@@ -77,9 +92,9 @@ public class SettingsScreen implements Screen {
         float musicVolume = game.data.getMusicVolume();
         this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
         this.musicSlider.setPosition(350, 300);
-        this.musicSlider.getStyle().knob.setMinHeight(50);
+        this.musicSlider.getStyle().knob.setMinHeight(70);
         this.musicSlider.getStyle().knob.setMinWidth(40);
-        this.musicSlider.getStyle().knobDown.setMinHeight(50);
+        this.musicSlider.getStyle().knobDown.setMinHeight(70);
         this.musicSlider.getStyle().knobDown.setMinWidth(40);
         this.musicSlider.setAnimateDuration(0);
         this.musicSlider.setValue(musicVolume * SLIDER_RANGE);
@@ -147,15 +162,15 @@ public class SettingsScreen implements Screen {
         this.soundSliderLabel.setWidth(100);
         this.soundSliderLabel.setColor(1, 1, 1, 1);
 
-        setStage(backButton, settingsLabel, musicLabel, soundLabel);
+        setStage(settingsLabel, musicLabel, soundLabel, backButton);
+        this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
     }
 
-    private void setStage(ImageButton backButton, Label settingsLabel,
-                            Label musicLabel, Label soundLabel) {
+    private void setStage(Label settingsLabel, Label musicLabel, Label soundLabel,
+                            ToggleButton backButton) {
         this.stage = new Stage(
                 new FitViewport(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
-        this.stage.addActor(backButton);
         this.stage.addActor(settingsLabel);
         this.stage.addActor(musicLabel);
         this.stage.addActor(musicSlider);
@@ -163,6 +178,7 @@ public class SettingsScreen implements Screen {
         this.stage.addActor(soundLabel);
         this.stage.addActor(soundSlider);
         this.stage.addActor(soundSliderLabel);
+        this.stage.addActor(backButton);
         Gdx.input.setInputProcessor(this.stage);
     }
 
@@ -173,9 +189,12 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(60 / 256f, 93 / 256f, 117 / 256f, 1);
+        Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
+        this.game.batch.begin();
+        this.game.batch.draw(this.backgroundTexture, 0, 0);
+        this.game.batch.end();
         this.stage.draw();
     }
 
