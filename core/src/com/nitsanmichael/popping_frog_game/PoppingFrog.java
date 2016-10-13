@@ -1,6 +1,7 @@
 package com.nitsanmichael.popping_frog_game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.config.Config;
@@ -61,7 +62,11 @@ public class PoppingFrog extends Game {
 
 	@Override
 	public void render () {
-		super.render();
+		float deltaTime = Gdx.graphics.getDeltaTime();
+		this.tweenController.update(deltaTime);
+		if (null != this.screen) {
+			this.screen.render(deltaTime);
+		}
 	}
 	
 	@Override

@@ -99,7 +99,6 @@ public class PlayScreen extends FadingScreen {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);

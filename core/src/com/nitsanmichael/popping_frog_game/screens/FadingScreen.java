@@ -13,7 +13,7 @@ import com.nitsanmichael.popping_frog_game.tweens.TweenController;
  */
 public abstract class FadingScreen implements Screen {
 
-    private static final Color TRANSPARENT_WHITE_COLOR = new Color(1,1,1,0);
+    private static final int TRANSPARENT_WHITE_COLOR = 0xffffff00;
 
     public Color screenColor;
     protected Batch batch;
@@ -21,15 +21,10 @@ public abstract class FadingScreen implements Screen {
 
 
     public FadingScreen(Batch batch, TweenController tweenController) {
-        this.screenColor = TRANSPARENT_WHITE_COLOR;
+        this.screenColor = new Color(TRANSPARENT_WHITE_COLOR);
         this.batch = batch;
         this.batch.setColor(this.screenColor);
         this.tweenController = tweenController;
-    }
-
-    @Override
-    public void render(float delta) {
-        this.tweenController.update(delta);
     }
 
     public void setScreenColor(float r, float g, float b, float a) {

@@ -199,7 +199,6 @@ public class GameOverScreen extends FadingScreen {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(64/255f, 64/255f, 64/255f, 1);

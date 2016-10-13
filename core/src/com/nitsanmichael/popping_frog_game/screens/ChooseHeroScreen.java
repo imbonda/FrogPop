@@ -161,7 +161,6 @@ public class ChooseHeroScreen extends FadingScreen {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
         update(delta);
         Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
