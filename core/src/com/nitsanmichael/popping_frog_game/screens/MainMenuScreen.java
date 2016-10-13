@@ -53,7 +53,7 @@ public class MainMenuScreen extends FadingScreen {
     private Stage stage;
 
 
-    public MainMenuScreen(PoppingFrog game) {
+    public MainMenuScreen(final PoppingFrog game) {
         super(game.batch, game.tweenController);
         this.game = game;
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
@@ -109,9 +109,15 @@ public class MainMenuScreen extends FadingScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 settingsButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
-                dispose();
-                final PoppingFrog game = MainMenuScreen.this.game;
-                game.setScreen(new SettingsScreen(game));
+                game.tweenController.fadeOutScreen(MainMenuScreen.this, FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        dispose();
+                        FadingScreen screen = new SettingsScreen(game);
+                        game.setScreen(screen);
+                        game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
+                    }
+                });
             }
         });
         // Hero button.

@@ -1,34 +1,36 @@
 package com.nitsanmichael.popping_frog_game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.TweenCallback;
+
+
 /**
  * Created by MichaelBond on 9/29/2016.
  */
-public class SettingsScreen implements Screen {
+public class SettingsScreen extends FadingScreen {
 
+    private static final float FADE_OUT_TIME = 1f;
+    private static final float FADE_IN_TIME = 1f;
     // Label constants.
     private static final String SETTINGS = "Settings";
     private static final String MUSIC = "Music :";
@@ -47,6 +49,7 @@ public class SettingsScreen implements Screen {
     private Stage stage;
 
     public SettingsScreen(final PoppingFrog game) {
+        super(game.batch, game.tweenController);
         this.game = game;
         Skin slideSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
@@ -71,8 +74,15 @@ public class SettingsScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 backButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
-                dispose();
-                game.setScreen(new MainMenuScreen(game));
+                game.tweenController.fadeOutScreen(SettingsScreen.this, FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        dispose();
+                        FadingScreen screen = new MainMenuScreen(game);
+                        game.setScreen(screen);
+                        game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
+                    }
+                });
             }
         });
 
@@ -106,6 +116,7 @@ public class SettingsScreen implements Screen {
             }
 
             private void updateMedia(float volume) {
+                PoppingFrog game = SettingsScreen.this.game;
                 game.data.setMusicVolume(volume);
                 game.media.updateMusicVolume(volume);
                 if (0 == volume) {
@@ -146,6 +157,7 @@ public class SettingsScreen implements Screen {
             }
 
             private void updateMedia(float volume) {
+                PoppingFrog game = SettingsScreen.this.game;
                 game.data.setSoundVolume(volume);
                 game.media.updateSoundVolume(volume);
             }
@@ -182,12 +194,21 @@ public class SettingsScreen implements Screen {
     }
 
     @Override
+    public void setScreenColor(float r, float g, float b, float a) {
+        super.setScreenColor(r, g, b, a);
+        for (Actor actor : this.stage.getActors()) {
+            actor.getColor().a = a;
+        }
+    }
+
+    @Override
     public void resize(int width, int height) {
         this.stage.getViewport().update(width, height, true);
     }
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
