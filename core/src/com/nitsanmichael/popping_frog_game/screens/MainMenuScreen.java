@@ -157,7 +157,6 @@ public class MainMenuScreen extends FadingScreen {
         // Play music.
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
 
-        this.game.playServices.signIn();
         if (game.adsController.isInternetConnected()) {
             game.adsController.showBannerAd();
         }
