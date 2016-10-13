@@ -15,8 +15,8 @@ import java.util.Random;
  */
 public class Hole extends Sprite {
 
-    private static final Vector2 SHUFFLE_ON_SPEED = new Vector2(30f, 15f);
-    private static final Vector2 SHUFFLE_OFF_SPEED = new Vector2(60f, 60f);
+    private static final float SHUFFLE_ON_SPEED = 30f;
+    private static final float SHUFFLE_OFF_SPEED = 60f;
     private static final Vector2 FROG_POSITION_OFFSET = new Vector2(55, 20);
 
     private enum State { STATIC, SHUFFLE_ON, SHUFFLE_OFF }
@@ -68,9 +68,8 @@ public class Hole extends Sprite {
 
     public void shuffleOn() {
         if (State.SHUFFLE_ON != this.state) {
-            int directionX = (this.random.nextInt(2) == 0) ? (-1) : 1;
-            int directionY = (this.random.nextInt(2) == 0) ? (-1) : 1;
-            this.velocity.set(directionX * SHUFFLE_ON_SPEED.x, directionY * SHUFFLE_ON_SPEED.y);
+            this.velocity.set(getRandomUnitVector());
+            this.velocity.scl(SHUFFLE_ON_SPEED);
             this.state = State.SHUFFLE_ON;
         }
         this.shuffleRequestCounter += 1;
@@ -82,9 +81,18 @@ public class Hole extends Sprite {
             Vector2 toOrigin = new Vector2(
                     this.origin.x - this.position.x,
                     this.origin.y - this.position.y).nor();
-            this.velocity.set(toOrigin.x * SHUFFLE_OFF_SPEED.x, toOrigin.y * SHUFFLE_OFF_SPEED.y);
+            this.velocity.set(toOrigin.x * SHUFFLE_OFF_SPEED, toOrigin.y * SHUFFLE_OFF_SPEED);
             this.state = State.SHUFFLE_OFF;
         }
+    }
+
+    private Vector2 getRandomUnitVector() {
+        // We get a vector in ([0,1], [0,1]).
+        Vector2 v = new Vector2(this.random.nextFloat(), this.random.nextFloat());
+        v.x = (random.nextInt(2) == 0) ? (-v.x) : (v.x);
+        v.y = (random.nextInt(2) == 0) ? (-v.y) : (v.y);
+        // Now we get a unit vector.
+        return v.nor();
     }
 
     public void update(float deltaTime) {
