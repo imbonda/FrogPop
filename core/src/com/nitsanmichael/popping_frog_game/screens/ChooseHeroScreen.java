@@ -38,8 +38,8 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class ChooseHeroScreen extends FadingScreen {
 
-    private static final float FADE_OUT_TIME = 1f;
-    private static final float FADE_IN_TIME = 1f;
+    private static final float FADE_OUT_TIME = 0.25f;
+    private static final float FADE_IN_TIME = 0.25f;
     private static final String CHOOSE_HERO_TITLE = "My Frogish Hero";
 
     private Texture backgroundTexture;

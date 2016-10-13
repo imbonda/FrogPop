@@ -41,9 +41,8 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class MainMenuScreen extends FadingScreen {
 
-    private static final float FADE_OUT_TIME = 1f;
-    private static final float FADE_IN_TIME = 1f;
-    private static final float GAME_FADE_IN = 0.3f;
+    private static final float FADE_OUT_TIME = 0.25f;
+    private static final float FADE_IN_TIME = 0.25f;
     private static final String GAME_TITLE = "Popping Frog";
 
     private PoppingFrog game;
@@ -85,7 +84,7 @@ public class MainMenuScreen extends FadingScreen {
                                 dispose();
                                 FadingScreen screen = new PlayScreen(game);
                                 game.setScreen(screen);
-                                game.tweenController.fadeInScreen(screen, GAME_FADE_IN, null);
+                                game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
                             }
                 });
             }

@@ -35,9 +35,9 @@ import aurelienribon.tweenengine.TweenCallback;
 public class GameOverScreen extends FadingScreen {
 
     private static final float FADE_OUT_TIME = 0.3f;
-    private static final float FADE_IN_TIME = 1f;
+    private static final float FADE_IN_TIME = 0.25f;
     private static final float GAME_FADE_IN = 0.3f;
-    // Label consts.
+    // Label constants.
     private static final String LEVEL = "Level: ";
     private static final String SCORE = "Score: ";
     private static final String HIGHEST_SCORE = "Highest score: ";

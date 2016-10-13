@@ -27,7 +27,7 @@ import aurelienribon.tweenengine.TweenCallback;
 public class PlayScreen extends FadingScreen {
 
     private static final float FADE_OUT_TIME = 0.1f;
-    private static final float FADE_IN_TIME = 1f;
+    private static final float FADE_IN_TIME = 0.25f;
     private static final int MAX_LIVES = 3;
 
     private PoppingFrog game;

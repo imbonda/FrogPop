@@ -29,8 +29,8 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class SettingsScreen extends FadingScreen {
 
-    private static final float FADE_OUT_TIME = 1f;
-    private static final float FADE_IN_TIME = 1f;
+    private static final float FADE_OUT_TIME = 0.25f;
+    private static final float FADE_IN_TIME = 0.25f;
     // Label constants.
     private static final String SETTINGS = "Settings";
     private static final String MUSIC = "Music :";
