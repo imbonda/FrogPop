@@ -74,13 +74,12 @@ public class SettingsScreen extends FadingScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 backButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
-                game.tweenController.fadeOutScreen(SettingsScreen.this, FADE_OUT_TIME, new TweenCallback() {
+                final PoppingFrog game = SettingsScreen.this.game;
+                SettingsScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
                         dispose();
-                        FadingScreen screen = new MainMenuScreen(game);
-                        game.setScreen(screen);
-                        game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
+                        new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
                     }
                 });
             }

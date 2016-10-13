@@ -32,22 +32,24 @@ public class TweenController {
         this.manager.update(deltaTime);
     }
 
-    public void fadeInScreen(FadingScreen screen, float duration, TweenCallback callback) {
+    public void fadeInScreen(FadingScreen screen, float duration, int trigger,
+                                TweenCallback callback) {
         Tween.set(screen, FadingScreenAccessor.ALPHA_TYPE).target(0).start(this.manager);
         if (null != callback) {
             Tween.to(screen, FadingScreenAccessor.ALPHA_TYPE, duration).target(1).
-                        setCallback(callback).start(this.manager);
+                        setCallbackTriggers(trigger).setCallback(callback).start(this.manager);
         }
         else {
             Tween.to(screen, FadingScreenAccessor.ALPHA_TYPE, duration).target(1).start(this.manager);
         }
     }
 
-    public void fadeOutScreen(FadingScreen screen, float duration, TweenCallback callback) {
+    public void fadeOutScreen(FadingScreen screen, float duration, int trigger,
+                                TweenCallback callback) {
         Tween.set(screen, FadingScreenAccessor.ALPHA_TYPE).target(1).start(this.manager);
         if (null != callback) {
             Tween.to(screen, FadingScreenAccessor.ALPHA_TYPE, duration).target(0).
-                    setCallback(callback).start(this.manager);
+                    setCallbackTriggers(trigger).setCallback(callback).start(this.manager);
         }
         else {
             Tween.to(screen, FadingScreenAccessor.ALPHA_TYPE, duration).target(0).start(this.manager);

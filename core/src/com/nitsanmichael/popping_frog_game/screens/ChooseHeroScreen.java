@@ -75,13 +75,11 @@ public class ChooseHeroScreen extends FadingScreen {
                 backButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = ChooseHeroScreen.this.game;
-                game.tweenController.fadeOutScreen(ChooseHeroScreen.this, FADE_OUT_TIME, new TweenCallback() {
+                ChooseHeroScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
                         dispose();
-                        FadingScreen screen = new MainMenuScreen(game);
-                        game.setScreen(screen);
-                        game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
+                        new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
                     }
                 });
             }

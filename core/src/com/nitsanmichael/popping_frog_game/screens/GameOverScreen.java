@@ -74,16 +74,13 @@ public class GameOverScreen extends FadingScreen {
                 restartButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = GameOverScreen.this.game;
-                game.tweenController.fadeOutScreen(GameOverScreen.this, FADE_OUT_TIME,
-                        new TweenCallback() {
-                            @Override
-                            public void onEvent(int type, BaseTween<?> source) {
-                                dispose();
-                                FadingScreen screen = new PlayScreen(game);
-                                game.setScreen(screen);
-                                game.tweenController.fadeInScreen(screen, GAME_FADE_IN, null);
-                            }
-                        });
+                GameOverScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        dispose();
+                        new PlayScreen(game).fadeIn(game, FADE_IN_TIME);
+                    }
+                });
             }
         });
         // Home button.
@@ -105,15 +102,12 @@ public class GameOverScreen extends FadingScreen {
                 homeButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = GameOverScreen.this.game;
-                game.tweenController.fadeOutScreen(GameOverScreen.this, FADE_OUT_TIME,
-                        new TweenCallback() {
-                            @Override
-                            public void onEvent(int type, BaseTween<?> source) {
-                                dispose();
-                                FadingScreen screen = new MainMenuScreen(game);
-                                game.setScreen(screen);
-                                game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
-                            }
+                GameOverScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        dispose();
+                        new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
+                    }
                 });
             }
         });

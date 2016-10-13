@@ -51,8 +51,7 @@ public class PoppingFrog extends Game {
 					this.assetController, this.data.getMusicVolume(), this.data.getSoundVolume());
 		this.tweenController = new TweenController();
 		FadingScreen screen = new MainMenuScreen(PoppingFrog.this);
-		setScreen(screen);
-		this.tweenController.fadeInScreen(screen, 0.5f, null);
+		screen.fadeIn(this, 0.5f);
 	}
 
 	@Override

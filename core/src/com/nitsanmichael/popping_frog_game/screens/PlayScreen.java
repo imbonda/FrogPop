@@ -86,13 +86,11 @@ public class PlayScreen extends FadingScreen {
         this.game.media.playSound(Assets.GAME_OVER_SOUND);
         this.spritesDrawer.clear();
         this.themeController.reset();
-        dispose();
-        this.game.tweenController.fadeOutScreen(this, FADE_OUT_TIME, new TweenCallback() {
+        fadeOut(FADE_OUT_TIME, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                FadingScreen screen = new GameOverScreen(game, runtimeInfo);
-                game.tweenController.fadeInScreen(screen, FADE_IN_TIME, null);
-                game.setScreen(screen);
+                dispose();
+                new GameOverScreen(game, runtimeInfo).fadeIn(game, FADE_IN_TIME);
             }
         });
     }
