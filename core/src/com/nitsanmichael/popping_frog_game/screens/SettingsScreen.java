@@ -51,7 +51,8 @@ public class SettingsScreen extends FadingScreen {
     public SettingsScreen(final PoppingFrog game) {
         super(game.batch, game.tweenController);
         this.game = game;
-        Skin slideSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
+        Skin sliderSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
+        adjustSliderKnob(sliderSkin);
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
         font.getData().setScale(0.2f);
 
@@ -94,16 +95,12 @@ public class SettingsScreen extends FadingScreen {
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         // Music label.
         Label musicLabel = new Label(MUSIC, labelStyle);
-        musicLabel.setPosition(250, 300);
+        musicLabel.setPosition(200, 300);
         musicLabel.setWidth(250);
         // Music slider.
         float musicVolume = game.data.getMusicVolume();
-        this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
-        this.musicSlider.setPosition(350, 300);
-        this.musicSlider.getStyle().knob.setMinHeight(70);
-        this.musicSlider.getStyle().knob.setMinWidth(40);
-        this.musicSlider.getStyle().knobDown.setMinHeight(70);
-        this.musicSlider.getStyle().knobDown.setMinWidth(40);
+        this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
+        this.musicSlider.setPosition(330, 287);
         this.musicSlider.setAnimateDuration(0);
         this.musicSlider.setValue(musicVolume * SLIDER_RANGE);
         this.musicSlider.addListener(new ChangeListener() {
@@ -139,12 +136,12 @@ public class SettingsScreen extends FadingScreen {
 
         // Sound label.
         Label soundLabel = new Label(SOUND, labelStyle);
-        soundLabel.setPosition(250, 200);
+        soundLabel.setPosition(200, 200);
         soundLabel.setWidth(250);
         // Sound slider.
         float soundVolume = game.data.getSoundVolume();
-        this.soundSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, slideSkin);
-        this.soundSlider.setPosition(350, 187);
+        this.soundSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
+        this.soundSlider.setPosition(330, 187);
         this.soundSlider.setAnimateDuration(0);
         this.soundSlider.setValue(soundVolume * SLIDER_RANGE);
         this.soundSlider.addListener(new ChangeListener() {
@@ -174,6 +171,14 @@ public class SettingsScreen extends FadingScreen {
 
         setStage(settingsLabel, musicLabel, soundLabel, backButton);
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
+    }
+
+    private void adjustSliderKnob(Skin sliderSkin) {
+        Slider slider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
+        slider.getStyle().knob.setMinHeight(70);
+        slider.getStyle().knob.setMinWidth(40);
+        slider.getStyle().knobDown.setMinHeight(70);
+        slider.getStyle().knobDown.setMinWidth(40);
     }
 
     private void setStage(Label settingsLabel, Label musicLabel, Label soundLabel,
