@@ -59,8 +59,8 @@ public class GameOverScreen extends FadingScreen {
         Texture restartPressedIcon = this.game.assetController.get(Assets.RESTART_PRESSED_ICON);
         final ToggleButton restartButton = new ToggleButton(
                     new Image(restartIcon), new Image(restartPressedIcon));
-        restartButton.setSize(120, 120);
-        restartButton.setPosition(530, 200);
+        restartButton.setSize(100, 100);
+        restartButton.setPosition(480, 200);
         restartButton.addListener(new ClickListener() {
 
             @Override
@@ -87,8 +87,8 @@ public class GameOverScreen extends FadingScreen {
         Texture homeIcon = this.game.assetController.get(Assets.HOME_ICON);
         Texture homePressedIcon = this.game.assetController.get(Assets.HOME_PRESSED_ICON);
         final ToggleButton homeButton = new ToggleButton(new Image(homeIcon), new Image(homePressedIcon));
-        homeButton.setSize(120, 120);
-        homeButton.setPosition(670, 200);
+        homeButton.setSize(100, 100);
+        homeButton.setPosition(480, 70);
         homeButton.addListener(new ClickListener() {
 
             @Override
@@ -115,8 +115,8 @@ public class GameOverScreen extends FadingScreen {
         Texture rankIcon = this.game.assetController.get(Assets.RANK_ICON);
         Texture rankPressedIcon = this.game.assetController.get(Assets.RANK_PRESSED_ICON);
         final ToggleButton rankButton = new ToggleButton(new Image(rankIcon), new Image(rankPressedIcon));
-        rankButton.setSize(120, 120);
-        rankButton.setPosition(605, 60);
+        rankButton.setSize(100, 100);
+        rankButton.setPosition(700, 200);
         rankButton.addListener(new ClickListener() {
 
             @Override
@@ -136,20 +136,20 @@ public class GameOverScreen extends FadingScreen {
         // Highest-score label.
         Label highestScoreLabel = new Label(HIGHEST_SCORE + this.game.data.getHighScore(),
                 new Label.LabelStyle(font, Color.GOLD));
-        highestScoreLabel.setFontScale(0.2f);
-        highestScoreLabel.setPosition(600, 450);
+        highestScoreLabel.setFontScale(0.35f);
+        highestScoreLabel.setPosition(420, 450);
         highestScoreLabel.setHeight(50);
         // Level label.
         Label levelLabel = new Label(LEVEL + this.runtimeInfo.gameLevel,
                     new Label.LabelStyle(font, Color.WHITE));
-        levelLabel.setFontScale(0.2f);
-        levelLabel.setPosition(600, 350);
+        levelLabel.setFontScale(0.25f);
+        levelLabel.setPosition(500, 330);
         levelLabel.setHeight(50);
         // Score label.
         Label scoreLabel = new Label(SCORE + this.runtimeInfo.gameScore,
                     new Label.LabelStyle(font, Color.WHITE));
-        scoreLabel.setFontScale(0.2f);
-        scoreLabel.setPosition(600, 400);
+        scoreLabel.setFontScale(0.25f);
+        scoreLabel.setPosition(500, 380);
         scoreLabel.setHeight(50);
 
         initIdleFrogs();
@@ -165,7 +165,7 @@ public class GameOverScreen extends FadingScreen {
     private void initIdleFrogs() {
         this.idleFrogs = new Array<IdleFrog>();
         this.idleFrogs.add(new IdleFreezeFrog(this.game.assetController,
-                IdleFreezeFrog.AnimationType.BIG, new Vector2(100, 50)));
+                IdleFreezeFrog.AnimationType.BIG, new Vector2(50, 50)));
     }
 
     private void setStage(Label levelLabel, Label scoreLabel, Label highestScoreLabel,
