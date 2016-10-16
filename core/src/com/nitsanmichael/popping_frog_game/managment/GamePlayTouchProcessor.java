@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
+import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
 
 /**
@@ -25,7 +26,7 @@ public class GamePlayTouchProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (this.runtimeInfo.gameStarted) {
+        if (PlayScreen.GameState.PLAY == this.runtimeInfo.gameState) {
             Vector2 touchVector = new Vector2(screenX, screenY);
             touchVector = this.viewport.unproject(touchVector);
 

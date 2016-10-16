@@ -26,6 +26,8 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class PlayScreen extends FadingScreen {
 
+    public enum GameState { COUNTDOWN, PLAY, PAUSE, OVER }
+
     private static final float FADE_OUT_TIME = 0.1f;
     private static final float FADE_IN_TIME = 0.25f;
     private static final int MAX_LIVES = 3;
@@ -39,7 +41,6 @@ public class PlayScreen extends FadingScreen {
     private LevelController levelController;
     private Hud hud;
     private PopupDrawer popupDrawer;
-    private boolean isAlreadyOver;
 
 
     public PlayScreen(PoppingFrog game) {
@@ -51,7 +52,7 @@ public class PlayScreen extends FadingScreen {
         this.effectDrawer = new EffectDrawer();
         this.themeController = new ThemeController(this.game.config, this.game.assetController,
                     this.effectDrawer);
-        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES);
+        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES, GameState.COUNTDOWN);
         Timer timer = new Timer(this.game.assetController);
         this.hud = new Hud(this.game.assetController, this.game.batch, runtimeInfo, timer);
         this.popupDrawer = new PopupDrawer(this.gameViewPort, this.game.batch,
@@ -59,7 +60,6 @@ public class PlayScreen extends FadingScreen {
         this.levelController = new LevelController(
                     this.game.config, this.game.assetController, this.game.media, this.spritesDrawer,
                     this.popupDrawer, this.runtimeInfo, timer, this.themeController);
-        this.isAlreadyOver = false;
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(this.gameViewPort, this.runtimeInfo));
         // Play music.
         this.game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
@@ -73,8 +73,8 @@ public class PlayScreen extends FadingScreen {
     public void update(float deltaTime) {
         this.levelController.update(deltaTime);
         this.hud.update();
-        if (this.runtimeInfo.gameLives <= 0 && !this.isAlreadyOver) {
-            this.isAlreadyOver = true;
+        if (this.runtimeInfo.gameLives <= 0 && GameState.OVER != this.runtimeInfo.gameState) {
+            this.runtimeInfo.gameState = GameState.OVER;
             gameOver();
         }
     }

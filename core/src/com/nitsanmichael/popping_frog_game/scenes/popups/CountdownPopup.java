@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
+import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 import com.nitsanmichael.popping_frog_game.tweens.TweenController;
 
 import aurelienribon.tweenengine.BaseTween;
@@ -104,7 +105,7 @@ public class CountdownPopup implements Popup {
                 countDownLabel.setFontScale(INITIAL_FONT_SCALE);
                 // Remove the label from the stage.
                 countDownLabel.remove();
-                runtimeInfo.gameStarted = true;
+                runtimeInfo.gameState = PlayScreen.GameState.PLAY;
             }
         });
     }

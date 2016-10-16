@@ -10,6 +10,7 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.PopupDrawer;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
 import com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData;
+import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
 
 /**
@@ -155,7 +156,7 @@ public class LevelController {
      * @param deltaTime The time passed from the last update call.
      */
     public void update(float deltaTime) {
-        if (this.runtimeInfo.gameStarted) {
+        if (PlayScreen.GameState.PLAY == this.runtimeInfo.gameState) {
             this.levelTimer.update(deltaTime);
             this.frogManager.update(deltaTime);
             if (this.levelTimer.isTimedOut()) {
