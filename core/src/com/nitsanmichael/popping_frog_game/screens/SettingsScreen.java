@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
+import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -63,18 +64,9 @@ public class SettingsScreen extends FadingScreen {
                 new Image(backIcon), new Image(backPressedIcon));
         backButton.setSize(100, 100);
         backButton.setPosition(20, 400);
-        backButton.addListener(new ClickListener() {
-
+        ToggleButtonListener.Callback touchUp = new ToggleButtonListener.Callback() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                backButton.setState(ToggleButton.OFF_STATE);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                backButton.setState(ToggleButton.ON_STATE);
-                super.touchUp(event, x, y, pointer, button);
+            public void call() {
                 final PoppingFrog game = SettingsScreen.this.game;
                 SettingsScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
@@ -84,7 +76,8 @@ public class SettingsScreen extends FadingScreen {
                     }
                 });
             }
-        });
+        };
+        backButton.addListener(new ToggleButtonListener(backButton, touchUp));
 
         // Header label.
         Label settingsLabel = new Label(SETTINGS, new Label.LabelStyle(font, Color.LIME));
