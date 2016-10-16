@@ -22,6 +22,7 @@ import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
+import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFreezeFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
 
@@ -65,18 +66,9 @@ public class GameOverScreen extends FadingScreen {
                     new Image(restartIcon), new Image(restartPressedIcon));
         restartButton.setSize(100, 100);
         restartButton.setPosition(480, 200);
-        restartButton.addListener(new ClickListener() {
-
+        ToggleButtonListener.Callback touchUp = new ToggleButtonListener.Callback() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                restartButton.setState(ToggleButton.OFF_STATE);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                restartButton.setState(ToggleButton.ON_STATE);
-                super.touchUp(event, x, y, pointer, button);
+            public void call() {
                 final PoppingFrog game = GameOverScreen.this.game;
                 if (!isListening) {
                     return;
@@ -90,25 +82,17 @@ public class GameOverScreen extends FadingScreen {
                 });
                 isListening = false;
             }
-        });
+        };
+        restartButton.addListener(new ToggleButtonListener(restartButton, touchUp));
         // Home button.
         Texture homeIcon = this.game.assetController.get(Assets.HOME_ICON);
         Texture homePressedIcon = this.game.assetController.get(Assets.HOME_PRESSED_ICON);
         final ToggleButton homeButton = new ToggleButton(new Image(homeIcon), new Image(homePressedIcon));
         homeButton.setSize(100, 100);
         homeButton.setPosition(480, 70);
-        homeButton.addListener(new ClickListener() {
-
+        touchUp = new ToggleButtonListener.Callback() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                homeButton.setState(ToggleButton.OFF_STATE);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                homeButton.setState(ToggleButton.ON_STATE);
-                super.touchUp(event, x, y, pointer, button);
+            public void call() {
                 final PoppingFrog game = GameOverScreen.this.game;
                 if (!isListening) {
                     return;
@@ -122,31 +106,24 @@ public class GameOverScreen extends FadingScreen {
                 });
                 isListening = false;
             }
-        });
+        };
+        homeButton.addListener(new ToggleButtonListener(homeButton, touchUp));
         // Rank button.
         Texture rankIcon = this.game.assetController.get(Assets.RANK_ICON);
         Texture rankPressedIcon = this.game.assetController.get(Assets.RANK_PRESSED_ICON);
         final ToggleButton rankButton = new ToggleButton(new Image(rankIcon), new Image(rankPressedIcon));
         rankButton.setSize(100, 100);
         rankButton.setPosition(700, 200);
-        rankButton.addListener(new ClickListener() {
-
+        touchUp = new ToggleButtonListener.Callback() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                rankButton.setState(ToggleButton.OFF_STATE);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                rankButton.setState(ToggleButton.ON_STATE);
-                super.touchUp(event, x, y, pointer, button);
+            public void call() {
                 if (!isListening) {
                     return;
                 }
                 GameOverScreen.this.game.playServices.showScore();
             }
-        });
+        };
+        rankButton.addListener(new ToggleButtonListener(rankButton, touchUp));
 
         // Highest-score label.
         Label highestScoreLabel = new Label(HIGHEST_SCORE + this.game.data.getHighScore(),
