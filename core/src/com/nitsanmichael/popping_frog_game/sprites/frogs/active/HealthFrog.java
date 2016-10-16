@@ -67,9 +67,6 @@ public class HealthFrog extends Frog {
             this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
             this.runtimeInfo.gameLives += FROG_LIFE_PROFIT_VALUE;
         }
-        else {
-            Gdx.input.vibrate(500);
-        }
     }
 
     @Override
