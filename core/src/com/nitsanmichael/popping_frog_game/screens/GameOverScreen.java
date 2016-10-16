@@ -45,6 +45,8 @@ public class GameOverScreen extends FadingScreen {
     private PoppingFrog game;
     private RuntimeInfo runtimeInfo;
     private Array<IdleFrog> idleFrogs;
+
+    private boolean isListening;
     private Stage stage;
 
 
@@ -53,6 +55,8 @@ public class GameOverScreen extends FadingScreen {
         this.game = game;
         this.runtimeInfo = runtimeInfo;
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
+
+        this.isListening = true;
 
         // Restart button.
         Texture restartIcon = this.game.assetController.get(Assets.RESTART_ICON);
@@ -74,6 +78,9 @@ public class GameOverScreen extends FadingScreen {
                 restartButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = GameOverScreen.this.game;
+                if (!isListening) {
+                    return;
+                }
                 GameOverScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
@@ -81,6 +88,7 @@ public class GameOverScreen extends FadingScreen {
                         new PlayScreen(game).fadeIn(game, FADE_IN_TIME);
                     }
                 });
+                isListening = false;
             }
         });
         // Home button.
@@ -102,6 +110,9 @@ public class GameOverScreen extends FadingScreen {
                 homeButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = GameOverScreen.this.game;
+                if (!isListening) {
+                    return;
+                }
                 GameOverScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
@@ -109,6 +120,7 @@ public class GameOverScreen extends FadingScreen {
                         new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
                     }
                 });
+                isListening = false;
             }
         });
         // Rank button.
@@ -129,6 +141,9 @@ public class GameOverScreen extends FadingScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 rankButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
+                if (!isListening) {
+                    return;
+                }
                 GameOverScreen.this.game.playServices.showScore();
             }
         });

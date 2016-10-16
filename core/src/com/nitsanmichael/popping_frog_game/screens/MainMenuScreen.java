@@ -49,6 +49,7 @@ public class MainMenuScreen extends FadingScreen {
     private Texture backgroundTexture;
     private Array<IdleFrog> idleFrogs;
 
+    private boolean isListening;
     private Stage stage;
 
 
@@ -56,6 +57,8 @@ public class MainMenuScreen extends FadingScreen {
         super(game.batch, game.tweenController);
         this.game = game;
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
+
+        this.isListening = true;
 
         // Play button.
         Texture playIcon = this.game.assetController.get(Assets.PLAY_ICON);
@@ -77,6 +80,9 @@ public class MainMenuScreen extends FadingScreen {
                 playButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = MainMenuScreen.this.game;
+                if (!isListening) {
+                    return;
+                }
                 MainMenuScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
@@ -84,6 +90,7 @@ public class MainMenuScreen extends FadingScreen {
                         new PlayScreen(game).fadeIn(game, FADE_IN_TIME);
                     }
                 });
+                isListening = false;
             }
         });
         // Settings button.
@@ -106,6 +113,9 @@ public class MainMenuScreen extends FadingScreen {
                 settingsButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = MainMenuScreen.this.game;
+                if (!isListening) {
+                    return;
+                }
                 MainMenuScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
@@ -113,6 +123,7 @@ public class MainMenuScreen extends FadingScreen {
                         new SettingsScreen(game).fadeIn(game, FADE_IN_TIME);
                     }
                 });
+                isListening = false;
             }
         });
         // Hero button.
@@ -135,6 +146,9 @@ public class MainMenuScreen extends FadingScreen {
                 heroButton.setState(ToggleButton.ON_STATE);
                 super.touchUp(event, x, y, pointer, button);
                 final PoppingFrog game = MainMenuScreen.this.game;
+                if (!isListening) {
+                    return;
+                }
                 MainMenuScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
@@ -142,6 +156,7 @@ public class MainMenuScreen extends FadingScreen {
                         new ChooseHeroScreen(game).fadeIn(game, FADE_IN_TIME);
                     }
                 });
+                isListening = false;
             }
         });
 
