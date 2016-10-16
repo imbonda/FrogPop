@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
+import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
 import com.nitsanmichael.popping_frog_game.sprites.Buttons;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleBritishFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
@@ -62,18 +63,9 @@ public class ChooseHeroScreen extends FadingScreen {
                 new Image(backIcon), new Image(backPressedIcon));
         backButton.setSize(100, 100);
         backButton.setPosition(20, 400);
-        backButton.addListener(new ClickListener() {
-
+        ToggleButtonListener.Callback touchUp = new ToggleButtonListener.Callback() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                backButton.setState(ToggleButton.OFF_STATE);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                backButton.setState(ToggleButton.ON_STATE);
-                super.touchUp(event, x, y, pointer, button);
+            public void call() {
                 final PoppingFrog game = ChooseHeroScreen.this.game;
                 ChooseHeroScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
@@ -83,7 +75,8 @@ public class ChooseHeroScreen extends FadingScreen {
                     }
                 });
             }
-        });
+        };
+        backButton.addListener(new ToggleButtonListener(backButton, touchUp));
 
         // Next hero button.
         Texture nextIcon = this.game.assetController.get(Assets.NEXT_ICON);
@@ -92,23 +85,15 @@ public class ChooseHeroScreen extends FadingScreen {
                     new Image(nextIcon), new Image(nextPressedIcon));
         nextHeroButton.setSize(80, 80);
         nextHeroButton.setPosition(540, 240);
-        nextHeroButton.addListener(new ClickListener() {
-
+        touchUp = new ToggleButtonListener.Callback() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                nextHeroButton.setState(ToggleButton.OFF_STATE);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                nextHeroButton.setState(ToggleButton.ON_STATE);
-                super.touchUp(event, x, y, pointer, button);
+            public void call() {
                 // todo old
                 index++;
                 frog = idleFrogs.get(index%4);
             }
-        });
+        };
+        nextHeroButton.addListener(new ToggleButtonListener(nextHeroButton, touchUp));
 
         // Choose hero title.
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.DARK_GRAY);
