@@ -190,7 +190,7 @@ public final class Assets {
             BUTTERFLY_PURPLE,
             BUTTERFLY_RED,
             FROG_GHOST,
-        // CAnimation textures
+        // Animation textures
             BIRD1, BIRD2, BIRD3,    // Bird
             HEALTH_FROG1, HEALTH_FROG2, // Health frog
             EVIL_FROG1, EVIL_FROG2, EVIL_FROG3, // Evil frog
