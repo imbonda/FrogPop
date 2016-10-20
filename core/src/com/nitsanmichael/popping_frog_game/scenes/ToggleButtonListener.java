@@ -57,6 +57,7 @@ public class ToggleButtonListener extends ClickListener {
     @Override
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
         if (!this.isValid) {
+            this.isValid = true;
             return;
         }
         this.button.setState(ToggleButton.ON_STATE);
