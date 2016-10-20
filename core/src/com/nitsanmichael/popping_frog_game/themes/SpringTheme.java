@@ -9,7 +9,7 @@ import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
 import com.nitsanmichael.popping_frog_game.effects.SunEffect;
 
 /**
- * This class is the default implementation of the Theme interface.
+ * A spring theme.
  *
  * Created by MichaelBond on 9/18/2016.
  */

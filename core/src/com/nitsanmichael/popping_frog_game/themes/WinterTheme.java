@@ -7,7 +7,7 @@ import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
 import com.nitsanmichael.popping_frog_game.effects.SnowEffect;
 
 /**
- * TODO This is just an example class, should be removed when actual themes are created !!!
+ * A winter theme.
  *
  * Created by MichaelBond on 9/18/2016.
  */
