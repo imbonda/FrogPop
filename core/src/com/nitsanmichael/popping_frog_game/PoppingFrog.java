@@ -42,11 +42,11 @@ public class PoppingFrog extends Game {
 	@Override
 	public void create () {
 		this.batch = new SpriteBatch();
-		this.assetController = new AssetController();
+		this.data = new Data();
+		this.assetController = new AssetController(this.data);
 		this.assetController.loadAll();
 		// Assets are now loaded.
 		this.config = this.assetController.config;
-		this.data = new Data();
 		this.media = new Media(
 					this.assetController, this.data.getMusicVolume(), this.data.getSoundVolume());
 		this.tweenController = new TweenController();

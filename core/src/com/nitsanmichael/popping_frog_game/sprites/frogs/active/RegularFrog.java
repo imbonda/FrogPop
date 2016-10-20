@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
@@ -45,13 +46,8 @@ public class RegularFrog extends Frog {
     }
 
     private void generateRandomAnimation() {
-        Random rand = new Random();
-        if (rand.nextInt(2) == TONGUE_ANIMATION) {
-            this.animation = this.assetController.getAnimation(Assets.HERO_REGULAR_TONGUE_ANIMATION);
-        }
-        else {
-            this.animation = this.assetController.getAnimation(Assets.HERO_REGULAR_WINK_ANIMATION);
-        }
+        Array<Animation> heroAnimations = this.assetController.getHeroAnimations();
+        this.animation = heroAnimations.random();
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
     }

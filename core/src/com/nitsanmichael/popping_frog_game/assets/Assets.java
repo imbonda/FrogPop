@@ -208,6 +208,17 @@ public final class Assets {
     /**
      * Animations textures.
      */
+
+    public static class AnimationMeta {
+        public float frameTime;
+        public String [] animation;
+
+        AnimationMeta(String[] animation, float frameTime) {
+            this.animation = animation;
+            this.frameTime = frameTime;
+        }
+    }
+
     public static final String BIRD_ANIMATION [] = {
             BIRD1,
             BIRD2,
@@ -248,6 +259,8 @@ public final class Assets {
             ILLUSION_FROG3,
             ILLUSION_FROG4
     };
+
+    // Heroes.
     public static final String HERO_REGULAR_TONGUE_ANIMATION [] = {
             HERO_REGULAR_TONGUE1,
             HERO_REGULAR_TONGUE2,
@@ -295,4 +308,19 @@ public final class Assets {
             HERO_BRITISH1
     };
 
+    public static final AnimationMeta HEROES_ANIMATIONS [] [] = {
+            new AnimationMeta[] {
+                        new AnimationMeta(HERO_REGULAR_TONGUE_ANIMATION, 0.07f),
+                        new AnimationMeta(HERO_REGULAR_WINK_ANIMATION, 0.07f),
+            },
+            new AnimationMeta[] {
+                        new AnimationMeta(HERO_BRITISH_ANIMATION, 0.4f),
+            },
+            new AnimationMeta[] {
+                        new AnimationMeta(HERO_MEXICAN_ANIMATION, 0.2f),
+            },
+            new AnimationMeta[] {
+                        new AnimationMeta(HERO_TURKISH_ANIMATION, 0.2f),
+            }
+    };
 }

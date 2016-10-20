@@ -21,7 +21,7 @@ public class AddFrogsMetaDataLoader {
         Array<XmlReader.Element> addFrogElements = null;
         try {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal(
-                        "config/frog_addition_levels.xml"));
+                        "config/frogs_addition.xml"));
             addFrogElements = root.getChildrenByName("addFrog");
         }
         catch (IOException e) {

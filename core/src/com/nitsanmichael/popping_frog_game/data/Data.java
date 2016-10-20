@@ -1,5 +1,8 @@
 package com.nitsanmichael.popping_frog_game.data;
 
+import com.nitsanmichael.popping_frog_game.media.Media;
+import com.nitsanmichael.popping_frog_game.screens.ChooseHeroScreen;
+
 /**
  *
  * This class exposes some basic API for manipulating the game saved data and preferences.
@@ -45,7 +48,7 @@ public class Data {
      *  has been made.
      */
     public float getMusicVolume() {
-        return this.dataManager.getFloat(MUSIC_VOLUME_KEY, com.nitsanmichael.popping_frog_game.media.Media.DEFAULT_MUSIC_VOLUME);
+        return this.dataManager.getFloat(MUSIC_VOLUME_KEY, Media.DEFAULT_MUSIC_VOLUME);
     }
 
     /**
@@ -62,7 +65,7 @@ public class Data {
      *  has been made.
      */
     public float getSoundVolume() {
-        return this.dataManager.getFloat(SOUND_VOLUME_KEY, com.nitsanmichael.popping_frog_game.media.Media.DEFAULT_SOUND_VOLUME);
+        return this.dataManager.getFloat(SOUND_VOLUME_KEY, Media.DEFAULT_SOUND_VOLUME);
     }
 
     /**
@@ -73,13 +76,21 @@ public class Data {
     public void setSoundVolume(float volume) {
         this.dataManager.saveFloat(SOUND_VOLUME_KEY, volume);
     }
-	
-    public float getChoosenHero() {
-        return this.dataManager.getFloat(CHOOSE_HERO_KEY, 0);
+
+    /**
+     * @return  The index of the hero that is preferred by the user.
+     */
+    public int getHeroIndex() {
+        return this.dataManager.getInt(CHOOSE_HERO_KEY, ChooseHeroScreen.DEFAULT_HERO_INDEX);
     }
-	
-    public float setChoosenHero() {
-        return this.dataManager.getFloat(CHOOSE_HERO_KEY, 0);
+
+    /**
+     * Sets the user-preferred hero index.
+     *
+     * @param index The index of the new hero.
+     */
+    public void setHeroIndex(int index) {
+        this.dataManager.saveInt(CHOOSE_HERO_KEY, index);
     }
 
 

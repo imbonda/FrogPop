@@ -21,7 +21,7 @@ public class ThemesMetaDataLoader {
         Array<XmlReader.Element> themeElements = null;
         try {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal(
-                        "config/level_themes.xml"));
+                        "config/themes.xml"));
             themeElements = root.getChildrenByName("theme");
         }
         catch (IOException e) {

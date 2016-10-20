@@ -39,6 +39,8 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class ChooseHeroScreen extends FadingScreen {
 
+    public static final int DEFAULT_HERO_INDEX = 0;
+
     private static final float FADE_OUT_TIME = 0.25f;
     private static final float FADE_IN_TIME = 0.25f;
     private static final String CHOOSE_HERO_TITLE = "My Frogish Hero";
@@ -46,12 +48,12 @@ public class ChooseHeroScreen extends FadingScreen {
     private Texture backgroundTexture;
     private PoppingFrog game;
     private Array<IdleFrog> idleFrogs;
-    private IdleFrog frog;
+    private IdleFrog idleHero;
     private int index;
     private Stage stage;
 
 
-    public ChooseHeroScreen(PoppingFrog game) {
+    public ChooseHeroScreen(final PoppingFrog game) {
         super(game.batch, game.tweenController);
         this.game = game;
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
@@ -88,9 +90,9 @@ public class ChooseHeroScreen extends FadingScreen {
         touchUp = new ToggleButtonListener.Callback() {
             @Override
             public void call() {
-                // todo old
-                index++;
-                frog = idleFrogs.get(index%4);
+                index = (index + 1) % idleFrogs.size;
+                game.data.setHeroIndex(index);
+                idleHero = idleFrogs.get(index);
             }
         };
         nextHeroButton.addListener(new ToggleButtonListener(nextHeroButton, touchUp));
@@ -103,8 +105,8 @@ public class ChooseHeroScreen extends FadingScreen {
         chooseHeroTitle.setHeight(50);
 
         initIdleFrogs();
-        this.index = 0;
-        this.frog = idleFrogs.get(index);
+        this.index = this.game.data.getHeroIndex();
+        this.idleHero = idleFrogs.get(index);
 
         setStage(chooseHeroTitle, backButton, nextHeroButton);
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
@@ -166,7 +168,7 @@ public class ChooseHeroScreen extends FadingScreen {
     }
 
     private void drawIdleFrogs() {
-        frog.draw(this.game.batch);
+        idleHero.draw(this.game.batch);
     }
 
     @Override

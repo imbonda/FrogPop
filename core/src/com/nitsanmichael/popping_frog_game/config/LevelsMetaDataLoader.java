@@ -22,7 +22,7 @@ public class LevelsMetaDataLoader {
         Array<XmlReader.Element> levelElements = null;
         try {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal(
-                        "config/frogs_level_distribution.xml"));
+                        "config/frogs_distribution.xml"));
             levelElements = root.getChildrenByName("level");
         }
         catch (IOException e) {

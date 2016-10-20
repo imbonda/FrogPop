@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.config.Config;
+import com.nitsanmichael.popping_frog_game.data.Data;
 
 import java.util.HashMap;
 
@@ -21,11 +22,13 @@ public class AssetController {
     // Public members.
     public Config config;
     // Private members.
+    private Data data;
     private AssetManager manager;
     // Animations frames.
     private HashMap<String[], Array<Texture>> animationFramesHashMap;
 
-    public AssetController() {
+    public AssetController(Data data) {
+        this.data = data;
         this.manager = new AssetManager();
         this.animationFramesHashMap = new HashMap<String[], Array<Texture>>();
     }
@@ -106,6 +109,15 @@ public class AssetController {
             this.animationFramesHashMap.put(animationTexturesNames, frames);
             return frames;
         }
+    }
+
+    public Array<Animation> getHeroAnimations() {
+        Array<Animation> heroAnimations = new Array<Animation>();
+        int heroIndex = this.data.getHeroIndex();
+        for (Assets.AnimationMeta meta : Assets.HEROES_ANIMATIONS[heroIndex]) {
+            heroAnimations.add(getAnimation(meta.animation, meta.frameTime));
+        }
+        return heroAnimations;
     }
 
     public void unload(String fileName) {
