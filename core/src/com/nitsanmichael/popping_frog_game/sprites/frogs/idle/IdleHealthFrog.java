@@ -18,7 +18,7 @@ public class IdleHealthFrog extends IdleFrog {
 
 
     public IdleHealthFrog(AssetController assetController, Vector2 position) {
-        this.animation = assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION, 0.15f);
+        this.animation = assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION);
         this.position = position;
     }
 

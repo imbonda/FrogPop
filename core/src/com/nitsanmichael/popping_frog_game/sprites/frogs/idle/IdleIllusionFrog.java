@@ -17,7 +17,7 @@ public class IdleIllusionFrog extends IdleFrog {
 
 
     public IdleIllusionFrog(AssetController assetController, Vector2 position) {
-        this.animation = assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION, 0.1f);
+        this.animation = assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION);
         this.position = position;
     }
 

@@ -42,7 +42,7 @@ public class IllusionFrog extends Frog {
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION, 0.1f);
+        this.animation = this.assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION);
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
     }

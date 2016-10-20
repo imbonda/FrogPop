@@ -88,12 +88,8 @@ public class AssetController {
         return this.manager.get(fileName);
     }
 
-    public Animation getAnimation(String [] animationTexturesNames) {
-        return new Animation(getFrames(animationTexturesNames));
-    }
-
-    public Animation getAnimation(String [] animationTexturesNames, float frameTime) {
-        return new Animation(getFrames(animationTexturesNames), frameTime);
+    public Animation getAnimation(Assets.AnimationMeta animationMeta) {
+        return new Animation(getFrames(animationMeta.animation), animationMeta.frameTime);
     }
 
     private Array<Texture> getFrames(String [] animationTexturesNames) {
@@ -115,7 +111,7 @@ public class AssetController {
         Array<Animation> heroAnimations = new Array<Animation>();
         int heroIndex = this.data.getHeroIndex();
         for (Assets.AnimationMeta meta : Assets.HEROES_ANIMATIONS[heroIndex]) {
-            heroAnimations.add(getAnimation(meta.animation, meta.frameTime));
+            heroAnimations.add(getAnimation(meta));
         }
         return heroAnimations;
     }

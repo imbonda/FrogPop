@@ -219,108 +219,130 @@ public final class Assets {
         }
     }
 
-    public static final String BIRD_ANIMATION [] = {
-            BIRD1,
-            BIRD2,
-            BIRD3,
-            BIRD3,
-            BIRD2,
-            BIRD1
-    };
-    public static final String HEALTH_FROG_ANIMATION [] = {
-            HEALTH_FROG1,
-            HEALTH_FROG2
-    };
-    public static final String EVIL_FROG_ANIMATION [] = {
-            EVIL_FROG1,
-            EVIL_FROG2,
-            EVIL_FROG3
-    };
-    public static final String FREEZE_FROG_ANIMATION [] = {
-            FREEZE_FROG1,
-            FREEZE_FROG2,
-            FREEZE_FROG3,
-            FREEZE_FROG3,
-            FREEZE_FROG3,
-            FREEZE_FROG2,
-            FREEZE_FROG1
-    };
-    public static final String FREEZE_FROG_BIG_ANIMATION [] = {
-            FREEZE_FROG_BIG1,
-            FREEZE_FROG_BIG2,
-            FREEZE_FROG_BIG3,
-            FREEZE_FROG_BIG3,
-            FREEZE_FROG_BIG2,
-            FREEZE_FROG_BIG1
-    };
-    public static final String ILLUSION_FROG_ANIMATION [] = {
-            ILLUSION_FROG1,
-            ILLUSION_FROG2,
-            ILLUSION_FROG3,
-            ILLUSION_FROG4
-    };
+    public static final AnimationMeta BIRD_ANIMATION = new AnimationMeta(
+            new String[] {
+                    BIRD1,
+                    BIRD2,
+                    BIRD3,
+                    BIRD3,
+                    BIRD2,
+                    BIRD1
+            }, 0.07f
+    );
+    public static final AnimationMeta HEALTH_FROG_ANIMATION = new AnimationMeta(
+            new String[] {
+                    HEALTH_FROG1,
+                    HEALTH_FROG2
+            }, 0.15f
+    );
+    public static final AnimationMeta EVIL_FROG_ANIMATION = new AnimationMeta(
+            new String []{
+                    EVIL_FROG1,
+                    EVIL_FROG2,
+                    EVIL_FROG3
+            }, 0.1f
+    );
+    public static final AnimationMeta FREEZE_FROG_ANIMATION = new AnimationMeta(
+            new String[]{
+                    FREEZE_FROG1,
+                    FREEZE_FROG2,
+                    FREEZE_FROG3,
+                    FREEZE_FROG3,
+                    FREEZE_FROG3,
+                    FREEZE_FROG2,
+                    FREEZE_FROG1
+            }, 0.15f
+    );
+    public static final AnimationMeta FREEZE_FROG_BIG_ANIMATION = new AnimationMeta(
+            new String[]{
+                    FREEZE_FROG_BIG1,
+                    FREEZE_FROG_BIG2,
+                    FREEZE_FROG_BIG3,
+                    FREEZE_FROG_BIG3,
+                    FREEZE_FROG_BIG2,
+                    FREEZE_FROG_BIG1
+            }, 0.15f
+    );
+    public static final AnimationMeta ILLUSION_FROG_ANIMATION = new AnimationMeta(
+            new String []{
+                    ILLUSION_FROG1,
+                    ILLUSION_FROG2,
+                    ILLUSION_FROG3,
+                    ILLUSION_FROG4
+            }, 0.1f
+    );
 
     // Heroes.
-    public static final String HERO_REGULAR_TONGUE_ANIMATION [] = {
-            HERO_REGULAR_TONGUE1,
-            HERO_REGULAR_TONGUE2,
-            HERO_REGULAR_TONGUE3,
-            HERO_REGULAR_TONGUE4,
-            HERO_REGULAR_TONGUE4,
-            HERO_REGULAR_TONGUE3,
-            HERO_REGULAR_TONGUE2,
-            HERO_REGULAR_TONGUE1
-    };
-    public static final String HERO_REGULAR_WINK_ANIMATION [] = {
-            HERO_REGULAR_WINK1,
-            HERO_REGULAR_WINK2,
-            HERO_REGULAR_WINK3,
-            HERO_REGULAR_WINK4,
-            HERO_REGULAR_WINK4,
-            HERO_REGULAR_WINK3,
-            HERO_REGULAR_WINK2,
-            HERO_REGULAR_WINK1
-    };
-    public static final String HERO_TURKISH_ANIMATION [] = {
-            HERO_TURKISH1,
-            HERO_TURKISH2,
-            HERO_TURKISH3,
-            HERO_TURKISH2,
-            HERO_TURKISH3,
-            HERO_TURKISH2,
-            HERO_TURKISH1
-    };
-    public static final String HERO_MEXICAN_ANIMATION [] = {
-            HERO_MEXICAN1,
-            HERO_MEXICAN2,
-            HERO_MEXICAN1,
-            HERO_MEXICAN2,
-            HERO_MEXICAN2,
-            HERO_MEXICAN1
-    };
-    public static final String HERO_BRITISH_ANIMATION [] = {
-            HERO_BRITISH1,
-            HERO_BRITISH2,
-            HERO_BRITISH3,
-            HERO_BRITISH2,
-            HERO_BRITISH3,
-            HERO_BRITISH2,
-            HERO_BRITISH1
-    };
+    public static final AnimationMeta HERO_REGULAR_TONGUE_ANIMATION = new AnimationMeta(
+            new String[]{
+                    HERO_REGULAR_TONGUE1,
+                    HERO_REGULAR_TONGUE2,
+                    HERO_REGULAR_TONGUE3,
+                    HERO_REGULAR_TONGUE4,
+                    HERO_REGULAR_TONGUE4,
+                    HERO_REGULAR_TONGUE3,
+                    HERO_REGULAR_TONGUE2,
+                    HERO_REGULAR_TONGUE1
+            }, 0.07f
+    );
+    public static final AnimationMeta HERO_REGULAR_WINK_ANIMATION = new AnimationMeta(
+            new String[]{
+                    HERO_REGULAR_WINK1,
+                    HERO_REGULAR_WINK2,
+                    HERO_REGULAR_WINK3,
+                    HERO_REGULAR_WINK4,
+                    HERO_REGULAR_WINK4,
+                    HERO_REGULAR_WINK3,
+                    HERO_REGULAR_WINK2,
+                    HERO_REGULAR_WINK1
+            }, 0.07f
+    );
+    public static final AnimationMeta HERO_TURKISH_ANIMATION = new AnimationMeta(
+            new String[]{
+                    HERO_TURKISH1,
+                    HERO_TURKISH2,
+                    HERO_TURKISH3,
+                    HERO_TURKISH2,
+                    HERO_TURKISH3,
+                    HERO_TURKISH2,
+                    HERO_TURKISH1
+            }, 0.2f
+    );
+    public static final AnimationMeta HERO_MEXICAN_ANIMATION = new AnimationMeta(
+            new String[]{
+                    HERO_MEXICAN1,
+                    HERO_MEXICAN2,
+                    HERO_MEXICAN1,
+                    HERO_MEXICAN2,
+                    HERO_MEXICAN2,
+                    HERO_MEXICAN1
+            }, 0.2f
+    );
+    public static final AnimationMeta HERO_BRITISH_ANIMATION = new AnimationMeta(
+            new String[]{
+                    HERO_BRITISH1,
+                    HERO_BRITISH2,
+                    HERO_BRITISH3,
+                    HERO_BRITISH2,
+                    HERO_BRITISH3,
+                    HERO_BRITISH2,
+                    HERO_BRITISH1
+            }, 0.4f
+    );
 
     public static final AnimationMeta HEROES_ANIMATIONS [] [] = {
             new AnimationMeta[] {
-                        new AnimationMeta(HERO_REGULAR_TONGUE_ANIMATION, 0.07f),
-                        new AnimationMeta(HERO_REGULAR_WINK_ANIMATION, 0.07f),
+                        HERO_REGULAR_TONGUE_ANIMATION,
+                        HERO_REGULAR_WINK_ANIMATION,
             },
             new AnimationMeta[] {
-                        new AnimationMeta(HERO_BRITISH_ANIMATION, 0.4f),
+                        HERO_BRITISH_ANIMATION
             },
             new AnimationMeta[] {
-                        new AnimationMeta(HERO_MEXICAN_ANIMATION, 0.2f),
+                        HERO_MEXICAN_ANIMATION
             },
             new AnimationMeta[] {
-                        new AnimationMeta(HERO_TURKISH_ANIMATION, 0.2f),
+                        HERO_TURKISH_ANIMATION
             }
     };
 }

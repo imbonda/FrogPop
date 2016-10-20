@@ -18,7 +18,7 @@ public class IdleTurkishFrog extends IdleFrog {
 
 
     public IdleTurkishFrog(AssetController assetController, Vector2 position) {
-        this.animation = assetController.getAnimation(Assets.HERO_TURKISH_ANIMATION, 0.2f);
+        this.animation = assetController.getAnimation(Assets.HERO_TURKISH_ANIMATION);
         this.position = position;
     }
 

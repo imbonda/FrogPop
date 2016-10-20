@@ -21,8 +21,8 @@ public class IdleFreezeFrog extends IdleFrog {
 
     public IdleFreezeFrog(AssetController assetController, AnimationType type, Vector2 position) {
         this.animation = (AnimationType.NORMAL == type) ?
-                (assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION, 0.15f)) :
-                (assetController.getAnimation(Assets.FREEZE_FROG_BIG_ANIMATION, 0.15f));
+                (assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION)) :
+                (assetController.getAnimation(Assets.FREEZE_FROG_BIG_ANIMATION));
         this.position = position;
     }
 
