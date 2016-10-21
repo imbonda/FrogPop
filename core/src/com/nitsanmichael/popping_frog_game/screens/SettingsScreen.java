@@ -20,6 +20,7 @@ import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
+import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -64,9 +65,12 @@ public class SettingsScreen extends FadingScreen {
                 new Image(backIcon), new Image(backPressedIcon));
         backButton.setSize(100, 100);
         backButton.setPosition(20, 400);
-        ToggleButtonListener.Callback touchUp = new ToggleButtonListener.Callback() {
+        backButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 final PoppingFrog game = SettingsScreen.this.game;
                 SettingsScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
@@ -76,8 +80,7 @@ public class SettingsScreen extends FadingScreen {
                     }
                 });
             }
-        };
-        backButton.addListener(new ToggleButtonListener(backButton, touchUp));
+        });
 
         // Header label.
         Label settingsLabel = new Label(SETTINGS, new Label.LabelStyle(font, Color.LIME));

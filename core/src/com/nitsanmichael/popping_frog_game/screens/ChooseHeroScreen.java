@@ -23,6 +23,7 @@ import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
+import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
 import com.nitsanmichael.popping_frog_game.sprites.Buttons;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleBritishFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
@@ -65,9 +66,12 @@ public class ChooseHeroScreen extends FadingScreen {
                 new Image(backIcon), new Image(backPressedIcon));
         backButton.setSize(100, 100);
         backButton.setPosition(20, 400);
-        ToggleButtonListener.Callback touchUp = new ToggleButtonListener.Callback() {
+        backButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 final PoppingFrog game = ChooseHeroScreen.this.game;
                 ChooseHeroScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
                     @Override
@@ -77,8 +81,7 @@ public class ChooseHeroScreen extends FadingScreen {
                     }
                 });
             }
-        };
-        backButton.addListener(new ToggleButtonListener(backButton, touchUp));
+        });
 
         // Next hero button.
         Texture nextIcon = this.game.assetController.get(Assets.NEXT_ICON);
@@ -87,15 +90,17 @@ public class ChooseHeroScreen extends FadingScreen {
                     new Image(nextIcon), new Image(nextPressedIcon));
         nextHeroButton.setSize(80, 80);
         nextHeroButton.setPosition(540, 240);
-        touchUp = new ToggleButtonListener.Callback() {
+        nextHeroButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != nextHeroButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 index = (index + 1) % idleFrogs.size;
                 game.data.setHeroIndex(index);
                 idleHero = idleFrogs.get(index);
             }
-        };
-        nextHeroButton.addListener(new ToggleButtonListener(nextHeroButton, touchUp));
+        });
 
         // Choose hero title.
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.DARK_GRAY);

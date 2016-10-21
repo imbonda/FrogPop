@@ -3,6 +3,7 @@ package com.nitsanmichael.popping_frog_game.scenes;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.nitsanmichael.popping_frog_game.scenes.events.MessageEvent;
 
 
 /**
@@ -10,22 +11,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class ToggleButtonListener extends ClickListener {
 
+    // Message events.
+    public static final int EMPTY_MESSAGE = -777;
+    public static final int ON_TOUCH_UP = 1;
+
     private static final float MAX_VALIDITY_TOUCH_DISTANCE = 80;
 
-
-    public interface Callback {
-        void call();
-    }
-
     private ToggleButton button;
-    private Callback touchUpCallback;
     private Vector2 initialTouch;
     private boolean isValid;
 
 
-    public ToggleButtonListener(ToggleButton toggleButton, Callback touchUpCallback) {
+    public ToggleButtonListener(ToggleButton toggleButton) {
         this.button = toggleButton;
-        this.touchUpCallback = touchUpCallback;
         this.initialTouch = new Vector2(0, 0);
         this.isValid = true;
     }
@@ -57,11 +55,12 @@ public class ToggleButtonListener extends ClickListener {
     @Override
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
         if (!this.isValid) {
+            this.isValid = true;
             return;
         }
         this.button.setState(ToggleButton.ON_STATE);
         super.touchUp(event, x, y, pointer, button);
-        this.touchUpCallback.call();
+        this.button.fire(new MessageEvent(ON_TOUCH_UP, EMPTY_MESSAGE));
     }
 
 }

@@ -23,6 +23,7 @@ import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
+import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFreezeFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
 
@@ -66,9 +67,12 @@ public class GameOverScreen extends FadingScreen {
                     new Image(restartIcon), new Image(restartPressedIcon));
         restartButton.setSize(100, 100);
         restartButton.setPosition(480, 200);
-        ToggleButtonListener.Callback touchUp = new ToggleButtonListener.Callback() {
+        restartButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != restartButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 final PoppingFrog game = GameOverScreen.this.game;
                 if (!isListening) {
                     return;
@@ -82,17 +86,19 @@ public class GameOverScreen extends FadingScreen {
                 });
                 isListening = false;
             }
-        };
-        restartButton.addListener(new ToggleButtonListener(restartButton, touchUp));
+        });
         // Home button.
         Texture homeIcon = this.game.assetController.get(Assets.HOME_ICON);
         Texture homePressedIcon = this.game.assetController.get(Assets.HOME_PRESSED_ICON);
         final ToggleButton homeButton = new ToggleButton(new Image(homeIcon), new Image(homePressedIcon));
         homeButton.setSize(100, 100);
         homeButton.setPosition(480, 70);
-        touchUp = new ToggleButtonListener.Callback() {
+        homeButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != homeButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 final PoppingFrog game = GameOverScreen.this.game;
                 if (!isListening) {
                     return;
@@ -106,24 +112,25 @@ public class GameOverScreen extends FadingScreen {
                 });
                 isListening = false;
             }
-        };
-        homeButton.addListener(new ToggleButtonListener(homeButton, touchUp));
+        });
         // Rank button.
         Texture rankIcon = this.game.assetController.get(Assets.RANK_ICON);
         Texture rankPressedIcon = this.game.assetController.get(Assets.RANK_PRESSED_ICON);
         final ToggleButton rankButton = new ToggleButton(new Image(rankIcon), new Image(rankPressedIcon));
         rankButton.setSize(100, 100);
         rankButton.setPosition(700, 200);
-        touchUp = new ToggleButtonListener.Callback() {
+        rankButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != rankButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 if (!isListening) {
                     return;
                 }
                 GameOverScreen.this.game.playServices.showScore();
             }
-        };
-        rankButton.addListener(new ToggleButtonListener(rankButton, touchUp));
+        });
 
         // Highest-score label.
         Label highestScoreLabel = new Label(HIGHEST_SCORE + this.game.data.getHighScore(),
