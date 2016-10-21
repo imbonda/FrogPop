@@ -46,7 +46,7 @@ public class PopupDrawer {
     }
 
     public void drawPopups() {
-        stage.draw();
+        this.stage.draw();
     }
 
     public void dispose() {

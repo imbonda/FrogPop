@@ -94,6 +94,7 @@ public final class Assets {
     public static final String NEXT_PRESSED_ICON = "images/icons/next_pressed.png";
     // Backgrounds.
     public static final String MENU_BACKGROUND = "images/backgrounds/menu.jpg";
+    public static final String PAUSE_BACKGROUND = "images/backgrounds/pause.png";
     // Themes.
     public static final String SUMMER_THEME = "images/themes/summer.png";
     public static final String AUTUMN_THEME = "images/themes/autumn.png";
@@ -176,6 +177,7 @@ public final class Assets {
             NEXT_PRESSED_ICON,
         // Backgrounds
             MENU_BACKGROUND,
+            PAUSE_BACKGROUND,
         // Themes
             SUMMER_THEME,
             AUTUMN_THEME,
