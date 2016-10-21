@@ -23,6 +23,7 @@ import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
+import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
 import com.nitsanmichael.popping_frog_game.sprites.Buttons;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleBritishFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
@@ -68,9 +69,12 @@ public class MainMenuScreen extends FadingScreen {
                     new Image(playIcon), new Image(playPressedIcon));
         playButton.setSize(100, 100);
         playButton.setPosition(340, 300);
-        ToggleButtonListener.Callback touchUp = new ToggleButtonListener.Callback() {
+        playButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != playButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 final PoppingFrog game = MainMenuScreen.this.game;
                 if (!isListening) {
                     return;
@@ -84,8 +88,7 @@ public class MainMenuScreen extends FadingScreen {
                 });
                 isListening = false;
             }
-        };
-        playButton.addListener(new ToggleButtonListener(playButton, touchUp));
+        });
         // Settings button.
         Texture settingsIcon = this.game.assetController.get(Assets.SETTINGS_ICON);
         Texture settingsPressedIcon = this.game.assetController.get(Assets.SETTINGS_PRESSED_ICON);
@@ -93,9 +96,12 @@ public class MainMenuScreen extends FadingScreen {
                     new Image(settingsIcon), new Image(settingsPressedIcon));
         settingsButton.setSize(100, 100);
         settingsButton.setPosition(200, 300);
-        touchUp = new ToggleButtonListener.Callback() {
+        settingsButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != settingsButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 final PoppingFrog game = MainMenuScreen.this.game;
                 if (!isListening) {
                     return;
@@ -109,8 +115,7 @@ public class MainMenuScreen extends FadingScreen {
                 });
                 isListening = false;
             }
-        };
-        settingsButton.addListener(new ToggleButtonListener(settingsButton, touchUp));
+        });
         // Hero button.
         Texture heroIcon = this.game.assetController.get(Assets.HERO_ICON);
         Texture heroPressedIcon = this.game.assetController.get(Assets.HERO_PRESSED_ICON);
@@ -118,9 +123,12 @@ public class MainMenuScreen extends FadingScreen {
                     new Image(heroIcon), new Image(heroPressedIcon));
         heroButton.setSize(100, 100);
         heroButton.setPosition(480, 300);
-        touchUp = new ToggleButtonListener.Callback() {
+        heroButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != heroButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 final PoppingFrog game = MainMenuScreen.this.game;
                 if (!isListening) {
                     return;
@@ -134,8 +142,7 @@ public class MainMenuScreen extends FadingScreen {
                 });
                 isListening = false;
             }
-        };
-        heroButton.addListener(new ToggleButtonListener(heroButton, touchUp));
+        });
 
         // Game title.
         Label titleLabel = new Label(GAME_TITLE, new Label.LabelStyle(font, Color.LIME));
