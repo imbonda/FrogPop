@@ -16,6 +16,7 @@ import com.nitsanmichael.popping_frog_game.scenes.PopupDrawer;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
 import com.nitsanmichael.popping_frog_game.managment.GamePlayTouchProcessor;
 import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
+import com.nitsanmichael.popping_frog_game.states.StateTracker;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -26,21 +27,21 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class PlayScreen extends FadingScreen {
 
-    public enum GameState { COUNTDOWN, PLAY, PAUSE, OVER }
-
     private static final float FADE_OUT_TIME = 0.1f;
     private static final float FADE_IN_TIME = 0.25f;
     private static final int MAX_LIVES = 3;
 
-    private PoppingFrog game;
-    private Viewport gameViewPort;
-    private SpritesDrawer spritesDrawer;
-    private EffectDrawer effectDrawer;
-    private RuntimeInfo runtimeInfo;
-    private ThemeController themeController;
-    private LevelController levelController;
-    private Hud hud;
-    private PopupDrawer popupDrawer;
+    public PoppingFrog game;
+    public Viewport gameViewPort;
+    public SpritesDrawer spritesDrawer;
+    public EffectDrawer effectDrawer;
+    public RuntimeInfo runtimeInfo;
+    public ThemeController themeController;
+    public LevelController levelController;
+    public Hud hud;
+    public PopupDrawer popupDrawer;
+
+    private StateTracker stateTracker;
 
 
     public PlayScreen(PoppingFrog game) {
@@ -52,7 +53,8 @@ public class PlayScreen extends FadingScreen {
         this.effectDrawer = new EffectDrawer();
         this.themeController = new ThemeController(this.game.config, this.game.assetController,
                     this.effectDrawer);
-        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES, GameState.COUNTDOWN);
+        this.stateTracker = new StateTracker(this);
+        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES, this.stateTracker);
         Timer timer = new Timer(this.game.assetController);
         this.hud = new Hud(this.game.assetController, this.game.batch, runtimeInfo, timer);
         this.popupDrawer = new PopupDrawer(this.gameViewPort, this.game.batch,
@@ -60,26 +62,16 @@ public class PlayScreen extends FadingScreen {
         this.levelController = new LevelController(
                     this.game.config, this.game.assetController, this.game.media, this.spritesDrawer,
                     this.popupDrawer, this.runtimeInfo, timer, this.themeController);
-        Gdx.input.setInputProcessor(new GamePlayTouchProcessor(this.gameViewPort, this.runtimeInfo));
         // Play music.
         this.game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
         this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
-        // Begin countdown.
-        this.popupDrawer.register(PopupDrawer.PopupType.COUNTDOWN);
+
+        this.stateTracker.setState(StateTracker.GameState.PLAY);
 
         game.adsController.hideBannerAd();
     }
 
-    public void update(float deltaTime) {
-        this.levelController.update(deltaTime);
-        this.hud.update();
-        if (this.runtimeInfo.gameLives <= 0 && GameState.OVER != this.runtimeInfo.gameState) {
-            this.runtimeInfo.gameState = GameState.OVER;
-            gameOver();
-        }
-    }
-
-    private void gameOver() {
+    public void gameOver() {
         this.game.data.updateHighScore(this.runtimeInfo.gameScore);
         this.game.playServices.submitScore(this.game.data.getHighScore());
         this.game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
@@ -97,16 +89,7 @@ public class PlayScreen extends FadingScreen {
 
     @Override
     public void render(float delta) {
-        update(delta);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
-        this.game.batch.begin();
-        this.themeController.currentTheme.draw(this.game.batch);
-        this.spritesDrawer.drawSprites(this.game.batch);
-        this.effectDrawer.drawEffects(this.game.batch);
-        this.game.batch.end();
-        this.popupDrawer.drawPopups();
-        this.hud.draw();
+        this.stateTracker.render(delta);
     }
 
     @Override
@@ -120,6 +103,7 @@ public class PlayScreen extends FadingScreen {
         Gdx.input.setInputProcessor(null);
         this.hud.dispose();
         this.popupDrawer.dispose();
+        this.stateTracker.dispose();
     }
 
     @Override

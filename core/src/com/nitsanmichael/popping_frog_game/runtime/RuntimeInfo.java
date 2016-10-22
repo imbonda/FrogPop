@@ -2,9 +2,9 @@ package com.nitsanmichael.popping_frog_game.runtime;
 
 import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.managment.LevelController;
-import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 import com.nitsanmichael.popping_frog_game.sprites.Hole;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.states.StateTracker;
 
 
 /**
@@ -16,14 +16,14 @@ public class RuntimeInfo {
     public int gameLives;
     public int gameLevel;
     public float gameSpeed;
-    public PlayScreen.GameState gameState;
+    public StateTracker stateTracker;
     public Array<Frog> activeFrogs;
     public Array<Hole> holes;
 
-    public RuntimeInfo(int score, int lives, PlayScreen.GameState state) {
+    public RuntimeInfo(int score, int lives, StateTracker stateTracker) {
         this.gameScore = score;
         this.gameLives = lives;
-        this.gameState = state;
+        this.stateTracker = stateTracker;
         this.gameLevel = LevelController.STARTING_LEVEL;
         this.gameSpeed = LevelController.STARTING_SPEED;
         this.activeFrogs = new Array<Frog>();

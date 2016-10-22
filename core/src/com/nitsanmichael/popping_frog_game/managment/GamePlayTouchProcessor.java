@@ -26,19 +26,17 @@ public class GamePlayTouchProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (PlayScreen.GameState.PLAY == this.runtimeInfo.gameState) {
-            Vector2 touchVector = new Vector2(screenX, screenY);
-            touchVector = this.viewport.unproject(touchVector);
+        Vector2 touchVector = new Vector2(screenX, screenY);
+        touchVector = this.viewport.unproject(touchVector);
 
-            for (Frog frog : this.runtimeInfo.activeFrogs) {
-                if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
-                    frog.touched();
-                    return true;
-                }
+        for (Frog frog : this.runtimeInfo.activeFrogs) {
+            if (frog.isFrogTouched(touchVector) && !frog.isLifeTimeExpired()) {
+                frog.touched();
+                return true;
             }
-            Gdx.input.vibrate(500);
-            this.runtimeInfo.gameLives -= 1;
         }
+        Gdx.input.vibrate(500);
+        this.runtimeInfo.gameLives -= 1;
         return false;
     }
 

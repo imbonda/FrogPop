@@ -1,32 +1,24 @@
 package com.nitsanmichael.popping_frog_game.scenes.dialogs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
-import com.nitsanmichael.popping_frog_game.screens.MainMenuScreen;
-import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
+import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
+import com.nitsanmichael.popping_frog_game.states.StateTracker;
 
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.TweenCallback;
 
 /**
  * Created by MichaelBond on 10/17/2016.
@@ -38,7 +30,8 @@ public class PauseDialog implements Disposable {
     private Texture background;
     private Stage stage;
 
-    public PauseDialog(AssetController assetController, Viewport viewport, Batch batch) {
+    public PauseDialog(AssetController assetController, Viewport viewport, Batch batch,
+                       final RuntimeInfo runtimeInfo) {
         BitmapFont font = assetController.get(Assets.GAME_FONT);
         this.background = assetController.get(Assets.PAUSE_BACKGROUND);
 
@@ -49,13 +42,15 @@ public class PauseDialog implements Disposable {
                 new Image(playIcon), new Image(playPressedIcon));
         playButton.setSize(100, 100);
         playButton.setPosition(340, 250);
-        ToggleButtonListener.Callback touchUp = new ToggleButtonListener.Callback() {
+        playButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
-                // todo (implement)
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != playButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
+                runtimeInfo.stateTracker.setState(StateTracker.GameState.PLAY);
             }
-        };
-        playButton.addListener(new ToggleButtonListener(playButton, touchUp));
+        });
 
         // Home button.
         Texture homeIcon = assetController.get(Assets.HOME_ICON);
@@ -63,13 +58,15 @@ public class PauseDialog implements Disposable {
         final ToggleButton homeButton = new ToggleButton(new Image(homeIcon), new Image(homePressedIcon));
         homeButton.setSize(50, 50);
         homeButton.setPosition(365, 150);
-        touchUp = new ToggleButtonListener.Callback() {
+        homeButton.addListener(new MessageEventListener() {
             @Override
-            public void call() {
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != homeButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
                 // todo (implement)
             }
-        };
-        homeButton.addListener(new ToggleButtonListener(homeButton, touchUp));
+        });
 
         Label titleLabel = new Label(DIALOG_TITLE, new Label.LabelStyle(font, Color.WHITE));
         titleLabel.setFontScale(0.3f);
@@ -84,9 +81,7 @@ public class PauseDialog implements Disposable {
         this.stage.addActor(title);
         this.stage.addActor(playButton);
         this.stage.addActor(homeButton);
-        InputProcessor processor = Gdx.input.getInputProcessor();
-        // todo check if we want this behavior
-        Gdx.input.setInputProcessor(new InputMultiplexer(this.stage, processor));
+        Gdx.input.setInputProcessor(this.stage);
     }
 
     public void draw() {

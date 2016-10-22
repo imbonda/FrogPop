@@ -156,15 +156,12 @@ public class LevelController {
      * @param deltaTime The time passed from the last update call.
      */
     public void update(float deltaTime) {
-        if (PlayScreen.GameState.PLAY == this.runtimeInfo.gameState) {
-            this.levelTimer.update(deltaTime);
-            this.frogManager.update(deltaTime);
-            if (this.levelTimer.isTimedOut()) {
-                setNewTimer();
-                levelUp();
-            }
+        this.levelTimer.update(deltaTime);
+        this.frogManager.update(deltaTime);
+        if (this.levelTimer.isTimedOut()) {
+            setNewTimer();
+            levelUp();
         }
-        this.themeController.update(deltaTime, this.runtimeInfo.gameLevel);
     }
 
     private void setNewTimer() {
