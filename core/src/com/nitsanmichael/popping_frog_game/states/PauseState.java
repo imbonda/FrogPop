@@ -2,6 +2,7 @@ package com.nitsanmichael.popping_frog_game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.nitsanmichael.popping_frog_game.managment.GamePauseTouchProcessor;
 import com.nitsanmichael.popping_frog_game.scenes.dialogs.PauseDialog;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 
@@ -17,6 +18,7 @@ public class PauseState implements State {
 
     public PauseState(PlayScreen playScreen) {
         this.playScreen = playScreen;
+        Gdx.input.setInputProcessor(new GamePauseTouchProcessor(playScreen.runtimeInfo.stateTracker));
         this.pauseDialog = new PauseDialog(
                     this.playScreen.game.assetController,
                     this.playScreen.gameViewPort,

@@ -1,6 +1,8 @@
 package com.nitsanmichael.popping_frog_game.scenes.dialogs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -81,7 +83,8 @@ public class PauseDialog implements Disposable {
         this.stage.addActor(title);
         this.stage.addActor(playButton);
         this.stage.addActor(homeButton);
-        Gdx.input.setInputProcessor(this.stage);
+        InputProcessor processor = Gdx.input.getInputProcessor();
+        Gdx.input.setInputProcessor(new InputMultiplexer(this.stage, processor));
     }
 
     public void draw() {

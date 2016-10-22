@@ -1,12 +1,14 @@
 package com.nitsanmichael.popping_frog_game.managment;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.states.StateTracker;
 
 /**
  * This class is responsible for all the touch events happening during the game runtime.
@@ -42,6 +44,10 @@ public class GamePlayTouchProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (Input.Keys.P == keycode) {
+            this.runtimeInfo.stateTracker.setState(StateTracker.GameState.PAUSE);
+            return true;
+        }
         return false;
     }
 

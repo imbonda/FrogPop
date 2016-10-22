@@ -12,7 +12,7 @@ public class StateTracker implements Disposable {
     public enum GameState { COUNTDOWN, PLAY, PAUSE, OVER }
 
     private PlayScreen playScreen;
-    private GameState previousState;
+    private GameState currentStateName;
     private State currentState;
 
 
@@ -21,12 +21,13 @@ public class StateTracker implements Disposable {
     }
 
     public void setState(GameState state) {
-        if (this.previousState == state) {
+        if (this.currentStateName == state) {
             return;
         }
         if (null != this.currentState) {
             this.currentState.dispose();
         }
+        this.currentStateName = state;
         switch (state) {
             case COUNTDOWN:
                 this.currentState = new CountdownState(this.playScreen);
@@ -43,7 +44,6 @@ public class StateTracker implements Disposable {
             default:
                 break;
         }
-        this.previousState = state;
     }
 
     public void render(float deltaTime) {
