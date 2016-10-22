@@ -44,7 +44,7 @@ public class GamePlayTouchProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (Input.Keys.P == keycode) {
+        if (Input.Keys.P == keycode || Input.Keys.BACK == keycode) {
             this.runtimeInfo.stateTracker.setState(StateTracker.GameState.PAUSE);
             return true;
         }
