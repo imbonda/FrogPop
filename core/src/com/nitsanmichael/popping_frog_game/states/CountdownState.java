@@ -22,15 +22,7 @@ public class CountdownState implements State {
     @Override
     public void render(float deltaTime) {
         update(deltaTime);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.playScreen.game.batch.setProjectionMatrix(playScreen.gameViewPort.getCamera().combined);
-        this.playScreen.game.batch.begin();
-        this.playScreen.themeController.currentTheme.draw(playScreen.game.batch);
-        this.playScreen.spritesDrawer.drawSprites(playScreen.game.batch);
-        this.playScreen.effectDrawer.drawEffects(playScreen.game.batch);
-        this.playScreen.game.batch.end();
-        this.playScreen.popupDrawer.drawPopups();
-        this.playScreen.hud.draw();
+        this.playScreen.draw();
     }
 
     private void update(float deltaTime) {

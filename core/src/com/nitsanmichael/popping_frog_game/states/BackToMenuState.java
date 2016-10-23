@@ -4,31 +4,31 @@ import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 
 
 /**
- * Created by MichaelBond on 10/22/2016.
+ * Created by MichaelBond on 10/23/2016.
  */
-public class GameOverState implements State {
+public class BackToMenuState implements State {
 
     private PlayScreen playScreen;
-    private boolean isOverAlready;
+    private boolean isReturningAlready;
 
 
-    public GameOverState(PlayScreen playScreen) {
+    public BackToMenuState(PlayScreen playScreen) {
         this.playScreen = playScreen;
-        this.isOverAlready = false;
+        this.isReturningAlready = false;
     }
 
     @Override
     public void render(float deltaTime) {
-        gameOver();
+        backToMenu();
         update(deltaTime);
         this.playScreen.draw();
     }
 
-    private void gameOver() {
-        if (!this.isOverAlready) {
-            this.playScreen.gameOver();
+    private void backToMenu() {
+        if (!this.isReturningAlready) {
+            this.playScreen.backToMenu();
         }
-        this.isOverAlready = true;
+        this.isReturningAlready = true;
     }
 
     private void update(float deltaTime) {
@@ -38,7 +38,6 @@ public class GameOverState implements State {
 
     @Override
     public void dispose() {
-        // Nothing to dispose.
-    }
 
+    }
 }

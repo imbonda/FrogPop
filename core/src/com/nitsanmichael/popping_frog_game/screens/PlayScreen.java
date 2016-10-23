@@ -74,22 +74,47 @@ public class PlayScreen extends FadingScreen {
     public void gameOver() {
         this.game.data.updateHighScore(this.runtimeInfo.gameScore);
         this.game.playServices.submitScore(this.game.data.getHighScore());
-        this.game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
-        this.game.media.playSound(Assets.GAME_OVER_SOUND);
-        this.spritesDrawer.clear();
-        this.themeController.reset();
         fadeOut(FADE_OUT_TIME, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
+                game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
+                game.media.playSound(Assets.GAME_OVER_SOUND);
+                spritesDrawer.clear();
+                themeController.reset();
                 dispose();
                 new GameOverScreen(game, runtimeInfo).fadeIn(game, FADE_IN_TIME);
             }
         });
     }
 
+    public void backToMenu() {
+        fadeOut(FADE_OUT_TIME, new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
+                spritesDrawer.clear();
+                themeController.reset();
+                dispose();
+                new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
+            }
+        });
+    }
+
     @Override
     public void render(float delta) {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.stateTracker.render(delta);
+    }
+
+    public void draw() {
+        this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
+        this.game.batch.begin();
+        this.themeController.currentTheme.draw(this.game.batch);
+        this.spritesDrawer.drawSprites(this.game.batch);
+        this.effectDrawer.drawEffects(this.game.batch);
+        this.game.batch.end();
+        this.popupDrawer.drawPopups();
+        this.hud.draw();
     }
 
     @Override

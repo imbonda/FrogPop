@@ -1,5 +1,6 @@
 package com.nitsanmichael.popping_frog_game.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 
@@ -9,7 +10,7 @@ import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
  */
 public class StateTracker implements Disposable {
 
-    public enum GameState { COUNTDOWN, PLAY, PAUSE, OVER }
+    public enum GameState { COUNTDOWN, PLAY, PAUSE, OVER, BACK_TO_MENU }
 
     private PlayScreen playScreen;
     private GameState currentStateName;
@@ -28,6 +29,7 @@ public class StateTracker implements Disposable {
             this.currentState.dispose();
         }
         this.currentStateName = state;
+        Gdx.input.setInputProcessor(null);
         switch (state) {
             case COUNTDOWN:
                 this.currentState = new CountdownState(this.playScreen);
@@ -40,6 +42,9 @@ public class StateTracker implements Disposable {
                 break;
             case OVER:
                 this.currentState = new GameOverState(this.playScreen);
+                break;
+            case BACK_TO_MENU:
+                this.currentState = new BackToMenuState(this.playScreen);
                 break;
             default:
                 break;

@@ -42,8 +42,8 @@ public class PauseDialog implements Disposable {
         Texture playPressedIcon = assetController.get(Assets.PLAY_PRESSED_ICON);
         final ToggleButton playButton = new ToggleButton(
                 new Image(playIcon), new Image(playPressedIcon));
-        playButton.setSize(100, 100);
-        playButton.setPosition(340, 250);
+        playButton.setSize(130, 130);
+        playButton.setPosition(325, 230);
         playButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -58,21 +58,21 @@ public class PauseDialog implements Disposable {
         Texture homeIcon = assetController.get(Assets.HOME_ICON);
         Texture homePressedIcon = assetController.get(Assets.HOME_PRESSED_ICON);
         final ToggleButton homeButton = new ToggleButton(new Image(homeIcon), new Image(homePressedIcon));
-        homeButton.setSize(50, 50);
-        homeButton.setPosition(365, 150);
+        homeButton.setSize(80, 80);
+        homeButton.setPosition(350, 100);
         homeButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
                 if (actor != homeButton || message != ToggleButtonListener.ON_TOUCH_UP) {
                     return;
                 }
-                // todo (implement)
+                runtimeInfo.stateTracker.setState(StateTracker.GameState.BACK_TO_MENU);
             }
         });
 
         Label titleLabel = new Label(DIALOG_TITLE, new Label.LabelStyle(font, Color.WHITE));
-        titleLabel.setFontScale(0.3f);
-        titleLabel.setPosition(330, 400);
+        titleLabel.setFontScale(0.4f);
+        titleLabel.setPosition(310, 400);
 
         setStage(viewport, batch, playButton, homeButton, titleLabel);
     }
