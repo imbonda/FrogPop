@@ -11,5 +11,7 @@ public interface AdsController {
 
     void hideBannerAd();
 
-    void showInterstitialAd (Runnable then);
+    void showInterstitialAd(Runnable then);
+
+    void showRewardingVideo(Runnable then);
 }

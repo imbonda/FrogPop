@@ -167,6 +167,12 @@ public class SettingsScreen extends FadingScreen {
 
         setStage(settingsLabel, musicLabel, soundLabel, backButton);
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
+        this.game.adsController.showRewardingVideo(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
     }
 
     private void adjustSliderKnob(Skin sliderSkin) {

@@ -11,6 +11,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 public class AndroidLauncher extends AndroidApplication {
 
 	private AndroidPlayServices playServices;
+	private AndroidAdsController adsController;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -20,9 +21,9 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useCompass = false;
 		// Create a gameView and a bannerAd AdView.
 		this.playServices = new AndroidPlayServices(this);
-		AndroidAdsController adsController = new AndroidAdsController(this);
-		View gameView = initializeForView(new PoppingFrog(adsController, this.playServices), config);
-		adsController.setUp(gameView);
+		this.adsController = new AndroidAdsController(this);
+		View gameView = initializeForView(new PoppingFrog(this.adsController, this.playServices), config);
+		this.adsController.setUp(gameView);
 	}
 
 	@Override
@@ -43,4 +44,15 @@ public class AndroidLauncher extends AndroidApplication {
 		this.playServices.onActivityResult(requestCode, resultCode, data);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		this.adsController.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		this.adsController.onResume();
+	}
 }
