@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<frogsDistribution>
+    <level id="1">
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog" spawn_prob="1" />
+    </level>
+    <level id="2">
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog" spawn_prob="0.5" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.IllusionFrog" spawn_prob="0.5" />
+    </level>
+    <level id="5">
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog" spawn_prob="0.4" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.EvilFrog" spawn_prob="0.3" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.IllusionFrog" spawn_prob="0.3" />
+    </level>
+    <level id ="9">
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog" spawn_prob="0.2" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.EvilFrog" spawn_prob="0.8" />
+    </level>
+    <level id ="10">
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog" spawn_prob="0.7" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.EvilFrog" spawn_prob="0.2" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.HealthFrog" spawn_prob="0.1" max_allowed="1"/>
+    </level>
+    <level id ="12">
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog" spawn_prob="0.2" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.EvilFrog" spawn_prob="0.3" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.IllusionFrog" spawn_prob="0.3" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.FreezeFrog" spawn_prob="0.2" max_parallel="1" />
+    </level>
+    <level id="14">
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog" spawn_prob="0.7" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.IllusionFrog" spawn_prob="0.1" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.EvilFrog" spawn_prob="0.1" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.HealthFrog" spawn_prob="0.1" max_allowed="1"/>
+    </level>
+    <level id="17">
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog" spawn_prob="0.4" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.IllusionFrog" spawn_prob="0.2"  />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.EvilFrog" spawn_prob="0.2" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.FreezeFrog" spawn_prob="0.15" max_parallel="1" />
+        <frog class="com.nitsanmichael.popping_frog_game.sprites.frogs.active.HealthFrog" spawn_prob="0.05" />
+    </level>
+</frogsDistribution>
