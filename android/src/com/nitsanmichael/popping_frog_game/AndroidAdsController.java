@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.badlogic.gdx.Gdx;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.nitsanmichael.popping_frog_game.adds.AdsController;
 
 
@@ -20,6 +23,7 @@ import com.nitsanmichael.popping_frog_game.adds.AdsController;
 public class AndroidAdsController implements AdsController {
 
     private static final String BANNER_AD_UNIT_ID = "ca-app-pub-9580777050562768/7512736139";
+    private static final String INTERSTITIAL_UNIT_ID = "ca-app-pub-5519384153835422/6795093799";
     private static final String BANNER_AD_TEST_DEVICE_IDS [] = {
             "E5DBDD7696804F8E99991CB332E32029",
             "870C561BBC76ED46228B771081A24D17"
@@ -32,6 +36,7 @@ public class AndroidAdsController implements AdsController {
     private AndroidLauncher mainActivity;
     private View gameView;
     private AdView bannerAd;
+    private InterstitialAd interstitialAd;
 
 
     public AndroidAdsController(AndroidLauncher mainActivity) {
@@ -50,6 +55,12 @@ public class AndroidAdsController implements AdsController {
         bannerAd.setBackgroundColor(0xff000000); // black
         bannerAd.setAdUnitId(BANNER_AD_UNIT_ID);
         bannerAd.setAdSize(AdSize.SMART_BANNER);
+        interstitialAd = new InterstitialAd(this.mainActivity);
+        interstitialAd.setAdUnitId(INTERSTITIAL_UNIT_ID);
+
+        AdRequest.Builder builder = new AdRequest.Builder();
+        AdRequest ad = builder.build();
+        interstitialAd.loadAd(ad);
     }
 
     private void setLayout() {
@@ -107,6 +118,29 @@ public class AndroidAdsController implements AdsController {
                 }
                 AdRequest ad = builder.build();
                 bannerAd.loadAd(ad);
+            }
+        });
+    }
+    @Override
+    public void showInterstitialAd(final Runnable then) {
+        this.mainActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (then != null) {
+                    interstitialAd.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            Gdx.app.postRunnable(then);
+                            AdRequest.Builder builder = new AdRequest.Builder();
+                            for (String deviceId : BANNER_AD_TEST_DEVICE_IDS) {
+                                builder.addTestDevice(deviceId);
+                            }
+                            AdRequest ad = builder.build();
+                            interstitialAd.loadAd(ad);
+                        }
+                    });
+                }
+                interstitialAd.show();
             }
         });
     }
