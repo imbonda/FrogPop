@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.nitsanmichael.popping_frog_game.ads.AndroidAdsController;
 
 
 public class AndroidLauncher extends AndroidApplication {
