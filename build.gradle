@@ -65,6 +65,15 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
         compile fileTree(dir: '../libs', include: '*.jar')
+        compile fileTree(dir: '../libs', include: ['*.jar'])  // Vungle SDK
+        compile(name:'VungleAdapter', 'ext':'aar')  // Vungle Adapter for AdMob
+    }
+
+    repositories {
+        jcenter()
+        flatDir {
+            dirs '../libs'
+        }
     }
 }
 
