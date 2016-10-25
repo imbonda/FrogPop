@@ -24,4 +24,10 @@ public class DummyAdsController implements com.nitsanmichael.popping_frog_game.a
     public void showInterstitialAd(Runnable then) {
 
     }
+
+    @Override
+    public void showRewardingVideo(Runnable then) {
+
+    }
+
 }
