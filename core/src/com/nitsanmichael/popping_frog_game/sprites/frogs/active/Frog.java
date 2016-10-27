@@ -33,14 +33,6 @@ public abstract class Frog extends Sprite implements Pool.Poolable {
 
     /**
      * This method should be implemented by each sub-class.
-     * It ensures it will be drawn
-     * properly.
-     */
-    @Override
-    public abstract void draw(Batch batch);
-
-    /**
-     * This method should be implemented by each sub-class.
      * It method is called whenever a frog is considered dead, and should take care of all the -
      * underlying logic. (Updating the Hud, etc.)
      */

@@ -75,18 +75,17 @@ public class FreezeFrog extends Frog {
     private void updateAnimation(float deltaTime) {
         this.animation.update(deltaTime);
         Texture frame = this.animation.getFrame();
-        setSize(frame.getWidth(), frame.getHeight());
+        setTexture(frame);
     }
 
     @Override
     public void draw(Batch batch) {
         float fromPeekFraction = Math.abs(FROG_MAX_LIFE_TIME / 2 - this.lifeTime) /
                 (FROG_MAX_LIFE_TIME / 2);
-        batch.draw(
-                this.animation.getFrame(),
-                this.position.x, this.position.y,
-                0, 0,
-                (int)getWidth(), (int)(getHeight() * (1 - fromPeekFraction)));
+        setPosition(this.position.x, this.position.y);
+        setSize(getTexture().getWidth(), getTexture().getHeight() * (1 - fromPeekFraction));
+        setRegion(0, 0, (int)getWidth(), (int)(getHeight()));
+        super.draw(batch);
     }
 
     @Override
