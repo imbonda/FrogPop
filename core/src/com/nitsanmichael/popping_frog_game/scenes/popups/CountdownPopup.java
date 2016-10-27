@@ -46,8 +46,6 @@ public class CountdownPopup implements Popup {
         style.font = font;
         style.fontColor = GREEN_LIME;
         this.countDownLabel = new Label("", style);
-        this.countDownLabel.setPosition(POSITION_COUNT.x, POSITION_COUNT.y);
-        this.countDownLabel.setFontScale(INITIAL_FONT_SCALE);
     }
 
     @Override
@@ -57,6 +55,8 @@ public class CountdownPopup implements Popup {
     }
 
     private void countdown3() {
+        this.countDownLabel.setPosition(POSITION_COUNT.x, POSITION_COUNT.y);
+        this.countDownLabel.setFontScale(INITIAL_FONT_SCALE);
         this.countDownLabel.setText(COUNTDOWN_3);
         this.tweenController.popupLabelFontScale(
                 this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);

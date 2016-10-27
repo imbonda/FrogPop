@@ -27,6 +27,7 @@ public class CountdownState implements State {
 
     private void update(float deltaTime) {
         this.playScreen.themeController.update(deltaTime, playScreen.runtimeInfo.gameLevel);
+        this.playScreen.hud.update();
     }
 
     @Override

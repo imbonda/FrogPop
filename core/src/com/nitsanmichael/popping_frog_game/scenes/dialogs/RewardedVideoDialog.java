@@ -22,25 +22,30 @@ import com.nitsanmichael.popping_frog_game.states.StateTracker;
  */
 public class RewardedVideoDialog implements Disposable {
 
+    private RuntimeInfo runtimeInfo;
     private Stage stage;
 
 
     public RewardedVideoDialog(AssetController assetController, Viewport viewport, Batch batch,
-                                final RuntimeInfo runtimeInfo) {
+                                RuntimeInfo runtimeInfo) {
+        this.runtimeInfo = runtimeInfo;
+
         // Rewarded video button.
         Texture rewardedReplayIcon = assetController.get(Assets.REWARDED_REPLAY_ICON);
         Texture rewardedReplayPressedIcon = assetController.get(Assets.REWARDED_REPLAY_PRESSED_ICON);
-        ToggleButton rewardedReplayButton = new ToggleButton(
+        final ToggleButton rewardedReplayButton = new ToggleButton(
                     new Image(rewardedReplayIcon), new Image(rewardedReplayPressedIcon));
         rewardedReplayButton.setSize(250, 150);
         rewardedReplayButton.setPosition(265, 220);
         rewardedReplayButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
-//                if (actor != playButton || message != ToggleButtonListener.ON_TOUCH_UP) {
-//                    return;
-//                }
-//                runtimeInfo.stateTracker.setState(StateTracker.GameState.PLAY);
+                if (actor != rewardedReplayButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
+                RewardedVideoDialog.this.runtimeInfo.gameLives = 3;
+                RewardedVideoDialog.this.runtimeInfo.stateTracker.setState(
+                            StateTracker.GameState.COUNTDOWN);
             }
         });
 
@@ -57,7 +62,7 @@ public class RewardedVideoDialog implements Disposable {
                 if (actor != xButton || message != ToggleButtonListener.ON_TOUCH_UP) {
                     return;
                 }
-                runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
+                RewardedVideoDialog.this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
             }
         });
 

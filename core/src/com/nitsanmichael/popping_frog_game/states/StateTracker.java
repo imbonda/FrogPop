@@ -10,7 +10,7 @@ import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
  */
 public class StateTracker implements Disposable {
 
-    public enum GameState { COUNTDOWN, PLAY, PAUSE, OVER, BACK_TO_MENU }
+    public enum GameState { COUNTDOWN, PLAY, PAUSE, OVER, BACK_TO_MENU, REWARDED_REPLAY }
 
     private PlayScreen playScreen;
     private GameState currentStateName;
@@ -45,6 +45,9 @@ public class StateTracker implements Disposable {
                 break;
             case BACK_TO_MENU:
                 this.currentState = new BackToMenuState(this.playScreen);
+                break;
+            case REWARDED_REPLAY:
+                this.currentState = new RewardedReplayState(this.playScreen);
                 break;
             default:
                 break;
