@@ -9,26 +9,17 @@ import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 public class BackToMenuState implements State {
 
     private PlayScreen playScreen;
-    private boolean isReturningAlready;
 
 
     public BackToMenuState(PlayScreen playScreen) {
         this.playScreen = playScreen;
-        this.isReturningAlready = false;
+        this.playScreen.backToMenu();
     }
 
     @Override
     public void render(float deltaTime) {
-        backToMenu();
         update(deltaTime);
         this.playScreen.draw();
-    }
-
-    private void backToMenu() {
-        if (!this.isReturningAlready) {
-            this.playScreen.backToMenu();
-        }
-        this.isReturningAlready = true;
     }
 
     private void update(float deltaTime) {

@@ -9,26 +9,17 @@ import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 public class GameOverState implements State {
 
     private PlayScreen playScreen;
-    private boolean isOverAlready;
 
 
     public GameOverState(PlayScreen playScreen) {
         this.playScreen = playScreen;
-        this.isOverAlready = false;
+        this.playScreen.gameOver();
     }
 
     @Override
     public void render(float deltaTime) {
-        gameOver();
         update(deltaTime);
         this.playScreen.draw();
-    }
-
-    private void gameOver() {
-        if (!this.isOverAlready) {
-            this.playScreen.gameOver();
-        }
-        this.isOverAlready = true;
     }
 
     private void update(float deltaTime) {
