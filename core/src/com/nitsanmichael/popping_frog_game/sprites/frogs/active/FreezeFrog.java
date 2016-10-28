@@ -36,14 +36,14 @@ public class FreezeFrog extends Frog {
         setAnimation();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
-                getWidth() + 40, getHeight() + 35);
+                getTexture().getWidth() + 40, getTexture().getHeight() + 35);
         initAbility();
     }
 
     private void setAnimation() {
         this.animation = this.assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION);
         Texture frame = this.animation.getFrame();
-        setSize(frame.getWidth(), frame.getHeight());
+        setTexture(frame);
     }
 
     private void initAbility() {

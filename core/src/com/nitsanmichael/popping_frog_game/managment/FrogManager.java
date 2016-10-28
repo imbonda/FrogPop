@@ -23,19 +23,16 @@ import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
  */
 public class FrogManager {
 
-    private HolesManager holesManager;
     private Array<Integer> unpopulatedHolesIndexes;
     private HashMap<Frog, Integer> frogToHoleIndexMap;
     private FrogPool frogPool;
     private AssetController assetController;
     private SpritesDrawer spritesDrawer;
     private RuntimeInfo runtimeInfo;
-    private Array<FrogGhost> frogGhosts;
 
 
     public FrogManager(AssetController assetController, SpritesDrawer spritesDrawer,
                        RuntimeInfo runtimeInfo, FrogClassAllocator frogClassAllocator) {
-        this.holesManager = new HolesManager(assetController, spritesDrawer, runtimeInfo);
         this.assetController = assetController;
         this.spritesDrawer = spritesDrawer;
         this.runtimeInfo = runtimeInfo;
@@ -43,7 +40,6 @@ public class FrogManager {
         this.unpopulatedHolesIndexes = new Array<Integer>();
         setUnpopulatedHolesIndexes();
         this.frogPool = new FrogPool(frogClassAllocator);
-        this.frogGhosts = new Array<FrogGhost>();
     }
 
     private void setUnpopulatedHolesIndexes() {
@@ -97,7 +93,6 @@ public class FrogManager {
      * @param deltaTime The time passed from the last call to update.
      */
     public void update(float deltaTime) {
-        this.holesManager.update(deltaTime);
         // Updating frogs.
         Iterator<Frog> frogIterator = this.runtimeInfo.activeFrogs.iterator();
         while (frogIterator.hasNext()) {
@@ -109,7 +104,7 @@ public class FrogManager {
             }
         }
         // Updating ghosts.
-        Iterator<FrogGhost> iterator = this.frogGhosts.iterator();
+        Iterator<FrogGhost> iterator = this.runtimeInfo.frogGhosts.iterator();
         while (iterator.hasNext()) {
             FrogGhost frogGhost = iterator.next();
             frogGhost.update(deltaTime);
@@ -129,7 +124,7 @@ public class FrogManager {
     private void recycleDeadFrog(Iterator<Frog> frogIterator, Frog frog) {
         if (frog.isKilled()) {
             FrogGhost ghost = new FrogGhost(this.assetController, frog.getCenterPosition());
-            this.frogGhosts.add(ghost);
+            this.runtimeInfo.frogGhosts.add(ghost);
             this.spritesDrawer.addSprite(ghost);
         }
         int frogHoleIndex = this.frogToHoleIndexMap.remove(frog);
@@ -138,6 +133,21 @@ public class FrogManager {
         this.spritesDrawer.removeSprite(frog);
         addFrog();
         this.unpopulatedHolesIndexes.add(frogHoleIndex);
+    }
+
+    public void reset() {
+        Iterator<Frog> frogIterator = this.runtimeInfo.activeFrogs.iterator();
+        while (frogIterator.hasNext()) {
+            Frog frog = frogIterator.next();
+            int frogHoleIndex = this.frogToHoleIndexMap.remove(frog);
+            this.unpopulatedHolesIndexes.add(frogHoleIndex);
+            frogIterator.remove();
+            this.frogPool.free(frog);
+            this.spritesDrawer.removeSprite(frog);
+        }
+        this.frogPool.clear();
+        this.runtimeInfo.activeFrogs.clear();
+        this.runtimeInfo.frogGhosts.clear();
     }
 
 }

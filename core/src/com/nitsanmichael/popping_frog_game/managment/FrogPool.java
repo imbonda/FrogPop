@@ -96,7 +96,6 @@ public class FrogPool {
      * Clears the frog pool.
      */
     public void clear() {
-        // TODO (consider disposing all frogs).
         this.allFrogs.clear();
         this.classToFreeInstancesIndexesMap.clear();
     }

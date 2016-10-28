@@ -1,6 +1,5 @@
 package com.nitsanmichael.popping_frog_game.tweens.accessors;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import aurelienribon.tweenengine.TweenAccessor;

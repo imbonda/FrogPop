@@ -75,8 +75,11 @@ public class Hole extends Sprite {
         this.shuffleRequestCounter += 1;
     }
 
-    public void shuffleOff() {
+    public void shuffleOff(boolean hard) {
         this.shuffleRequestCounter -= 1;
+        if (hard) {
+            this.shuffleRequestCounter = 0;
+        }
         if (State.SHUFFLE_ON == this.state && 0 == this.shuffleRequestCounter) {
             Vector2 toOrigin = new Vector2(
                     this.origin.x - this.position.x,

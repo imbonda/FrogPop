@@ -56,4 +56,10 @@ public class HolesManager {
             hole.update(deltaTime);
         }
     }
+
+    public void reset() {
+        for (Hole hole : this.runtimeInfo.holes) {
+            hole.shuffleOff(true);
+        }
+    }
 }

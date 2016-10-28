@@ -35,13 +35,13 @@ public class HealthFrog extends Frog {
         setAnimation();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
-                getWidth() + 40, getHeight() + 35);
+                getTexture().getWidth() + 40, getTexture().getHeight() + 35);
     }
 
     private void setAnimation() {
         this.animation = this.assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION);
         Texture frame = getFrogTexture();
-        setSize(frame.getWidth(), frame.getHeight());
+        setTexture(frame);
     }
 
     @Override

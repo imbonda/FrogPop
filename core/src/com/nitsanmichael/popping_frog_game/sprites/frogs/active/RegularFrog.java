@@ -42,14 +42,14 @@ public class RegularFrog extends Frog {
         generateRandomAnimation();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
-                getWidth() + 40, getHeight() + 35);
+                getTexture().getWidth() + 40, getTexture().getHeight() + 35);
     }
 
     private void generateRandomAnimation() {
         Array<Animation> heroAnimations = this.assetController.getHeroAnimations();
         this.animation = heroAnimations.random();
         Texture frame = this.animation.getFrame();
-        setSize(frame.getWidth(), frame.getHeight());
+        setTexture(frame);
     }
 
     @Override

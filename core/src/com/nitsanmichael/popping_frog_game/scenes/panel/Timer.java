@@ -1,12 +1,13 @@
 package com.nitsanmichael.popping_frog_game.scenes.panel;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.tweens.TweenController;
+
 
 /**
  * Created by MichaelBond on 9/6/2016.
@@ -35,9 +36,9 @@ public class Timer extends Actor {
     private float timeLeftToCountDown;
 
 
-    public Timer(com.nitsanmichael.popping_frog_game.assets.AssetController assetController) {
-        this.timerTexture = assetController.get(com.nitsanmichael.popping_frog_game.assets.Assets.TIMER);
-        this.clockHandTexture = assetController.get(com.nitsanmichael.popping_frog_game.assets.Assets.TIMER_HAND);
+    public Timer(AssetController assetController, TweenController tweenController) {
+        this.timerTexture = assetController.get(Assets.TIMER);
+        this.clockHandTexture = assetController.get(Assets.TIMER_HAND);
         this.timerTexturePosition = DEFAULT_TIMER_TEXTURE_POSITION;
         this.timeToCountDown = DEFAULT_COUNTDOWN_TIME;
         this.timeLeftToCountDown = this.timeToCountDown;
@@ -54,9 +55,21 @@ public class Timer extends Actor {
         return this.timeLeftToCountDown <= 0;
     }
 
-    public void setCountTimeByFactor(float scalingFactor) {
-        this.timeToCountDown *= scalingFactor;
+    public void setCountdownTime(float time) {
+        this.timeToCountDown = time;
         this.timeLeftToCountDown = this.timeToCountDown;
+    }
+
+    public float getCountdownTime() {
+        return this.timeToCountDown;
+    }
+
+    public void setTimeLeft(float time) {
+        this.timeLeftToCountDown = time;
+    }
+
+    public float getTimeLeft() {
+        return this.timeLeftToCountDown;
     }
 
     @Override

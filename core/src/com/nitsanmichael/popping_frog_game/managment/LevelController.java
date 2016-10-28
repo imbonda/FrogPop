@@ -85,25 +85,8 @@ public class LevelController {
         setup();
     }
 
-    /**
-     * @param config    The game configuration.
-     * @param assetController   An asset controller instance for retrieving the loaded assets.
-     * @param media A media object for playing music and sounds.
-     * @param spritesDrawer A class that is used to draw queued sprites.
-     * @param runtimeInfo A runtime information regarding the game state.
-     * @param timer A timer to be used for timing the levels.
-     * @param themeController A theme-controller to use for switching between themes.
-     * @param level A level to set the LevelController to.
-     */
-    public LevelController(Config config, AssetController assetController, Media media,
-                           SpritesDrawer spritesDrawer, PopupDrawer popupDrawer,
-                           RuntimeInfo runtimeInfo, Timer timer, ThemeController themeController,
-                           int level) {
-        this(config, assetController, media, spritesDrawer, popupDrawer, runtimeInfo, timer);
-        this.runtimeInfo.gameLevel = level;
-        this.themeController = themeController;
-        this.themeController.init(level);
-        // TODO (finish function: calculate the this.runtimeInfo.gameSpeed for the given level..)
+    public void reset() {
+        this.frogManager.reset();
         setup();
     }
 
@@ -165,11 +148,12 @@ public class LevelController {
     }
 
     private void setNewTimer() {
+        float countdownTime = this.levelTimer.getCountdownTime();
         if (this.runtimeInfo.gameLevel <= MAX_DIFFICALITY_LEVEL) {
-            this.levelTimer.setCountTimeByFactor(LEVEL_TIMER_INCREMENTAL_FACTOR);
+            this.levelTimer.setCountdownTime(countdownTime * LEVEL_TIMER_INCREMENTAL_FACTOR);
         }
         else {
-            this.levelTimer.setCountTimeByFactor(1);
+            this.levelTimer.setCountdownTime(countdownTime);
         }
     }
 

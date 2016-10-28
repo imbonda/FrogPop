@@ -35,7 +35,7 @@ public class IllusionFrog extends Frog {
         setAnimation();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
-                getWidth() + 40, getHeight() + 35);
+                getTexture().getWidth() + 40, getTexture().getHeight() + 35);
         for (Hole hole : this.runtimeInfo.holes) {
             hole.shuffleOn();
         }
@@ -44,7 +44,7 @@ public class IllusionFrog extends Frog {
     private void setAnimation() {
         this.animation = this.assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION);
         Texture frame = this.animation.getFrame();
-        setSize(frame.getWidth(), frame.getHeight());
+        setTexture(frame);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class IllusionFrog extends Frog {
     @Override
     public void onDeath() {
         for (Hole hole : this.runtimeInfo.holes) {
-            hole.shuffleOff();
+            hole.shuffleOff(false);
         }
         if (isKilled()) {
             this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;

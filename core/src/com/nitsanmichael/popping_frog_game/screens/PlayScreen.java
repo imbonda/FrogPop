@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
+import com.nitsanmichael.popping_frog_game.managment.HolesManager;
 import com.nitsanmichael.popping_frog_game.managment.LevelController;
 import com.nitsanmichael.popping_frog_game.managment.ThemeController;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
@@ -36,8 +37,10 @@ public class PlayScreen extends FadingScreen {
     public SpritesDrawer spritesDrawer;
     public EffectDrawer effectDrawer;
     public RuntimeInfo runtimeInfo;
+    public HolesManager holesManager;
     public ThemeController themeController;
     public LevelController levelController;
+    public Timer timer;
     public Hud hud;
     public PopupDrawer popupDrawer;
 
@@ -51,20 +54,22 @@ public class PlayScreen extends FadingScreen {
                     PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera());
         this.spritesDrawer = new SpritesDrawer();
         this.effectDrawer = new EffectDrawer();
-        this.themeController = new ThemeController(this.game.config, this.game.assetController,
+        this.themeController = new ThemeController(game.config, game.assetController,
                     this.effectDrawer);
         this.stateTracker = new StateTracker(this);
         this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES, this.stateTracker);
-        Timer timer = new Timer(this.game.assetController);
-        this.hud = new Hud(this.game.assetController, this.game.batch, runtimeInfo, timer);
+        this.timer = new Timer(game.assetController, game.tweenController);
+        this.hud = new Hud(game.assetController, game.batch, this.runtimeInfo, this.timer);
         this.popupDrawer = new PopupDrawer(this.gameViewPort, this.game.batch,
-                this.game.assetController, this.game.tweenController, this.runtimeInfo);
+                game.assetController, game.tweenController, this.runtimeInfo);
+        this.holesManager = new HolesManager(game.assetController, this.spritesDrawer,
+                    this.runtimeInfo);
         this.levelController = new LevelController(
-                    this.game.config, this.game.assetController, this.game.media, this.spritesDrawer,
+                    game.config, game.assetController, game.media, this.spritesDrawer,
                     this.popupDrawer, this.runtimeInfo, timer, this.themeController);
         // Play music.
-        this.game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
-        this.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
+        game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
+        game.media.playMusic(Assets.GAME_PLAY_MUSIC);
 
         this.stateTracker.setState(StateTracker.GameState.PLAY);
 
