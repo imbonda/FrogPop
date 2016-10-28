@@ -83,7 +83,6 @@ public class PlayScreen extends FadingScreen {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
-                game.media.playSound(Assets.GAME_OVER_SOUND);
                 spritesDrawer.clear();
                 themeController.reset();
                 dispose();

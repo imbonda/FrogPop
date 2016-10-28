@@ -2,6 +2,7 @@ package com.nitsanmichael.popping_frog_game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.managment.GamePlayTouchProcessor;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 
@@ -43,34 +44,10 @@ public class PlayState implements State {
         this.playScreen.holesManager.update(deltaTime);
         this.playScreen.hud.update();
         if (this.playScreen.runtimeInfo.gameLives <= 0 && isRewardedReplayAllowed()) {
-            Gdx.input.setInputProcessor(null);
-            this.playScreen.game.tweenController.frogsGhostGameOverAnimation(
-                    this.playScreen.runtimeInfo.frogGhosts, GAME_OVER_ANIMATION_DURATION, null);
-            this.playScreen.game.tweenController.frogsGameOverAnimation(
-                    this.playScreen.runtimeInfo.activeFrogs, GAME_OVER_ANIMATION_DURATION,
-                        new TweenCallback() {
-                            @Override
-                            public void onEvent(int type, BaseTween<?> source) {
-                                switchState(StateTracker.GameState.REWARDED_REPLAY);
-                            }
-                    }
-            );
-            this.isNoLongerPlaying = true;
+            switchState(StateTracker.GameState.REWARDED_REPLAY);
         }
         else if (this.playScreen.runtimeInfo.gameLives <= 0) {
-            Gdx.input.setInputProcessor(null);
-            this.playScreen.game.tweenController.frogsGhostGameOverAnimation(
-                    this.playScreen.runtimeInfo.frogGhosts, GAME_OVER_ANIMATION_DURATION, null);
-            this.playScreen.game.tweenController.frogsGameOverAnimation(
-                    this.playScreen.runtimeInfo.activeFrogs, GAME_OVER_ANIMATION_DURATION,
-                        new TweenCallback() {
-                            @Override
-                            public void onEvent(int type, BaseTween<?> source) {
-                                switchState(StateTracker.GameState.OVER);
-                            }
-                    }
-            );
-            this.isNoLongerPlaying = true;
+            switchState(StateTracker.GameState.OVER);
         }
     }
 
@@ -78,8 +55,21 @@ public class PlayState implements State {
         return this.playScreen.runtimeInfo.gameScore >= MIN_SCORE_FOR_REWARDED_REPLAY;
     }
 
-    private void switchState(StateTracker.GameState state) {
-        this.playScreen.runtimeInfo.stateTracker.setState(state);
+    private void switchState(final StateTracker.GameState state) {
+        Gdx.input.setInputProcessor(null);
+        this.playScreen.game.media.playSound(Assets.GAME_OVER_SOUND);
+        this.playScreen.game.tweenController.frogsGhostGameOverAnimation(
+                this.playScreen.runtimeInfo.frogGhosts, GAME_OVER_ANIMATION_DURATION, null);
+        this.playScreen.game.tweenController.frogsGameOverAnimation(
+                this.playScreen.runtimeInfo.activeFrogs, GAME_OVER_ANIMATION_DURATION,
+                new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        playScreen.runtimeInfo.stateTracker.setState(state);
+                    }
+                }
+        );
+        this.isNoLongerPlaying = true;
     }
 
     @Override
