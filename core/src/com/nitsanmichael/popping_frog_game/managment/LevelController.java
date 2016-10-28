@@ -82,15 +82,13 @@ public class LevelController {
         this.runtimeInfo.gameSpeed = STARTING_SPEED;
         this.themeController = themeController;
         this.themeController.init();
-        setup();
     }
 
     public void reset() {
         this.frogManager.reset();
-        setup();
     }
 
-    private void setup() {
+    public void setup() {
         setLevelsToAddFrog();
         setCurrentLevel();
     }
