@@ -32,11 +32,13 @@ public class RewardedVideoDialog implements Disposable {
     private Label timeLabel;
     private Stage stage;
     private float timeLeft;
+    private boolean countdownFinished;
 
 
     public RewardedVideoDialog(AssetController assetController, Viewport viewport, Batch batch,
                                 RuntimeInfo runtimeInfo) {
         this.timeLeft = SHOW_TIME;
+        this.countdownFinished = false;
         this.runtimeInfo = runtimeInfo;
 
         // Rewarded video button.
@@ -105,9 +107,12 @@ public class RewardedVideoDialog implements Disposable {
 
     public void update(float deltaTime) {
         this.timeLeft -= deltaTime * COUNTDOWN_SPEED;
-        if (this.timeLeft < 0) {
-            this.timeLeft = 0;
+        if (this.countdownFinished) {
             this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
+        }
+        else if (this.timeLeft < 0) {
+            this.timeLeft = 0;
+            this.countdownFinished = true;
         }
         this.timeLabel.setText(Integer.toString((int)Math.ceil(this.timeLeft)));
     }
