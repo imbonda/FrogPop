@@ -1,11 +1,13 @@
 package com.nitsanmichael.popping_frog_game.scenes.dialogs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
@@ -22,12 +24,19 @@ import com.nitsanmichael.popping_frog_game.states.StateTracker;
  */
 public class RewardedVideoDialog implements Disposable {
 
+    // Dialog show time in seconds.
+    private static final int SHOW_TIME = 5;
+    private static final float COUNTDOWN_SPEED = 0.8f;
+
     private RuntimeInfo runtimeInfo;
+    private Label timeLabel;
     private Stage stage;
+    private float timeLeft;
 
 
     public RewardedVideoDialog(AssetController assetController, Viewport viewport, Batch batch,
                                 RuntimeInfo runtimeInfo) {
+        this.timeLeft = SHOW_TIME;
         this.runtimeInfo = runtimeInfo;
 
         // Rewarded video button.
@@ -66,15 +75,41 @@ public class RewardedVideoDialog implements Disposable {
             }
         });
 
-        setStage(viewport, batch, rewardedReplayButton, xButton);
+        // Film-reel countdown image.
+        Texture filmReelCountdownIcon = assetController.get(Assets.FILM_REEL_COUNTDOWN_ICON);
+        Image filmReelCountdownImage = new Image(filmReelCountdownIcon);
+        filmReelCountdownImage.setPosition(360, 350);
+        filmReelCountdownImage.setSize(53, 53);
+
+        // Time label.
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = assetController.get(Assets.GAME_FONT);
+        style.fontColor = Color.DARK_GRAY;
+        this.timeLabel = new Label(Integer.toString((int)Math.ceil(this.timeLeft)), style);
+        this.timeLabel.setFontScale(0.2f);
+        this.timeLabel.setPosition(380, 355);
+
+        setStage(viewport, batch, filmReelCountdownImage, rewardedReplayButton, xButton);
     }
 
     private void setStage(Viewport viewport, Batch batch,
+                            Image filmReelCountdownImage,
                             ToggleButton rewardedReplayButton, ToggleButton xButton) {
         this.stage = new Stage(viewport, batch);
         this.stage.addActor(rewardedReplayButton);
         this.stage.addActor(xButton);
+        this.stage.addActor(filmReelCountdownImage);
+        this.stage.addActor(this.timeLabel);
         Gdx.input.setInputProcessor(this.stage);
+    }
+
+    public void update(float deltaTime) {
+        this.timeLeft -= deltaTime * COUNTDOWN_SPEED;
+        if (this.timeLeft < 0) {
+            this.timeLeft = 0;
+            this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
+        }
+        this.timeLabel.setText(Integer.toString((int)Math.ceil(this.timeLeft)));
     }
 
     public void draw() {

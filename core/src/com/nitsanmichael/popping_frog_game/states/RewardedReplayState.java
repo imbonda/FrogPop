@@ -32,6 +32,7 @@ public class RewardedReplayState implements State {
 
     private void update(float deltaTime) {
         this.playScreen.themeController.update(deltaTime, playScreen.runtimeInfo.gameLevel);
+        this.rewardedVideoDialog.update(deltaTime);
     }
 
     @Override
