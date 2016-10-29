@@ -1,5 +1,6 @@
 package com.nitsanmichael.popping_frog_game.ads;
 
+import com.badlogic.gdx.Gdx;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
@@ -15,12 +16,16 @@ public class RewardedVideoController implements RewardedVideoAdListener {
 
     private static final String REWARDED_VIDEO_UNIT_ID = "ca-app-pub-9580777050562768/6126304134";
 
+    private enum LoadingState { LOADING, LOADED, FAILED, NOT_LOADED }
+
     private AndroidLauncher mainActivity;
     private RewardedVideoAd rewardedVideoAd;
     private Runnable rewardedVideoRunnable;
+    private LoadingState state;
 
 
     public RewardedVideoController(AndroidLauncher mainActivity) {
+        this.state = LoadingState.NOT_LOADED;
         this.mainActivity = mainActivity;
         this.rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this.mainActivity);
         this.rewardedVideoAd.setRewardedVideoAdListener(this);
@@ -28,21 +33,37 @@ public class RewardedVideoController implements RewardedVideoAdListener {
     }
 
     private void loadRewardedVideoAd() {
-        if (!this.rewardedVideoAd.isLoaded()) {
+        if (LoadingState.LOADED != this.state && LoadingState.LOADING != this.state) {
+            this.state = LoadingState.LOADING;
             this.rewardedVideoAd.loadAd(REWARDED_VIDEO_UNIT_ID, new AdRequest.Builder().build());
         }
     }
 
-    public void showRewardingVideo(final Runnable then) {
+    public void showRewardingVideo(Runnable then) {
+        this.rewardedVideoRunnable = then;
         this.mainActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                rewardedVideoRunnable = then;
                 if (rewardedVideoAd.isLoaded()) {
                     rewardedVideoAd.show();
                 }
             }
         });
+    }
+
+    public boolean isVideoLoaded() {
+        if (LoadingState.LOADED == state) {
+            return true;
+        }
+        else {
+            this.mainActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    loadRewardedVideoAd();
+                }
+            });
+            return false;
+        }
     }
 
     public void onPause() {
@@ -55,37 +76,41 @@ public class RewardedVideoController implements RewardedVideoAdListener {
 
     @Override
     public void onRewarded(RewardItem rewardItem) {
-
+        if (this.rewardedVideoRunnable != null) {
+            Gdx.app.postRunnable(this.rewardedVideoRunnable);
+            this.rewardedVideoRunnable = null;
+        }
     }
 
     @Override
     public void onRewardedVideoAdLoaded() {
-
+        this.state = LoadingState.LOADED;
     }
 
     @Override
     public void onRewardedVideoAdOpened() {
-
+        this.state = LoadingState.NOT_LOADED;
     }
 
     @Override
     public void onRewardedVideoStarted() {
-
+        this.state = LoadingState.NOT_LOADED;
     }
 
     @Override
     public void onRewardedVideoAdClosed() {
+        this.state = LoadingState.NOT_LOADED;
         loadRewardedVideoAd();
     }
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
-
+        this.state = LoadingState.NOT_LOADED;
     }
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
-
+        this.state = LoadingState.FAILED;
     }
 
 }

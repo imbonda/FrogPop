@@ -13,5 +13,7 @@ public interface AdsController {
 
     void showInterstitialAd(Runnable then);
 
+    boolean isRewardedVideoAvailable();
+
     void showRewardingVideo(Runnable then);
 }

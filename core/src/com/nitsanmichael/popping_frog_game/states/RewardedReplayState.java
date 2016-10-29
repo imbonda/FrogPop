@@ -17,6 +17,7 @@ public class RewardedReplayState implements State {
         this.playScreen = playScreen;
         this.rewardedVideoDialog = new RewardedVideoDialog(
                 this.playScreen.game.assetController,
+                this.playScreen.game.adsController,
                 this.playScreen.gameViewPort,
                 this.playScreen.game.batch,
                 this.playScreen.runtimeInfo

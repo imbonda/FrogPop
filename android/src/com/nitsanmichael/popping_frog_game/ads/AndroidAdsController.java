@@ -114,6 +114,11 @@ public class AndroidAdsController implements AdsController {
     }
 
     @Override
+    public boolean isRewardedVideoAvailable() {
+        return this.rewardedVideoController.isVideoLoaded();
+    }
+
+    @Override
     public void showRewardingVideo(final Runnable then) {
         this.rewardedVideoController.showRewardingVideo(then);
     }

@@ -53,7 +53,10 @@ public class PlayState implements State {
     }
 
     private boolean isRewardedReplayAllowed() {
-        return this.playScreen.runtimeInfo.gameScore >= MIN_SCORE_FOR_REWARDED_REPLAY;
+        boolean videoAvailable = this.playScreen.game.adsController.isRewardedVideoAvailable();
+        boolean minReplayScoreReached =
+                    this.playScreen.runtimeInfo.gameScore >= MIN_SCORE_FOR_REWARDED_REPLAY;
+        return videoAvailable && minReplayScoreReached;
     }
 
     private void switchState(final StateTracker.GameState state) {

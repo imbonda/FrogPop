@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.nitsanmichael.popping_frog_game.adds.AdsController;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
@@ -28,17 +29,21 @@ public class RewardedVideoDialog implements Disposable {
     private static final int SHOW_TIME = 5;
     private static final float COUNTDOWN_SPEED = 0.8f;
 
+    private enum CountdownState { COUNTING, FINISHED, PLAYING_VIDEO }
+
+    private AdsController adsController;
     private RuntimeInfo runtimeInfo;
     private Label timeLabel;
     private Stage stage;
     private float timeLeft;
-    private boolean countdownFinished;
+    private CountdownState state;
 
 
-    public RewardedVideoDialog(AssetController assetController, Viewport viewport, Batch batch,
-                                RuntimeInfo runtimeInfo) {
+    public RewardedVideoDialog(AssetController assetController, AdsController adsController,
+                                Viewport viewport, Batch batch, RuntimeInfo runtimeInfo) {
         this.timeLeft = SHOW_TIME;
-        this.countdownFinished = false;
+        this.state = CountdownState.COUNTING;
+        this.adsController = adsController;
         this.runtimeInfo = runtimeInfo;
 
         // Rewarded video button.
@@ -54,9 +59,7 @@ public class RewardedVideoDialog implements Disposable {
                 if (actor != rewardedReplayButton || message != ToggleButtonListener.ON_TOUCH_UP) {
                     return;
                 }
-                RewardedVideoDialog.this.runtimeInfo.gameLives = 3;
-                RewardedVideoDialog.this.runtimeInfo.stateTracker.setState(
-                            StateTracker.GameState.COUNTDOWN);
+                playRewardingVideo();
             }
         });
 
@@ -106,15 +109,34 @@ public class RewardedVideoDialog implements Disposable {
     }
 
     public void update(float deltaTime) {
-        this.timeLeft -= deltaTime * COUNTDOWN_SPEED;
-        if (this.countdownFinished) {
-            this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
+        switch (state) {
+            case COUNTING:
+                this.timeLeft -= deltaTime * COUNTDOWN_SPEED;
+                if (this.timeLeft < 0) {
+                    this.timeLeft = 0;
+                    this.state = CountdownState.FINISHED;
+                }
+                this.timeLabel.setText(Integer.toString((int)Math.ceil(this.timeLeft)));
+                break;
+            case FINISHED:
+                this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
+                break;
+            case PLAYING_VIDEO:
+                break;
+            default:
+                break;
         }
-        else if (this.timeLeft < 0) {
-            this.timeLeft = 0;
-            this.countdownFinished = true;
-        }
-        this.timeLabel.setText(Integer.toString((int)Math.ceil(this.timeLeft)));
+    }
+
+    private void playRewardingVideo() {
+        this.state = CountdownState.PLAYING_VIDEO;
+        this.adsController.showRewardingVideo(new Runnable() {
+            @Override
+            public void run() {
+                runtimeInfo.gameLives = 3;
+                runtimeInfo.stateTracker.setState(StateTracker.GameState.COUNTDOWN);
+            }
+        });
     }
 
     public void draw() {

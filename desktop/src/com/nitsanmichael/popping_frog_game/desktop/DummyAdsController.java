@@ -26,6 +26,11 @@ public class DummyAdsController implements com.nitsanmichael.popping_frog_game.a
     }
 
     @Override
+    public boolean isRewardedVideoAvailable() {
+        return false;
+    }
+
+    @Override
     public void showRewardingVideo(Runnable then) {
 
     }
