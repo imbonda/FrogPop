@@ -136,6 +136,7 @@ public class FrogManager {
     }
 
     public void reset() {
+        // Frogs.
         Iterator<Frog> frogIterator = this.runtimeInfo.activeFrogs.iterator();
         while (frogIterator.hasNext()) {
             Frog frog = frogIterator.next();
@@ -146,8 +147,13 @@ public class FrogManager {
             this.spritesDrawer.removeSprite(frog);
         }
         this.frogPool.clear();
-        this.runtimeInfo.activeFrogs.clear();
-        this.runtimeInfo.frogGhosts.clear();
+        // Frog-ghosts.
+        Iterator<FrogGhost> iterator = this.runtimeInfo.frogGhosts.iterator();
+        while (iterator.hasNext()) {
+            FrogGhost frogGhost = iterator.next();
+            this.spritesDrawer.removeSprite(frogGhost);
+            iterator.remove();
+        }
     }
 
 }
