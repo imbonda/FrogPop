@@ -116,9 +116,7 @@ public class ChooseHeroScreen extends FadingScreen {
         setStage(chooseHeroTitle, backButton, nextHeroButton);
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
 
-        if (game.adsController.isInternetConnected()) {
-            game.adsController.showBannerAd();
-        }
+        game.adsController.showBannerAd();
     }
 
     private void initIdleFrogs() {

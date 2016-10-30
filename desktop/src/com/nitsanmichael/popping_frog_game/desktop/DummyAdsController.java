@@ -6,11 +6,6 @@ package com.nitsanmichael.popping_frog_game.desktop;
 public class DummyAdsController implements com.nitsanmichael.popping_frog_game.adds.AdsController {
 
     @Override
-    public boolean isInternetConnected() {
-        return false;
-    }
-
-    @Override
     public void showBannerAd() {
 
     }

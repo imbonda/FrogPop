@@ -5,8 +5,6 @@ package com.nitsanmichael.popping_frog_game.adds;
  */
 public interface AdsController {
 
-    boolean isInternetConnected();
-
     void showBannerAd();
 
     void hideBannerAd();

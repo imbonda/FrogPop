@@ -51,11 +51,9 @@ public class AndroidPlayServices implements PlayServices {
     @Override
     public void signIn() {
         try {
-            this.mainActivity.runOnUiThread(new Runnable()
-            {
+            this.mainActivity.runOnUiThread(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     gameHelper.beginUserInitiatedSignIn();
                 }
             });

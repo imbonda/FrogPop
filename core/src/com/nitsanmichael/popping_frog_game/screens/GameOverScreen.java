@@ -156,16 +156,13 @@ public class GameOverScreen extends FadingScreen {
 
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
 
-        if (game.adsController.isInternetConnected()) {
-            game.adsController.showBannerAd();
-            game.adsController.showInterstitialAd(new Runnable() {
-                @Override
-                public void run() {
+        game.adsController.showBannerAd();
+        game.adsController.showInterstitialAd(new Runnable() {
+            @Override
+            public void run() {
 
-                }
-            });
-
-        }
+            }
+        });
     }
 
     private void initIdleFrogs() {

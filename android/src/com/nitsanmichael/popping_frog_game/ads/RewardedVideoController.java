@@ -33,7 +33,9 @@ public class RewardedVideoController implements RewardedVideoAdListener {
     }
 
     private void loadRewardedVideoAd() {
-        if (LoadingState.LOADED != this.state && LoadingState.LOADING != this.state) {
+        if (LoadingState.LOADED != this.state &&
+                    LoadingState.LOADING != this.state &&
+                    this.mainActivity.isInternetConnected()) {
             this.state = LoadingState.LOADING;
             this.rewardedVideoAd.loadAd(REWARDED_VIDEO_UNIT_ID, new AdRequest.Builder().build());
         }

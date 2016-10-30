@@ -24,10 +24,6 @@ public class AndroidAdsController implements AdsController {
             "E5DBDD7696804F8E99991CB332E32029",
             "870C561BBC76ED46228B771081A24D17"
     };
-    private static final int INTERNET_CONNECTION_TYPES [] = {
-            ConnectivityManager.TYPE_WIFI,
-            ConnectivityManager.TYPE_MOBILE
-    };
 
     public static AdRequest getAdRequest() {
         AdRequest.Builder builder = new AdRequest.Builder();
@@ -79,23 +75,6 @@ public class AndroidAdsController implements AdsController {
         layout.addView(this.bannerAdController.getBannerAd(), params);
 
         this.mainActivity.setContentView(layout);
-    }
-
-    @Override
-    public boolean isInternetConnected() {
-        ConnectivityManager cm = (ConnectivityManager) this.mainActivity.getSystemService(
-                    Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null) { // connected to the internet
-            for (int type : INTERNET_CONNECTION_TYPES) {
-                if (type == activeNetwork.getType()) {
-                    // connected to wifi
-                    return true;
-                }
-            }
-        }
-        // not connected to the internet
-        return false;
     }
 
     @Override

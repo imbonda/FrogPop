@@ -27,7 +27,9 @@ public class InterstitialAdsController extends AdListener {
     }
 
     private void loadInterstitialAd() {
-        if (!this.interstitialAd.isLoaded()) {
+        if (!this.interstitialAd.isLoaded() &&
+                    ! this.interstitialAd.isLoading() &&
+                    this.mainActivity.isInternetConnected()) {
             interstitialAd.loadAd(AndroidAdsController.getAdRequest());
         }
     }
