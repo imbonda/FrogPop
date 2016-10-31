@@ -44,7 +44,7 @@ public class SummerTheme implements Theme {
 
     @Override
     public void draw(Batch batch) {
-        Gdx.gl.glClearColor(171/255f,107/255f,72/255f,1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         batch.draw(this.backgroundTexture, 0, 0);
     }
 
