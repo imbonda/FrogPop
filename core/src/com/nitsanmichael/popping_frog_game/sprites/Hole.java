@@ -99,6 +99,9 @@ public class Hole extends Sprite {
     }
 
     public void update(float deltaTime) {
+        if (0 == deltaTime) {
+            return;
+        }
         this.velocity.scl(deltaTime);
         switch (this.state) {
             case STATIC:

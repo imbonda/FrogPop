@@ -45,6 +45,9 @@ public class Bird extends Sprite {
     }
 
     public void update(float deltaTime) {
+        if (0 == deltaTime) {
+            return;
+        }
         this.birdAnimation.update(deltaTime);
         Texture frame = this.birdAnimation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());

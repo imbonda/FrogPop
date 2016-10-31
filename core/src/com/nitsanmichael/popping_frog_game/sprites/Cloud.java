@@ -67,6 +67,9 @@ public class Cloud extends Sprite {
      * @param deltaTime The time passed from the last call.
      */
     public void update(float deltaTime) {
+        if (0 == deltaTime) {
+            return;
+        }
         this.velocity.scl(deltaTime);
         this.position.add(this.velocity);
         containInsideBox();

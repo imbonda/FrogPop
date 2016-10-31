@@ -65,6 +65,9 @@ public class Butterfly extends Sprite {
     }
 
     public void update(float deltaTime) {
+        if (0 == deltaTime) {
+            return;
+        }
         this.velocity.scl(deltaTime);
         this.position.add(this.velocity);
         containInsideBox();
