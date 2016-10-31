@@ -67,9 +67,8 @@ public class PlayScreen extends FadingScreen {
         this.levelController = new LevelController(
                     game.config, game.assetController, game.media, this.spritesDrawer,
                     this.popupDrawer, this.runtimeInfo, timer, this.themeController);
-        // Play music.
+        // Pause menu music.
         game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
-        game.media.playMusic(Assets.GAME_PLAY_MUSIC);
 
         this.stateTracker.setState(StateTracker.GameState.PLAY);
 
@@ -82,7 +81,6 @@ public class PlayScreen extends FadingScreen {
         fadeOut(FADE_OUT_TIME, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
                 spritesDrawer.clear();
                 themeController.reset();
                 dispose();
