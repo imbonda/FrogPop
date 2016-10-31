@@ -13,6 +13,8 @@ import com.nitsanmichael.popping_frog_game.assets.Assets;
  */
 public class Bird extends Sprite {
 
+    private static final Vector2 BIRD_SIZE = new Vector2(30, 30);
+
     private Vector2 position;
     private Vector2 velocity;
     private Vector2 boxBottomLeft;
@@ -49,8 +51,7 @@ public class Bird extends Sprite {
             return;
         }
         this.birdAnimation.update(deltaTime);
-        Texture frame = this.birdAnimation.getFrame();
-        setSize(frame.getWidth(), frame.getHeight());
+        setSize(BIRD_SIZE.x, BIRD_SIZE.y);
         this.velocity.scl(deltaTime);
         this.position.add(this.velocity);
         containInsideBox();
