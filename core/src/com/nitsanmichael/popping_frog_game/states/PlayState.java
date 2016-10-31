@@ -27,7 +27,6 @@ public class PlayState implements State {
         this.isNoLongerPlaying = false;
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(
                 this.playScreen.gameViewPort, this.playScreen.runtimeInfo));
-        playScreen.levelController.setup();
     }
 
     @Override

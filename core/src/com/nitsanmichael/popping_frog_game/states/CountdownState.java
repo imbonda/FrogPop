@@ -18,6 +18,7 @@ public class CountdownState implements State {
         this.playScreen = playScreen;
         this.playScreen.popupDrawer.register(PopupDrawer.PopupType.COUNTDOWN);
         playScreen.levelController.reset();
+        playScreen.levelController.setup();
         playScreen.holesManager.reset();
         playScreen.game.tweenController.timerResetAnimation(playScreen.timer,
                     TIMER_RESET_ANIMATION_DURATION, null);
