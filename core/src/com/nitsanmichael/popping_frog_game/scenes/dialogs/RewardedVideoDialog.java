@@ -29,7 +29,7 @@ public class RewardedVideoDialog implements Disposable {
     private static final int SHOW_TIME = 5;
     private static final float COUNTDOWN_SPEED = 0.8f;
 
-    private enum CountdownState { COUNTING, FINISHED, PLAYING_VIDEO }
+    private enum CountdownState { COUNTING, FINISHED, PLAYING_VIDEO, EMPTY }
 
     private AdsController adsController;
     private RuntimeInfo runtimeInfo;
@@ -56,7 +56,8 @@ public class RewardedVideoDialog implements Disposable {
         rewardedReplayButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
-                if (actor != rewardedReplayButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                if (actor != rewardedReplayButton || message != ToggleButtonListener.ON_TOUCH_UP ||
+                            CountdownState.FINISHED == state) {
                     return;
                 }
                 playRewardingVideo();
@@ -73,10 +74,12 @@ public class RewardedVideoDialog implements Disposable {
         xButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
-                if (actor != xButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                if (actor != xButton || message != ToggleButtonListener.ON_TOUCH_UP ||
+                            CountdownState.FINISHED == state) {
                     return;
                 }
                 RewardedVideoDialog.this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
+                state = CountdownState.EMPTY;
             }
         });
 
@@ -122,6 +125,8 @@ public class RewardedVideoDialog implements Disposable {
                 this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
                 break;
             case PLAYING_VIDEO:
+                break;
+            case EMPTY:
                 break;
             default:
                 break;
