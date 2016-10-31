@@ -81,6 +81,7 @@ public class PlayScreen extends FadingScreen {
         fadeOut(FADE_OUT_TIME, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
+                game.media.stopSound(Assets.GAME_OVER_SOUND);
                 spritesDrawer.clear();
                 themeController.reset();
                 dispose();

@@ -1,5 +1,6 @@
 package com.nitsanmichael.popping_frog_game.states;
 
+import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.scenes.PopupDrawer;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 
@@ -22,6 +23,9 @@ public class CountdownState implements State {
         playScreen.holesManager.reset();
         playScreen.game.tweenController.timerResetAnimation(playScreen.timer,
                     TIMER_RESET_ANIMATION_DURATION, null);
+        // Play music.
+        this.playScreen.game.media.stopSound(Assets.GAME_OVER_SOUND);
+        playScreen.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
     }
 
     @Override

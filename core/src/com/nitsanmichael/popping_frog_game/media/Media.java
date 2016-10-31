@@ -67,6 +67,13 @@ public class Media {
         }
     }
 
+    public void stopSound(String name) {
+        Sound sound = this.assetController.get(name);
+        if (null != sound && 0 != this.soundVolume) {
+            sound.stop();
+        }
+    }
+
     public void updateSoundVolume(float volume) {
         this.soundVolume = volume;
     }
