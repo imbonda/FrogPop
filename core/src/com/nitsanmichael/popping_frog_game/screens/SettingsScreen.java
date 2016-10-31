@@ -54,6 +54,7 @@ public class SettingsScreen extends FadingScreen {
     private Stage stage;
     private Viewport viewport;
 
+
     public SettingsScreen(final PoppingFrog game) {
         super(game.batch, game.tweenController);
         this.game = game;
@@ -61,7 +62,7 @@ public class SettingsScreen extends FadingScreen {
         adjustSliderKnob(sliderSkin);
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
         font.getData().setScale(0.2f);
-        viewport=new StretchViewport(PoppingFrog.VIRTUAL_WIDTH,PoppingFrog.VIRTUAL_HEIGHT);
+        this.viewport = new StretchViewport(PoppingFrog.VIRTUAL_WIDTH,PoppingFrog.VIRTUAL_HEIGHT);
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
         Texture backPressedIcon = this.game.assetController.get(Assets.BACK_PRESSED_ICON);
@@ -209,10 +210,10 @@ public class SettingsScreen extends FadingScreen {
 
     @Override
     public void resize(int width, int height) {
-            this.viewport.update(width, height, true);
-            this.stage.getViewport().update(width, height, false);
-            this.stage.getCamera().position.set(0,0,0);
-            this.stage.getCamera().translate(game.VIRTUAL_WIDTH/2,game.VIRTUAL_HEIGHT/2,0);
+    	this.viewport.update(width, height, true);
+		this.stage.getViewport().update(width, height, false);
+		this.stage.getCamera().position.set(0,0,0);
+		this.stage.getCamera().translate(game.VIRTUAL_WIDTH/2,game.VIRTUAL_HEIGHT/2,0);
     }
 
     @Override
@@ -223,7 +224,6 @@ public class SettingsScreen extends FadingScreen {
         this.game.batch.setProjectionMatrix(this.viewport.getCamera().combined);
         this.game.batch.draw(this.backgroundTexture, 0, 0);
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
-
         this.game.batch.end();
         this.stage.draw();
     }

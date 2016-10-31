@@ -61,8 +61,7 @@ public class ChooseHeroScreen extends FadingScreen {
         super(game.batch, game.tweenController);
         this.game = game;
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
-        viewport=new StretchViewport(PoppingFrog.VIRTUAL_WIDTH,PoppingFrog.VIRTUAL_HEIGHT);
-
+        this.viewport = new StretchViewport(PoppingFrog.VIRTUAL_WIDTH,PoppingFrog.VIRTUAL_HEIGHT);
 
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
@@ -159,10 +158,8 @@ public class ChooseHeroScreen extends FadingScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.begin();
         this.game.batch.setProjectionMatrix(this.viewport.getCamera().combined);
-
         this.game.batch.draw(this.backgroundTexture, 0, 0);
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
-
         drawIdleFrogs();
         this.game.batch.end();
         this.stage.draw();

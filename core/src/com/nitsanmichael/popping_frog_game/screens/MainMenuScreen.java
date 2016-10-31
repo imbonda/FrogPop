@@ -1,4 +1,5 @@
 package com.nitsanmichael.popping_frog_game.screens;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -30,6 +31,7 @@ import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleMexicanFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleEvilFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleRegularFrog;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleTurkishFrog;
+
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
 
@@ -49,7 +51,6 @@ public class MainMenuScreen extends FadingScreen {
 
     private boolean isListening;
     private Stage stage;
-
 
 
     public MainMenuScreen(final PoppingFrog game) {
@@ -191,7 +192,7 @@ public class MainMenuScreen extends FadingScreen {
     }
 
     @Override
-    public void render(float delta){
+    public void render(float delta) {
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
@@ -224,7 +225,7 @@ public class MainMenuScreen extends FadingScreen {
     @Override
     public void resize(int width, int height) {
         this.viewport.update(width, height, true);
-         this.stage.getViewport().update(width, height, false);
+        this.stage.getViewport().update(width, height, false);
         this.stage.getCamera().position.set(0,0,0);
         this.stage.getCamera().translate(game.VIRTUAL_WIDTH/2,game.VIRTUAL_HEIGHT/2,0);
     }

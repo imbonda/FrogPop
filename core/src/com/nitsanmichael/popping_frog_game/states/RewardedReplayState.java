@@ -1,6 +1,5 @@
 package com.nitsanmichael.popping_frog_game.states;
 
-import com.badlogic.gdx.Gdx;
 import com.nitsanmichael.popping_frog_game.scenes.dialogs.RewardedVideoDialog;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 
@@ -21,8 +20,8 @@ public class RewardedReplayState implements State {
                 this.playScreen.game.adsController,
                 this.playScreen.gameViewPort,
                 this.playScreen.game.batch,
-                this.playScreen.runtimeInfo        );
-
+                this.playScreen.runtimeInfo
+        );
     }
 
     @Override

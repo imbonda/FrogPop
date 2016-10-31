@@ -24,7 +24,6 @@ public class PauseState implements State {
                     this.playScreen.gameViewPort,
                     this.playScreen.game.batch,
                     this.playScreen.runtimeInfo);
-
     }
 
     @Override

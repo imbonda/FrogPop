@@ -27,6 +27,8 @@ public class PlayState implements State {
         this.isNoLongerPlaying = false;
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(
                 this.playScreen.gameViewPort, this.playScreen.runtimeInfo));
+        // Play music.
+        playScreen.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
     }
 
     @Override
@@ -60,6 +62,7 @@ public class PlayState implements State {
 
     private void switchState(final StateTracker.GameState state) {
         Gdx.input.setInputProcessor(null);
+        this.playScreen.game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
         this.playScreen.game.media.playSound(Assets.GAME_OVER_SOUND);
         this.playScreen.game.tweenController.frogsGhostGameOverAnimation(
                 this.playScreen.runtimeInfo.frogGhosts, GAME_OVER_ANIMATION_DURATION, null);
