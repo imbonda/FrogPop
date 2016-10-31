@@ -3,8 +3,11 @@ package com.nitsanmichael.popping_frog_game.themes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
 import com.nitsanmichael.popping_frog_game.effects.RainEffect;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 /**
  * An autumn theme.
@@ -21,8 +24,9 @@ public class AutumnTheme implements Theme {
     }
 
     @Override
-    public void init(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, EffectDrawer effectDrawer) {
-        this.backgroundTexture = assetController.get(com.nitsanmichael.popping_frog_game.assets.Assets.AUTUMN_THEME);
+    public void init(AssetController assetController,
+                        EffectDrawer effectDrawer, RuntimeInfo runtimeInfo) {
+        this.backgroundTexture = assetController.get(Assets.AUTUMN_THEME);
         this.rainEffect = new RainEffect(assetController);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.rainEffect);

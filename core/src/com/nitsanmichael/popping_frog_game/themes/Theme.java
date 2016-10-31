@@ -4,6 +4,7 @@ package com.nitsanmichael.popping_frog_game.themes;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 /**
  * This class represents a game's theme.
@@ -18,8 +19,9 @@ public interface Theme {
      *
      * @param assetController   An asset controller instance for retrieving the loaded assets.
      * @param effectDrawer  An effect drawer to be used in case the theme is using some effects.
+     * @param runtimeInfo A class containing runtime information regarding the app.
      */
-    void init (AssetController assetController, EffectDrawer effectDrawer);
+    void init (AssetController assetController, EffectDrawer effectDrawer, RuntimeInfo runtimeInfo);
 
     /**
      * Updates the theme with regard to the time passed since the last call to 'update'.

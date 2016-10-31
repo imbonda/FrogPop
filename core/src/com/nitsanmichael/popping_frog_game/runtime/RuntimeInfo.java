@@ -21,11 +21,13 @@ public class RuntimeInfo {
     public Array<Frog> activeFrogs;
     public Array<Hole> holes;
     public Array<FrogGhost> frogGhosts;
+    public ScreenInfo screenInfo;
 
-    public RuntimeInfo(int score, int lives, StateTracker stateTracker) {
+    public RuntimeInfo(int score, int lives, StateTracker stateTracker, ScreenInfo screenInfo) {
         this.gameScore = score;
         this.gameLives = lives;
         this.stateTracker = stateTracker;
+        this.screenInfo = screenInfo;
         this.gameLevel = LevelController.STARTING_LEVEL;
         this.gameSpeed = LevelController.STARTING_SPEED;
         this.activeFrogs = new Array<Frog>();

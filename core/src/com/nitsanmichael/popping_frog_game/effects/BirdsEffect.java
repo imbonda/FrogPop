@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.Bird;
 
 import java.util.Random;
@@ -36,20 +37,17 @@ public class BirdsEffect implements Effect {
     private Array<Bird> birds;
 
 
-    public BirdsEffect(AssetController assetController) {
+    public BirdsEffect(AssetController assetController, RuntimeInfo runtimeInfo) {
         this.random = new Random();
-        initializeBirds(assetController);
+        initializeBirds(assetController, runtimeInfo);
     }
 
-    public void initializeBirds(AssetController assetController) {
+    public void initializeBirds(AssetController assetController, RuntimeInfo runtimeInfo) {
         this.birds = new Array<Bird>();
         for (BirdConfig birdConfig : BIRDS_CONFIG) {
             Vector2 position = birdConfig.position;
             BirdType type = birdConfig.type;
-            Bird bird = new Bird(assetController);
-            bird.setBox(
-                        new Vector2(0, 430),    // Bottom left.
-                        new Vector2(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT)); // Top right.
+            Bird bird = new Bird(assetController, runtimeInfo, 430);
             int direction = (this.random.nextInt(2) == 0) ? (-1) : (1);
             if (type == BirdType.NORMAL) {
                 Vector2 velocity = new Vector2(

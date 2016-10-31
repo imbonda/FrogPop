@@ -7,6 +7,7 @@ import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.config.Config;
 import com.nitsanmichael.popping_frog_game.config.metadata.ThemeMetaData;
 import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.themes.Theme;
 
 /**
@@ -25,12 +26,14 @@ public class ThemeController {
     private Array<ThemeMetaData> themesMetaData;
     private AssetController assetController;
     private EffectDrawer effectDrawer;
+    private RuntimeInfo runtimeInfo;
 
     public ThemeController(Config config, AssetController assetController,
-                           EffectDrawer effectDrawer) {
+                            EffectDrawer effectDrawer, RuntimeInfo runtimeInfo) {
         this.themesMetaData = config.themesMetaData;
         this.assetController = assetController;
         this.effectDrawer = effectDrawer;
+        this.runtimeInfo = runtimeInfo;
         int sum = 0;
         for (ThemeMetaData meta : this.themesMetaData) {
             sum += meta.duration;
@@ -86,7 +89,7 @@ public class ThemeController {
         Class<? extends Theme> themeClass = this.themesMetaData.get(this.nextThemeIndex).themeClass;
         try {
             this.currentTheme = themeClass.newInstance();
-            this.currentTheme.init(this.assetController, this.effectDrawer);
+            this.currentTheme.init(this.assetController, this.effectDrawer, this.runtimeInfo);
             this.nextThemeLevel += this.themesMetaData.get(this.nextThemeIndex).duration;
             this.nextThemeIndex = (this.nextThemeIndex + 1) % (this.themesMetaData.size);
         }

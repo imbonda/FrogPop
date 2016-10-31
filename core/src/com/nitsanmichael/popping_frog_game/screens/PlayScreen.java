@@ -12,6 +12,7 @@ import com.nitsanmichael.popping_frog_game.managment.HolesManager;
 import com.nitsanmichael.popping_frog_game.managment.LevelController;
 import com.nitsanmichael.popping_frog_game.managment.ThemeController;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
+import com.nitsanmichael.popping_frog_game.runtime.ScreenInfo;
 import com.nitsanmichael.popping_frog_game.scenes.Hud;
 import com.nitsanmichael.popping_frog_game.scenes.PopupDrawer;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
@@ -35,6 +36,7 @@ public class PlayScreen extends FadingScreen {
     public Viewport gameViewPort;
     public SpritesDrawer spritesDrawer;
     public EffectDrawer effectDrawer;
+    public ScreenInfo screenInfo;
     public RuntimeInfo runtimeInfo;
     public HolesManager holesManager;
     public ThemeController themeController;
@@ -55,14 +57,15 @@ public class PlayScreen extends FadingScreen {
         this.backgroundViewport = new StretchViewport(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
         this.spritesDrawer = new SpritesDrawer();
         this.effectDrawer = new EffectDrawer();
-        this.themeController = new ThemeController(game.config, game.assetController,
-                    this.effectDrawer);
         this.stateTracker = new StateTracker(this);
-        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES, this.stateTracker);
+        this.screenInfo = new ScreenInfo(this.gameViewPort);
+        this.runtimeInfo = new RuntimeInfo(0, MAX_LIVES, this.stateTracker, this.screenInfo);
+        this.themeController = new ThemeController(game.config, game.assetController,
+                    this.effectDrawer, this.runtimeInfo);
         this.timer = new Timer(game.assetController, game.tweenController);
         this.hud = new Hud(game.assetController, game.batch, this.runtimeInfo, this.timer);
         this.popupDrawer = new PopupDrawer(this.gameViewPort, this.game.batch,
-                game.assetController, game.tweenController, this.runtimeInfo);
+                    game.assetController, game.tweenController, this.runtimeInfo);
         this.holesManager = new HolesManager(game.assetController, this.spritesDrawer,
                     this.runtimeInfo);
         this.levelController = new LevelController(
@@ -132,6 +135,7 @@ public class PlayScreen extends FadingScreen {
                     PoppingFrog.VIRTUAL_HEIGHT / 2,
                     0);
         this.gameViewPort.update(width, height, false);
+        this.screenInfo.resize(width, height);
     }
 
     @Override

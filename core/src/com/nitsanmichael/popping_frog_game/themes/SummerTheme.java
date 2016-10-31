@@ -8,6 +8,7 @@ import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.effects.BirdsEffect;
 import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
 import com.nitsanmichael.popping_frog_game.effects.SunEffect;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 /**
  * A summer theme.
@@ -25,9 +26,10 @@ public class SummerTheme implements Theme {
     }
 
     @Override
-    public void init(AssetController assetController, EffectDrawer effectDrawer) {
+    public void init(AssetController assetController, EffectDrawer effectDrawer,
+                        RuntimeInfo runtimeInfo) {
         this.backgroundTexture = assetController.get(Assets.SUMMER_THEME);
-        this.birdsEffect = new BirdsEffect(assetController);
+        this.birdsEffect = new BirdsEffect(assetController, runtimeInfo);
         this.sunEffect = new SunEffect(assetController);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.sunEffect);

@@ -3,10 +3,12 @@ package com.nitsanmichael.popping_frog_game.themes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.effects.ButterflyEffect;
 import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
 import com.nitsanmichael.popping_frog_game.effects.SunEffect;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 /**
  * A spring theme.
@@ -26,7 +28,8 @@ public class SpringTheme implements Theme {
     }
 
     @Override
-    public void init(com.nitsanmichael.popping_frog_game.assets.AssetController assetController, EffectDrawer effectDrawer) {
+    public void init(AssetController assetController, EffectDrawer effectDrawer,
+                        RuntimeInfo runtimeInfo) {
         this.backgroundTexture = assetController.get(Assets.SPRING_THEME);
         this.butterflyEffect = new ButterflyEffect(assetController);
         this.sunEffect = new SunEffect(assetController, SPRING_SUN_COLOR);

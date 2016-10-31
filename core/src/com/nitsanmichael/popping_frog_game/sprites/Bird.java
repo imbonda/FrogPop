@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 /**
  * Created by MichaelBond on 10/5/2016.
@@ -20,9 +21,13 @@ public class Bird extends Sprite {
     private Vector2 boxBottomLeft;
     private Vector2 boxTopRight;
     private Animation birdAnimation;
+    private float skyHeight;
+    private RuntimeInfo runtimeInfo;
 
 
-    public Bird(AssetController assetController) {
+    public Bird(AssetController assetController, RuntimeInfo runtimeInfo, float skyHeight) {
+        this.runtimeInfo = runtimeInfo;
+        this.skyHeight = skyHeight;
         this.birdAnimation = assetController.getAnimation(Assets.BIRD_ANIMATION);
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
@@ -33,9 +38,9 @@ public class Bird extends Sprite {
     /**
      * The bird can move only within the boundaries of the given box descriptions.
      */
-    public void setBox(Vector2 bottomLeft, Vector2 topRight) {
-        this.boxBottomLeft.set(bottomLeft);
-        this.boxTopRight.set(topRight);
+    private void setBox() {
+        this.boxBottomLeft.set(this.runtimeInfo.screenInfo.getScreenBottomLeft().x, this.skyHeight);
+        this.boxTopRight.set(this.runtimeInfo.screenInfo.getScreenTopRight());
     }
 
     public void setPosition(Vector2 position) {
@@ -54,6 +59,7 @@ public class Bird extends Sprite {
         setSize(BIRD_SIZE.x, BIRD_SIZE.y);
         this.velocity.scl(deltaTime);
         this.position.add(this.velocity);
+        setBox();
         containInsideBox();
         this.velocity.scl(1 / deltaTime);
     }
