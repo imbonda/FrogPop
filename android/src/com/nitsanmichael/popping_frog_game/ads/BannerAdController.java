@@ -18,11 +18,13 @@ public class BannerAdController extends AdListener {
     private AndroidLauncher mainActivity;
     private AdView bannerAd;
     private boolean isLoaded;
+    private boolean isHidden;
 
 
     public BannerAdController(AndroidLauncher mainActivity) {
         this.mainActivity = mainActivity;
         this.isLoaded = false;
+        this.isHidden = false;
         this.bannerAd = new AdView(this.mainActivity);
         this.bannerAd.setVisibility(View.INVISIBLE);
         this.bannerAd.setBackgroundColor(0xff000000); // black
@@ -48,6 +50,7 @@ public class BannerAdController extends AdListener {
         this.mainActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                isHidden = true;
                 bannerAd.setVisibility(View.INVISIBLE);
             }
         });
@@ -57,6 +60,7 @@ public class BannerAdController extends AdListener {
         this.mainActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                isHidden = false;
                 if (isLoaded) {
                     bannerAd.setVisibility(View.VISIBLE);
                 }
@@ -71,6 +75,8 @@ public class BannerAdController extends AdListener {
     public void onAdLoaded() {
         super.onAdLoaded();
         this.isLoaded = true;
-        this.bannerAd.setVisibility(View.VISIBLE);
+        if (!this.isHidden) {
+            this.bannerAd.setVisibility(View.VISIBLE);
+        }
     }
 }
