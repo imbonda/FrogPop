@@ -89,7 +89,7 @@ public class Bird extends Sprite {
         batch.draw(
                     frame,
                     this.position.x, this.position.y,
-                    30,30,1,1,
+                    getWidth(), getHeight(), 1, 1,
                     frame.getWidth(), frame.getHeight(),
                     isFlipX,
                     false);
