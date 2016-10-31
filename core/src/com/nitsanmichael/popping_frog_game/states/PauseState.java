@@ -30,6 +30,8 @@ public class PauseState implements State {
     public void render(float deltaTime) {
         update(deltaTime);
         this.playScreen.draw();
+        this.playScreen.game.batch.setProjectionMatrix(
+                    this.playScreen.backgroundViewport.getCamera().combined);
         this.pauseDialog.draw();
     }
 

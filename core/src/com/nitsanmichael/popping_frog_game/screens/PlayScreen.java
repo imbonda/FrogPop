@@ -46,7 +46,7 @@ public class PlayScreen extends FadingScreen {
     public Timer timer;
     public Hud hud;
     public PopupDrawer popupDrawer;
-    private Viewport viewport;
+    public Viewport backgroundViewport;
 
     private StateTracker stateTracker;
 
@@ -56,7 +56,7 @@ public class PlayScreen extends FadingScreen {
         this.game = game;
         this.gameViewPort = new ExtendViewport(
                     PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
-        viewport=new StretchViewport(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
+        this.backgroundViewport = new StretchViewport(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
         this.spritesDrawer = new SpritesDrawer();
         this.effectDrawer = new EffectDrawer();
         this.themeController = new ThemeController(game.config, game.assetController,
@@ -116,7 +116,7 @@ public class PlayScreen extends FadingScreen {
 
     public void draw() {
         this.game.batch.begin();
-        this.game.batch.setProjectionMatrix(this.viewport.getCamera().combined);
+        this.game.batch.setProjectionMatrix(this.backgroundViewport.getCamera().combined);
         this.themeController.currentTheme.draw(this.game.batch);
         this.game.batch.setProjectionMatrix(this.gameViewPort.getCamera().combined);
         this.spritesDrawer.drawSprites(this.game.batch);
@@ -129,10 +129,10 @@ public class PlayScreen extends FadingScreen {
     @Override
     public void resize(int width, int height) {
         this.hud.resize(width, height, true);
-        viewport.update(width,height,true);
+        this.backgroundViewport.update(width,height,true);
         this.gameViewPort.update(width, height, false);
         this.gameViewPort.getCamera().position.set(0,0,0);
-        this.gameViewPort.getCamera().translate(game.VIRTUAL_WIDTH/2,game.VIRTUAL_HEIGHT/2,0);
+        this.gameViewPort.getCamera().translate(PoppingFrog.VIRTUAL_WIDTH/2,PoppingFrog.VIRTUAL_HEIGHT/2,0);
     }
 
     @Override
