@@ -27,7 +27,7 @@ public class AutumnTheme implements Theme {
     public void init(AssetController assetController,
                         EffectDrawer effectDrawer, RuntimeInfo runtimeInfo) {
         this.backgroundTexture = assetController.get(Assets.AUTUMN_THEME);
-        this.rainEffect = new RainEffect(assetController);
+        this.rainEffect = new RainEffect(assetController, runtimeInfo);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.rainEffect);
     }

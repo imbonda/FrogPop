@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 
 /**
@@ -18,9 +19,13 @@ public class Cloud extends Sprite {
     private Vector2 boxBottomLeft;
     private Vector2 boxTopRight;
     private Texture cloudTexture;
+    private float horizonHeight;
+    private RuntimeInfo runtimeInfo;
 
 
-    public Cloud(AssetController assetController) {
+    public Cloud(AssetController assetController, RuntimeInfo runtimeInfo, float horizonHeight) {
+        this.runtimeInfo = runtimeInfo;
+        this.horizonHeight = horizonHeight;
         this.cloudTexture = assetController.get(Assets.CLOUD);
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
@@ -29,8 +34,9 @@ public class Cloud extends Sprite {
         setSize(this.cloudTexture.getWidth(), this.cloudTexture.getHeight());
     }
 
-    public Cloud(AssetController assetController, Vector2 position, Vector2 velocity) {
-        this(assetController);
+    public Cloud(AssetController assetController, RuntimeInfo runtimeInfo, float horizonHeight,
+                    Vector2 position, Vector2 velocity) {
+        this(assetController, runtimeInfo, horizonHeight);
         setPosition(position);
         setVelocity(velocity);
     }
@@ -38,9 +44,9 @@ public class Cloud extends Sprite {
     /**
      * The cloud can move only within the boundaries of the given box descriptions.
      */
-    public void setBox(Vector2 bottomLeft, Vector2 topRight) {
-        this.boxBottomLeft.set(bottomLeft);
-        this.boxTopRight.set(topRight);
+    private void setBox() {
+        this.boxBottomLeft.set(this.runtimeInfo.screenInfo.getScreenBottomLeft().x, this.horizonHeight);
+        this.boxTopRight.set(this.runtimeInfo.screenInfo.getScreenTopRight());
     }
 
     public void setPosition(Vector2 position) {
@@ -72,6 +78,7 @@ public class Cloud extends Sprite {
         }
         this.velocity.scl(deltaTime);
         this.position.add(this.velocity);
+        setBox();
         containInsideBox();
         this.velocity.scl(1 / deltaTime);
     }

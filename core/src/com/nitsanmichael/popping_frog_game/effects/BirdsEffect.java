@@ -15,6 +15,8 @@ import java.util.Random;
  */
 public class BirdsEffect implements Effect {
 
+    private static final float HORIZON_HEIGHT = 430;
+
     private enum BirdType { NORMAL, FAST }
 
     private class BirdConfig {
@@ -47,7 +49,7 @@ public class BirdsEffect implements Effect {
         for (BirdConfig birdConfig : BIRDS_CONFIG) {
             Vector2 position = birdConfig.position;
             BirdType type = birdConfig.type;
-            Bird bird = new Bird(assetController, runtimeInfo, 430);
+            Bird bird = new Bird(assetController, runtimeInfo, HORIZON_HEIGHT);
             int direction = (this.random.nextInt(2) == 0) ? (-1) : (1);
             if (type == BirdType.NORMAL) {
                 Vector2 velocity = new Vector2(

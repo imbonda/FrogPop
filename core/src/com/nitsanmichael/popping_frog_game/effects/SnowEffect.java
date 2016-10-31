@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.Cloud;
 
 import java.util.Random;
@@ -16,6 +17,8 @@ import java.util.Random;
  * Created by MichaelBond on 9/28/2016.
  */
 public class SnowEffect implements Effect {
+
+    private static final float HORIZON_HEIGHT = 430;
 
     private static final Vector2 CLOUD_SPACE [] = {
             new Vector2(-50, 480), new Vector2(50, 440), new Vector2(150, 430),
@@ -30,20 +33,19 @@ public class SnowEffect implements Effect {
     private ParticleEmitter emitter;
     private Array<Cloud> clouds;
 
-    public SnowEffect(AssetController assetController) {
+    public SnowEffect(AssetController assetController, RuntimeInfo runtimeInfo) {
         this.random = new Random();
         this.snowEffect = assetController.get(Assets.SNOW_EFFECT.fileName);
         this.snowEffect.start();
         this.emitter = this.snowEffect.getEmitters().first();
         this.direction = (random.nextInt(2) == 0) ? (-1) : (1);
-        initializeClouds(assetController);
+        initializeClouds(assetController, runtimeInfo);
     }
 
-    public void initializeClouds(AssetController assetController) {
+    public void initializeClouds(AssetController assetController, RuntimeInfo runtimeInfo) {
         this.clouds = new Array<Cloud>();
         for (Vector2 position : CLOUD_SPACE) {
-            Cloud c = new Cloud(assetController);
-            c.setBox(new Vector2(0, 0), new Vector2(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT));
+            Cloud c = new Cloud(assetController, runtimeInfo, HORIZON_HEIGHT);
             int speed = this.random.nextInt(10) + 20;
             c.setVelocity(new Vector2(this.direction * speed, 0));
             c.setPosition(position);

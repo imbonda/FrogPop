@@ -27,7 +27,7 @@ public class WinterTheme implements Theme {
     public void init(AssetController assetController, EffectDrawer effectDrawer,
                         RuntimeInfo runtimeInfo) {
         this.backgroundTexture = assetController.get(Assets.WINTER_THEME);
-        this.snowEffect = new SnowEffect(assetController);
+        this.snowEffect = new SnowEffect(assetController, runtimeInfo);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.snowEffect);
     }

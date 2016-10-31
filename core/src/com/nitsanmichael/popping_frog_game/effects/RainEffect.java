@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.Cloud;
 
 import java.util.Random;
@@ -16,6 +17,8 @@ import java.util.Random;
  * Created by MichaelBond on 9/28/2016.
  */
 public class RainEffect implements Effect {
+
+    private static final float HORIZON_HEIGHT = 430;
 
     private static final Vector2 CLOUD_SPACE [] = {
             new Vector2(-50, 480), new Vector2(50, 440), new Vector2(150, 430),
@@ -32,7 +35,7 @@ public class RainEffect implements Effect {
     private ParticleEmitter emitter;
     private Array<Cloud> clouds;
 
-    public RainEffect(AssetController assetController) {
+    public RainEffect(AssetController assetController, RuntimeInfo runtimeInfo) {
         this.random = new Random();
         this.rainEffect = assetController.get(Assets.RAIN_EFFECT.fileName);
         this.rainEffect.start();
@@ -40,7 +43,7 @@ public class RainEffect implements Effect {
         this.direction = (random.nextInt(2) == 0) ? (-1) : (1);
         setRainParticleRotation();
         setRainAngle(AngleState.ON);
-        initializeClouds(assetController);
+        initializeClouds(assetController, runtimeInfo);
     }
 
     public void setRainParticleRotation() {
@@ -67,11 +70,10 @@ public class RainEffect implements Effect {
         angle.setHigh(highMin + angleAddFactor, highMax + angleAddFactor);
     }
 
-    public void initializeClouds(AssetController assetController) {
+    public void initializeClouds(AssetController assetController, RuntimeInfo runtimeInfo) {
         this.clouds = new Array<Cloud>();
         for (Vector2 position : CLOUD_SPACE) {
-            Cloud c = new Cloud(assetController);
-            c.setBox(new Vector2(0, 0), new Vector2(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT));
+            Cloud c = new Cloud(assetController, runtimeInfo, HORIZON_HEIGHT);
             int speed = this.random.nextInt(13) + 20;
             c.setVelocity(new Vector2(this.direction * speed, 0));
             c.setPosition(position);

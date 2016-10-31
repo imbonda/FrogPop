@@ -21,13 +21,13 @@ public class Bird extends Sprite {
     private Vector2 boxBottomLeft;
     private Vector2 boxTopRight;
     private Animation birdAnimation;
-    private float skyHeight;
+    private float horizonHeight;
     private RuntimeInfo runtimeInfo;
 
 
-    public Bird(AssetController assetController, RuntimeInfo runtimeInfo, float skyHeight) {
+    public Bird(AssetController assetController, RuntimeInfo runtimeInfo, float horizonHeight) {
         this.runtimeInfo = runtimeInfo;
-        this.skyHeight = skyHeight;
+        this.horizonHeight = horizonHeight;
         this.birdAnimation = assetController.getAnimation(Assets.BIRD_ANIMATION);
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
@@ -39,7 +39,7 @@ public class Bird extends Sprite {
      * The bird can move only within the boundaries of the given box descriptions.
      */
     private void setBox() {
-        this.boxBottomLeft.set(this.runtimeInfo.screenInfo.getScreenBottomLeft().x, this.skyHeight);
+        this.boxBottomLeft.set(this.runtimeInfo.screenInfo.getScreenBottomLeft().x, this.horizonHeight);
         this.boxTopRight.set(this.runtimeInfo.screenInfo.getScreenTopRight());
     }
 
