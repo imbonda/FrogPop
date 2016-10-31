@@ -2,10 +2,7 @@ package com.nitsanmichael.popping_frog_game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
@@ -18,7 +15,6 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.Hud;
 import com.nitsanmichael.popping_frog_game.scenes.PopupDrawer;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
-import com.nitsanmichael.popping_frog_game.managment.GamePlayTouchProcessor;
 import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
 import com.nitsanmichael.popping_frog_game.states.StateTracker;
 
@@ -130,9 +126,12 @@ public class PlayScreen extends FadingScreen {
     public void resize(int width, int height) {
         this.hud.resize(width, height, true);
         this.backgroundViewport.update(width,height,true);
-        this.gameViewPort.update(width, height, false);
         this.gameViewPort.getCamera().position.set(0,0,0);
-        this.gameViewPort.getCamera().translate(PoppingFrog.VIRTUAL_WIDTH/2,PoppingFrog.VIRTUAL_HEIGHT/2,0);
+        this.gameViewPort.getCamera().translate(
+                    PoppingFrog.VIRTUAL_WIDTH / 2,
+                    PoppingFrog.VIRTUAL_HEIGHT / 2,
+                    0);
+        this.gameViewPort.update(width, height, false);
     }
 
     @Override

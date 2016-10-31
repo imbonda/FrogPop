@@ -52,8 +52,6 @@ public class StateTracker implements Disposable {
             default:
                 break;
         }
-		// TODO: this is a hotfix for the viewport bug when switching states that have stages.
-        this.playScreen.resize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         this.playScreen.resize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     }
 
