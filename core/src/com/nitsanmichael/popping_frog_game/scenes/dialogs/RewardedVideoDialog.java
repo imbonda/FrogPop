@@ -51,8 +51,8 @@ public class RewardedVideoDialog implements Disposable {
         Texture rewardedReplayPressedIcon = assetController.get(Assets.REWARDED_REPLAY_PRESSED_ICON);
         final ToggleButton rewardedReplayButton = new ToggleButton(
                     new Image(rewardedReplayIcon), new Image(rewardedReplayPressedIcon));
-        rewardedReplayButton.setSize(250, 150);
-        rewardedReplayButton.setPosition(265, 220);
+        rewardedReplayButton.setSize(350, 200);
+        rewardedReplayButton.setPosition(215, 195);
         rewardedReplayButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -69,8 +69,8 @@ public class RewardedVideoDialog implements Disposable {
         Texture xPressedIcon = assetController.get(Assets.X_PRESSED_ICON);
         final ToggleButton xButton = new ToggleButton(
                     new Image(xIcon), new Image(xPressedIcon));
-        xButton.setSize(30, 27);
-        xButton.setPosition(490, 350);
+        xButton.setSize(50, 47);
+        xButton.setPosition(515, 355);
         xButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -86,16 +86,16 @@ public class RewardedVideoDialog implements Disposable {
         // Film-reel countdown image.
         Texture filmReelCountdownIcon = assetController.get(Assets.FILM_REEL_COUNTDOWN_ICON);
         Image filmReelCountdownImage = new Image(filmReelCountdownIcon);
-        filmReelCountdownImage.setPosition(360, 350);
-        filmReelCountdownImage.setSize(53, 53);
+        filmReelCountdownImage.setPosition(350, 360);
+        filmReelCountdownImage.setSize(70, 70);
 
         // Time label.
         Label.LabelStyle style = new Label.LabelStyle();
         style.font = assetController.get(Assets.GAME_FONT);
         style.fontColor = Color.DARK_GRAY;
         this.timeLabel = new Label(Integer.toString((int)Math.ceil(this.timeLeft)), style);
-        this.timeLabel.setFontScale(0.2f);
-        this.timeLabel.setPosition(380, 355);
+        this.timeLabel.setFontScale(0.25f);
+        this.timeLabel.setPosition(375, 373);
 
         setStage(viewport, batch, filmReelCountdownImage, rewardedReplayButton, xButton);
     }
