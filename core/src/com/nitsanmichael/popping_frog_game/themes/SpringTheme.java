@@ -31,7 +31,7 @@ public class SpringTheme implements Theme {
     public void init(AssetController assetController, EffectDrawer effectDrawer,
                         RuntimeInfo runtimeInfo) {
         this.backgroundTexture = assetController.get(Assets.SPRING_THEME);
-        this.butterflyEffect = new ButterflyEffect(assetController);
+        this.butterflyEffect = new ButterflyEffect(assetController, runtimeInfo);
         this.sunEffect = new SunEffect(assetController, SPRING_SUN_COLOR);
         this.effectDrawer = effectDrawer;
         this.effectDrawer.addEffect(this.sunEffect);

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
 /**
  * Created by MichaelBond on 10/5/2016.
@@ -19,6 +20,7 @@ public class Butterfly extends Sprite {
     private Vector2 boxBottomLeft;
     private Vector2 boxTopRight;
     private Texture butterflyTexture;
+    private RuntimeInfo runtimeInfo;
 
 
     private Butterfly() {
@@ -28,8 +30,9 @@ public class Butterfly extends Sprite {
         this.boxTopRight = new Vector2(0, 0);
     }
 
-    public Butterfly(AssetController assetController, Color type) {
+    public Butterfly(AssetController assetController, RuntimeInfo runtimeInfo, Color type) {
         this();
+        this.runtimeInfo = runtimeInfo;
         switch (type) {
             case ORANGE:
                 this.butterflyTexture = assetController.get(Assets.BUTTERFLY_ORANGE);
@@ -51,9 +54,9 @@ public class Butterfly extends Sprite {
     /**
      * The butterfly can move only within the boundaries of the given box descriptions.
      */
-    public void setBox(Vector2 bottomLeft, Vector2 topRight) {
-        this.boxBottomLeft.set(bottomLeft);
-        this.boxTopRight.set(topRight);
+    private void setBox() {
+        this.boxBottomLeft.set(this.runtimeInfo.screenInfo.getScreenBottomLeft());
+        this.boxTopRight.set(this.runtimeInfo.screenInfo.getScreenTopRight());
     }
 
     public void setPosition(Vector2 position) {
@@ -70,6 +73,7 @@ public class Butterfly extends Sprite {
         }
         this.velocity.scl(deltaTime);
         this.position.add(this.velocity);
+        setBox();
         containInsideBox();
         this.velocity.scl(1 / deltaTime);
     }

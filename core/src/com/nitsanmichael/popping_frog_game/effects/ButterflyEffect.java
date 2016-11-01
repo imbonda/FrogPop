@@ -3,6 +3,8 @@ package com.nitsanmichael.popping_frog_game.effects;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
+import com.nitsanmichael.popping_frog_game.assets.AssetController;
+import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.Butterfly;
 
 import java.util.HashMap;
@@ -41,19 +43,16 @@ public class ButterflyEffect implements Effect {
     private HashMap<Butterfly, ButterflyConfig> butterflyToConfigMap;
 
 
-    public ButterflyEffect(com.nitsanmichael.popping_frog_game.assets.AssetController assetController) {
+    public ButterflyEffect(AssetController assetController, RuntimeInfo runtimeInfo) {
         this.random = new Random();
-        initializeButterflies(assetController);
+        initializeButterflies(assetController, runtimeInfo);
     }
 
-    public void initializeButterflies(com.nitsanmichael.popping_frog_game.assets.AssetController assetController) {
+    public void initializeButterflies(AssetController assetController, RuntimeInfo runtimeInfo) {
         this.butterflyToConfigMap = new HashMap<Butterfly, ButterflyConfig>();
         for (ButterflyConfig config : BUTTERFLIES_CONFIG) {
             Vector2 position = config.position;
-            Butterfly butterfly = new Butterfly(assetController, config.color);
-            butterfly.setBox(
-                    new Vector2(0, 0),    // Bottom left.
-                    new Vector2(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT)); // Top right.
+            Butterfly butterfly = new Butterfly(assetController, runtimeInfo, config.color);
             butterfly.setPosition(position);
             this.butterflyToConfigMap.put(butterfly, config);
         }
