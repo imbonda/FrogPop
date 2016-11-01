@@ -1,8 +1,7 @@
 package com.nitsanmichael.popping_frog_game.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.nitsanmichael.popping_frog_game.managment.GamePauseTouchProcessor;
+import com.nitsanmichael.popping_frog_game.input.GamePauseTouchProcessor;
 import com.nitsanmichael.popping_frog_game.scenes.dialogs.PauseDialog;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 

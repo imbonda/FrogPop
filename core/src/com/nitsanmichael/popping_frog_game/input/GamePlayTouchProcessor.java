@@ -1,4 +1,4 @@
-package com.nitsanmichael.popping_frog_game.managment;
+package com.nitsanmichael.popping_frog_game.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

@@ -19,7 +19,7 @@ public class BackKeyInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (Input.Keys.P == keycode || Input.Keys.BACK == keycode) {
+        if (Input.Keys.BACK == keycode) {
             this.backKeyAction.run();
             return true;
         }

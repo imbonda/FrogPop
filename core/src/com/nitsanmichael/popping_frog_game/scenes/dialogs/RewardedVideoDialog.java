@@ -1,6 +1,7 @@
 package com.nitsanmichael.popping_frog_game.scenes.dialogs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.adds.AdsController;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.input.BackKeyInputProcessor;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
@@ -81,9 +83,7 @@ public class RewardedVideoDialog implements Disposable {
                             !isListening || CountdownState.FINISHED == state) {
                     return;
                 }
-                RewardedVideoDialog.this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
-                state = CountdownState.EMPTY;
-                isListening = false;
+                exitDialog();
             }
         });
 
@@ -102,6 +102,7 @@ public class RewardedVideoDialog implements Disposable {
         this.timeLabel.setPosition(375, 373);
 
         setStage(viewport, batch, filmReelCountdownImage, rewardedReplayButton, xButton);
+        setInputProcessor();
     }
 
     private void setStage(Viewport viewport, Batch batch,
@@ -112,7 +113,24 @@ public class RewardedVideoDialog implements Disposable {
         this.stage.addActor(xButton);
         this.stage.addActor(filmReelCountdownImage);
         this.stage.addActor(this.timeLabel);
-        Gdx.input.setInputProcessor(this.stage);
+    }
+
+    private void setInputProcessor() {
+        BackKeyInputProcessor backKeyInputProcessor = new BackKeyInputProcessor(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        exitDialog();
+                    }
+                }
+        );
+        Gdx.input.setInputProcessor(new InputMultiplexer(this.stage, backKeyInputProcessor));
+    }
+
+    private void exitDialog() {
+        this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
+        this.state = CountdownState.EMPTY;
+        this.isListening = false;
     }
 
     public void update(float deltaTime) {

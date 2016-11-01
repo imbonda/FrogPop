@@ -71,6 +71,9 @@ public class PlayScreen extends FadingScreen {
         this.levelController = new LevelController(
                     game.config, game.assetController, game.media, this.spritesDrawer,
                     this.popupDrawer, this.runtimeInfo, timer, this.themeController);
+
+        Gdx.input.setCatchBackKey(true);
+
         // Pause menu music.
         game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
 

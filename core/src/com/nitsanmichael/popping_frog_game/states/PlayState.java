@@ -1,9 +1,8 @@
 package com.nitsanmichael.popping_frog_game.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
-import com.nitsanmichael.popping_frog_game.managment.GamePlayTouchProcessor;
+import com.nitsanmichael.popping_frog_game.input.GamePlayTouchProcessor;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 
 import aurelienribon.tweenengine.BaseTween;
