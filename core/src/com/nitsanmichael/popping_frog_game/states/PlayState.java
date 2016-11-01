@@ -22,11 +22,14 @@ public class PlayState implements State {
     private boolean isNoLongerPlaying;
 
 
-    public PlayState(PlayScreen playScreen) {
+    public PlayState(PlayScreen playScreen, boolean isSetupNeeded) {
         this.playScreen = playScreen;
         this.isNoLongerPlaying = false;
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(
                 this.playScreen.gameViewPort, this.playScreen.runtimeInfo));
+        if (isSetupNeeded) {
+            playScreen.levelController.setup();
+        }
         // Play music.
         playScreen.game.media.playMusic(Assets.GAME_PLAY_MUSIC);
     }

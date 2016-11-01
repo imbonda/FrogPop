@@ -28,14 +28,14 @@ public class StateTracker implements Disposable {
         if (null != this.currentState) {
             this.currentState.dispose();
         }
-        this.currentStateName = state;
         Gdx.input.setInputProcessor(null);
         switch (state) {
             case COUNTDOWN:
                 this.currentState = new CountdownState(this.playScreen);
                 break;
             case PLAY:
-                this.currentState = new PlayState(this.playScreen);
+                boolean isSetupNeeded = (this.currentStateName != GameState.PAUSE);
+                this.currentState = new PlayState(this.playScreen, isSetupNeeded);
                 break;
             case PAUSE:
                 this.currentState = new PauseState(this.playScreen);
@@ -53,6 +53,7 @@ public class StateTracker implements Disposable {
                 break;
         }
         this.playScreen.resize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        this.currentStateName = state;
     }
 
     public void render(float deltaTime) {

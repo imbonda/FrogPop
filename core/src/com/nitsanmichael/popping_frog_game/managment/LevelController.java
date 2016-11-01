@@ -82,7 +82,6 @@ public class LevelController {
         this.runtimeInfo.gameSpeed = STARTING_SPEED;
         this.themeController = themeController;
         this.themeController.init();
-        setup();
     }
 
     public void reset() {
