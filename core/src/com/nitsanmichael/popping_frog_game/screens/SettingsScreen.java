@@ -1,6 +1,7 @@
 package com.nitsanmichael.popping_frog_game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.input.BackKeyInputProcessor;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
 import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
@@ -52,7 +54,7 @@ public class SettingsScreen extends FadingScreen {
     private Slider soundSlider;
     private Texture backgroundTexture;
     private Stage stage;
-    private Viewport viewport;
+    private Viewport backgroundViewport;
 
 
     public SettingsScreen(final PoppingFrog game) {
@@ -62,7 +64,8 @@ public class SettingsScreen extends FadingScreen {
         adjustSliderKnob(sliderSkin);
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
         font.getData().setScale(0.2f);
-        this.viewport = new StretchViewport(PoppingFrog.VIRTUAL_WIDTH,PoppingFrog.VIRTUAL_HEIGHT);
+        this.backgroundViewport = new StretchViewport(
+                    PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
         Texture backPressedIcon = this.game.assetController.get(Assets.BACK_PRESSED_ICON);
@@ -76,14 +79,7 @@ public class SettingsScreen extends FadingScreen {
                 if (actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
                     return;
                 }
-                final PoppingFrog game = SettingsScreen.this.game;
-                SettingsScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
-                    @Override
-                    public void onEvent(int type, BaseTween<?> source) {
-                        dispose();
-                        new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
-                    }
-                });
+                backToMenu();
             }
         });
 
@@ -173,6 +169,9 @@ public class SettingsScreen extends FadingScreen {
         setStage(settingsLabel, musicLabel, soundLabel, backButton);
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
 
+        Gdx.input.setCatchBackKey(true);
+        setInputProcessor();
+
         this.game.adsController.showBannerAd();
     }
 
@@ -197,7 +196,29 @@ public class SettingsScreen extends FadingScreen {
         this.stage.addActor(soundSlider);
         this.stage.addActor(soundSliderLabel);
         this.stage.addActor(backButton);
-        Gdx.input.setInputProcessor(this.stage);
+    }
+
+    private void setInputProcessor() {
+        BackKeyInputProcessor backKeyInputProcessor = new BackKeyInputProcessor(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        backToMenu();
+                    }
+                }
+        );
+        Gdx.input.setInputProcessor(new InputMultiplexer(this.stage, backKeyInputProcessor));
+    }
+
+    private void backToMenu() {
+        final PoppingFrog game = this.game;
+        fadeOut(FADE_OUT_TIME, new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                dispose();
+                new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
+            }
+        });
     }
 
     @Override
@@ -210,10 +231,13 @@ public class SettingsScreen extends FadingScreen {
 
     @Override
     public void resize(int width, int height) {
-    	this.viewport.update(width, height, true);
-		this.stage.getViewport().update(width, height, false);
+    	this.backgroundViewport.update(width, height, true);
 		this.stage.getCamera().position.set(0,0,0);
-		this.stage.getCamera().translate(game.VIRTUAL_WIDTH/2,game.VIRTUAL_HEIGHT/2,0);
+		this.stage.getCamera().translate(
+                    PoppingFrog.VIRTUAL_WIDTH / 2,
+                    PoppingFrog.VIRTUAL_HEIGHT / 2,
+                    0);
+        this.stage.getViewport().update(width, height, false);
     }
 
     @Override
@@ -221,7 +245,7 @@ public class SettingsScreen extends FadingScreen {
         Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.begin();
-        this.game.batch.setProjectionMatrix(this.viewport.getCamera().combined);
+        this.game.batch.setProjectionMatrix(this.backgroundViewport.getCamera().combined);
         this.game.batch.draw(this.backgroundTexture, 0, 0);
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
         this.game.batch.end();

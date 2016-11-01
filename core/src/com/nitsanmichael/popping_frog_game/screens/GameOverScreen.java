@@ -1,6 +1,7 @@
 package com.nitsanmichael.popping_frog_game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.input.BackKeyInputProcessor;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
@@ -99,18 +101,7 @@ public class GameOverScreen extends FadingScreen {
                 if (actor != homeButton || message != ToggleButtonListener.ON_TOUCH_UP) {
                     return;
                 }
-                final PoppingFrog game = GameOverScreen.this.game;
-                if (!isListening) {
-                    return;
-                }
-                GameOverScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
-                    @Override
-                    public void onEvent(int type, BaseTween<?> source) {
-                        dispose();
-                        new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
-                    }
-                });
-                isListening = false;
+                backToMenu();
             }
         });
         // Rank button.
@@ -154,6 +145,9 @@ public class GameOverScreen extends FadingScreen {
         initIdleFrogs();
         setStage(levelLabel, scoreLabel, highestScoreLabel, restartButton, homeButton, rankButton);
 
+        Gdx.input.setCatchBackKey(true);
+        setInputProcessor();
+
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
 
         game.adsController.showBannerAd();
@@ -182,7 +176,33 @@ public class GameOverScreen extends FadingScreen {
         this.stage.addActor(restartButton);
         this.stage.addActor(homeButton);
         this.stage.addActor(rankButton);
-        Gdx.input.setInputProcessor(this.stage);
+    }
+
+    private void setInputProcessor() {
+        BackKeyInputProcessor backKeyInputProcessor = new BackKeyInputProcessor(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        backToMenu();
+                    }
+                }
+        );
+        Gdx.input.setInputProcessor(new InputMultiplexer(this.stage, backKeyInputProcessor));
+    }
+
+    private void backToMenu() {
+        final PoppingFrog game = this.game;
+        if (!isListening) {
+            return;
+        }
+        fadeOut(FADE_OUT_TIME, new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                dispose();
+                new MainMenuScreen(game).fadeIn(game, FADE_IN_TIME);
+            }
+        });
+        isListening = false;
     }
 
     @Override

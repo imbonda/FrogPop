@@ -153,6 +153,8 @@ public class MainMenuScreen extends FadingScreen {
         // Play music.
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
 
+        Gdx.input.setCatchBackKey(false);
+
         game.adsController.showBannerAd();
     }
 

@@ -54,8 +54,6 @@ public class PoppingFrog extends Game {
 		screen.fadeIn(this, 0.5f);
 
 		this.playServices.signIn();
-
-		Gdx.input.setCatchBackKey(true);
 	}
 
 	@Override
