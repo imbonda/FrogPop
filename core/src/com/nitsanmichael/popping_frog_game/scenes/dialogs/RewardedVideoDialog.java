@@ -37,12 +37,14 @@ public class RewardedVideoDialog implements Disposable {
     private Stage stage;
     private float timeLeft;
     private CountdownState state;
+    private boolean isListening;
 
 
     public RewardedVideoDialog(AssetController assetController, AdsController adsController,
                                 Viewport viewport, Batch batch, RuntimeInfo runtimeInfo) {
         this.timeLeft = SHOW_TIME;
         this.state = CountdownState.COUNTING;
+        this.isListening = true;
         this.adsController = adsController;
         this.runtimeInfo = runtimeInfo;
 
@@ -57,10 +59,11 @@ public class RewardedVideoDialog implements Disposable {
             @Override
             public void receivedMessage(int message, Actor actor) {
                 if (actor != rewardedReplayButton || message != ToggleButtonListener.ON_TOUCH_UP ||
-                            CountdownState.FINISHED == state) {
+                            !isListening || CountdownState.FINISHED == state) {
                     return;
                 }
                 playRewardingVideo();
+                isListening = false;
             }
         });
 
@@ -75,11 +78,12 @@ public class RewardedVideoDialog implements Disposable {
             @Override
             public void receivedMessage(int message, Actor actor) {
                 if (actor != xButton || message != ToggleButtonListener.ON_TOUCH_UP ||
-                            CountdownState.FINISHED == state) {
+                            !isListening || CountdownState.FINISHED == state) {
                     return;
                 }
                 RewardedVideoDialog.this.runtimeInfo.stateTracker.setState(StateTracker.GameState.OVER);
                 state = CountdownState.EMPTY;
+                isListening = false;
             }
         });
 
