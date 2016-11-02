@@ -65,7 +65,6 @@ public class RewardedVideoDialog implements Disposable {
                     return;
                 }
                 playRewardingVideo();
-                isListening = false;
             }
         });
 
@@ -161,6 +160,7 @@ public class RewardedVideoDialog implements Disposable {
             @Override
             public void run() {
                 runtimeInfo.gameLives = 3;
+                runtimeInfo.rewardedReplays += 1;
                 runtimeInfo.stateTracker.setState(StateTracker.GameState.COUNTDOWN);
             }
         });

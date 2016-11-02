@@ -17,6 +17,7 @@ public class RuntimeInfo {
     public int gameLives;
     public int gameLevel;
     public float gameSpeed;
+    public int rewardedReplays;
     public StateTracker stateTracker;
     public Array<Frog> activeFrogs;
     public Array<Hole> holes;
@@ -30,6 +31,7 @@ public class RuntimeInfo {
         this.screenInfo = screenInfo;
         this.gameLevel = LevelController.STARTING_LEVEL;
         this.gameSpeed = LevelController.STARTING_SPEED;
+        this.rewardedReplays = 0;
         this.activeFrogs = new Array<Frog>();
         this.holes = new Array<Hole>();
         this.frogGhosts = new Array<FrogGhost>();

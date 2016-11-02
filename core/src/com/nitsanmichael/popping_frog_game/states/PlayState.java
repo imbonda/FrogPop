@@ -14,7 +14,7 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class PlayState implements State {
 
-    private static final int MIN_SCORE_FOR_REWARDED_REPLAY = 0;
+    private static final int MIN_SCORE_FOR_REWARDED_REPLAY = 100;
     private static final int GAME_OVER_ANIMATION_DURATION = 1;
 
     private PlayScreen playScreen;
@@ -59,7 +59,8 @@ public class PlayState implements State {
         boolean videoAvailable = this.playScreen.game.adsController.isRewardedVideoAvailable();
         boolean minReplayScoreReached =
                     this.playScreen.runtimeInfo.gameScore >= MIN_SCORE_FOR_REWARDED_REPLAY;
-        return videoAvailable && minReplayScoreReached;
+        boolean maxReplaysReached = this.playScreen.runtimeInfo.rewardedReplays > 0;
+        return videoAvailable && minReplayScoreReached && (!maxReplaysReached);
     }
 
     private void switchState(final StateTracker.GameState state) {
