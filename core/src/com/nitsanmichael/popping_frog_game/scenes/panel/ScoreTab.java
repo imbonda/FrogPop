@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  */
 public class ScoreTab extends Group {
 
-    private static final Vector2 LABEL_POSITION = new Vector2(25, 515);
+    private static final Vector2 LABEL_POSITION = new Vector2(320, 500);
     // Private members.
     private Label scoreLabel;
 
@@ -25,10 +25,9 @@ public class ScoreTab extends Group {
     }
 
     private void initScoreLabel(BitmapFont font) {
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = font;
-        style.fontColor = new Color(0x000000ff);
+        Label.LabelStyle style = new Label.LabelStyle(font, Color.DARK_GRAY);
         this.scoreLabel = new Label("", style);
+        this.scoreLabel.setFontScale(0.35f);
         this.scoreLabel.setWidth(260);
         this.scoreLabel.setPosition(LABEL_POSITION.x, LABEL_POSITION.y);
     }

@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  */
 public class LevelTab extends Group {
 
-    private static final Vector2 LABEL_POSITION = new Vector2(25, 490);
+    private static final Vector2 LABEL_POSITION = new Vector2(5, 500);
     // Private members.
     private Label levelLabel;
 
@@ -26,10 +26,9 @@ public class LevelTab extends Group {
     }
 
     private void initLevelLabel(BitmapFont font) {
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = font;
-        style.fontColor = new Color(0x000000ff);
+        Label.LabelStyle style = new Label.LabelStyle(font, Color.DARK_GRAY);
         this.levelLabel = new Label("", style);
+        this.levelLabel.setFontScale(0.35f);
         this.levelLabel.setWidth(260);
         this.levelLabel.setPosition(LABEL_POSITION.x, LABEL_POSITION.y);
     }
