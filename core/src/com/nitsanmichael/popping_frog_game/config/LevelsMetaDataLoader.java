@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.XmlReader;
 import com.nitsanmichael.popping_frog_game.config.metadata.FrogMetaData;
 import com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
 
 import java.io.IOException;
 
@@ -97,7 +98,7 @@ public class LevelsMetaDataLoader {
         }
     }
 
-    private static Class<? extends com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog> getFrogClassByName(String className)
+    private static Class<? extends Frog> getFrogClassByName(String className)
                 throws ClassNotFoundException {
         return ClassForName.getFrogClassByName(className);
     }

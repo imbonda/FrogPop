@@ -1,8 +1,10 @@
-package com.nitsanmichael.popping_frog_game.sprites.frogs.idle;
+package com.nitsanmichael.popping_frog_game.scenes.idlefrogs;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
@@ -11,7 +13,7 @@ import com.nitsanmichael.popping_frog_game.assets.Assets;
 /**
  * Created by MichaelBond on 10/1/2016.
  */
-public class IdleRegularFrog extends IdleFrog {
+public class IdleRegularFrog extends Actor {
 
     public enum AnimationType { TONGUE, WINK }
 
@@ -30,17 +32,19 @@ public class IdleRegularFrog extends IdleFrog {
     }
 
     @Override
-    public void update(float deltaTime) {
+    public void act(float deltaTime) {
         this.animation.update(deltaTime);
         Texture frame = this.animation.getFrame();
         setSize(frame.getWidth(), frame.getHeight());
     }
 
     @Override
-    public void draw(Batch batch) {
+    public void draw(Batch batch, float parentAlpha) {
+        Color c = this.getColor();
+        this.setColor(c.r, c.g, c.b, parentAlpha);
         batch.draw(
-                    this.animation.getFrame(),          // Texture.
-                    this.position.x, this.position.y,   // Position.
-                    getWidth(), getHeight());           // Size.
+                this.animation.getFrame(),
+                this.position.x, this.position.y,
+                getWidth(), getHeight());
     }
 }

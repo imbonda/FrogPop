@@ -1,7 +1,7 @@
 package com.nitsanmichael.popping_frog_game.managment;
 
 import com.badlogic.gdx.utils.Array;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
 
 import java.util.HashMap;
 

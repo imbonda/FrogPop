@@ -1,18 +1,14 @@
-package com.nitsanmichael.popping_frog_game.sprites.frogs.active;
+package com.nitsanmichael.popping_frog_game.sprites.frogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
-
-import java.util.Random;
-
 
 /**
  * This class represents a regular-frog.
@@ -21,33 +17,29 @@ import java.util.Random;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class RegularFrog extends Frog {
+public class EvilFrog extends Frog {
 
-    private static final int FROG_SCORE_PROFIT_VALUE = 1;
-    private static final int FROG_LIFE_PENALTY_VALUE = -1;
-    // Animations.
-    private static final int TONGUE_ANIMATION = 0;
-    private static final int WINK_ANIMATION = 1;
-
+    private static final int FROG_SCORE_PROFIT_VALUE = -1;
+    private static final int FROG_LIFE_PROFIT_VALUE = -1;
+    private static final int FROG_LIFE_PENALTY_VALUE = 0;
 
     private Animation animation;
 
 
-    public RegularFrog() {
+    public EvilFrog() {
     }
 
     @Override
     public void init(AssetController assetController, RuntimeInfo runtimeInfo, Vector2 position) {
         super.defaultInit(assetController, runtimeInfo, position);
-        generateRandomAnimation();
+        setAnimation();
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 getTexture().getWidth() + 40, getTexture().getHeight() + 35);
     }
 
-    private void generateRandomAnimation() {
-        Array<Animation> heroAnimations = this.assetController.getHeroAnimations();
-        this.animation = heroAnimations.random();
+    private void setAnimation() {
+        this.animation = this.assetController.getAnimation(Assets.EVIL_FROG_ANIMATION);
         Texture frame = this.animation.getFrame();
         setTexture(frame);
     }
@@ -60,11 +52,12 @@ public class RegularFrog extends Frog {
     @Override
     public void onDeath() {
         if (isKilled()) {
+            this.runtimeInfo.gameLives += FROG_LIFE_PROFIT_VALUE;
             this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
+            Gdx.input.vibrate(new long[] { 0, 200, 200, 200}, -1);
         }
         else {
             this.runtimeInfo.gameLives += FROG_LIFE_PENALTY_VALUE;
-            Gdx.input.vibrate(500);
         }
     }
 
@@ -83,7 +76,7 @@ public class RegularFrog extends Frog {
     @Override
     public void draw(Batch batch) {
         float fromPeekFraction = Math.abs(FROG_MAX_LIFE_TIME / 2 - this.lifeTime) /
-                    (FROG_MAX_LIFE_TIME / 2);
+                (FROG_MAX_LIFE_TIME / 2);
         setPosition(this.position.x, this.position.y);
         setSize(getTexture().getWidth(), getTexture().getHeight() * (1 - fromPeekFraction));
         setRegion(0, 0, (int)getWidth(), (int)(getHeight()));

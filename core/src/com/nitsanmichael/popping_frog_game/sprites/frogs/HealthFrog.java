@@ -1,6 +1,6 @@
-package com.nitsanmichael.popping_frog_game.sprites.frogs.active;
+package com.nitsanmichael.popping_frog_game.sprites.frogs;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,16 +17,15 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class EvilFrog extends Frog {
+public class HealthFrog extends Frog {
 
-    private static final int FROG_SCORE_PROFIT_VALUE = -1;
-    private static final int FROG_LIFE_PROFIT_VALUE = -1;
-    private static final int FROG_LIFE_PENALTY_VALUE = 0;
+    private static final int FROG_SCORE_PROFIT_VALUE = 2;
+    private static final int FROG_LIFE_PROFIT_VALUE = 1;
 
     private Animation animation;
 
 
-    public EvilFrog() {
+    public HealthFrog() {
     }
 
     @Override
@@ -39,8 +38,8 @@ public class EvilFrog extends Frog {
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.EVIL_FROG_ANIMATION);
-        Texture frame = this.animation.getFrame();
+        this.animation = this.assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION);
+        Texture frame = getFrogTexture();
         setTexture(frame);
     }
 
@@ -52,19 +51,21 @@ public class EvilFrog extends Frog {
     @Override
     public void onDeath() {
         if (isKilled()) {
-            this.runtimeInfo.gameLives += FROG_LIFE_PROFIT_VALUE;
             this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
-            Gdx.input.vibrate(new long[] { 0, 200, 200, 200}, -1);
-        }
-        else {
-            this.runtimeInfo.gameLives += FROG_LIFE_PENALTY_VALUE;
+            this.runtimeInfo.gameLives += FROG_LIFE_PROFIT_VALUE;
         }
     }
 
     @Override
+    public void reset() {
+        super.defaultReset();
+        this.animation.reset();
+    }
+
+    @Override
     public void update(float deltaTime) {
-        super.update(deltaTime);
         updateAnimation(deltaTime);
+        this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed * 1.2f;
     }
 
     private void updateAnimation(float deltaTime) {
@@ -83,10 +84,8 @@ public class EvilFrog extends Frog {
         super.draw(batch);
     }
 
-    @Override
-    public void reset() {
-        super.defaultReset();
-        this.animation.reset();
+    private Texture getFrogTexture() {
+        return this.animation.getFrame();
     }
 
 }

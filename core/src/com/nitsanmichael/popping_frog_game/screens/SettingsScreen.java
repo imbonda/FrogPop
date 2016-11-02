@@ -60,12 +60,14 @@ public class SettingsScreen extends FadingScreen {
     public SettingsScreen(final PoppingFrog game) {
         super(game.batch, game.tweenController);
         this.game = game;
+        this.backgroundViewport = new StretchViewport(
+                PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
+
         Skin sliderSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
         adjustSliderKnob(sliderSkin);
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
         font.getData().setScale(0.2f);
-        this.backgroundViewport = new StretchViewport(
-                    PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
+
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
         Texture backPressedIcon = this.game.assetController.get(Assets.BACK_PRESSED_ICON);

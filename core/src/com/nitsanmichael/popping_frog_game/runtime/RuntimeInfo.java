@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.managment.LevelController;
 import com.nitsanmichael.popping_frog_game.sprites.FrogGhost;
 import com.nitsanmichael.popping_frog_game.sprites.Hole;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
 import com.nitsanmichael.popping_frog_game.states.StateTracker;
 
 

@@ -1,6 +1,6 @@
 package com.nitsanmichael.popping_frog_game.config.metadata;
 
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
 
 /**
  * Created by MichaelBond on 9/8/2016.

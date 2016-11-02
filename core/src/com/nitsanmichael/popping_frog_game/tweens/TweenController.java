@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
 import com.nitsanmichael.popping_frog_game.screens.FadingScreen;
 import com.nitsanmichael.popping_frog_game.sprites.FrogGhost;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
 import com.nitsanmichael.popping_frog_game.tweens.accessors.FadingScreenAccessor;
 import com.nitsanmichael.popping_frog_game.tweens.accessors.FrogAccessor;
 import com.nitsanmichael.popping_frog_game.tweens.accessors.FrogGhostAccessor;

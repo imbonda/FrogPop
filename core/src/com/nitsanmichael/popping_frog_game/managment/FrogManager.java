@@ -12,7 +12,7 @@ import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.managment.exceptions.OverpopulatedHolesException;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.sprites.FrogGhost;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
 import com.nitsanmichael.popping_frog_game.sprites.SpritesDrawer;
 
 

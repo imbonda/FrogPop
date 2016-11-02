@@ -1,4 +1,4 @@
-package com.nitsanmichael.popping_frog_game.sprites.frogs.active;
+package com.nitsanmichael.popping_frog_game.sprites.frogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,7 +9,7 @@ import com.nitsanmichael.popping_frog_game.animation.Animation;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
-
+import com.nitsanmichael.popping_frog_game.sprites.Hole;
 
 /**
  * This class represents a regular-frog.
@@ -18,16 +18,15 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class FreezeFrog extends Frog {
+public class IllusionFrog extends Frog {
 
-    private static final int FROG_SCORE_PROFIT_VALUE = 1;
+    private static final int FROG_SCORE_PROFIT_VALUE = 3;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
-    private static final float SLOW_DOWN_FACTOR = 0.3f;
 
     private Animation animation;
 
 
-    public FreezeFrog() {
+    public IllusionFrog() {
     }
 
     @Override
@@ -37,17 +36,15 @@ public class FreezeFrog extends Frog {
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 getTexture().getWidth() + 40, getTexture().getHeight() + 35);
-        initAbility();
+        for (Hole hole : this.runtimeInfo.holes) {
+            hole.shuffleOn();
+        }
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION);
+        this.animation = this.assetController.getAnimation(Assets.ILLUSION_FROG_ANIMATION);
         Texture frame = this.animation.getFrame();
         setTexture(frame);
-    }
-
-    private void initAbility() {
-        this.runtimeInfo.gameSpeed *= SLOW_DOWN_FACTOR;
     }
 
     @Override
@@ -57,6 +54,9 @@ public class FreezeFrog extends Frog {
 
     @Override
     public void onDeath() {
+        for (Hole hole : this.runtimeInfo.holes) {
+            hole.shuffleOff(false);
+        }
         if (isKilled()) {
             this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
         }
@@ -68,8 +68,8 @@ public class FreezeFrog extends Frog {
 
     @Override
     public void update(float deltaTime) {
-        super.update(deltaTime);
         updateAnimation(deltaTime);
+        this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed;
     }
 
     private void updateAnimation(float deltaTime) {
@@ -92,7 +92,6 @@ public class FreezeFrog extends Frog {
     public void reset() {
         super.defaultReset();
         this.animation.reset();
-        this.runtimeInfo.gameSpeed *= (1 / SLOW_DOWN_FACTOR);
     }
 
 }

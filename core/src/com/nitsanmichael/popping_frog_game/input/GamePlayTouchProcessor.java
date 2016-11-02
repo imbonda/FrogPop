@@ -6,8 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
-import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
 import com.nitsanmichael.popping_frog_game.states.StateTracker;
 
 /**

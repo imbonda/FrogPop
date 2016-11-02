@@ -7,17 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
@@ -26,8 +20,7 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
 import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFreezeFrog;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog;
+import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleFreezeFrog;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -48,7 +41,6 @@ public class GameOverScreen extends FadingScreen {
 
     private PoppingFrog game;
     private RuntimeInfo runtimeInfo;
-    private Array<IdleFrog> idleFrogs;
 
     private boolean isListening;
     private Stage stage;
@@ -142,7 +134,6 @@ public class GameOverScreen extends FadingScreen {
         scoreLabel.setPosition(500, 380);
         scoreLabel.setHeight(50);
 
-        initIdleFrogs();
         setStage(levelLabel, scoreLabel, highestScoreLabel, restartButton, homeButton, rankButton);
 
         Gdx.input.setCatchBackKey(true);
@@ -159,12 +150,6 @@ public class GameOverScreen extends FadingScreen {
         });
     }
 
-    private void initIdleFrogs() {
-        this.idleFrogs = new Array<IdleFrog>();
-        this.idleFrogs.add(new IdleFreezeFrog(this.game.assetController,
-                IdleFreezeFrog.AnimationType.BIG, new Vector2(50, 50)));
-    }
-
     private void setStage(Label levelLabel, Label scoreLabel, Label highestScoreLabel,
                             ToggleButton restartButton, ToggleButton homeButton, ToggleButton rankButton) {
         this.stage = new Stage(new FitViewport(
@@ -176,6 +161,8 @@ public class GameOverScreen extends FadingScreen {
         this.stage.addActor(restartButton);
         this.stage.addActor(homeButton);
         this.stage.addActor(rankButton);
+        this.stage.addActor(new IdleFreezeFrog(this.game.assetController,
+                    IdleFreezeFrog.AnimationType.BIG, new Vector2(50, 50)));
     }
 
     private void setInputProcessor() {
@@ -220,26 +207,11 @@ public class GameOverScreen extends FadingScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(64/255f, 64/255f, 64/255f, 1);
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
-        this.game.batch.begin();
-        drawIdleFrogs();
-        this.game.batch.end();
         this.stage.draw();
     }
 
     public void update(float deltaTime) {
-        updateIdleFrogs(deltaTime);
-    }
-
-    private void updateIdleFrogs(float deltaTime) {
-        for (com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog frog : this.idleFrogs) {
-            frog.update(deltaTime);
-        }
-    }
-
-    private void drawIdleFrogs() {
-        for (com.nitsanmichael.popping_frog_game.sprites.frogs.idle.IdleFrog frog : this.idleFrogs) {
-            frog.draw(this.game.batch);
-        }
+        this.stage.act(deltaTime);
     }
 
     @Override

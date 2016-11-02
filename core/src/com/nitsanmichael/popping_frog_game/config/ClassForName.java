@@ -3,12 +3,12 @@ package com.nitsanmichael.popping_frog_game.config;
 import com.nitsanmichael.popping_frog_game.themes.AutumnTheme;
 import com.nitsanmichael.popping_frog_game.themes.SpringTheme;
 import com.nitsanmichael.popping_frog_game.themes.WinterTheme;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.FreezeFrog;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.IllusionFrog;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.HealthFrog;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.RegularFrog;
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.EvilFrog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.FreezeFrog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.IllusionFrog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.HealthFrog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.RegularFrog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.EvilFrog;
 
 /**
  * This class is used to translate a given class-name to it's corresponding class-object.

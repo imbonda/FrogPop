@@ -1,6 +1,6 @@
 package com.nitsanmichael.popping_frog_game.tweens.accessors;
 
-import com.nitsanmichael.popping_frog_game.sprites.frogs.active.Frog;
+import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
 
 import aurelienribon.tweenengine.TweenAccessor;
 

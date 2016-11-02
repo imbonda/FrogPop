@@ -1,4 +1,4 @@
-package com.nitsanmichael.popping_frog_game.sprites.frogs.active;
+package com.nitsanmichael.popping_frog_game.sprites.frogs;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;

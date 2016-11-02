@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -30,11 +29,10 @@ import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleTurkishFrog;
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
 
-
 /**
- * Created by MichaelBond on 9/1/2016.
+ * Created by MichaelBond on 11/2/2016.
  */
-public class ChooseHeroScreen extends FadingScreen {
+public class InfoScreen extends FadingScreen {
 
     public static final int DEFAULT_HERO_INDEX = 0;
 
@@ -44,20 +42,15 @@ public class ChooseHeroScreen extends FadingScreen {
 
     private Texture backgroundTexture;
     private PoppingFrog game;
-    private Array<Actor> idleFrogs;
-    private Actor idleHero;
-    private int index;
     private Stage stage;
-    private Viewport backgroundViewport;
+    private Viewport viewport;
 
 
-    public ChooseHeroScreen(final PoppingFrog game) {
+    public InfoScreen(final PoppingFrog game) {
         super(game.batch, game.tweenController);
         this.game = game;
-        this.backgroundViewport = new StretchViewport(
-                    PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
-
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
+        this.viewport = new StretchViewport(PoppingFrog.VIRTUAL_WIDTH,PoppingFrog.VIRTUAL_HEIGHT);
 
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
@@ -76,29 +69,6 @@ public class ChooseHeroScreen extends FadingScreen {
             }
         });
 
-        // Next hero button.
-        Texture nextIcon = this.game.assetController.get(Assets.NEXT_ICON);
-        Texture nextPressedIcon = this.game.assetController.get(Assets.NEXT_PRESSED_ICON);
-        final ToggleButton nextHeroButton = new ToggleButton(
-                    new Image(nextIcon), new Image(nextPressedIcon));
-        nextHeroButton.setSize(80, 80);
-        nextHeroButton.setPosition(540, 240);
-        nextHeroButton.addListener(new MessageEventListener() {
-            @Override
-            public void receivedMessage(int message, Actor actor) {
-                if (actor != nextHeroButton || message != ToggleButtonListener.ON_TOUCH_UP) {
-                    return;
-                }
-                index = (index + 1) % idleFrogs.size;
-                game.data.setHeroIndex(index);
-                // Remove old hero from stage.
-                idleHero.remove();
-                idleHero = idleFrogs.get(index);
-                // Add new hero to stage.
-                stage.addActor(idleHero);
-            }
-        });
-
         // Choose hero title.
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.DARK_GRAY);
         Label chooseHeroTitle = new Label(CHOOSE_HERO_TITLE, labelStyle);
@@ -106,12 +76,7 @@ public class ChooseHeroScreen extends FadingScreen {
         chooseHeroTitle.setPosition(220, 440);
         chooseHeroTitle.setHeight(50);
 
-        setStage(chooseHeroTitle, backButton, nextHeroButton);
-
-        initIdleFrogs();
-        this.index = this.game.data.getHeroIndex();
-        this.idleHero = idleFrogs.get(index);
-        this.stage.addActor(this.idleHero);
+        setStage(chooseHeroTitle, backButton);
 
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
 
@@ -121,23 +86,21 @@ public class ChooseHeroScreen extends FadingScreen {
         game.adsController.showBannerAd();
     }
 
-    private void initIdleFrogs() {
-        this.idleFrogs = new Array<Actor>();
-        this.idleFrogs.add(new IdleRegularFrog(this.game.assetController,
-                    IdleRegularFrog.AnimationType.TONGUE, new Vector2(400, 200)));
-        this.idleFrogs.add(new IdleBritishFrog(this.game.assetController, new Vector2(400, 200)));
-        this.idleFrogs.add(new IdleMexicanFrog(this.game.assetController, new Vector2(400, 200)));
-        this.idleFrogs.add(new IdleTurkishFrog(this.game.assetController, new Vector2(400, 200)));
-    }
-
-    private void setStage(Label chooseHeroTitle, ToggleButton backButton,
-                            ToggleButton nextHeroButton) {
+    private void setStage(Label chooseHeroTitle, ToggleButton backButton) {
         this.stage = new Stage(new ExtendViewport(
-                    PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
-                    this.game.batch);
+                PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
+                this.game.batch);
         this.stage.addActor(chooseHeroTitle);
         this.stage.addActor(backButton);
-        this.stage.addActor(nextHeroButton);
+        addIdleFrogsToStage();
+    }
+
+    private void addIdleFrogsToStage() {
+        this.stage.addActor(new IdleRegularFrog(this.game.assetController,
+                IdleRegularFrog.AnimationType.TONGUE, new Vector2(400, 200)));
+        this.stage.addActor(new IdleBritishFrog(this.game.assetController, new Vector2(400, 200)));
+        this.stage.addActor(new IdleMexicanFrog(this.game.assetController, new Vector2(400, 200)));
+        this.stage.addActor(new IdleTurkishFrog(this.game.assetController, new Vector2(400, 200)));
     }
 
     private void setInputProcessor() {
@@ -177,7 +140,7 @@ public class ChooseHeroScreen extends FadingScreen {
         Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.begin();
-        this.game.batch.setProjectionMatrix(this.backgroundViewport.getCamera().combined);
+        this.game.batch.setProjectionMatrix(this.viewport.getCamera().combined);
         this.game.batch.draw(this.backgroundTexture, 0, 0);
         this.game.batch.end();
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
@@ -190,12 +153,12 @@ public class ChooseHeroScreen extends FadingScreen {
 
     @Override
     public void resize(int width, int height) {
-        this.backgroundViewport.update(width, height, true);
+        this.viewport.update(width, height, true);
         this.stage.getCamera().position.set(0,0,0);
         this.stage.getCamera().translate(
-                    PoppingFrog.VIRTUAL_WIDTH / 2,
-                    PoppingFrog.VIRTUAL_HEIGHT / 2,
-                    0);
+                PoppingFrog.VIRTUAL_WIDTH / 2,
+                PoppingFrog.VIRTUAL_HEIGHT / 2,
+                0);
         this.stage.getViewport().update(width, height, false);
     }
 

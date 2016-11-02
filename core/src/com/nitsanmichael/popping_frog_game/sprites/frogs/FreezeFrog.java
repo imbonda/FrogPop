@@ -1,5 +1,4 @@
-package com.nitsanmichael.popping_frog_game.sprites.frogs.active;
-
+package com.nitsanmichael.popping_frog_game.sprites.frogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +10,7 @@ import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 
+
 /**
  * This class represents a regular-frog.
  * It has no special abilities, and it's profit and penalty values are the default ones:
@@ -18,15 +18,16 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
  *
  * Created by MichaelBond on 9/8/2016.
  */
-public class HealthFrog extends Frog {
+public class FreezeFrog extends Frog {
 
-    private static final int FROG_SCORE_PROFIT_VALUE = 2;
-    private static final int FROG_LIFE_PROFIT_VALUE = 1;
+    private static final int FROG_SCORE_PROFIT_VALUE = 1;
+    private static final int FROG_LIFE_PENALTY_VALUE = -1;
+    private static final float SLOW_DOWN_FACTOR = 0.3f;
 
     private Animation animation;
 
 
-    public HealthFrog() {
+    public FreezeFrog() {
     }
 
     @Override
@@ -36,12 +37,17 @@ public class HealthFrog extends Frog {
         this.frogRectangle = new Rectangle(
                 this.position.x-20, this.position.y-35,
                 getTexture().getWidth() + 40, getTexture().getHeight() + 35);
+        initAbility();
     }
 
     private void setAnimation() {
-        this.animation = this.assetController.getAnimation(Assets.HEALTH_FROG_ANIMATION);
-        Texture frame = getFrogTexture();
+        this.animation = this.assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION);
+        Texture frame = this.animation.getFrame();
         setTexture(frame);
+    }
+
+    private void initAbility() {
+        this.runtimeInfo.gameSpeed *= SLOW_DOWN_FACTOR;
     }
 
     @Override
@@ -53,20 +59,17 @@ public class HealthFrog extends Frog {
     public void onDeath() {
         if (isKilled()) {
             this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
-            this.runtimeInfo.gameLives += FROG_LIFE_PROFIT_VALUE;
+        }
+        else {
+            this.runtimeInfo.gameLives += FROG_LIFE_PENALTY_VALUE;
+            Gdx.input.vibrate(500);
         }
     }
 
     @Override
-    public void reset() {
-        super.defaultReset();
-        this.animation.reset();
-    }
-
-    @Override
     public void update(float deltaTime) {
+        super.update(deltaTime);
         updateAnimation(deltaTime);
-        this.lifeTime += deltaTime * this.runtimeInfo.gameSpeed * 1.2f;
     }
 
     private void updateAnimation(float deltaTime) {
@@ -85,8 +88,11 @@ public class HealthFrog extends Frog {
         super.draw(batch);
     }
 
-    private Texture getFrogTexture() {
-        return this.animation.getFrame();
+    @Override
+    public void reset() {
+        super.defaultReset();
+        this.animation.reset();
+        this.runtimeInfo.gameSpeed *= (1 / SLOW_DOWN_FACTOR);
     }
 
 }
