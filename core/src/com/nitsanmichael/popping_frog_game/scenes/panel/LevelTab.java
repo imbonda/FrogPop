@@ -26,7 +26,7 @@ public class LevelTab extends Group {
     }
 
     private void initLevelLabel(BitmapFont font) {
-        Label.LabelStyle style = new Label.LabelStyle(font, Color.DARK_GRAY);
+        Label.LabelStyle style = new Label.LabelStyle(font, new Color(0x567382));
         this.levelLabel = new Label("", style);
         this.levelLabel.setFontScale(0.35f);
         this.levelLabel.setWidth(260);

@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  */
 public class ScoreTab extends Group {
 
-    private static final Vector2 LABEL_POSITION = new Vector2(290, 495);
+    private static final Vector2 LABEL_POSITION = new Vector2(290, 500);
     // Private members.
     private Label scoreLabel;
 
