@@ -17,10 +17,10 @@ public class LifeTab extends Group {
 
     private static final Vector2 LABEL_POSITION = new Vector2(750, 480);
     // Lives' position.
-    private static final Vector2 LIFE1_POSITION = new Vector2(575, 475);
-    private static final Vector2 LIFE2_POSITION = new Vector2(635, 475);
-    private static final Vector2 LIFE3_POSITION = new Vector2(695, 475);
-    private static final Vector2 LIFE_SIZE = new Vector2(50, 50);
+    private static final Vector2 LIFE1_POSITION = new Vector2(570, 475);
+    private static final Vector2 LIFE2_POSITION = new Vector2(630, 475);
+    private static final Vector2 LIFE3_POSITION = new Vector2(690, 475);
+    private static final Vector2 LIFE_SIZE = new Vector2(61, 50);
     private static final String EXTRA_LIFE = "x ";
 
     // Private members.
