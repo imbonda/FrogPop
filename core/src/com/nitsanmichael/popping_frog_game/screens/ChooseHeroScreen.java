@@ -202,9 +202,12 @@ public class ChooseHeroScreen extends FadingScreen {
     @Override
     public void resize(int width, int height) {
         this.viewport.update(width, height, true);
-        this.stage.getViewport().update(width, height, false);
         this.stage.getCamera().position.set(0,0,0);
-        this.stage.getCamera().translate(game.VIRTUAL_WIDTH/2,game.VIRTUAL_HEIGHT/2,0);
+        this.stage.getCamera().translate(
+                    PoppingFrog.VIRTUAL_WIDTH / 2,
+                    PoppingFrog.VIRTUAL_HEIGHT / 2,
+                    0);
+        this.stage.getViewport().update(width, height, false);
     }
 
     @Override
