@@ -2,6 +2,7 @@ package com.nitsanmichael.popping_frog_game.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -27,13 +28,11 @@ import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
  */
 public class Hud implements Disposable {
 
-    private BitmapFont font;
     private ScoreTab scoreTab;
     private LevelTab levelTab;
     private LifeTab lifeTab;
     private SpriteBatch batch;
     private RuntimeInfo runtimeInfo;
-    private Timer timer;
     private Stage stage;
 
     /**
@@ -45,29 +44,29 @@ public class Hud implements Disposable {
      */
     public Hud(AssetController assetController, SpriteBatch batch, RuntimeInfo runtimeInfo,
                 Timer timer) {
-        this.font = assetController.get(Assets.GAME_FONT);
-        this.font.getData().setScale(0.2f);
         this.batch = batch;
         this.runtimeInfo = runtimeInfo;
-        this.timer = timer;
-        setPanel();
-        setStage();
+        setPanel(assetController);
+        setStage(timer);
     }
 
     /**
      * Sets the hud's panel.
      */
-    private void setPanel() {
-        this.scoreTab = new ScoreTab(this.font, this.runtimeInfo.gameScore);
-        this.levelTab = new LevelTab(this.font, this.runtimeInfo.gameLevel);
-        this.lifeTab = new LifeTab(this.font, this.runtimeInfo.gameLives);
+    private void setPanel(AssetController assetController) {
+        BitmapFont font = assetController.get(Assets.GAME_FONT);
+        font.getData().setScale(0.2f);
+        this.scoreTab = new ScoreTab(font, this.runtimeInfo.gameScore);
+        this.levelTab = new LevelTab(font, this.runtimeInfo.gameLevel);
+        Texture lifeIcon = assetController.get(Assets.LIFE_ICON);
+        this.lifeTab = new LifeTab(lifeIcon, font, this.runtimeInfo.gameLives);
     }
 
     /**
      * Sets the hud's stage.
      * The stage is what actually hold all the hud's elements, and it draws them eventually.
      */
-    private void setStage() {
+    private void setStage(Timer timer) {
         Viewport hudViewPort = new ExtendViewport(
                 PoppingFrog.VIRTUAL_WIDTH,
                 PoppingFrog.VIRTUAL_HEIGHT,
@@ -76,7 +75,7 @@ public class Hud implements Disposable {
         this.stage.addActor(this.scoreTab);
         this.stage.addActor(this.levelTab);
         this.stage.addActor(this.lifeTab);
-        this.stage.addActor(this.timer);
+        this.stage.addActor(timer);
     }
 
     /**
