@@ -16,12 +16,11 @@ import com.nitsanmichael.popping_frog_game.assets.Assets;
 public class IdleTurkishFrog extends Actor {
 
     private Animation animation;
-    private Vector2 position;
 
 
     public IdleTurkishFrog(AssetController assetController, Vector2 position) {
         this.animation = assetController.getAnimation(Assets.HERO_TURKISH_ANIMATION);
-        this.position = position;
+        setPosition(position.x, position.y);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class IdleTurkishFrog extends Actor {
         this.setColor(c.r, c.g, c.b, parentAlpha);
         batch.draw(
                 this.animation.getFrame(),
-                this.position.x, this.position.y,
+                getX(), getY(),
                 getWidth(), getHeight());
     }
 }

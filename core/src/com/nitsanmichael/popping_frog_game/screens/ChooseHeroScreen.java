@@ -100,7 +100,7 @@ public class ChooseHeroScreen extends FadingScreen {
         });
 
         // Choose hero title.
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.DARK_GRAY);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.LIME);
         Label chooseHeroTitle = new Label(CHOOSE_HERO_TITLE, labelStyle);
         chooseHeroTitle.setFontScale(0.5f);
         chooseHeroTitle.setPosition(220, 440);

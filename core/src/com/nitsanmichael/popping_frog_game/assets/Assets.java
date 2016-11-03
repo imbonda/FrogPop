@@ -98,6 +98,8 @@ public final class Assets {
     public static final String X_PRESSED_ICON = "images/icons/x_pressed.png";
     public static final String FILM_REEL_COUNTDOWN_ICON = "images/icons/film_reel_countdown.png";
     public static final String LIFE_ICON = "images/icons/life.png";
+    public static final String INFO_ICON = "images/icons/info.png";
+    public static final String INFO_PRESSED_ICON = "images/icons/info_pressed.png";
     // Backgrounds.
     public static final String MENU_BACKGROUND = "images/backgrounds/menu.jpg";
     public static final String PAUSE_BACKGROUND = "images/backgrounds/pause.png";
@@ -177,6 +179,7 @@ public final class Assets {
             X_ICON, X_PRESSED_ICON,
             FILM_REEL_COUNTDOWN_ICON,
             LIFE_ICON,
+            INFO_ICON, INFO_PRESSED_ICON,
         // Backgrounds
             MENU_BACKGROUND,
             PAUSE_BACKGROUND,

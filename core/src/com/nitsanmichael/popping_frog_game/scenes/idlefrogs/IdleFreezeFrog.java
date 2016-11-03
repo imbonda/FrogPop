@@ -18,14 +18,13 @@ public class IdleFreezeFrog extends Actor {
     public enum AnimationType { NORMAL, BIG }
 
     private Animation animation;
-    private Vector2 position;
 
 
     public IdleFreezeFrog(AssetController assetController, AnimationType type, Vector2 position) {
         this.animation = (AnimationType.NORMAL == type) ?
                 (assetController.getAnimation(Assets.FREEZE_FROG_ANIMATION)) :
                 (assetController.getAnimation(Assets.FREEZE_FROG_BIG_ANIMATION));
-        this.position = position;
+        setPosition(position.x, position.y);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class IdleFreezeFrog extends Actor {
         this.setColor(c.r, c.g, c.b, parentAlpha);
         batch.draw(
                 this.animation.getFrame(),
-                this.position.x, this.position.y,
+                getX(), getY(),
                 getWidth(), getHeight());
     }
 }

@@ -88,7 +88,7 @@ public class SettingsScreen extends FadingScreen {
         // Header label.
         Label settingsLabel = new Label(SETTINGS, new Label.LabelStyle(font, Color.LIME));
         settingsLabel.setFontScale(0.5f);
-        settingsLabel.setPosition(230, 450);
+        settingsLabel.setPosition(300, 450);
         settingsLabel.setHeight(50);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);

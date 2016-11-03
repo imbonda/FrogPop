@@ -137,6 +137,33 @@ public class MainMenuScreen extends FadingScreen {
                 isListening = false;
             }
         });
+        // Info button.
+        Texture infoIcon = this.game.assetController.get(Assets.INFO_ICON);
+        Texture infoPressedIcon = this.game.assetController.get(Assets.INFO_PRESSED_ICON);
+        final ToggleButton infoButton = new ToggleButton(
+                    new Image(infoIcon), new Image(infoPressedIcon));
+        infoButton.setSize(70, 70);
+        infoButton.setPosition(700, 430);
+        infoButton.addListener(new MessageEventListener() {
+            @Override
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != infoButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
+                final PoppingFrog game = MainMenuScreen.this.game;
+                if (!isListening) {
+                    return;
+                }
+                MainMenuScreen.this.fadeOut(FADE_OUT_TIME, new TweenCallback() {
+                    @Override
+                    public void onEvent(int type, BaseTween<?> source) {
+                        dispose();
+                        new ManualScreen(game).fadeIn(game, FADE_IN_TIME);
+                    }
+                });
+                isListening = false;
+            }
+        });
 
         // Game title.
         Label titleLabel = new Label(GAME_TITLE, new Label.LabelStyle(font, Color.LIME));
@@ -144,7 +171,7 @@ public class MainMenuScreen extends FadingScreen {
         titleLabel.setPosition(230, 450);
         titleLabel.setHeight(50);
 
-        setStage(titleLabel, playButton, settingsButton, heroButton);
+        setStage(titleLabel, playButton, settingsButton, heroButton, infoButton);
 
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
         // Play music.
@@ -156,7 +183,7 @@ public class MainMenuScreen extends FadingScreen {
     }
 
     private void setStage(Label titleLabel, ToggleButton playButton, ToggleButton settingsButton,
-                            ToggleButton heroButton) {
+                            ToggleButton heroButton, ToggleButton infoButton) {
         this.stage = new Stage(new ExtendViewport(
                     PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                     this.game.batch);
@@ -164,6 +191,7 @@ public class MainMenuScreen extends FadingScreen {
         this.stage.addActor(playButton);
         this.stage.addActor(settingsButton);
         this.stage.addActor(heroButton);
+        this.stage.addActor(infoButton);
         addIdleFrogsToStage();
         Gdx.input.setInputProcessor(this.stage);
     }
