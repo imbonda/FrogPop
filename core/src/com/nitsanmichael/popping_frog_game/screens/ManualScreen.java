@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.input.BackKeyInputProcessor;
+import com.nitsanmichael.popping_frog_game.scenes.Manual;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
 import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
@@ -45,28 +46,16 @@ public class ManualScreen extends FadingScreen {
     private static final float FADE_OUT_TIME = 0.25f;
     private static final float FADE_IN_TIME = 0.25f;
     private static final String MANUAL_TITLE = "Manual";
-    // Descriptions.
-    private static final String HERO_DESCRIPTION =
-                "Tap it to increase the score +1,\notherwise you will lose a life.";
-    private static final String DEVIL_DESCRIPTION =
-                "Do not tap it,\nyou will lose a life if you do.";
-    private static final String ANGEL_DESCRIPTION =
-                "Tap it to get an extra life.\nYou won't lose any if you miss it.";
-    private static final String GENIE_DESCRIPTION =
-                "Oh no ! it makes all the holes move.\nTap it to increase the score + 3,\n" +
-                "otherwise you will lose a life.";
-    private static final String POLICE_DESCRIPTION =
-                "Careful it's the police.\nIt slows all the frogs down.\n" +
-                "Tap it to increase the score + 1,\notherwise you will lose a life.";
     // Produced by.
     private static final String PRODUCED_BY = "Producers :\t" +
                 "Michael Bondarevsky and Nitsan Levy.";
 
 
-    private Sprite background;
     private PoppingFrog game;
-    private Stage stage;
     private Viewport backgroundViewport;
+    private Stage stage;
+    private Sprite background;
+    private Manual manual;
 
 
     public ManualScreen(final PoppingFrog game) {
@@ -108,6 +97,7 @@ public class ManualScreen extends FadingScreen {
         producedByLabel.setPosition(150, 360);
         producedByLabel.setHeight(50);
 
+        this.manual = new Manual(this.game.assetController);
         setStage(chooseHeroTitle, producedByLabel, backButton);
 
         this.background = new Sprite((Texture) this.game.assetController.get(Assets.MENU_BACKGROUND));
@@ -125,74 +115,8 @@ public class ManualScreen extends FadingScreen {
         this.stage.addActor(chooseHeroTitle);
         this.stage.addActor(producedByLabel);
         this.stage.addActor(backButton);
-        addManualToStage();
-    }
 
-    private void addManualToStage() {
-        Table table = new Table();
-        Table container = new Table();
-        Skin scrollPaneSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
-        ScrollPane scrollPane = new ScrollPane(table, scrollPaneSkin);
-        scrollPane.getStyle().background = new TextureRegionDrawable(new TextureRegion(
-                    (Texture)this.game.assetController.get(Assets.SCROLL_BACKGROUND)));
-        container.add(scrollPane);
-        container.setSize(700, 300);
-        container.setPosition(50, 50);
-        container.setFillParent(false);
-
-        BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
-        Label.LabelStyle style = new Label.LabelStyle(font, Color.BROWN);
-
-        // Adding frogs to manual.
-        table.top();
-        // Hero.
-        table.add(new IdleRegularFrog(this.game.assetController,
-                    IdleRegularFrog.AnimationType.TONGUE, Vector2.Zero)).padTop(20).padLeft(20);
-        Label heroLabel = new Label("Hero", style);
-        heroLabel.setFontScale(0.2f);
-        table.add(heroLabel).padTop(20).padLeft(20);
-        Label heroDescriptionLabel = new Label(HERO_DESCRIPTION, style);
-        heroDescriptionLabel.setFontScale(0.2f);
-        table.add(heroDescriptionLabel).padTop(20).padLeft(20).padRight(20);
-        table.row();
-        // Devil.
-        table.add(new IdleEvilFrog(this.game.assetController, Vector2.Zero)).padTop(20).padLeft(20);
-        Label devilLabel = new Label("Devil", style);
-        devilLabel.setFontScale(0.2f);
-        table.add(devilLabel).padTop(20).padLeft(20);
-        Label devilDescriptionLabel = new Label(DEVIL_DESCRIPTION, style);
-        devilDescriptionLabel.setFontScale(0.2f);
-        table.add(devilDescriptionLabel).padTop(20).padLeft(20).padRight(20);
-        table.row();
-        // Angel.
-        table.add(new IdleHealthFrog(this.game.assetController, Vector2.Zero)).padTop(20).padLeft(20);
-        Label angelLabel = new Label("Angel", style);
-        angelLabel.setFontScale(0.2f);
-        table.add(angelLabel).padTop(20).padLeft(20);
-        Label angelDescriptionLabel = new Label(ANGEL_DESCRIPTION, style);
-        angelDescriptionLabel.setFontScale(0.2f);
-        table.add(angelDescriptionLabel).padTop(20).padLeft(20).padRight(20);
-        table.row();
-        // Genie.
-        table.add(new IdleIllusionFrog(this.game.assetController, Vector2.Zero)).padTop(20).padLeft(20);
-        Label genieLabel = new Label("Genie", style);
-        genieLabel.setFontScale(0.2f);
-        table.add(genieLabel).padTop(20).padLeft(20);
-        Label genieDescriptionLabel = new Label(GENIE_DESCRIPTION, style);
-        genieDescriptionLabel.setFontScale(0.2f);
-        table.add(genieDescriptionLabel).padTop(20).padLeft(20).padRight(20);
-        table.row();
-        // Police.
-        table.add(new IdleFreezeFrog(this.game.assetController, IdleFreezeFrog.AnimationType.NORMAL,
-                    Vector2.Zero)).padTop(20).padLeft(20).padBottom(20);
-        Label policeLabel = new Label("Police", style);
-        policeLabel.setFontScale(0.2f);
-        table.add(policeLabel).padTop(20).padLeft(20).padBottom(20);
-        Label policeDescriptionLabel = new Label(POLICE_DESCRIPTION, style);
-        policeDescriptionLabel.setFontScale(0.2f);
-        table.add(policeDescriptionLabel).padTop(20).padLeft(20).padRight(20).padBottom(20);
-
-        this.stage.addActor(container);
+        this.stage.addActor(this.manual);
     }
 
     private void setInputProcessor() {
