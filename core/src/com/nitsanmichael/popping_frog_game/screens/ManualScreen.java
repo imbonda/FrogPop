@@ -47,17 +47,17 @@ public class ManualScreen extends FadingScreen {
     private static final String MANUAL_TITLE = "Manual";
     // Descriptions.
     private static final String HERO_DESCRIPTION =
-                "Tap it to increase score +1,\notherwise you will lose a life.";
+                "Tap it to increase the score +1,\notherwise you will lose a life.";
     private static final String DEVIL_DESCRIPTION =
                 "Do not tap it,\nyou will lose a life if you do.";
     private static final String ANGEL_DESCRIPTION =
                 "Tap it to get an extra life.\nYou won't lose any if you miss it.";
     private static final String GENIE_DESCRIPTION =
-                "Oh no ! he is making all the holes move.\nTap it to increase the score + 3,\n" +
+                "Oh no ! it makes all the holes move.\nTap it to increase the score + 3,\n" +
                 "otherwise you will lose a life.";
     private static final String POLICE_DESCRIPTION =
-                "Careful it is the police.\nIt is slowing all the other frogs down.\n" +
-                "Tap it to increase the score + 1\notherwise you will lose a life.";
+                "Careful it's the police.\nIt slows all the frogs down.\n" +
+                "Tap it to increase the score + 1,\notherwise you will lose a life.";
     // Produced by.
     private static final String PRODUCED_BY = "Producers :\t" +
                 "Michael Bondarevsky and Nitsan Levy.";
@@ -102,7 +102,7 @@ public class ManualScreen extends FadingScreen {
         chooseHeroTitle.setHeight(50);
 
         // Produced by.
-        style = new Label.LabelStyle(font, new Color(0x42000b0));
+        style = new Label.LabelStyle(font, new Color(0x42000b9f));
         Label producedByLabel = new Label(PRODUCED_BY, style);
         producedByLabel.setFontScale(0.2f);
         producedByLabel.setPosition(150, 360);
@@ -136,8 +136,8 @@ public class ManualScreen extends FadingScreen {
         scrollPane.getStyle().background = new TextureRegionDrawable(new TextureRegion(
                     (Texture)this.game.assetController.get(Assets.SCROLL_BACKGROUND)));
         container.add(scrollPane);
-        container.setSize(700, 330);
-        container.setPosition(50, 20);
+        container.setSize(700, 300);
+        container.setPosition(50, 50);
         container.setFillParent(false);
 
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
@@ -153,7 +153,7 @@ public class ManualScreen extends FadingScreen {
         table.add(heroLabel).padTop(20).padLeft(20);
         Label heroDescriptionLabel = new Label(HERO_DESCRIPTION, style);
         heroDescriptionLabel.setFontScale(0.2f);
-        table.add(heroDescriptionLabel).padTop(20).padLeft(20);
+        table.add(heroDescriptionLabel).padTop(20).padLeft(20).padRight(20);
         table.row();
         // Devil.
         table.add(new IdleEvilFrog(this.game.assetController, Vector2.Zero)).padTop(20).padLeft(20);
@@ -162,7 +162,7 @@ public class ManualScreen extends FadingScreen {
         table.add(devilLabel).padTop(20).padLeft(20);
         Label devilDescriptionLabel = new Label(DEVIL_DESCRIPTION, style);
         devilDescriptionLabel.setFontScale(0.2f);
-        table.add(devilDescriptionLabel).padTop(20).padLeft(20);
+        table.add(devilDescriptionLabel).padTop(20).padLeft(20).padRight(20);
         table.row();
         // Angel.
         table.add(new IdleHealthFrog(this.game.assetController, Vector2.Zero)).padTop(20).padLeft(20);
@@ -171,7 +171,7 @@ public class ManualScreen extends FadingScreen {
         table.add(angelLabel).padTop(20).padLeft(20);
         Label angelDescriptionLabel = new Label(ANGEL_DESCRIPTION, style);
         angelDescriptionLabel.setFontScale(0.2f);
-        table.add(angelDescriptionLabel).padTop(20).padLeft(20);
+        table.add(angelDescriptionLabel).padTop(20).padLeft(20).padRight(20);
         table.row();
         // Genie.
         table.add(new IdleIllusionFrog(this.game.assetController, Vector2.Zero)).padTop(20).padLeft(20);
@@ -180,7 +180,7 @@ public class ManualScreen extends FadingScreen {
         table.add(genieLabel).padTop(20).padLeft(20);
         Label genieDescriptionLabel = new Label(GENIE_DESCRIPTION, style);
         genieDescriptionLabel.setFontScale(0.2f);
-        table.add(genieDescriptionLabel).padTop(20).padLeft(20);
+        table.add(genieDescriptionLabel).padTop(20).padLeft(20).padRight(20);
         table.row();
         // Police.
         table.add(new IdleFreezeFrog(this.game.assetController, IdleFreezeFrog.AnimationType.NORMAL,
@@ -190,7 +190,7 @@ public class ManualScreen extends FadingScreen {
         table.add(policeLabel).padTop(20).padLeft(20).padBottom(20);
         Label policeDescriptionLabel = new Label(POLICE_DESCRIPTION, style);
         policeDescriptionLabel.setFontScale(0.2f);
-        table.add(policeDescriptionLabel).padTop(20).padLeft(20).padBottom(20);
+        table.add(policeDescriptionLabel).padTop(20).padLeft(20).padRight(20).padBottom(20);
 
         this.stage.addActor(container);
     }
