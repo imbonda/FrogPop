@@ -58,6 +58,9 @@ public class ManualScreen extends FadingScreen {
     private static final String POLICE_DESCRIPTION =
                 "Careful it is the police.\nIt is slowing all the other frogs down.\n" +
                 "Tap it to increase the score + 1\notherwise you will lose a life.";
+    // Produced by.
+    private static final String PRODUCED_BY = "Producers :\t" +
+                "Michael Bondarevsky and Nitsan Levy.";
 
 
     private Sprite background;
@@ -92,13 +95,20 @@ public class ManualScreen extends FadingScreen {
         });
 
         // Choose hero title.
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.LIME);
-        Label chooseHeroTitle = new Label(MANUAL_TITLE, labelStyle);
+        Label.LabelStyle style = new Label.LabelStyle(font, Color.LIME);
+        Label chooseHeroTitle = new Label(MANUAL_TITLE, style);
         chooseHeroTitle.setFontScale(0.6f);
         chooseHeroTitle.setPosition(300, 440);
         chooseHeroTitle.setHeight(50);
 
-        setStage(chooseHeroTitle, backButton);
+        // Produced by.
+        style = new Label.LabelStyle(font, new Color(0x42000b0));
+        Label producedByLabel = new Label(PRODUCED_BY, style);
+        producedByLabel.setFontScale(0.2f);
+        producedByLabel.setPosition(150, 360);
+        producedByLabel.setHeight(50);
+
+        setStage(chooseHeroTitle, producedByLabel, backButton);
 
         this.background = new Sprite((Texture) this.game.assetController.get(Assets.MENU_BACKGROUND));
 
@@ -108,16 +118,17 @@ public class ManualScreen extends FadingScreen {
         game.adsController.showBannerAd();
     }
 
-    private void setStage(Label chooseHeroTitle, ToggleButton backButton) {
+    private void setStage(Label chooseHeroTitle, Label producedByLabel, ToggleButton backButton) {
         this.stage = new Stage(new ExtendViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
         this.stage.addActor(chooseHeroTitle);
+        this.stage.addActor(producedByLabel);
         this.stage.addActor(backButton);
-        addIdleFrogsToStage();
+        addManualToStage();
     }
 
-    private void addIdleFrogsToStage() {
+    private void addManualToStage() {
         Table table = new Table();
         Table container = new Table();
         Skin scrollPaneSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
@@ -125,7 +136,7 @@ public class ManualScreen extends FadingScreen {
         scrollPane.getStyle().background = new TextureRegionDrawable(new TextureRegion(
                     (Texture)this.game.assetController.get(Assets.SCROLL_BACKGROUND)));
         container.add(scrollPane);
-        container.setSize(700, 350);
+        container.setSize(700, 330);
         container.setPosition(50, 20);
         container.setFillParent(false);
 
@@ -180,7 +191,7 @@ public class ManualScreen extends FadingScreen {
         Label policeDescriptionLabel = new Label(POLICE_DESCRIPTION, style);
         policeDescriptionLabel.setFontScale(0.2f);
         table.add(policeDescriptionLabel).padTop(20).padLeft(20).padBottom(20);
-        
+
         this.stage.addActor(container);
     }
 
