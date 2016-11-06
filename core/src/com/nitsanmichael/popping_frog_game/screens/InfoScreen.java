@@ -8,16 +8,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -28,11 +23,6 @@ import com.nitsanmichael.popping_frog_game.scenes.Manual;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
 import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
-import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleEvilFrog;
-import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleFreezeFrog;
-import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleHealthFrog;
-import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleIllusionFrog;
-import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleRegularFrog;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -41,28 +31,31 @@ import aurelienribon.tweenengine.TweenCallback;
 /**
  * Created by MichaelBond on 11/2/2016.
  */
-public class ManualScreen extends FadingScreen {
+public class InfoScreen extends FadingScreen {
 
     private static final float FADE_OUT_TIME = 0.25f;
     private static final float FADE_IN_TIME = 0.25f;
-    private static final String MANUAL_TITLE = "Manual";
-    // Produced by.
-    private static final String PRODUCED_BY = "Producers :\t" +
-                "Michael Bondarevsky and Nitsan Levy.";
+    // Creators.
+    private static final String PRODUCERS =
+                "Producers :\tMichael Bondarevsky and Nitsan Levy.";
+    private static final String PAINTERS = "Painting artist :\tMika Yosef.";
 
 
     private PoppingFrog game;
     private Viewport backgroundViewport;
     private Stage stage;
     private Sprite background;
-    private Manual manual;
+    private Array<Actor> introActors;
+    private boolean isShowingManual;
 
 
-    public ManualScreen(final PoppingFrog game) {
+    public InfoScreen(final PoppingFrog game) {
         super(game.batch, game.tweenController);
         this.game = game;
         this.backgroundViewport = new StretchViewport(
                     PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
+        this.introActors = new Array<Actor>();
+        this.isShowingManual = false;
 
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
 
@@ -82,23 +75,41 @@ public class ManualScreen extends FadingScreen {
                 backToMenu();
             }
         });
-
-        // Choose hero title.
-        Label.LabelStyle style = new Label.LabelStyle(font, Color.LIME);
-        Label chooseHeroTitle = new Label(MANUAL_TITLE, style);
-        chooseHeroTitle.setFontScale(0.6f);
-        chooseHeroTitle.setPosition(300, 440);
-        chooseHeroTitle.setHeight(50);
+        // Manual button.
+        Texture manualIcon = this.game.assetController.get(Assets.MANUAL_ICON);
+        Texture manualPressedIcon = this.game.assetController.get(Assets.MANUAL_PRESSED_ICON);
+        final ToggleButton manualButton = new ToggleButton(
+                    new Image(manualIcon), new Image(manualPressedIcon));
+        manualButton.setSize(270, 100);
+        manualButton.setPosition(270, 180);
+        manualButton.addListener(new MessageEventListener() {
+            @Override
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != manualButton || message != ToggleButtonListener.ON_TOUCH_UP ||
+                            isShowingManual) {
+                    return;
+                }
+                showManual();
+            }
+        });
+        this.introActors.add(manualButton);
 
         // Produced by.
-        style = new Label.LabelStyle(font, new Color(0x42000b9f));
-        Label producedByLabel = new Label(PRODUCED_BY, style);
-        producedByLabel.setFontScale(0.2f);
-        producedByLabel.setPosition(150, 360);
-        producedByLabel.setHeight(50);
+        Label.LabelStyle style = new Label.LabelStyle(font, new Color(0x42000b9f));
+        Label producersLabel = new Label(PRODUCERS, style);
+        producersLabel.setFontScale(0.2f);
+        producersLabel.setPosition(200, 400);
+        producersLabel.setHeight(50);
+        this.introActors.add(producersLabel);
 
-        this.manual = new Manual(this.game.assetController);
-        setStage(chooseHeroTitle, producedByLabel, backButton);
+        // Paintings.
+        Label paintersLabel = new Label(PAINTERS, style);
+        paintersLabel.setFontScale(0.2f);
+        paintersLabel.setPosition(200, 350);
+        paintersLabel.setHeight(50);
+        this.introActors.add(paintersLabel);
+
+        setStage(producersLabel, paintersLabel, backButton, manualButton);
 
         this.background = new Sprite((Texture) this.game.assetController.get(Assets.MENU_BACKGROUND));
 
@@ -108,15 +119,15 @@ public class ManualScreen extends FadingScreen {
         game.adsController.showBannerAd();
     }
 
-    private void setStage(Label chooseHeroTitle, Label producedByLabel, ToggleButton backButton) {
+    private void setStage(Label producersLabel, Label paintersLabel,
+                            ToggleButton backButton, ToggleButton manualButton) {
         this.stage = new Stage(new ExtendViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
-        this.stage.addActor(chooseHeroTitle);
-        this.stage.addActor(producedByLabel);
+        this.stage.addActor(producersLabel);
+        this.stage.addActor(paintersLabel);
         this.stage.addActor(backButton);
-
-        this.stage.addActor(this.manual);
+        this.stage.addActor(manualButton);
     }
 
     private void setInputProcessor() {
@@ -142,12 +153,32 @@ public class ManualScreen extends FadingScreen {
         });
     }
 
+    private void showManual() {
+        for (final Actor actor : this.introActors) {
+            // Fade out actor.
+            this.game.tweenController.actorFade(actor, 0.5f, 1, 0, 0, 0, new TweenCallback() {
+                @Override
+                public void onEvent(int type, BaseTween<?> source) {
+                    // Remove from stage
+                    actor.remove();
+                }
+            });
+        }
+        Manual manual = new Manual(this.game.assetController);
+        this.stage.addActor(manual);
+        // Fade in manual.
+        this.game.tweenController.actorFade(manual, 0.5f, 0, 1, 0, 0, null);
+        this.isShowingManual = true;
+    }
+
     @Override
     public void setScreenColor(float r, float g, float b, float a) {
         super.setScreenColor(r, g, b, a);
         for (Actor actor : this.stage.getActors()) {
             actor.getColor().a = a;
         }
+        Color c = this.background.getColor();
+        this.background.setColor(c.r, c.g, c.b, a);
     }
 
     @Override

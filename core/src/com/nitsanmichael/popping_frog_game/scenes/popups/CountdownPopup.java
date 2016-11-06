@@ -58,9 +58,9 @@ public class CountdownPopup implements Popup {
         this.countDownLabel.setPosition(POSITION_COUNT.x, POSITION_COUNT.y);
         this.countDownLabel.setFontScale(INITIAL_FONT_SCALE);
         this.countDownLabel.setText(COUNTDOWN_3);
-        this.tweenController.popupLabelFontScale(
+        this.tweenController.labelFontScale(
                 this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);
-        this.tweenController.popupLabelFade(this.countDownLabel, 0.5f, 0.1f, new TweenCallback() {
+        this.tweenController.actorFade(this.countDownLabel, 0.5f, 0, 1, 1, 0.1f, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 countDownLabel.setFontScale(INITIAL_FONT_SCALE);
@@ -71,9 +71,9 @@ public class CountdownPopup implements Popup {
 
     private void countdown2() {
         this.countDownLabel.setText(COUNTDOWN_2);
-        this.tweenController.popupLabelFontScale(
+        this.tweenController.labelFontScale(
                 this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);
-        this.tweenController.popupLabelFade(this.countDownLabel, 0.5f, 0.1f, new TweenCallback() {
+        this.tweenController.actorFade(this.countDownLabel, 0.5f, 0, 1, 1, 0.1f, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 countDownLabel.setFontScale(INITIAL_FONT_SCALE);
@@ -84,9 +84,9 @@ public class CountdownPopup implements Popup {
 
     private void countdown1() {
         this.countDownLabel.setText(COUNTDOWN_1);
-        this.tweenController.popupLabelFontScale(
+        this.tweenController.labelFontScale(
                 this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);
-        this.tweenController.popupLabelFade(this.countDownLabel, 0.5f, 0.1f, new TweenCallback() {
+        this.tweenController.actorFade(this.countDownLabel, 0.5f, 0, 1, 1, 0.1f, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 countDownLabel.setFontScale(INITIAL_FONT_SCALE);
@@ -98,16 +98,17 @@ public class CountdownPopup implements Popup {
     private void countdownGo() {
         this.countDownLabel.setPosition(POSITION_GO.x, POSITION_GO.y);
         this.countDownLabel.setText(COUNTDOWN_GO);
-        this.tweenController.popupLabelFontScale(
+        this.tweenController.labelFontScale(
                 this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);
-        this.tweenController.popupLabelFade(this.countDownLabel, 0.5f, 0.1f, new TweenCallback() {
-            @Override
-            public void onEvent(int type, BaseTween<?> source) {
-                countDownLabel.setFontScale(INITIAL_FONT_SCALE);
-                // Remove the label from the stage.
-                countDownLabel.remove();
-                runtimeInfo.stateTracker.setState(StateTracker.GameState.PLAY);
-            }
+        this.tweenController.actorFade(this.countDownLabel, 0.5f, 0, 1, 1, 0.1f,
+                    new TweenCallback() {
+                        @Override
+                        public void onEvent(int type, BaseTween<?> source) {
+                            countDownLabel.setFontScale(INITIAL_FONT_SCALE);
+                            // Remove the label from the stage.
+                            countDownLabel.remove();
+                            runtimeInfo.stateTracker.setState(StateTracker.GameState.PLAY);
+                        }
         });
     }
 

@@ -41,8 +41,8 @@ public class LevelUpPopup implements Popup {
     @Override
     public void perform() {
         this.stage.addActor(this.levelUpLabel);
-        this.tweenController.popupLabelFade(this.levelUpLabel, 0.5f, 0.5f, null);
-        this.tweenController.popupLabelFontScale(
+        this.tweenController.actorFade(this.levelUpLabel, 0.5f, 0, 1, 1, 0.5f, null);
+        this.tweenController.labelFontScale(
                 this.levelUpLabel,
                 SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 1, 0.5f, new TweenCallback() {
                     @Override

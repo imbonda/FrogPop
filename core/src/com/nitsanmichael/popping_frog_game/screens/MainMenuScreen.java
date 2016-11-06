@@ -158,7 +158,7 @@ public class MainMenuScreen extends FadingScreen {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
                         dispose();
-                        new ManualScreen(game).fadeIn(game, FADE_IN_TIME);
+                        new InfoScreen(game).fadeIn(game, FADE_IN_TIME);
                     }
                 });
                 isListening = false;

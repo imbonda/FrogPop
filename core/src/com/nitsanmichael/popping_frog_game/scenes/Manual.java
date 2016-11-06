@@ -19,6 +19,7 @@ import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleHealthFrog;
 import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleIllusionFrog;
 import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleRegularFrog;
 
+
 /**
  * Created by MichaelBond on 11/6/2016.
  */
@@ -51,8 +52,8 @@ public class Manual extends Group {
         scrollPane.getStyle().background = new TextureRegionDrawable(new TextureRegion(
                 (Texture)assetController.get(Assets.SCROLL_BACKGROUND)));
         container.add(scrollPane);
-        container.setSize(700, 300);
-        container.setPosition(50, 50);
+        container.setSize(700, 450);
+        container.setPosition(100, 50);
         container.setFillParent(false);
 
         BitmapFont font = assetController.get(Assets.GAME_FONT);
