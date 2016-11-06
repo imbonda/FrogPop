@@ -39,6 +39,7 @@ public class InfoScreen extends FadingScreen {
     private static final String PRODUCERS =
                 "Producers :\tMichael Bondarevsky and Nitsan Levy.";
     private static final String PAINTERS = "Painting artist :\tMika Yosef.";
+    private static final String MUSICIANS = "Music by : \tPattrick Angello.";
 
 
     private PoppingFrog game;
@@ -109,7 +110,14 @@ public class InfoScreen extends FadingScreen {
         paintersLabel.setHeight(50);
         this.introActors.add(paintersLabel);
 
-        setStage(producersLabel, paintersLabel, backButton, manualButton);
+        // Music.
+        Label musiciansLabel = new Label(MUSICIANS, style);
+        musiciansLabel.setFontScale(0.2f);
+        musiciansLabel.setPosition(200, 300);
+        musiciansLabel.setHeight(50);
+        this.introActors.add(musiciansLabel);
+
+        setStage(producersLabel, paintersLabel, musiciansLabel, backButton, manualButton);
 
         this.background = new Sprite((Texture) this.game.assetController.get(Assets.MENU_BACKGROUND));
 
@@ -119,13 +127,14 @@ public class InfoScreen extends FadingScreen {
         game.adsController.showBannerAd();
     }
 
-    private void setStage(Label producersLabel, Label paintersLabel,
+    private void setStage(Label producersLabel, Label paintersLabel, Label musiciansLabel,
                             ToggleButton backButton, ToggleButton manualButton) {
         this.stage = new Stage(new ExtendViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
         this.stage.addActor(producersLabel);
         this.stage.addActor(paintersLabel);
+        this.stage.addActor(musiciansLabel);
         this.stage.addActor(backButton);
         this.stage.addActor(manualButton);
     }
