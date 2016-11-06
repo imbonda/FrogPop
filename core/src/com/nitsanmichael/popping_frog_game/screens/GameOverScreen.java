@@ -149,12 +149,13 @@ public class GameOverScreen extends FadingScreen {
         this.game.media.playMusic(Assets.MAIN_MENU_MUSIC);
 
         game.adsController.showBannerAd();
-        game.adsController.showInterstitialAd(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
+        // TODO add when wanted.
+//        game.adsController.showInterstitialAd(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 
     private void setStage(Label levelLabel, Label scoreLabel, Label highestScoreLabel, Label highestLevelLabel,
