@@ -1,6 +1,5 @@
 package com.nitsanmichael.popping_frog_game.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -8,13 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.AssetController;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
-import com.nitsanmichael.popping_frog_game.scenes.panel.LevelTab;
 import com.nitsanmichael.popping_frog_game.scenes.panel.LifeTab;
 import com.nitsanmichael.popping_frog_game.scenes.panel.ScoreTab;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
@@ -29,7 +26,6 @@ import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
 public class Hud implements Disposable {
 
     private ScoreTab scoreTab;
-    private LevelTab levelTab;
     private LifeTab lifeTab;
     private SpriteBatch batch;
     private RuntimeInfo runtimeInfo;
@@ -43,7 +39,7 @@ public class Hud implements Disposable {
      * @param timer A timer used for timing the levels.
      */
     public Hud(AssetController assetController, SpriteBatch batch, RuntimeInfo runtimeInfo,
-                Timer timer) {
+               Timer timer) {
         this.batch = batch;
         this.runtimeInfo = runtimeInfo;
         setPanel(assetController);
@@ -57,7 +53,6 @@ public class Hud implements Disposable {
         BitmapFont font = assetController.get(Assets.GAME_FONT);
         font.getData().setScale(0.2f);
         this.scoreTab = new ScoreTab(font, this.runtimeInfo.gameScore);
-        this.levelTab = new LevelTab(font, this.runtimeInfo.gameLevel);
         Texture lifeIcon = assetController.get(Assets.LIFE_ICON);
         this.lifeTab = new LifeTab(lifeIcon, font, this.runtimeInfo.gameLives);
     }
@@ -73,7 +68,6 @@ public class Hud implements Disposable {
                 new OrthographicCamera());
         this.stage = new Stage(hudViewPort, this.batch);
         this.stage.addActor(this.scoreTab);
-        this.stage.addActor(this.levelTab);
         this.stage.addActor(this.lifeTab);
         this.stage.addActor(timer);
     }
@@ -96,7 +90,6 @@ public class Hud implements Disposable {
      */
     public void update() {
         this.scoreTab.updateScore(this.runtimeInfo.gameScore);
-        this.levelTab.updateLevel(this.runtimeInfo.gameLevel);
         this.lifeTab.updateLives(this.runtimeInfo.gameLives);
     }
 
