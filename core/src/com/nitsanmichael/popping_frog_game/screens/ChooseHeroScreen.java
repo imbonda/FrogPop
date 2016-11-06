@@ -110,7 +110,7 @@ public class ChooseHeroScreen extends FadingScreen {
 
                 HeroSpecMetaData meta = heroesSpecMap.get(idleHero.getClass());
                 if(highestLevel >= meta.requiredLevel) {
-                    game.data.setHeroIndex(index);
+                    game.data.setHeroIndex(meta.animationIndex);
                 }
                 setHeroRow();
 
@@ -140,16 +140,22 @@ public class ChooseHeroScreen extends FadingScreen {
         this.idleFrogs = new Array<Actor>();
         this.idleFrogs.add(new IdleRegularFrog(this.game.assetController,
                 IdleRegularFrog.AnimationType.TONGUE, Vector2.Zero));
+        this.idleFrogs.add(new IdleTurkishFrog(this.game.assetController, Vector2.Zero));
         this.idleFrogs.add(new IdleBritishFrog(this.game.assetController, Vector2.Zero));
         this.idleFrogs.add(new IdleMexicanFrog(this.game.assetController, Vector2.Zero));
-        this.idleFrogs.add(new IdleTurkishFrog(this.game.assetController, Vector2.Zero));
-        for (Actor hero : this.idleFrogs) {
+
+        this.index = 0;
+        for (int i = 0; i < this.idleFrogs.size; ++ i) {
+            Actor hero = this.idleFrogs.get(i);
             if (this.heroesSpecMap.get(hero.getClass()).requiredLevel > this.highestLevel) {
                 hero.setColor(80/255f, 80/255f, 80/255f, hero.getColor().a);
             }
+            if (this.game.data.getHeroIndex() ==
+                        this.heroesSpecMap.get(hero.getClass()).animationIndex) {
+                this.index = i;
+                this.idleHero = this.idleFrogs.get(i);
+            }
         }
-        this.index = this.game.data.getHeroIndex();
-        this.idleHero = idleFrogs.get(index);
     }
 
     private void setStage(Label chooseHeroTitle, ToggleButton backButton,
