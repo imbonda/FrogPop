@@ -160,8 +160,8 @@ public class ChooseHeroScreen extends FadingScreen {
         this.stage.addActor(chooseHeroTitle);
         this.stage.addActor(backButton);
         this.heroesTable = new Table();
-        this.heroesTable.setSize(600, 200);
-        this.heroesTable.setPosition(100, 170);
+        this.heroesTable.setSize(600, 270);
+        this.heroesTable.setPosition(100, 135);
         this.heroesTable.background(new TextureRegionDrawable(new TextureRegion(
                 (Texture)this.game.assetController.get(Assets.CHOOSE_HERO_BACKGROUND))));
         this.stage.addActor(this.heroesTable);
