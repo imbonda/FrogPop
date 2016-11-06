@@ -2,18 +2,18 @@
 <heroesSpec>
 
     <hero class="com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleRegularFrog"
-            animationIndex="0" requiredLevel="0" name="Hero" description="Your first hero" />
+            animationIndex="0" name="Hero" description="Your first hero." />
 
     <hero class="com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleBritishFrog"
-            animationIndex="1" requiredLevel="1" name="Gentlefrog"
-            description="Reach to level x to achieve it." />
+            animationIndex="1" requiredLevel="17" name="Gentlefrog"
+            description="Reach level 17." />
 
     <hero class="com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleMexicanFrog"
-            animationIndex="2" requiredLevel="1" name="El Mexicano"
-            description="Reach to level x to achieve it." />
+            animationIndex="2" requiredLevel="25" name="El Pacho"
+            description="Reach level 25." />
 
     <hero class="com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleTurkishFrog"
-            animationIndex="3" requiredLevel="1" name="Kurbaga"
-            description="Reach to level x to achieve it." />
+            animationIndex="3" requiredLevel="10" name="Kurbaga"
+            description="Reach level 10." />
 
 </heroesSpec>

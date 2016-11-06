@@ -14,6 +14,7 @@ public class Data {
     private static final String PREFERENCES_NAME = "PoppingFrog-preferences";
     // Keys.
     private static final String HIGH_SCORE_KEY = "hs";
+    private static final String HIGH_LEVEL_KEY = "hl";
     private static final String MUSIC_VOLUME_KEY = "mv";
     private static final String SOUND_VOLUME_KEY = "sv";
     private static final String CHOOSE_HERO_KEY = "ch";
@@ -40,6 +41,25 @@ public class Data {
         int highScore = getHighScore();
         if (newScore > highScore) {
             this.dataManager.saveInt(HIGH_SCORE_KEY, newScore);
+        }
+    }
+
+    /**
+     * @return  The highest level achieved so far in the game.
+     */
+    public int getHighLevel() {
+        return this.dataManager.getInt(HIGH_LEVEL_KEY, 0);
+    }
+
+    /**
+     * Updated the highest level if necessary.
+     *
+     * @param newLevel  The newly achieved level.
+     */
+    public void updateHighLevel(int newLevel) {
+        int highLevel = getHighLevel();
+        if (newLevel > highLevel) {
+            this.dataManager.saveInt(HIGH_LEVEL_KEY, newLevel);
         }
     }
 

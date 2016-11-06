@@ -1,12 +1,14 @@
 package com.nitsanmichael.popping_frog_game.config;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.XmlReader;
 import com.nitsanmichael.popping_frog_game.config.metadata.HeroSpecMetaData;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 
 /**
@@ -14,7 +16,7 @@ import java.io.IOException;
  */
 public class HeroesSpecMetaDataLoader {
 
-    public static void load(XmlReader xmlReader, Array<HeroSpecMetaData> heroesSpec) {
+    public static void load(XmlReader xmlReader, HashMap<Class<? extends Actor>, HeroSpecMetaData> heroesSpec) {
         Array<XmlReader.Element> heroElement = null;
         try {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal(
@@ -28,7 +30,8 @@ public class HeroesSpecMetaDataLoader {
         try {
             if (null != heroElement) {
                 for (XmlReader.Element hero : heroElement) {
-                    heroesSpec.add(createHeroSpecMetaData(hero));
+                    HeroSpecMetaData heroSpecMetaData = createHeroSpecMetaData(hero);
+                    heroesSpec.put(heroSpecMetaData.heroClass, heroSpecMetaData);
                 }
             }
         }
@@ -58,13 +61,16 @@ public class HeroesSpecMetaDataLoader {
             String className = heroElement.getAttribute("class");
             String animationIndexString = heroElement.getAttribute("animationIndex");
             String requiredLevelString = heroElement.getAttribute("requiredLevel", null);
+            String heroName = heroElement.getAttribute("name");
+            String heroDescription = heroElement.getAttribute("description");
             Integer animationIndex = Integer.parseInt(animationIndexString);
             Integer requiredLevel = null;
             if (null != requiredLevelString) {
                 requiredLevel = Integer.parseInt(requiredLevelString);
             }
             return new HeroSpecMetaData(
-                    getHeroClassByName(className), animationIndex, requiredLevel);
+                    getHeroClassByName(className), animationIndex, requiredLevel,
+                        heroName, heroDescription);
         }
         catch (GdxRuntimeException e) {
             throw new IllegalStateException("A 'hero' element does not contain " +
@@ -76,7 +82,7 @@ public class HeroesSpecMetaDataLoader {
         }
     }
 
-    private static Class<?> getHeroClassByName(String className)
+    private static Class<? extends Actor> getHeroClassByName(String className)
             throws ClassNotFoundException {
         return ClassForName.getHeroClassByName(className);
     }

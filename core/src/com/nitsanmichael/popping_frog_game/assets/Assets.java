@@ -106,6 +106,7 @@ public final class Assets {
     public static final String MENU_BACKGROUND = "images/backgrounds/menu.jpg";
     public static final String PAUSE_BACKGROUND = "images/backgrounds/pause.png";
     public static final String SCROLL_BACKGROUND = "images/backgrounds/scroll.png";
+    public static final String CHOOSE_HERO_BACKGROUND = "images/backgrounds/choose_hero.png";
     // Themes.
     public static final String SUMMER_THEME = "images/themes/summer.png";
     public static final String AUTUMN_THEME = "images/themes/autumn.png";
@@ -188,6 +189,7 @@ public final class Assets {
             MENU_BACKGROUND,
             PAUSE_BACKGROUND,
             SCROLL_BACKGROUND,
+            CHOOSE_HERO_BACKGROUND,
         // Themes
             SUMMER_THEME,
             AUTUMN_THEME,

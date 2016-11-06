@@ -1,5 +1,6 @@
 package com.nitsanmichael.popping_frog_game.config;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleBritishFrog;
 import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleMexicanFrog;
 import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleRegularFrog;
@@ -75,7 +76,7 @@ public class ClassForName {
      * @return  The class object with the given class-name.
      * @throws ClassNotFoundException   In case no class was found for the given class-name.
      */
-    public static Class<?> getHeroClassByName(String classNme)
+    public static Class<? extends Actor> getHeroClassByName(String classNme)
             throws ClassNotFoundException {
         if (REGULAR_HERO.equals(classNme)) {
             return IdleRegularFrog.class;

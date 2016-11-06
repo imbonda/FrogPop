@@ -1,11 +1,14 @@
 package com.nitsanmichael.popping_frog_game.config;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.nitsanmichael.popping_frog_game.config.metadata.AddFrogMetaData;
 import com.nitsanmichael.popping_frog_game.config.metadata.HeroSpecMetaData;
 import com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData;
 import com.nitsanmichael.popping_frog_game.config.metadata.ThemeMetaData;
+
+import java.util.HashMap;
 
 /**
  * This class will hold all the configurations necessary for the game.
@@ -17,7 +20,7 @@ public class Config {
     public Array<LevelMetaData> levelsMetaData;
     public Array<AddFrogMetaData> addFrogsMetaData;
     public Array<ThemeMetaData> themesMetaData;
-    public Array<HeroSpecMetaData> heroesSpec;
+    public HashMap<Class<? extends Actor>, HeroSpecMetaData> heroesSpec;
     private XmlReader xmlReader;
 
     public Config() {
@@ -25,7 +28,7 @@ public class Config {
         this.levelsMetaData = new Array<LevelMetaData>();
         this.addFrogsMetaData = new Array<AddFrogMetaData>();
         this.themesMetaData = new Array<ThemeMetaData>();
-        this.heroesSpec = new Array<HeroSpecMetaData>();
+        this.heroesSpec = new HashMap<Class<? extends Actor>, HeroSpecMetaData>();
     }
 
     public void load() {

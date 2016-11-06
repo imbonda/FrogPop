@@ -7,17 +7,21 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
+import com.nitsanmichael.popping_frog_game.config.metadata.HeroSpecMetaData;
 import com.nitsanmichael.popping_frog_game.input.BackKeyInputProcessor;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
@@ -27,8 +31,11 @@ import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleMexicanFrog;
 import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleRegularFrog;
 import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleTurkishFrog;
 
+import java.util.HashMap;
+
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
+import javafx.scene.control.Tab;
 
 
 /**
@@ -42,22 +49,29 @@ public class ChooseHeroScreen extends FadingScreen {
     private static final float FADE_IN_TIME = 0.25f;
     private static final String CHOOSE_HERO_TITLE = "My Frogish Hero";
 
-    private Texture backgroundTexture;
     private PoppingFrog game;
+    private Texture backgroundTexture;
+    private Viewport backgroundViewport;
+    private HashMap<Class<? extends Actor>, HeroSpecMetaData> heroesSpecMap;
     private Array<Actor> idleFrogs;
     private Actor idleHero;
     private int index;
+    private int highestLevel;
+    private BitmapFont font;
     private Stage stage;
-    private Viewport backgroundViewport;
+    private Table heroesTable;
+
 
 
     public ChooseHeroScreen(final PoppingFrog game) {
         super(game.batch, game.tweenController);
         this.game = game;
+        this.heroesSpecMap = this.game.config.heroesSpec;
         this.backgroundViewport = new StretchViewport(
-                    PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
+                PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
 
-        BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
+        this.font = this.game.assetController.get(Assets.GAME_FONT);
+        this.highestLevel = game.data.getHighLevel();
 
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
@@ -80,9 +94,9 @@ public class ChooseHeroScreen extends FadingScreen {
         Texture nextIcon = this.game.assetController.get(Assets.NEXT_ICON);
         Texture nextPressedIcon = this.game.assetController.get(Assets.NEXT_PRESSED_ICON);
         final ToggleButton nextHeroButton = new ToggleButton(
-                    new Image(nextIcon), new Image(nextPressedIcon));
+                new Image(nextIcon), new Image(nextPressedIcon));
         nextHeroButton.setSize(80, 80);
-        nextHeroButton.setPosition(540, 240);
+        nextHeroButton.setPosition(600, 240);
         nextHeroButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -90,17 +104,20 @@ public class ChooseHeroScreen extends FadingScreen {
                     return;
                 }
                 index = (index + 1) % idleFrogs.size;
-                game.data.setHeroIndex(index);
                 // Remove old hero from stage.
                 idleHero.remove();
                 idleHero = idleFrogs.get(index);
-                // Add new hero to stage.
-                stage.addActor(idleHero);
+
+                if(idleHero.getColor().b!=80/255f) {
+                    game.data.setHeroIndex(index);
+                }
+                setHeroRow();
+
             }
         });
 
         // Choose hero title.
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.LIME);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(this.font, Color.LIME);
         Label chooseHeroTitle = new Label(CHOOSE_HERO_TITLE, labelStyle);
         chooseHeroTitle.setFontScale(0.5f);
         chooseHeroTitle.setPosition(220, 440);
@@ -111,7 +128,7 @@ public class ChooseHeroScreen extends FadingScreen {
         initIdleFrogs();
         this.index = this.game.data.getHeroIndex();
         this.idleHero = idleFrogs.get(index);
-        this.stage.addActor(this.idleHero);
+        setHeroRow();
 
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
 
@@ -124,20 +141,54 @@ public class ChooseHeroScreen extends FadingScreen {
     private void initIdleFrogs() {
         this.idleFrogs = new Array<Actor>();
         this.idleFrogs.add(new IdleRegularFrog(this.game.assetController,
-                    IdleRegularFrog.AnimationType.TONGUE, new Vector2(400, 200)));
-        this.idleFrogs.add(new IdleBritishFrog(this.game.assetController, new Vector2(400, 200)));
-        this.idleFrogs.add(new IdleMexicanFrog(this.game.assetController, new Vector2(400, 200)));
-        this.idleFrogs.add(new IdleTurkishFrog(this.game.assetController, new Vector2(400, 200)));
+                IdleRegularFrog.AnimationType.TONGUE, Vector2.Zero));
+        this.idleFrogs.add(new IdleBritishFrog(this.game.assetController, Vector2.Zero));
+        this.idleFrogs.add(new IdleMexicanFrog(this.game.assetController, Vector2.Zero));
+        this.idleFrogs.add(new IdleTurkishFrog(this.game.assetController, Vector2.Zero));
+        for (Actor hero : this.idleFrogs) {
+            if (this.heroesSpecMap.get(hero.getClass()).requiredLevel > this.highestLevel) {
+                hero.setColor(80/255f, 80/255f, 80/255f, hero.getColor().a);
+            }
+        }
     }
 
     private void setStage(Label chooseHeroTitle, ToggleButton backButton,
-                            ToggleButton nextHeroButton) {
+                          ToggleButton nextHeroButton) {
         this.stage = new Stage(new ExtendViewport(
-                    PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
-                    this.game.batch);
+                PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
+                this.game.batch);
         this.stage.addActor(chooseHeroTitle);
         this.stage.addActor(backButton);
         this.stage.addActor(nextHeroButton);
+        this.heroesTable = new Table();
+        this.heroesTable.setSize(450, 200);
+        this.heroesTable.setPosition(120, 170);
+        this.heroesTable.background(new TextureRegionDrawable(new TextureRegion(
+                (Texture)this.game.assetController.get(Assets.CHOOSE_HERO_BACKGROUND))));
+        this.stage.addActor(this.heroesTable);
+    }
+
+    private void setHeroRow() {
+        // Clear children.
+        this.heroesTable.clear();
+        // Set new row.
+        this.heroesTable.top();
+        this.heroesTable.add(this.idleHero).padTop(40).padLeft(10);
+
+        Table descriptionTable = new Table();
+        // Init nested description table.
+        Label.LabelStyle style = new Label.LabelStyle(this.font, Color.WHITE);
+        HeroSpecMetaData meta = this.heroesSpecMap.get(this.idleHero.getClass());
+        Label heroNameLabel = new Label(meta.name, style);
+        heroNameLabel.setFontScale(0.3f);
+        descriptionTable.add(heroNameLabel);
+        // New row.
+        descriptionTable.row();
+        Label heroDescriptionLabel = new Label(meta.description, style);
+        heroDescriptionLabel.setFontScale(0.2f);
+        descriptionTable.add(heroDescriptionLabel).padTop(20).padLeft(10);
+
+        this.heroesTable.add(descriptionTable).padLeft(10);
     }
 
     private void setInputProcessor() {
@@ -193,9 +244,9 @@ public class ChooseHeroScreen extends FadingScreen {
         this.backgroundViewport.update(width, height, true);
         this.stage.getCamera().position.set(0,0,0);
         this.stage.getCamera().translate(
-                    PoppingFrog.VIRTUAL_WIDTH / 2,
-                    PoppingFrog.VIRTUAL_HEIGHT / 2,
-                    0);
+                PoppingFrog.VIRTUAL_WIDTH / 2,
+                PoppingFrog.VIRTUAL_HEIGHT / 2,
+                0);
         this.stage.getViewport().update(width, height, false);
     }
 
