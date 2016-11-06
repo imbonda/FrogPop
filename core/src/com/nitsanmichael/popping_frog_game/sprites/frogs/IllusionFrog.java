@@ -20,7 +20,7 @@ import com.nitsanmichael.popping_frog_game.sprites.Hole;
  */
 public class IllusionFrog extends Frog {
 
-    private static final int FROG_SCORE_PROFIT_VALUE = 3;
+    private static final int FROG_SCORE_PROFIT_VALUE = 2;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
     private Animation animation;

@@ -33,7 +33,7 @@ public class Manual extends Group {
     private static final String ANGEL_DESCRIPTION =
             "Tap it to get an extra life.\nYou won't lose any if you miss it.";
     private static final String GENIE_DESCRIPTION =
-            "Oh no ! it makes all the holes move.\nTap it to increase the score + 3,\n" +
+            "Oh no ! it makes all the holes move.\nTap it to increase the score + 2,\n" +
                     "otherwise you will lose a life.";
     private static final String POLICE_DESCRIPTION =
             "Careful it's the police.\nIt slows all the frogs down.\n" +

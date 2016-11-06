@@ -14,7 +14,7 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class PlayState implements State {
 
-    private static final int MIN_SCORE_FOR_REWARDED_REPLAY = 100;
+    private static final int MIN_SCORE_FOR_REWARDED_REPLAY = 55;
     private static final int GAME_OVER_ANIMATION_DURATION = 1;
 
     private PlayScreen playScreen;
