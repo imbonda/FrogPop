@@ -52,8 +52,6 @@ public class PoppingFrog extends Game {
 		this.tweenController = new TweenController();
 		FadingScreen screen = new MainMenuScreen(PoppingFrog.this);
 		screen.fadeIn(this, 0.5f);
-
-		this.playServices.signIn();
 	}
 
 	@Override
