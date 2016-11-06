@@ -96,7 +96,7 @@ public class ChooseHeroScreen extends FadingScreen {
         final ToggleButton nextHeroButton = new ToggleButton(
                 new Image(nextIcon), new Image(nextPressedIcon));
         nextHeroButton.setSize(80, 80);
-        nextHeroButton.setPosition(600, 240);
+        nextHeroButton.setPosition(550, 240);
         nextHeroButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -108,7 +108,8 @@ public class ChooseHeroScreen extends FadingScreen {
                 idleHero.remove();
                 idleHero = idleFrogs.get(index);
 
-                if(idleHero.getColor().b!=80/255f) {
+                HeroSpecMetaData meta = heroesSpecMap.get(idleHero.getClass());
+                if(highestLevel >= meta.requiredLevel) {
                     game.data.setHeroIndex(index);
                 }
                 setHeroRow();
@@ -123,12 +124,9 @@ public class ChooseHeroScreen extends FadingScreen {
         chooseHeroTitle.setPosition(220, 440);
         chooseHeroTitle.setHeight(50);
 
-        setStage(chooseHeroTitle, backButton, nextHeroButton);
-
         initIdleFrogs();
-        this.index = this.game.data.getHeroIndex();
-        this.idleHero = idleFrogs.get(index);
-        setHeroRow();
+
+        setStage(chooseHeroTitle, backButton, nextHeroButton);
 
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
 
@@ -150,6 +148,8 @@ public class ChooseHeroScreen extends FadingScreen {
                 hero.setColor(80/255f, 80/255f, 80/255f, hero.getColor().a);
             }
         }
+        this.index = this.game.data.getHeroIndex();
+        this.idleHero = idleFrogs.get(index);
     }
 
     private void setStage(Label chooseHeroTitle, ToggleButton backButton,
@@ -159,31 +159,38 @@ public class ChooseHeroScreen extends FadingScreen {
                 this.game.batch);
         this.stage.addActor(chooseHeroTitle);
         this.stage.addActor(backButton);
-        this.stage.addActor(nextHeroButton);
         this.heroesTable = new Table();
-        this.heroesTable.setSize(450, 200);
-        this.heroesTable.setPosition(120, 170);
+        this.heroesTable.setSize(600, 200);
+        this.heroesTable.setPosition(100, 170);
         this.heroesTable.background(new TextureRegionDrawable(new TextureRegion(
                 (Texture)this.game.assetController.get(Assets.CHOOSE_HERO_BACKGROUND))));
         this.stage.addActor(this.heroesTable);
+        this.stage.addActor(nextHeroButton);
+        setHeroRow();
     }
 
     private void setHeroRow() {
+        HeroSpecMetaData meta = this.heroesSpecMap.get(this.idleHero.getClass());
+
         // Clear children.
         this.heroesTable.clear();
         // Set new row.
         this.heroesTable.top();
-        this.heroesTable.add(this.idleHero).padTop(40).padLeft(10);
-
+        this.heroesTable.add(this.idleHero).padTop(10).expandY();
         Table descriptionTable = new Table();
         // Init nested description table.
-        Label.LabelStyle style = new Label.LabelStyle(this.font, Color.WHITE);
-        HeroSpecMetaData meta = this.heroesSpecMap.get(this.idleHero.getClass());
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = this.font;
+        style.fontColor = Color.BROWN;
         Label heroNameLabel = new Label(meta.name, style);
         heroNameLabel.setFontScale(0.3f);
         descriptionTable.add(heroNameLabel);
         // New row.
         descriptionTable.row();
+        style = new Label.LabelStyle();
+        style.font = this.font;
+        style.fontColor = (meta.requiredLevel > this.highestLevel) ?
+                (Color.DARK_GRAY) : (new Color(0xe7d9cfff));
         Label heroDescriptionLabel = new Label(meta.description, style);
         heroDescriptionLabel.setFontScale(0.2f);
         descriptionTable.add(heroDescriptionLabel).padTop(20).padLeft(10);
