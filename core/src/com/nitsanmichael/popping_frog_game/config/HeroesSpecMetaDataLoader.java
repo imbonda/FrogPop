@@ -63,6 +63,7 @@ public class HeroesSpecMetaDataLoader {
             String requiredLevelString = heroElement.getAttribute("requiredLevel", null);
             String heroName = heroElement.getAttribute("name");
             String heroDescription = heroElement.getAttribute("description");
+            String heroLockDescription = heroElement.getAttribute("lock_description", null);
             Integer animationIndex = Integer.parseInt(animationIndexString);
             Integer requiredLevel = null;
             if (null != requiredLevelString) {
@@ -70,7 +71,7 @@ public class HeroesSpecMetaDataLoader {
             }
             return new HeroSpecMetaData(
                     getHeroClassByName(className), animationIndex, requiredLevel,
-                        heroName, heroDescription);
+                        heroName, heroDescription, heroLockDescription);
         }
         catch (GdxRuntimeException e) {
             throw new IllegalStateException("A 'hero' element does not contain " +

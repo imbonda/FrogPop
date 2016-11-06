@@ -191,7 +191,9 @@ public class ChooseHeroScreen extends FadingScreen {
         style.font = this.font;
         style.fontColor = (meta.requiredLevel > this.highestLevel) ?
                 (Color.DARK_GRAY) : (new Color(0xe7d9cfff));
-        Label heroDescriptionLabel = new Label(meta.description, style);
+        String extraInfo = (meta.requiredLevel > this.highestLevel) ?
+                (meta.lockDescription) : (meta.description);
+        Label heroDescriptionLabel = new Label(extraInfo, style);
         heroDescriptionLabel.setFontScale(0.2f);
         descriptionTable.add(heroDescriptionLabel).padTop(20).padLeft(10);
 

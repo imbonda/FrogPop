@@ -13,10 +13,11 @@ public class HeroSpecMetaData {
     public int requiredLevel;
     public String name;
     public String description;
+    public String lockDescription;
 
 
-    public HeroSpecMetaData(Class<? extends Actor> heroClass, int animationIndex,
-                                Integer requiredLevel, String name, String description) {
+    public HeroSpecMetaData(Class<? extends Actor> heroClass, int animationIndex, Integer requiredLevel,
+                                String name, String description, String lockDescription) {
         this.heroClass = heroClass;
         this.animationIndex = animationIndex;
         if (null == requiredLevel) {
@@ -27,6 +28,12 @@ public class HeroSpecMetaData {
         }
         this.name = name;
         this.description = description;
+        if (null == lockDescription) {
+            this.lockDescription = "";
+        }
+        else {
+            this.lockDescription = lockDescription;
+        }
     }
 
 }

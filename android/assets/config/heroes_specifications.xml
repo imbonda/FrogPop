@@ -6,14 +6,14 @@
 
     <hero class="com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleBritishFrog"
             animationIndex="1" requiredLevel="17" name="Gentlefrog"
-            description="Reach level 17." />
+            description="The british frog." lock_description="Reach level 17." />
 
     <hero class="com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleMexicanFrog"
             animationIndex="2" requiredLevel="25" name="Pacho"
-            description="Reach level 25." />
+            description="The mexican frog." lock_description="Reach level 25." />
 
     <hero class="com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleTurkishFrog"
             animationIndex="3" requiredLevel="10" name="Kurbaga"
-            description="Reach level 10." />
+            description="The mexican frog." lock_description="Reach level 10." />
 
 </heroesSpec>
