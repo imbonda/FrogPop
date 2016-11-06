@@ -125,20 +125,20 @@ public class GameOverScreen extends FadingScreen {
         Label highestLevelLabel = new Label(HIGHEST_LEVEL + this.game.data.getHighLevel(),
                 new Label.LabelStyle(font, Color.GOLD));
         highestLevelLabel.setFontScale(0.35f);
-        highestLevelLabel.setPosition(420, 420);
+        highestLevelLabel.setPosition(420, 410);
         highestLevelLabel.setHeight(50);
+        // Score label.
+        Label scoreLabel = new Label(SCORE + this.runtimeInfo.gameScore,
+                new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel.setFontScale(0.25f);
+        scoreLabel.setPosition(490, 350);
+        scoreLabel.setHeight(40);
         // Level label.
         Label levelLabel = new Label(LEVEL + this.runtimeInfo.gameLevel,
                     new Label.LabelStyle(font, Color.WHITE));
         levelLabel.setFontScale(0.25f);
         levelLabel.setPosition(490, 310);
-        levelLabel.setHeight(50);
-        // Score label.
-        Label scoreLabel = new Label(SCORE + this.runtimeInfo.gameScore,
-                    new Label.LabelStyle(font, Color.WHITE));
-        scoreLabel.setFontScale(0.25f);
-        scoreLabel.setPosition(490, 360);
-        scoreLabel.setHeight(50);
+        levelLabel.setHeight(40);
 
         setStage(levelLabel, scoreLabel, highestScoreLabel, highestLevelLabel,
                     restartButton, homeButton, rankButton);
