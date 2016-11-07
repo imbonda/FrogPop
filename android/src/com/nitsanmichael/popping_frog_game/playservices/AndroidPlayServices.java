@@ -1,28 +1,37 @@
-package com.nitsanmichael.popping_frog_game;
+package com.nitsanmichael.popping_frog_game.playservices;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import com.badlogic.gdx.Gdx;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesStatusCodes;
 import com.google.android.gms.games.leaderboard.LeaderboardVariant;
+import com.google.android.gms.games.leaderboard.Leaderboards;
 import com.google.example.games.basegameutils.GameHelper;
+import com.nitsanmichael.popping_frog_game.R;
 import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
+
+import java.util.HashMap;
 
 /**
  * Created by MichaelBond on 10/9/2016.
  */
 public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperListener {
 
-    private final static int REQUEST_CODE = 1;
-
     private Activity mainActivity;
     private GameHelper gameHelper;
+    private PlayServicesData data;
+    private HashMap<LeaderBoard, String> leaderBoardToId;
 
 
-    AndroidPlayServices (Activity mainActivity) {
+    public AndroidPlayServices (Activity mainActivity) {
         this.mainActivity = mainActivity;
+        this.data = new PlayServicesData();
         // Create the Google Api Client with access to the Play Games services.
         this.gameHelper = new GameHelper(this.mainActivity, GameHelper.CLIENT_GAMES);
         this.gameHelper.enableDebugLog(false);
@@ -30,6 +39,12 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
         this.gameHelper.setup(this);
         // Disable automated sign in on startup.
         this.gameHelper.setMaxAutoSignInAttempts(0);
+
+        this.leaderBoardToId = new HashMap<>();
+        this.leaderBoardToId.put(LeaderBoard.HIGHEST_SCORE,
+                    this.mainActivity.getString(R.string.leaderboard_highest_score));
+        this.leaderBoardToId.put(LeaderBoard.HIGHEST_LEVEL,
+                    this.mainActivity.getString(R.string.leaderboard_highest_level));
     }
 
     @Override
@@ -39,18 +54,44 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
 
     @Override
     public void onSignInSucceeded() {
-
+        // Update from the highest-score leader-board.
+        updateScoreFromLeaderBoard(LeaderBoard.HIGHEST_SCORE);
+        // Update from the highest-level leader-board.
+        updateScoreFromLeaderBoard(LeaderBoard.HIGHEST_LEVEL);
     }
 
-    protected void onStart() {
+    private void updateScoreFromLeaderBoard(final LeaderBoard leaderBoard) {
+        // Fetching results from leader-board and matching scores.
+        PendingResult<Leaderboards.LoadPlayerScoreResult> result;
+        result = Games.Leaderboards.loadCurrentPlayerLeaderboardScore(
+                this.gameHelper.getApiClient(),
+                this.leaderBoardToId.get(leaderBoard),
+                LeaderboardVariant.TIME_SPAN_ALL_TIME,
+                LeaderboardVariant.COLLECTION_PUBLIC);
+
+        result.setResultCallback(new ResultCallback<Leaderboards.LoadPlayerScoreResult>() {
+            @Override
+            public void onResult(@NonNull Leaderboards.LoadPlayerScoreResult result) {
+                // Check if valid score.
+                if (GamesStatusCodes.STATUS_OK == result.getStatus().getStatusCode()
+                        && result.getScore() != null) {
+
+                    // Assign score fetched as best score.
+                    data.updateScore(leaderBoard, (int) result.getScore().getRawScore());
+                }
+            }
+        });
+    }
+
+    public void onStart() {
         this.gameHelper.onStart(this.mainActivity);
     }
 
-    protected void onStop() {
+    public void onStop() {
         this.gameHelper.onStop();
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         this.gameHelper.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -102,11 +143,18 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
     }
 
     @Override
-    public void submitScore(int highScore) {
+    public void submitScore(LeaderBoard leaderBoard, int highScore) {
         if (isSignedIn()) {
-            Games.Leaderboards.submitScore(gameHelper.getApiClient(),
-                    this.mainActivity.getString(R.string.leaderboard_highest), highScore);
+            Games.Leaderboards.submitScore(
+                        this.gameHelper.getApiClient(),
+                        this.leaderBoardToId.get(leaderBoard),
+                        highScore);
         }
+    }
+
+    @Override
+    public int loadScore(LeaderBoard leaderBoard) {
+        return this.data.getHighestScore(leaderBoard);
     }
 
     @Override
@@ -123,9 +171,6 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
     @Override
     public void showLeaderBoards() {
         if (isSignedIn()) {
-//            this.mainActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
-//                    this.gameHelper.getApiClient(),
-//                    this.mainActivity.getString(R.string.leaderboard_highest)), REQUEST_CODE);
             this.mainActivity.startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(
                     this.gameHelper.getApiClient()), LeaderboardVariant.COLLECTION_PUBLIC);
 

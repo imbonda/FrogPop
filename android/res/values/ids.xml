@@ -3,6 +3,7 @@
 
     <string name="app_id">804982883752</string>
     <string name="number_guesses_leaderboard">CgkIqIvg5bYXEAIQCA</string>
-    <string name="leaderboard_highest">CgkIqIvg5bYXEAIQCA</string>
+    <string name="leaderboard_highest_score">CgkIqIvg5bYXEAIQCA</string>
+    <string name="leaderboard_highest_level">CgkIqIvg5bYXEAIQCg</string>
 
 </resources>

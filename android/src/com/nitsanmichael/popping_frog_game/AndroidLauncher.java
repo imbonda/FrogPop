@@ -10,6 +10,7 @@ import android.view.View;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.nitsanmichael.popping_frog_game.ads.AndroidAdsController;
+import com.nitsanmichael.popping_frog_game.playservices.AndroidPlayServices;
 
 
 public class AndroidLauncher extends AndroidApplication {
@@ -22,6 +23,7 @@ public class AndroidLauncher extends AndroidApplication {
 	private AndroidPlayServices playServices;
 	private AndroidAdsController adsController;
 
+	
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
