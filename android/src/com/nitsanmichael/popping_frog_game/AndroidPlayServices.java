@@ -22,11 +22,13 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
 
     AndroidPlayServices (Activity mainActivity) {
         this.mainActivity = mainActivity;
-        // Create the Google Api Client with access to the Play Games services
+        // Create the Google Api Client with access to the Play Games services.
         this.gameHelper = new GameHelper(this.mainActivity, GameHelper.CLIENT_GAMES);
         this.gameHelper.enableDebugLog(false);
 
         this.gameHelper.setup(this);
+        // Auto sign in only on the first application startup.
+        this.gameHelper.setMaxAutoSignInAttempts(1);
     }
 
     @Override
