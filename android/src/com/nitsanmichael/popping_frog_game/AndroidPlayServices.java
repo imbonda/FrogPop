@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.badlogic.gdx.Gdx;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.leaderboard.LeaderboardVariant;
 import com.google.example.games.basegameutils.GameHelper;
 import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
 
@@ -120,13 +121,13 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
     }
 
     @Override
-    public void showLeaderboards() {
+    public void showLeaderBoards() {
         if (isSignedIn()) {
 //            this.mainActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
 //                    this.gameHelper.getApiClient(),
 //                    this.mainActivity.getString(R.string.leaderboard_highest)), REQUEST_CODE);
             this.mainActivity.startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(
-                    this.gameHelper.getApiClient()), REQUEST_CODE);
+                    this.gameHelper.getApiClient()), LeaderboardVariant.COLLECTION_PUBLIC);
 
         }
         else {
