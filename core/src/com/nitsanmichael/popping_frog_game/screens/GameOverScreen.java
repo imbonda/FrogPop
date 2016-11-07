@@ -111,7 +111,7 @@ public class GameOverScreen extends FadingScreen {
                 if (!isListening) {
                     return;
                 }
-                GameOverScreen.this.game.playServices.showScore();
+                GameOverScreen.this.game.playServices.showLeaderboards();
             }
         });
 

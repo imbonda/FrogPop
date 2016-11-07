@@ -27,8 +27,8 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
         this.gameHelper.enableDebugLog(false);
 
         this.gameHelper.setup(this);
-        // Auto sign in only on the first application startup.
-        this.gameHelper.setMaxAutoSignInAttempts(1);
+        // Disable automated sign in on startup.
+        this.gameHelper.setMaxAutoSignInAttempts(0);
     }
 
     @Override
@@ -120,11 +120,14 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
     }
 
     @Override
-    public void showScore() {
+    public void showLeaderboards() {
         if (isSignedIn()) {
-            this.mainActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
-                    this.gameHelper.getApiClient(),
-                    this.mainActivity.getString(R.string.leaderboard_highest)), REQUEST_CODE);
+//            this.mainActivity.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
+//                    this.gameHelper.getApiClient(),
+//                    this.mainActivity.getString(R.string.leaderboard_highest)), REQUEST_CODE);
+            this.mainActivity.startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(
+                    this.gameHelper.getApiClient()), REQUEST_CODE);
+
         }
         else {
             signIn();

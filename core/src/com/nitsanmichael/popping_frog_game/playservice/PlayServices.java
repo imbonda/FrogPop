@@ -18,7 +18,7 @@ public interface PlayServices {
 
     void showAchievement();
 
-    void showScore();
+    void showLeaderboards();
 
     boolean isSignedIn();
 
