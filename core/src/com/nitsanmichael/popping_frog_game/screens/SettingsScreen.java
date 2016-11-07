@@ -43,6 +43,7 @@ public class SettingsScreen extends FadingScreen {
     private static final String MUSIC = "Music :";
     private static final String SOUND = "Sound :";
     private static final String PERCENTAGE = "%";
+    private static final String PLAY_SERVICES = "Play Services :";
     // Slider constants.
     private static final int SLIDER_RANGE = 10;
     private static final int SLIDER_STEP = 1;
@@ -53,8 +54,14 @@ public class SettingsScreen extends FadingScreen {
     private Slider musicSlider;
     private Slider soundSlider;
     private Texture backgroundTexture;
-    private Stage stage;
     private Viewport backgroundViewport;
+    private Stage stage;
+    // Play services login button.
+    private ToggleButton loginButton;
+    // Play services logout button.
+    private ToggleButton logoutButton;
+    // One of the above two buttons.
+    private ToggleButton activePlayServicesButton;
 
 
     public SettingsScreen(final PoppingFrog game) {
@@ -94,12 +101,12 @@ public class SettingsScreen extends FadingScreen {
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         // Music label.
         Label musicLabel = new Label(MUSIC, labelStyle);
-        musicLabel.setPosition(200, 300);
+        musicLabel.setPosition(200, 350);
         musicLabel.setWidth(250);
         // Music slider.
         float musicVolume = game.data.getMusicVolume();
         this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
-        this.musicSlider.setPosition(330, 287);
+        this.musicSlider.setPosition(330, 337);
         this.musicSlider.setAnimateDuration(0);
         this.musicSlider.setValue(musicVolume * SLIDER_RANGE);
         this.musicSlider.addListener(new ChangeListener() {
@@ -129,18 +136,18 @@ public class SettingsScreen extends FadingScreen {
         // Music-slider label.
         this.musicSliderLabel = new Label(Integer.toString((int)(musicVolume * 100)) + PERCENTAGE,
                     labelStyle);
-        this.musicSliderLabel.setPosition(520, 300);
+        this.musicSliderLabel.setPosition(520, 350);
         this.musicSliderLabel.setWidth(100);
         this.musicSliderLabel.setColor(1, 1, 1, 1);
 
         // Sound label.
         Label soundLabel = new Label(SOUND, labelStyle);
-        soundLabel.setPosition(200, 200);
+        soundLabel.setPosition(200, 250);
         soundLabel.setWidth(250);
         // Sound slider.
         float soundVolume = game.data.getSoundVolume();
         this.soundSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
-        this.soundSlider.setPosition(330, 187);
+        this.soundSlider.setPosition(330, 237);
         this.soundSlider.setAnimateDuration(0);
         this.soundSlider.setValue(soundVolume * SLIDER_RANGE);
         this.soundSlider.addListener(new ChangeListener() {
@@ -164,11 +171,52 @@ public class SettingsScreen extends FadingScreen {
         // Sound-slider label.
         this.soundSliderLabel = new Label(Integer.toString((int)(soundVolume * 100)) + PERCENTAGE,
                     labelStyle);
-        this.soundSliderLabel.setPosition(520, 200);
+        this.soundSliderLabel.setPosition(520, 250);
         this.soundSliderLabel.setWidth(100);
         this.soundSliderLabel.setColor(1, 1, 1, 1);
 
-        setStage(settingsLabel, musicLabel, soundLabel, backButton);
+        // Play-services label.
+        Label playServices = new Label(PLAY_SERVICES, labelStyle);
+        playServices.setPosition(160, 160);
+        playServices.setWidth(250);
+
+        // Play-services login.
+        Texture loginIcon = this.game.assetController.get(Assets.PLAYSERVICES_LOGIN_ICON);
+        Texture loginPressedIcon = this.game.assetController.get(Assets.PLAYSERVICES_LOGIN_PRESSED_ICON);
+        this.loginButton = new ToggleButton(
+                    new Image(loginIcon), new Image(loginPressedIcon));
+        this.loginButton.setSize(200, 80);
+        this.loginButton.setPosition(330, 130);
+        this.loginButton.addListener(new MessageEventListener() {
+            @Override
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != loginButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
+                game.playServices.signIn();
+            }
+        });
+        
+        // Play-services logout.
+        Texture logoutIcon = this.game.assetController.get(Assets.PLAYSERVICES_LOGOUT_ICON);
+        Texture logoutPressedIcon = this.game.assetController.get(Assets.PLAYSERVICES_LOGOUT_PRESSED_ICON);
+        this.logoutButton = new ToggleButton(
+                new Image(logoutIcon), new Image(logoutPressedIcon));
+        this.logoutButton.setSize(200, 80);
+        this.logoutButton.setPosition(330, 130);
+        this.logoutButton.addListener(new MessageEventListener() {
+            @Override
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != logoutButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
+                game.playServices.signOut();
+            }
+        });
+
+        setPlayServicesButton();
+
+        setStage(settingsLabel, musicLabel, soundLabel, playServices, backButton);
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
 
         Gdx.input.setCatchBackKey(true);
@@ -185,19 +233,35 @@ public class SettingsScreen extends FadingScreen {
         slider.getStyle().knobDown.setMinWidth(40);
     }
 
+    private void setPlayServicesButton() {
+        if (this.game.playServices.isSignedIn()) {
+            this.activePlayServicesButton = this.logoutButton;
+        }
+        else {
+            this.activePlayServicesButton = this.loginButton;
+        }
+    }
+
     private void setStage(Label settingsLabel, Label musicLabel, Label soundLabel,
-                            ToggleButton backButton) {
+                            Label playServicesLabel, ToggleButton backButton) {
         this.stage = new Stage(
-                new ExtendViewport(PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
-                this.game.batch);
+                    new ExtendViewport(
+                                PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT,
+                                new OrthographicCamera()),
+                    this.game.batch);
+        // Add labels to stage.
         this.stage.addActor(settingsLabel);
         this.stage.addActor(musicLabel);
-        this.stage.addActor(musicSlider);
-        this.stage.addActor(musicSliderLabel);
         this.stage.addActor(soundLabel);
-        this.stage.addActor(soundSlider);
-        this.stage.addActor(soundSliderLabel);
+        this.stage.addActor(playServicesLabel);
+        this.stage.addActor(this.musicSliderLabel);
+        this.stage.addActor(this.soundSliderLabel);
+        // Add sliders to stage.
+        this.stage.addActor(this.musicSlider);
+        this.stage.addActor(this.soundSlider);
+        // Add buttons to stage.
         this.stage.addActor(backButton);
+        this.stage.addActor(this.activePlayServicesButton);
     }
 
     private void setInputProcessor() {
@@ -244,6 +308,7 @@ public class SettingsScreen extends FadingScreen {
 
     @Override
     public void render(float delta) {
+        updatePlayServicesButton();
         Gdx.gl.glClearColor(0/255f, 163/255f, 232/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.game.batch.begin();
@@ -252,6 +317,21 @@ public class SettingsScreen extends FadingScreen {
         this.game.batch.setProjectionMatrix(this.stage.getCamera().combined);
         this.game.batch.end();
         this.stage.draw();
+    }
+
+    private void updatePlayServicesButton() {
+        if (this.game.playServices.isSignedIn() &&
+                    this.activePlayServicesButton != this.logoutButton) {
+            this.activePlayServicesButton.remove();
+            this.activePlayServicesButton = this.logoutButton;
+            this.stage.addActor(this.activePlayServicesButton);
+        }
+        else if (!this.game.playServices.isSignedIn() &&
+                    this.activePlayServicesButton != this.loginButton) {
+            this.activePlayServicesButton.remove();
+            this.activePlayServicesButton = this.loginButton;
+            this.stage.addActor(this.activePlayServicesButton);
+        }
     }
 
     @Override

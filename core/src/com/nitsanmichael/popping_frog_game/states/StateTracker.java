@@ -52,7 +52,7 @@ public class StateTracker implements Disposable {
             default:
                 break;
         }
-        this.playScreen.resize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        this.playScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.currentStateName = state;
     }
 

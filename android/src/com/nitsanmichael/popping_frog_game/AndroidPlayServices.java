@@ -12,7 +12,7 @@ import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
 /**
  * Created by MichaelBond on 10/9/2016.
  */
-public class AndroidPlayServices implements PlayServices {
+public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperListener {
 
     private final static int REQUEST_CODE = 1;
 
@@ -26,14 +26,17 @@ public class AndroidPlayServices implements PlayServices {
         this.gameHelper = new GameHelper(this.mainActivity, GameHelper.CLIENT_GAMES);
         this.gameHelper.enableDebugLog(false);
 
-        GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
-            @Override
-            public void onSignInFailed(){ }
+        this.gameHelper.setup(this);
+    }
 
-            @Override
-            public void onSignInSucceeded(){ }
-        };
-        this.gameHelper.setup(gameHelperListener);
+    @Override
+    public void onSignInFailed() {
+
+    }
+
+    @Override
+    public void onSignInSucceeded() {
+
     }
 
     protected void onStart() {
@@ -50,6 +53,10 @@ public class AndroidPlayServices implements PlayServices {
 
     @Override
     public void signIn() {
+        if (isSignedIn()) {
+            // Already signed in.
+            return;
+        }
         try {
             this.mainActivity.runOnUiThread(new Runnable() {
                 @Override
