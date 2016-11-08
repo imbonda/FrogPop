@@ -92,6 +92,8 @@ public final class Assets {
     public static final String HERO_PRESSED_ICON = "images/icons/hero_pressed.png";
     public static final String NEXT_ICON = "images/icons/next.png";
     public static final String NEXT_PRESSED_ICON = "images/icons/next_pressed.png";
+    public static final String PREVIOUS_ICON = "images/icons/previous.png";
+    public static final String PREVIOUS_PRESSED_ICON = "images/icons/previous_pressed.png";
     public static final String REWARDED_REPLAY_ICON = "images/icons/rewarded_replay.png";
     public static final String REWARDED_REPLAY_PRESSED_ICON = "images/icons/rewarded_replay_pressed.png";
     public static final String X_ICON = "images/icons/x.png";
@@ -183,6 +185,7 @@ public final class Assets {
             SETTINGS_ICON, SETTINGS_PRESSED_ICON,
             HERO_ICON, HERO_PRESSED_ICON,
             NEXT_ICON, NEXT_PRESSED_ICON,
+            PREVIOUS_ICON, PREVIOUS_PRESSED_ICON,
             REWARDED_REPLAY_ICON, REWARDED_REPLAY_PRESSED_ICON,
             X_ICON, X_PRESSED_ICON,
             FILM_REEL_COUNTDOWN_ICON,

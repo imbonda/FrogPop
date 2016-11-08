@@ -59,8 +59,8 @@ public class ChooseHeroScreen extends FadingScreen {
     private int index;
     private int highestLevel;
     private BitmapFont font;
-    private Stage stage;
     private Table heroesTable;
+    private Stage stage;
 
 
 
@@ -95,9 +95,9 @@ public class ChooseHeroScreen extends FadingScreen {
         Texture nextIcon = this.game.assetController.get(Assets.NEXT_ICON);
         Texture nextPressedIcon = this.game.assetController.get(Assets.NEXT_PRESSED_ICON);
         final ToggleButton nextHeroButton = new ToggleButton(
-                new Image(nextIcon), new Image(nextPressedIcon));
+                    new Image(nextIcon), new Image(nextPressedIcon));
         nextHeroButton.setSize(80, 80);
-        nextHeroButton.setPosition(550, 240);
+        nextHeroButton.setPosition(565, 220);
         nextHeroButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -114,7 +114,32 @@ public class ChooseHeroScreen extends FadingScreen {
                     game.data.setHeroIndex(meta.animationIndex);
                 }
                 setHeroRow();
+            }
+        });
 
+        // Previous hero button.
+        Texture previousIcon = this.game.assetController.get(Assets.PREVIOUS_ICON);
+        Texture previousPressedIcon = this.game.assetController.get(Assets.PREVIOUS_PRESSED_ICON);
+        final ToggleButton previousHeroButton = new ToggleButton(
+                    new Image(previousIcon), new Image(previousPressedIcon));
+        previousHeroButton.setSize(80, 80);
+        previousHeroButton.setPosition(156, 220);
+        previousHeroButton.addListener(new MessageEventListener() {
+            @Override
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != previousHeroButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
+                index = (index - 1 + idleFrogs.size) % idleFrogs.size;
+                // Remove old hero from stage.
+                idleHero.remove();
+                idleHero = idleFrogs.get(index);
+
+                HeroSpecMetaData meta = heroesSpecMap.get(idleHero.getClass());
+                if(highestLevel >= meta.requiredLevel) {
+                    game.data.setHeroIndex(meta.animationIndex);
+                }
+                setHeroRow();
             }
         });
 
@@ -127,7 +152,7 @@ public class ChooseHeroScreen extends FadingScreen {
 
         initIdleFrogs();
 
-        setStage(chooseHeroTitle, backButton, nextHeroButton);
+        setStage(chooseHeroTitle, backButton, nextHeroButton, previousHeroButton);
 
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
 
@@ -148,9 +173,6 @@ public class ChooseHeroScreen extends FadingScreen {
         this.index = 0;
         for (int i = 0; i < this.idleFrogs.size; ++ i) {
             Actor hero = this.idleFrogs.get(i);
-            if (this.heroesSpecMap.get(hero.getClass()).requiredLevel > this.highestLevel) {
-                hero.setColor(80/255f, 80/255f, 80/255f, hero.getColor().a);
-            }
             if (this.game.data.getHeroIndex() ==
                         this.heroesSpecMap.get(hero.getClass()).animationIndex) {
                 this.index = i;
@@ -160,7 +182,7 @@ public class ChooseHeroScreen extends FadingScreen {
     }
 
     private void setStage(Label chooseHeroTitle, ToggleButton backButton,
-                          ToggleButton nextHeroButton) {
+                            ToggleButton nextHeroButton, ToggleButton previousHeroButton) {
         this.stage = new Stage(new ExtendViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
@@ -173,6 +195,7 @@ public class ChooseHeroScreen extends FadingScreen {
                 (Texture)this.game.assetController.get(Assets.CHOOSE_HERO_BACKGROUND))));
         this.stage.addActor(this.heroesTable);
         this.stage.addActor(nextHeroButton);
+        this.stage.addActor(previousHeroButton);
         setHeroRow();
     }
 
