@@ -65,7 +65,7 @@ public class LocalData {
      * @param leaderBoard The leader-board we are working on.
      * @param newScore  The newly achieved score.
      */
-    public void updateHighScore(PlayServices.LeaderBoard leaderBoard, int newScore) {
+    synchronized public void updateHighScore(PlayServices.LeaderBoard leaderBoard, int newScore) {
         String key = leaderBoardStringToKey.get(leaderBoard);
         int highScore = getHighScore(leaderBoard);
         if (newScore > highScore) {
