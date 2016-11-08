@@ -42,7 +42,7 @@ public class PoppingFrog extends Game {
 	@Override
 	public void create () {
 		this.batch = new SpriteBatch();
-		this.data = new Data();
+		this.data = new Data(this.playServices);
 		this.assetController = new AssetController(this.data);
 		this.assetController.loadAll();
 		// Assets are now loaded.

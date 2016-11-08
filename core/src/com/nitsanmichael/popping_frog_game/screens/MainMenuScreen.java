@@ -230,7 +230,7 @@ public class MainMenuScreen extends FadingScreen {
         this.stage.draw();
     }
 
-    public void update(float deltaTime) {
+    private void update(float deltaTime) {
         this.stage.act(deltaTime);
     }
 

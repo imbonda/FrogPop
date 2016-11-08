@@ -1,66 +1,53 @@
 package com.nitsanmichael.popping_frog_game.data;
 
-import com.nitsanmichael.popping_frog_game.media.Media;
-import com.nitsanmichael.popping_frog_game.screens.ChooseHeroScreen;
+import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
+
 
 /**
+ * This class exposes some basic API for manipulating the game local and non-local data -
+ * (such as highest scores via play-services).
  *
- * This class exposes some basic API for manipulating the game saved data and preferences.
- *
- * Created by MichaelBond on 9/26/2016.
+ * Created by MichaelBond on 11/8/2016.
  */
 public class Data {
 
-    private static final String PREFERENCES_NAME = "PoppingFrog-preferences";
-    // Keys.
-    private static final String HIGH_SCORE_KEY = "hs";
-    private static final String HIGH_LEVEL_KEY = "hl";
-    private static final String MUSIC_VOLUME_KEY = "mv";
-    private static final String SOUND_VOLUME_KEY = "sv";
-    private static final String CHOOSE_HERO_KEY = "ch";
-    // Private members.
-    private DataManager dataManager;
+    private LocalData localData;
+    private PlayServices playServices;
 
-    public Data() {
-        this.dataManager = new DataManager(PREFERENCES_NAME);
+
+    public Data(PlayServices playServices) {
+        this.playServices = playServices;
+        this.localData = new LocalData();
     }
 
     /**
-     * @return  The highest score achieved so far in the game.
+     * @return  The highest score on the given leader-board, achieved so far in the game.
      */
-    public int getHighScore() {
-        return this.dataManager.getInt(HIGH_SCORE_KEY, 0);
+    public int getHighScore(PlayServices.LeaderBoard leaderBoard) {
+        return this.localData.getHighScore(leaderBoard);
     }
 
     /**
-     * Updated the highest score if necessary.
+     * Updated the highest score on the given leader-board, if necessary.
      *
+     * @param leaderBoard The leader-board we are working on.
      * @param newScore  The newly achieved score.
      */
-    public void updateHighScore(int newScore) {
-        int highScore = getHighScore();
-        if (newScore > highScore) {
-            this.dataManager.saveInt(HIGH_SCORE_KEY, newScore);
+    public void submitScore(PlayServices.LeaderBoard leaderBoard, int newScore) {
+        this.localData.updateHighScore(leaderBoard, newScore);
+        if (this.playServices.isSignedIn()) {
+            this.playServices.submitScore(leaderBoard, newScore);
         }
     }
 
     /**
-     * @return  The highest level achieved so far in the game.
-     */
-    public int getHighLevel() {
-        return this.dataManager.getInt(HIGH_LEVEL_KEY, 0);
-    }
-
-    /**
-     * Updated the highest level if necessary.
+     * Synchronizes the local score with the score on the play-service's leader-board.
      *
-     * @param newLevel  The newly achieved level.
+     * @param leaderBoard The leader-board we are working on.
+     * @param externalScore  The score on the external play service leader-board.
      */
-    public void updateHighLevel(int newLevel) {
-        int highLevel = getHighLevel();
-        if (newLevel > highLevel) {
-            this.dataManager.saveInt(HIGH_LEVEL_KEY, newLevel);
-        }
+    public void syncLocalScore(PlayServices.LeaderBoard leaderBoard, int externalScore) {
+        this.localData.updateHighScore(leaderBoard, externalScore);
     }
 
     /**
@@ -68,7 +55,7 @@ public class Data {
      *  has been made.
      */
     public float getMusicVolume() {
-        return this.dataManager.getFloat(MUSIC_VOLUME_KEY, Media.DEFAULT_MUSIC_VOLUME);
+        return this.localData.getMusicVolume();
     }
 
     /**
@@ -77,7 +64,7 @@ public class Data {
      * @param volume  The volume to set to.
      */
     public void setMusicVolume(float volume) {
-        this.dataManager.saveFloat(MUSIC_VOLUME_KEY, volume);
+        this.localData.setMusicVolume(volume);
     }
 
     /**
@@ -85,7 +72,7 @@ public class Data {
      *  has been made.
      */
     public float getSoundVolume() {
-        return this.dataManager.getFloat(SOUND_VOLUME_KEY, Media.DEFAULT_SOUND_VOLUME);
+        return this.localData.getSoundVolume();
     }
 
     /**
@@ -94,14 +81,14 @@ public class Data {
      * @param volume  The volume to set to.
      */
     public void setSoundVolume(float volume) {
-        this.dataManager.saveFloat(SOUND_VOLUME_KEY, volume);
+        this.localData.setSoundVolume(volume);
     }
 
     /**
      * @return  The index of the hero that is preferred by the user.
      */
     public int getHeroIndex() {
-        return this.dataManager.getInt(CHOOSE_HERO_KEY, ChooseHeroScreen.DEFAULT_HERO_INDEX);
+        return this.localData.getHeroIndex();
     }
 
     /**
@@ -110,8 +97,7 @@ public class Data {
      * @param index The index of the new hero.
      */
     public void setHeroIndex(int index) {
-        this.dataManager.saveInt(CHOOSE_HERO_KEY, index);
+        this.localData.setHeroIndex(index);
     }
-
 
 }

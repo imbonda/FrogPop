@@ -21,8 +21,6 @@ public interface PlayServices {
 
     void submitScore(LeaderBoard leaderBoard, int highScore);
 
-    int loadScore(LeaderBoard leaderBoard);
-
     void showAchievement();
 
     void showLeaderBoards();

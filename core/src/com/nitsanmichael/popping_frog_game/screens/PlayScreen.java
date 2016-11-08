@@ -11,6 +11,7 @@ import com.nitsanmichael.popping_frog_game.effects.EffectDrawer;
 import com.nitsanmichael.popping_frog_game.managment.HolesManager;
 import com.nitsanmichael.popping_frog_game.managment.LevelController;
 import com.nitsanmichael.popping_frog_game.managment.ThemeController;
+import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.runtime.ScreenInfo;
 import com.nitsanmichael.popping_frog_game.scenes.Hud;
@@ -83,9 +84,8 @@ public class PlayScreen extends FadingScreen {
     }
 
     public void gameOver() {
-        this.game.data.updateHighScore(this.runtimeInfo.gameScore);
-        this.game.data.updateHighLevel(this.runtimeInfo.gameLevel);
-        this.game.playServices.submitScore(this.game.data.getHighScore());
+        this.game.data.submitScore(PlayServices.LeaderBoard.HIGHEST_SCORE, this.runtimeInfo.gameScore);
+        this.game.data.submitScore(PlayServices.LeaderBoard.HIGHEST_LEVEL, this.runtimeInfo.gameLevel);
         fadeOut(FADE_OUT_TIME, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {

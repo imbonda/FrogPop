@@ -20,10 +20,12 @@ public class AndroidLauncher extends AndroidApplication {
 			ConnectivityManager.TYPE_MOBILE
 	};
 
+	public PoppingFrog game;
+
 	private AndroidPlayServices playServices;
 	private AndroidAdsController adsController;
 
-	
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,7 +35,8 @@ public class AndroidLauncher extends AndroidApplication {
 		// Create a gameView and a bannerAd AdView.
 		this.playServices = new AndroidPlayServices(this);
 		this.adsController = new AndroidAdsController(this);
-		View gameView = initializeForView(new PoppingFrog(this.adsController, this.playServices), config);
+		this.game = new PoppingFrog(this.adsController, this.playServices);
+		View gameView = initializeForView(this.game, config);
 		this.adsController.setUp(gameView);
 	}
 

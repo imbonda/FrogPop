@@ -23,6 +23,7 @@ import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.config.metadata.HeroSpecMetaData;
 import com.nitsanmichael.popping_frog_game.input.BackKeyInputProcessor;
+import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
 import com.nitsanmichael.popping_frog_game.scenes.events.MessageEventListener;
@@ -35,7 +36,6 @@ import java.util.HashMap;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenCallback;
-import javafx.scene.control.Tab;
 
 
 /**
@@ -48,6 +48,7 @@ public class ChooseHeroScreen extends FadingScreen {
     private static final float FADE_OUT_TIME = 0.25f;
     private static final float FADE_IN_TIME = 0.25f;
     private static final String CHOOSE_HERO_TITLE = "My Frogish Hero";
+    private static final Color DARK_SHADOW_COLOR = new Color(80/255f, 80/255f, 80/255f, 1);
 
     private PoppingFrog game;
     private Texture backgroundTexture;
@@ -71,7 +72,7 @@ public class ChooseHeroScreen extends FadingScreen {
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
 
         this.font = this.game.assetController.get(Assets.GAME_FONT);
-        this.highestLevel = game.data.getHighLevel();
+        this.highestLevel = game.data.getHighScore(PlayServices.LeaderBoard.HIGHEST_LEVEL);
 
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
@@ -177,11 +178,27 @@ public class ChooseHeroScreen extends FadingScreen {
 
     private void setHeroRow() {
         HeroSpecMetaData meta = this.heroesSpecMap.get(this.idleHero.getClass());
+        Color heroColor;
+        Color descriptionFontColor;
+        String extraHeroInformation;
+        if (meta.requiredLevel > this.highestLevel) {
+            heroColor = new Color(DARK_SHADOW_COLOR.r,DARK_SHADOW_COLOR.g, DARK_SHADOW_COLOR.b,
+                        this.idleHero.getColor().a);
+            descriptionFontColor = Color.DARK_GRAY;
+            extraHeroInformation = meta.lockDescription;
+        }
+        else {
+            heroColor = new Color(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b,
+                        this.idleHero.getColor().a);
+            descriptionFontColor = new Color(0xe7d9cfff);
+            extraHeroInformation = meta.description;
+        }
 
         // Clear children.
         this.heroesTable.clear();
         // Set new row.
         this.heroesTable.top();
+        this.idleHero.setColor(heroColor);
         this.heroesTable.add(this.idleHero).padTop(10).expandY();
         Table descriptionTable = new Table();
         // Init nested description table.
@@ -195,11 +212,8 @@ public class ChooseHeroScreen extends FadingScreen {
         descriptionTable.row();
         style = new Label.LabelStyle();
         style.font = this.font;
-        style.fontColor = (meta.requiredLevel > this.highestLevel) ?
-                (Color.DARK_GRAY) : (new Color(0xe7d9cfff));
-        String extraInfo = (meta.requiredLevel > this.highestLevel) ?
-                (meta.lockDescription) : (meta.description);
-        Label heroDescriptionLabel = new Label(extraInfo, style);
+        style.fontColor = descriptionFontColor;
+        Label heroDescriptionLabel = new Label(extraHeroInformation, style);
         heroDescriptionLabel.setFontScale(0.2f);
         descriptionTable.add(heroDescriptionLabel).padTop(20).padLeft(10);
 
@@ -250,8 +264,13 @@ public class ChooseHeroScreen extends FadingScreen {
         this.stage.draw();
     }
 
-    public void update(float deltaTime) {
+    private void update(float deltaTime) {
+        updateHighestLevel();
         this.stage.act(deltaTime);
+    }
+
+    private void updateHighestLevel() {
+        this.highestLevel = this.game.data.getHighScore(PlayServices.LeaderBoard.HIGHEST_LEVEL);
     }
 
     @Override

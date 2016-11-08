@@ -1,6 +1,5 @@
 package com.nitsanmichael.popping_frog_game.playservices;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -13,25 +12,25 @@ import com.google.android.gms.games.GamesStatusCodes;
 import com.google.android.gms.games.leaderboard.LeaderboardVariant;
 import com.google.android.gms.games.leaderboard.Leaderboards;
 import com.google.example.games.basegameutils.GameHelper;
+import com.nitsanmichael.popping_frog_game.AndroidLauncher;
 import com.nitsanmichael.popping_frog_game.R;
 import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
 
 import java.util.HashMap;
+
 
 /**
  * Created by MichaelBond on 10/9/2016.
  */
 public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperListener {
 
-    private Activity mainActivity;
+    private AndroidLauncher mainActivity;
     private GameHelper gameHelper;
-    private PlayServicesData data;
     private HashMap<LeaderBoard, String> leaderBoardToId;
 
 
-    public AndroidPlayServices (Activity mainActivity) {
+    public AndroidPlayServices (AndroidLauncher mainActivity) {
         this.mainActivity = mainActivity;
-        this.data = new PlayServicesData();
         // Create the Google Api Client with access to the Play Games services.
         this.gameHelper = new GameHelper(this.mainActivity, GameHelper.CLIENT_GAMES);
         this.gameHelper.enableDebugLog(false);
@@ -54,6 +53,12 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
 
     @Override
     public void onSignInSucceeded() {
+        // Submit highest score.
+        submitScore(LeaderBoard.HIGHEST_SCORE,
+                    this.mainActivity.game.data.getHighScore(LeaderBoard.HIGHEST_SCORE));
+        // Submit highest level.
+        submitScore(LeaderBoard.HIGHEST_LEVEL,
+                    this.mainActivity.game.data.getHighScore(LeaderBoard.HIGHEST_LEVEL));
         // Update from the highest-score leader-board.
         updateScoreFromLeaderBoard(LeaderBoard.HIGHEST_SCORE);
         // Update from the highest-level leader-board.
@@ -77,7 +82,9 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
                         && result.getScore() != null) {
 
                     // Assign score fetched as best score.
-                    data.updateScore(leaderBoard, (int) result.getScore().getRawScore());
+                    mainActivity.game.data.syncLocalScore(
+                                leaderBoard,
+                                (int) result.getScore().getRawScore());
                 }
             }
         });
@@ -150,11 +157,6 @@ public class AndroidPlayServices implements PlayServices, GameHelper.GameHelperL
                         this.leaderBoardToId.get(leaderBoard),
                         highScore);
         }
-    }
-
-    @Override
-    public int loadScore(LeaderBoard leaderBoard) {
-        return this.data.getHighestScore(leaderBoard);
     }
 
     @Override

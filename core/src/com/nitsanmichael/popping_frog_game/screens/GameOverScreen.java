@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.input.BackKeyInputProcessor;
+import com.nitsanmichael.popping_frog_game.playservice.PlayServices;
 import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButton;
 import com.nitsanmichael.popping_frog_game.scenes.ToggleButtonListener;
@@ -44,6 +45,8 @@ public class GameOverScreen extends FadingScreen {
 
     private boolean isListening;
     private Stage stage;
+    private Label highScoreLabel;
+    private Label highLevelLabel;
 
 
     public GameOverScreen(PoppingFrog game, RuntimeInfo runtimeInfo) {
@@ -86,7 +89,7 @@ public class GameOverScreen extends FadingScreen {
         Texture homePressedIcon = this.game.assetController.get(Assets.HOME_PRESSED_ICON);
         final ToggleButton homeButton = new ToggleButton(new Image(homeIcon), new Image(homePressedIcon));
         homeButton.setSize(100, 100);
-        homeButton.setPosition(480, 70);
+        homeButton.setPosition(480, 80);
         homeButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -116,17 +119,19 @@ public class GameOverScreen extends FadingScreen {
         });
 
         // Highest-score label.
-        Label highestScoreLabel = new Label(HIGHEST_SCORE + this.game.data.getHighScore(),
-                new Label.LabelStyle(font, Color.GOLD));
-        highestScoreLabel.setFontScale(0.35f);
-        highestScoreLabel.setPosition(420, 470);
-        highestScoreLabel.setHeight(50);
+        this.highScoreLabel = new Label(
+                    HIGHEST_SCORE + this.game.data.getHighScore(PlayServices.LeaderBoard.HIGHEST_SCORE),
+                    new Label.LabelStyle(font, Color.GOLD));
+        this.highScoreLabel.setFontScale(0.35f);
+        this.highScoreLabel.setPosition(420, 470);
+        this.highScoreLabel.setHeight(50);
         // Highest-level label.
-        Label highestLevelLabel = new Label(HIGHEST_LEVEL + this.game.data.getHighLevel(),
-                new Label.LabelStyle(font, Color.GOLD));
-        highestLevelLabel.setFontScale(0.35f);
-        highestLevelLabel.setPosition(420, 410);
-        highestLevelLabel.setHeight(50);
+        this.highLevelLabel = new Label(
+                    HIGHEST_LEVEL + this.game.data.getHighScore(PlayServices.LeaderBoard.HIGHEST_LEVEL),
+                    new Label.LabelStyle(font, Color.GOLD));
+        this.highLevelLabel.setFontScale(0.35f);
+        this.highLevelLabel.setPosition(420, 410);
+        this.highLevelLabel.setHeight(50);
         // Score label.
         Label scoreLabel = new Label(SCORE + this.runtimeInfo.gameScore,
                 new Label.LabelStyle(font, Color.WHITE));
@@ -140,8 +145,7 @@ public class GameOverScreen extends FadingScreen {
         levelLabel.setPosition(490, 310);
         levelLabel.setHeight(40);
 
-        setStage(levelLabel, scoreLabel, highestScoreLabel, highestLevelLabel,
-                    restartButton, homeButton, rankButton);
+        setStage(levelLabel, scoreLabel, restartButton, homeButton, rankButton);
 
         Gdx.input.setCatchBackKey(true);
         setInputProcessor();
@@ -158,15 +162,15 @@ public class GameOverScreen extends FadingScreen {
 //        });
     }
 
-    private void setStage(Label levelLabel, Label scoreLabel, Label highestScoreLabel, Label highestLevelLabel,
-                            ToggleButton restartButton, ToggleButton homeButton, ToggleButton rankButton) {
+    private void setStage(Label levelLabel, Label scoreLabel, ToggleButton restartButton,
+                            ToggleButton homeButton, ToggleButton rankButton) {
         this.stage = new Stage(new FitViewport(
                 PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT, new OrthographicCamera()),
                 this.game.batch);
         this.stage.addActor(levelLabel);
         this.stage.addActor(scoreLabel);
-        this.stage.addActor(highestScoreLabel);
-        this.stage.addActor(highestLevelLabel);
+        this.stage.addActor(this.highScoreLabel);
+        this.stage.addActor(this.highLevelLabel);
         this.stage.addActor(restartButton);
         this.stage.addActor(homeButton);
         this.stage.addActor(rankButton);
@@ -219,8 +223,18 @@ public class GameOverScreen extends FadingScreen {
         this.stage.draw();
     }
 
-    public void update(float deltaTime) {
+    private void update(float deltaTime) {
+        updateHighScoreLabels();
         this.stage.act(deltaTime);
+    }
+
+    private void updateHighScoreLabels() {
+        this.highScoreLabel.setText(
+                    HIGHEST_SCORE +
+                    this.game.data.getHighScore(PlayServices.LeaderBoard.HIGHEST_SCORE));
+        this.highLevelLabel.setText(
+                    HIGHEST_LEVEL +
+                    this.game.data.getHighScore(PlayServices.LeaderBoard.HIGHEST_LEVEL));
     }
 
     @Override
