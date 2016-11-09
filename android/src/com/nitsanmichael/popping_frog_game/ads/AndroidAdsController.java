@@ -1,12 +1,8 @@
 package com.nitsanmichael.popping_frog_game.ads;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.nitsanmichael.popping_frog_game.AndroidLauncher;

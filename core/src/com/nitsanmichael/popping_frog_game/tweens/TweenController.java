@@ -1,12 +1,14 @@
 package com.nitsanmichael.popping_frog_game.tweens;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.nitsanmichael.popping_frog_game.scenes.panel.Timer;
 import com.nitsanmichael.popping_frog_game.screens.FadingScreen;
 import com.nitsanmichael.popping_frog_game.sprites.FrogGhost;
 import com.nitsanmichael.popping_frog_game.sprites.frogs.Frog;
+import com.nitsanmichael.popping_frog_game.tweens.accessors.ActorAccessor;
 import com.nitsanmichael.popping_frog_game.tweens.accessors.FadingScreenAccessor;
 import com.nitsanmichael.popping_frog_game.tweens.accessors.FrogAccessor;
 import com.nitsanmichael.popping_frog_game.tweens.accessors.FrogGhostAccessor;
@@ -33,6 +35,7 @@ public class TweenController {
 
     private void registerAccessors() {
         Tween.registerAccessor(FadingScreen.class, new FadingScreenAccessor());
+        Tween.registerAccessor(Actor.class, new ActorAccessor());
         Tween.registerAccessor(Label.class, new LabelAccessor());
         Tween.registerAccessor(Frog.class, new FrogAccessor());
         Tween.registerAccessor(FrogGhost.class, new FrogGhostAccessor());
@@ -63,17 +66,18 @@ public class TweenController {
         tween.start(this.manager);
     }
 
-    public void popupLabelFade(Label label, float duration, float yoyoDelay, TweenCallback callback) {
-        Tween.set(label, LabelAccessor.ALPHA_TYPE).target(0).start(this.manager);
-        Tween tween = Tween.to(label, LabelAccessor.ALPHA_TYPE, duration).target(1).
-                    repeatYoyo(1, yoyoDelay);
+    public void actorFade(Actor actor, float duration, float origin, float dest,
+                            int yoyoTimes, float yoyoDelay, TweenCallback callback) {
+        Tween.set(actor, LabelAccessor.ALPHA_TYPE).target(origin).start(this.manager);
+        Tween tween = Tween.to(actor, LabelAccessor.ALPHA_TYPE, duration).target(dest).
+                    repeatYoyo(yoyoTimes, yoyoDelay);
         if (null != callback) {
             tween = tween.setCallback(callback);
         }
         tween.start(this.manager);
     }
 
-    public void popupLabelFontScale(Label label, Vector2 srcScale, Vector2 dstScale, float duration,
+    public void labelFontScale(Label label, Vector2 srcScale, Vector2 dstScale, float duration,
                                         int yoyoTimes, float yoyoDelay, TweenCallback callback) {
         Tween.set(label, LabelAccessor.SCALE_TYPE).target(srcScale.x, srcScale.y).start(this.manager);
         Tween tween = Tween.to(label, LabelAccessor.SCALE_TYPE, duration).

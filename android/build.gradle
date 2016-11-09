@@ -18,7 +18,7 @@ android {
         applicationId "com.nitsanmichael.popping_frog_game"
         minSdkVersion 15
         targetSdkVersion 23
-        versionName '1.1'
+        versionName '1.1.2'
     }
     productFlavors {
     }
@@ -125,4 +125,5 @@ idea {
 dependencies {
     compile 'com.google.android.gms:play-services-ads:9.6.1'
     compile 'com.google.android.gms:play-services-auth:9.6.1'
+    compile project(':unity-ads')
 }

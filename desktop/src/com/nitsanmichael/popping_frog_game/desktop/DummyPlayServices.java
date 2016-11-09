@@ -29,7 +29,7 @@ public class DummyPlayServices implements PlayServices {
     }
 
     @Override
-    public void submitScore(int highScore) {
+    public void submitScore(LeaderBoard leaderBoard, int highScore) {
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DummyPlayServices implements PlayServices {
     }
 
     @Override
-    public void showScore() {
+    public void showLeaderBoards() {
     }
 
 }

@@ -11,16 +11,19 @@ import com.nitsanmichael.popping_frog_game.states.StateTracker;
 public class BackKeyInputProcessor implements InputProcessor {
 
     private Runnable backKeyAction;
+    private boolean isListening;
 
 
     public BackKeyInputProcessor(Runnable backKeyAction) {
         this.backKeyAction = backKeyAction;
+        this.isListening = true;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (Input.Keys.BACK == keycode) {
+        if (this.isListening && Input.Keys.BACK == keycode) {
             this.backKeyAction.run();
+            this.isListening = false;
             return true;
         }
         return false;

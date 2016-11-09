@@ -31,12 +31,19 @@ public class IdleMexicanFrog extends Actor {
     }
 
     @Override
+    public void setColor(float r,float g, float b, float a) {
+        super.setColor(r, g, b, a);
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
+        Color batchColor = batch.getColor();
         Color c = this.getColor();
-        this.setColor(c.r, c.g, c.b, parentAlpha);
+        batch.setColor(c.r, c.g, c.b, c.a * batchColor.a);
         batch.draw(
                 this.animation.getFrame(),
                 getX(), getY(),
                 getWidth(), getHeight());
+        batch.setColor(batchColor.r, batchColor.g, batchColor.b, batchColor.a);
     }
 }

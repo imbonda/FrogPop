@@ -19,17 +19,17 @@ import aurelienribon.tweenengine.TweenCallback;
 public class CountdownPopup implements Popup {
 
     // Popup messages.
-    private static final String COUNTDOWN_1 = "1";
-    private static final String COUNTDOWN_2 = "2";
-    private static final String COUNTDOWN_3 = "3";
-    private static final String COUNTDOWN_GO = "TAP 'em !";
+    private static final String READY = "Ready";
+    private static final String STEADY = "Steady";
+    private static final String GO = "Goooo";
     // Font.
     private static final float INITIAL_FONT_SCALE = 0.7f;
     private static final Color GREEN_LIME = new Color(0x32cd32ff);
     private static final Vector2 SRC_FONT_SCALE = new Vector2(0.9f, 0.1f);
     private static final Vector2 DST_FONT_SCALE = new Vector2(0.9f, 0.9f);
-    private static final Vector2 POSITION_COUNT = new Vector2(370, 270);
-    private static final Vector2 POSITION_GO = new Vector2(210, 270);
+    private static final Vector2 POSITION_READY = new Vector2(260, 270);
+    private static final Vector2 POSITION_STEADY = new Vector2(255, 270);
+    private static final Vector2 POSITION_GO = new Vector2(265, 270);
 
     private TweenController tweenController;
     private RuntimeInfo runtimeInfo;
@@ -51,63 +51,54 @@ public class CountdownPopup implements Popup {
     @Override
     public void perform() {
         this.stage.addActor(this.countDownLabel);
-        countdown3();
+        ready();
     }
 
-    private void countdown3() {
-        this.countDownLabel.setPosition(POSITION_COUNT.x, POSITION_COUNT.y);
+    private void ready() {
+        // TODO this is a hotfix (update is made only in the next iteration, so alpha=1 for 1 frame).
+        this.countDownLabel.getStyle().fontColor.a = 0;
+        this.countDownLabel.setPosition(POSITION_READY.x, POSITION_READY.y);
         this.countDownLabel.setFontScale(INITIAL_FONT_SCALE);
-        this.countDownLabel.setText(COUNTDOWN_3);
-        this.tweenController.popupLabelFontScale(
+        this.countDownLabel.setText(READY);
+        this.tweenController.labelFontScale(
                 this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);
-        this.tweenController.popupLabelFade(this.countDownLabel, 0.5f, 0.1f, new TweenCallback() {
+        this.tweenController.actorFade(this.countDownLabel, 0.5f, 0, 1, 1, 0.1f, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                countDownLabel.setFontScale(INITIAL_FONT_SCALE);
-                countdown2();
+                steady();
             }
         });
     }
 
-    private void countdown2() {
-        this.countDownLabel.setText(COUNTDOWN_2);
-        this.tweenController.popupLabelFontScale(
+    private void steady() {
+        this.countDownLabel.setPosition(POSITION_STEADY.x, POSITION_STEADY.y);
+        countDownLabel.setFontScale(INITIAL_FONT_SCALE);
+        this.countDownLabel.setText(STEADY);
+        this.tweenController.labelFontScale(
                 this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);
-        this.tweenController.popupLabelFade(this.countDownLabel, 0.5f, 0.1f, new TweenCallback() {
+        this.tweenController.actorFade(this.countDownLabel, 0.5f, 0, 1, 1, 0.1f, new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                countDownLabel.setFontScale(INITIAL_FONT_SCALE);
-                countdown1();
+                go();
             }
         });
     }
 
-    private void countdown1() {
-        this.countDownLabel.setText(COUNTDOWN_1);
-        this.tweenController.popupLabelFontScale(
-                this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);
-        this.tweenController.popupLabelFade(this.countDownLabel, 0.5f, 0.1f, new TweenCallback() {
-            @Override
-            public void onEvent(int type, BaseTween<?> source) {
-                countDownLabel.setFontScale(INITIAL_FONT_SCALE);
-                countdownGo();
-            }
-        });
-    }
-
-    private void countdownGo() {
+    private void go() {
         this.countDownLabel.setPosition(POSITION_GO.x, POSITION_GO.y);
-        this.countDownLabel.setText(COUNTDOWN_GO);
-        this.tweenController.popupLabelFontScale(
+        countDownLabel.setFontScale(INITIAL_FONT_SCALE);
+        this.countDownLabel.setText(GO);
+        this.tweenController.labelFontScale(
                 this.countDownLabel, SRC_FONT_SCALE, DST_FONT_SCALE, 0.5f, 0, 0, null);
-        this.tweenController.popupLabelFade(this.countDownLabel, 0.5f, 0.1f, new TweenCallback() {
-            @Override
-            public void onEvent(int type, BaseTween<?> source) {
-                countDownLabel.setFontScale(INITIAL_FONT_SCALE);
-                // Remove the label from the stage.
-                countDownLabel.remove();
-                runtimeInfo.stateTracker.setState(StateTracker.GameState.PLAY);
-            }
+        this.tweenController.actorFade(this.countDownLabel, 0.5f, 0, 1, 1, 0.1f,
+                    new TweenCallback() {
+                        @Override
+                        public void onEvent(int type, BaseTween<?> source) {
+                            countDownLabel.setFontScale(INITIAL_FONT_SCALE);
+                            // Remove the label from the stage.
+                            countDownLabel.remove();
+                            runtimeInfo.stateTracker.setState(StateTracker.GameState.PLAY);
+                        }
         });
     }
 

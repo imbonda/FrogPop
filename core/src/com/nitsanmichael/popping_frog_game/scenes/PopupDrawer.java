@@ -28,7 +28,7 @@ public class PopupDrawer {
                         TweenController tweenController, RuntimeInfo runtimeInfo) {
         this.stage = new Stage(viewport, batch);
         BitmapFont font = assetController.get(Assets.GAME_FONT);
-        this.levelUpPopup = new LevelUpPopup(this.stage, tweenController, font);
+        this.levelUpPopup = new LevelUpPopup(runtimeInfo, this.stage, tweenController, font);
         this.countdownPopup = new CountdownPopup(tweenController, runtimeInfo, this.stage, font);
     }
 

@@ -18,7 +18,7 @@ public class LabelAccessor implements TweenAccessor<Label> {
     public int getValues(Label target, int tweenType, float[] returnValues) {
         switch (tweenType) {
             case ALPHA_TYPE:
-                returnValues[0] =target.getStyle().fontColor.a;
+                returnValues[0] = target.getStyle().fontColor.a;
                 return 1;
             case SCALE_TYPE:
                 returnValues[0] = target.getFontScaleX();

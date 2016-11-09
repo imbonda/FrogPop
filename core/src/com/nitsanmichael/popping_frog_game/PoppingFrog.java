@@ -42,7 +42,7 @@ public class PoppingFrog extends Game {
 	@Override
 	public void create () {
 		this.batch = new SpriteBatch();
-		this.data = new Data();
+		this.data = new Data(this.playServices);
 		this.assetController = new AssetController(this.data);
 		this.assetController.loadAll();
 		// Assets are now loaded.
@@ -52,8 +52,6 @@ public class PoppingFrog extends Game {
 		this.tweenController = new TweenController();
 		FadingScreen screen = new MainMenuScreen(PoppingFrog.this);
 		screen.fadeIn(this, 0.5f);
-
-		this.playServices.signIn();
 	}
 
 	@Override

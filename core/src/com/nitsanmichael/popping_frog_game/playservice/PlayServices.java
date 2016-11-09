@@ -6,6 +6,11 @@ package com.nitsanmichael.popping_frog_game.playservice;
  */
 public interface PlayServices {
 
+    enum LeaderBoard {
+        HIGHEST_SCORE,
+        HIGHEST_LEVEL
+    }
+
     void signIn();
 
     void signOut();
@@ -14,11 +19,11 @@ public interface PlayServices {
 
     void unlockAchievement();
 
-    void submitScore(int highScore);
+    void submitScore(LeaderBoard leaderBoard, int highScore);
 
     void showAchievement();
 
-    void showScore();
+    void showLeaderBoards();
 
     boolean isSignedIn();
 

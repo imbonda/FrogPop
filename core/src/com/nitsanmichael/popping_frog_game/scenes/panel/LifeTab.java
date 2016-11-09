@@ -15,11 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  */
 public class LifeTab extends Group {
 
-    private static final Vector2 LABEL_POSITION = new Vector2(750, 480);
+    private static final Vector2 LABEL_POSITION = new Vector2(650, 480);
     // Lives' position.
-    private static final Vector2 LIFE1_POSITION = new Vector2(570, 475);
-    private static final Vector2 LIFE2_POSITION = new Vector2(630, 475);
-    private static final Vector2 LIFE3_POSITION = new Vector2(690, 475);
+    private static final Vector2 LIFE1_POSITION = new Vector2(470, 475);
+    private static final Vector2 LIFE2_POSITION = new Vector2(530, 475);
+    private static final Vector2 LIFE3_POSITION = new Vector2(590, 475);
     private static final Vector2 LIFE_SIZE = new Vector2(61, 50);
     private static final String EXTRA_LIFE = "x ";
 
@@ -36,7 +36,7 @@ public class LifeTab extends Group {
     }
 
     private void initExtraLifeLabel(BitmapFont font) {
-        Label.LabelStyle style = new Label.LabelStyle(font, new Color(0x6ac44fff));
+        Label.LabelStyle style = new Label.LabelStyle(font, new Color(0xc60c0cff));
         this.extraLifeLabel = new Label(EXTRA_LIFE, style);
         this.extraLifeLabel.setFontScale(0.3f);
         this.extraLifeLabel.setWidth(50);

@@ -1,10 +1,14 @@
 package com.nitsanmichael.popping_frog_game.config;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.nitsanmichael.popping_frog_game.config.metadata.AddFrogMetaData;
+import com.nitsanmichael.popping_frog_game.config.metadata.HeroSpecMetaData;
 import com.nitsanmichael.popping_frog_game.config.metadata.LevelMetaData;
 import com.nitsanmichael.popping_frog_game.config.metadata.ThemeMetaData;
+
+import java.util.HashMap;
 
 /**
  * This class will hold all the configurations necessary for the game.
@@ -16,6 +20,7 @@ public class Config {
     public Array<LevelMetaData> levelsMetaData;
     public Array<AddFrogMetaData> addFrogsMetaData;
     public Array<ThemeMetaData> themesMetaData;
+    public HashMap<Class<? extends Actor>, HeroSpecMetaData> heroesSpec;
     private XmlReader xmlReader;
 
     public Config() {
@@ -23,12 +28,14 @@ public class Config {
         this.levelsMetaData = new Array<LevelMetaData>();
         this.addFrogsMetaData = new Array<AddFrogMetaData>();
         this.themesMetaData = new Array<ThemeMetaData>();
+        this.heroesSpec = new HashMap<Class<? extends Actor>, HeroSpecMetaData>();
     }
 
     public void load() {
         loadLevelsMetaData();
         loadAddFrogsMetaData();
         loadThemesMetaData();
+        loadHeroesSpec();
     }
 
     private void loadLevelsMetaData() {
@@ -36,11 +43,15 @@ public class Config {
     }
 
     private void loadAddFrogsMetaData() {
-        com.nitsanmichael.popping_frog_game.config.AddFrogsMetaDataLoader.load(this.xmlReader, this.addFrogsMetaData);
+        AddFrogsMetaDataLoader.load(this.xmlReader, this.addFrogsMetaData);
     }
 
     private void loadThemesMetaData() {
-        com.nitsanmichael.popping_frog_game.config.ThemesMetaDataLoader.load(this.xmlReader, this.themesMetaData);
+        ThemesMetaDataLoader.load(this.xmlReader, this.themesMetaData);
+    }
+
+    private void loadHeroesSpec() {
+        HeroesSpecMetaDataLoader.load(this.xmlReader, this.heroesSpec);
     }
 
 }
