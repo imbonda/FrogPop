@@ -17,8 +17,8 @@ public class AndroidAdsController implements AdsController {
     private static final String APP_ID = "ca-app-pub-9580777050562768~5793827338";
 
     private static final String TEST_DEVICE_IDS [] = {
-            "E5DBDD7696804F8E99991CB332E32029",
-            "870C561BBC76ED46228B771081A24D17"
+//            "E5DBDD7696804F8E99991CB332E32029",
+//            "870C561BBC76ED46228B771081A24D17"
     };
 
     public static AdRequest getAdRequest() {
