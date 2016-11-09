@@ -96,7 +96,7 @@ public class FrogClassAllocator {
                 this.worldPortionsSum -= probPortion.portion;
                 portionMapIterator.remove();
             }
-            if (probPortion.frogMetaData.isLimitedParallel &&
+            else if (probPortion.frogMetaData.isLimitedParallel &&
                     runtimeInfo.parallel >= probPortion.frogMetaData.maxParallel) {
                 // The maximal number of frogs of this class has been reached,
                 // update the probability mapping function.
@@ -135,24 +135,24 @@ public class FrogClassAllocator {
         Array<ProbPortion> probPortions = new Array<ProbPortion>();
         FrogClassRuntimeInfo runtimeInfo;
         for (FrogMetaData frogMetaData : this.levelMetaData.levelRelatedFrogs) {
-            if (null == this.frogClassesRuntimeInfo.get(frogMetaData.frogClass)) {
-                this.frogClassesRuntimeInfo.put(frogMetaData.frogClass, new FrogClassRuntimeInfo());
-            }
             runtimeInfo = this.frogClassesRuntimeInfo.get(frogMetaData.frogClass);
-            if (frogMetaData.isLimitedTotal &&
-                        frogMetaData.maxAllowed <= runtimeInfo.total) {
-                continue;
+            if (null == runtimeInfo) {
+                runtimeInfo = new FrogClassRuntimeInfo();
+                this.frogClassesRuntimeInfo.put(frogMetaData.frogClass, runtimeInfo);
             }
-            else if (frogMetaData.isLimitedParallel &&
-                        frogMetaData.maxParallel <= runtimeInfo.parallel ) {
-                continue;
-            }
+            runtimeInfo.total = 0;
             float spawnProb = frogMetaData.spawnProb;
             ProbPortion probPortion = new ProbPortion();
             probPortion.portion = (int) Math.ceil(spawnProb * 100);
             probPortion.frogMetaData = frogMetaData;
-            probPortions.add(probPortion);
             runtimeInfo.probPortion = probPortion;
+            // In case the given play state is incompatible with the given frog-class metadata,
+            // then do not add it yet to the probability function.
+            if (frogMetaData.isLimitedParallel
+                    && frogMetaData.maxParallel <= runtimeInfo.parallel) {
+                continue;
+            }
+            probPortions.add(probPortion);
             probWorldPortionsSum += probPortion.portion;
         }
 
@@ -178,12 +178,14 @@ public class FrogClassAllocator {
         for (FrogMetaData m : this.levelMetaData.levelRelatedFrogs) {
             if (m.frogClass == frogMeta.frogClass) {
                 isSupportedFrogClass = true;
+                break;
             }
         }
-        if (isSupportedFrogClass &&
-                    frogMeta.isLimitedParallel &&
-                    runtimeInfo.parallel < frogMeta.maxParallel &&
-                    (!frogMeta.isLimitedTotal || runtimeInfo.total < frogMeta.maxAllowed)) {
+        if (isSupportedFrogClass
+                    && !this.randomFrogClassGenerator.probPortions.contains(runtimeInfo.probPortion, true)
+                    && frogMeta.isLimitedParallel
+                    && runtimeInfo.parallel < frogMeta.maxParallel
+                    && (!frogMeta.isLimitedTotal || runtimeInfo.total < frogMeta.maxAllowed)) {
             this.randomFrogClassGenerator.probPortions.insert(0, runtimeInfo.probPortion);
             this.randomFrogClassGenerator.worldPortionsSum += runtimeInfo.probPortion.portion;
         }
