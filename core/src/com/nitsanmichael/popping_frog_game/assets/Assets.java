@@ -108,6 +108,9 @@ public final class Assets {
     public static final String PLAYSERVICES_LOGIN_PRESSED_ICON = "images/icons/playservices_login_pressed.png";
     public static final String PLAYSERVICES_LOGOUT_ICON = "images/icons/playservices_logout.png";
     public static final String PLAYSERVICES_LOGOUT_PRESSED_ICON = "images/icons/playservices_logout_pressed.png";
+    public static final String CHOSEN_STAMP_ICON = "images/icons/chosen_stamp.png";
+    public static final String CHOOSE_ICON = "images/icons/choose.png";
+    public static final String CHOOSE_PRESSED_ICON = "images/icons/choose_pressed.png";
     // Backgrounds.
     public static final String MENU_BACKGROUND = "images/backgrounds/menu.jpg";
     public static final String PAUSE_BACKGROUND = "images/backgrounds/pause.png";
@@ -194,6 +197,8 @@ public final class Assets {
             MANUAL_ICON, MANUAL_PRESSED_ICON,
             PLAYSERVICES_LOGIN_ICON, PLAYSERVICES_LOGIN_PRESSED_ICON,
             PLAYSERVICES_LOGOUT_ICON, PLAYSERVICES_LOGOUT_PRESSED_ICON,
+            CHOSEN_STAMP_ICON,
+            CHOOSE_ICON, CHOOSE_PRESSED_ICON,
         // Backgrounds
             MENU_BACKGROUND,
             PAUSE_BACKGROUND,

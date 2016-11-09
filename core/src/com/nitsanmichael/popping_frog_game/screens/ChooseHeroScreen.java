@@ -60,6 +60,8 @@ public class ChooseHeroScreen extends FadingScreen {
     private int highestLevel;
     private BitmapFont font;
     private Table heroesTable;
+    private Image chosenStamp;
+    private ToggleButton chooseHeroButton;
     private Stage stage;
 
 
@@ -73,6 +75,10 @@ public class ChooseHeroScreen extends FadingScreen {
 
         this.font = this.game.assetController.get(Assets.GAME_FONT);
         this.highestLevel = game.data.getHighScore(PlayServices.LeaderBoard.HIGHEST_LEVEL);
+
+        this.chosenStamp = new Image((Texture)this.game.assetController.get(Assets.CHOSEN_STAMP_ICON));
+        this.chosenStamp.setSize(90, 70);
+        this.chosenStamp.setPosition(190, 310);
 
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
@@ -105,14 +111,7 @@ public class ChooseHeroScreen extends FadingScreen {
                     return;
                 }
                 index = (index + 1) % idleFrogs.size;
-                // Remove old hero from stage.
-                idleHero.remove();
                 idleHero = idleFrogs.get(index);
-
-                HeroSpecMetaData meta = heroesSpecMap.get(idleHero.getClass());
-                if(highestLevel >= meta.requiredLevel) {
-                    game.data.setHeroIndex(meta.animationIndex);
-                }
                 setHeroRow();
             }
         });
@@ -131,15 +130,28 @@ public class ChooseHeroScreen extends FadingScreen {
                     return;
                 }
                 index = (index - 1 + idleFrogs.size) % idleFrogs.size;
-                // Remove old hero from stage.
-                idleHero.remove();
                 idleHero = idleFrogs.get(index);
-
-                HeroSpecMetaData meta = heroesSpecMap.get(idleHero.getClass());
-                if(highestLevel >= meta.requiredLevel) {
-                    game.data.setHeroIndex(meta.animationIndex);
-                }
                 setHeroRow();
+            }
+        });
+
+        // Choose button.
+        Texture chooseIcon = this.game.assetController.get(Assets.CHOOSE_ICON);
+        Texture choosePressedIcon = this.game.assetController.get(Assets.CHOOSE_PRESSED_ICON);
+        this.chooseHeroButton = new ToggleButton(
+                new Image(chooseIcon), new Image(choosePressedIcon));
+        this.chooseHeroButton.setSize(130, 50);
+        this.chooseHeroButton.setPosition(390, 150);
+        this.chooseHeroButton.addListener(new MessageEventListener() {
+            @Override
+            public void receivedMessage(int message, Actor actor) {
+                if (actor != chooseHeroButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                    return;
+                }
+                HeroSpecMetaData meta = heroesSpecMap.get(idleHero.getClass());
+                game.data.setHeroIndex(meta.animationIndex);
+                stage.addActor(chosenStamp);
+                chooseHeroButton.remove();
             }
         });
 
@@ -201,6 +213,17 @@ public class ChooseHeroScreen extends FadingScreen {
 
     private void setHeroRow() {
         HeroSpecMetaData meta = this.heroesSpecMap.get(this.idleHero.getClass());
+        if (this.game.data.getHeroIndex() == meta.animationIndex) {
+            this.stage.addActor(this.chosenStamp);
+        }
+        else if (meta.requiredLevel <= this.highestLevel) {
+            this.stage.addActor(this.chooseHeroButton);
+            this.chosenStamp.remove();
+        }
+        else {
+            this.chosenStamp.remove();
+            this.chooseHeroButton.remove();
+        }
         Color heroColor;
         Color descriptionFontColor;
         String extraHeroInformation;
