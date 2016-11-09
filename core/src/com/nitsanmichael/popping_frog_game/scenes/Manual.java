@@ -26,12 +26,14 @@ import com.nitsanmichael.popping_frog_game.scenes.idlefrogs.IdleRegularFrog;
 public class Manual extends Group {
 
     // Descriptions.
+    private static final String MISPLACED_TAP_DESCRIPTION =
+            "If you tap the screen and miss all the frogs ,\nyou lose 1 life !";
     private static final String HERO_DESCRIPTION =
             "Tap it to increase the score +1,\notherwise you will lose a life.";
     private static final String DEVIL_DESCRIPTION =
             "Do not tap it,\nyou will lose a life if you do.";
     private static final String ANGEL_DESCRIPTION =
-            "Tap it to get an extra life.\nYou won't lose any if you miss it.";
+            "Tap it to get an extra life.\nYou won't lose any if you don't -\n catch it.";
     private static final String GENIE_DESCRIPTION =
             "Oh no ! it makes all the holes move.\nTap it to increase the score + 2,\n" +
                     "otherwise you will lose a life.";
@@ -61,6 +63,10 @@ public class Manual extends Group {
 
         // Adding frogs to manual.
         table.top();
+        Label misplacedTapDescription = new Label(MISPLACED_TAP_DESCRIPTION, style);
+        misplacedTapDescription.setFontScale(0.23f);
+        table.add(misplacedTapDescription).colspan(3).padTop(20).padLeft(20).padRight(20);
+        table.row();
         // Hero.
         table.add(new IdleRegularFrog(assetController,
                 IdleRegularFrog.AnimationType.TONGUE, Vector2.Zero)).padTop(20).padLeft(20);

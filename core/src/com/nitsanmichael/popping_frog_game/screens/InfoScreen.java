@@ -39,7 +39,7 @@ public class InfoScreen extends FadingScreen {
     private static final String PRODUCERS =
                 "Producers :\tMichael Bondarevsky and Nitsan Levy.";
     private static final String PAINTERS = "Painting artist :\tMika Yosef.";
-    private static final String MUSICIANS = "Music by : \tPattrick Angello.";
+    private static final String MUSICIANS = "Music by : \tPattrick Angelo.";
 
 
     private PoppingFrog game;
