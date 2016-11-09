@@ -14,7 +14,7 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class PlayState implements State {
 
-    private static final int MIN_SCORE_FOR_REWARDED_REPLAY = 55;
+    private static final int MIN_SCORE_FOR_REWARDED_REPLAY = 5;
     private static final int GAME_OVER_ANIMATION_DURATION = 1;
 
     private PlayScreen playScreen;
@@ -67,10 +67,9 @@ public class PlayState implements State {
         Gdx.input.setInputProcessor(null);
         this.playScreen.game.media.stopMusic(Assets.GAME_PLAY_MUSIC);
         this.playScreen.game.media.playSound(Assets.GAME_OVER_SOUND);
-        this.playScreen.game.tweenController.frogsGhostGameOverAnimation(
-                this.playScreen.runtimeInfo.frogGhosts, GAME_OVER_ANIMATION_DURATION, null);
-        this.playScreen.game.tweenController.frogsGameOverAnimation(
-                this.playScreen.runtimeInfo.activeFrogs, GAME_OVER_ANIMATION_DURATION,
+        this.playScreen.game.tweenController.gameOverAnimation(
+                this.playScreen.runtimeInfo.activeFrogs, this.playScreen.runtimeInfo.frogGhosts,
+                GAME_OVER_ANIMATION_DURATION,
                 new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {

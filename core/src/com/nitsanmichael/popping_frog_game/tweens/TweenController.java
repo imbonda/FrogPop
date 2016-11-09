@@ -88,34 +88,18 @@ public class TweenController {
         tween.repeatYoyo(yoyoTimes, yoyoDelay).start(this.manager);
     }
 
-    public void frogsGameOverAnimation(Array<Frog> frogs, float duration, TweenCallback callback) {
-        if (null == frogs || frogs.size == 0) {
-            return;
-        }
+    public void gameOverAnimation(Array<Frog> frogs, Array<FrogGhost> ghosts, float duration, TweenCallback callback) {
         Timeline timeline = Timeline.createSequence();
         for (Frog frog : frogs) {
             timeline = timeline.push(Tween.set(frog, FrogAccessor.ALPHA_TYPE).target(1));
+        }
+        for (FrogGhost ghost : ghosts) {
+            timeline = timeline.push(Tween.set(ghost, FrogGhostAccessor.ALPHA_TYPE).target(ghost.getColor().a));
         }
         timeline = timeline.beginParallel();
         for (Frog frog : frogs) {
             timeline = timeline.push(Tween.to(frog, FrogAccessor.ALPHA_TYPE, duration).target(0));
         }
-        timeline = timeline.end();
-        if (null != callback) {
-            timeline = timeline.setCallback(callback);
-        }
-        timeline.start(this.manager);
-    }
-
-    public void frogsGhostGameOverAnimation(Array<FrogGhost> ghosts, float duration, TweenCallback callback) {
-        if (null == ghosts || ghosts.size == 0) {
-            return;
-        }
-        Timeline timeline = Timeline.createSequence();
-        for (FrogGhost ghost : ghosts) {
-            timeline = timeline.push(Tween.set(ghost, FrogGhostAccessor.ALPHA_TYPE).target(ghost.getColor().a));
-        }
-        timeline = timeline.beginParallel();
         for (FrogGhost ghost : ghosts) {
             timeline = timeline.push(Tween.to(ghost, FrogGhostAccessor.ALPHA_TYPE, duration).target(0));
         }
