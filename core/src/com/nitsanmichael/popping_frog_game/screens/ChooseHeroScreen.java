@@ -215,6 +215,7 @@ public class ChooseHeroScreen extends FadingScreen {
         HeroSpecMetaData meta = this.heroesSpecMap.get(this.idleHero.getClass());
         if (this.game.data.getHeroIndex() == meta.animationIndex) {
             this.stage.addActor(this.chosenStamp);
+            this.chooseHeroButton.remove();
         }
         else if (meta.requiredLevel <= this.highestLevel) {
             this.stage.addActor(this.chooseHeroButton);
