@@ -54,8 +54,8 @@ public class Manual extends Group {
         scrollPane.getStyle().background = new TextureRegionDrawable(new TextureRegion(
                 (Texture)assetController.get(Assets.SCROLL_BACKGROUND)));
         container.add(scrollPane);
-        container.setSize(700, 450);
-        container.setPosition(100, 50);
+        container.setSize(700, 430);
+        container.setPosition(100, 70);
         container.setFillParent(false);
 
         BitmapFont font = assetController.get(Assets.GAME_FONT);
