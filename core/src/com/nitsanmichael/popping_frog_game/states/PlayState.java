@@ -3,6 +3,7 @@ package com.nitsanmichael.popping_frog_game.states;
 import com.badlogic.gdx.Gdx;
 import com.nitsanmichael.popping_frog_game.assets.Assets;
 import com.nitsanmichael.popping_frog_game.input.GamePlayTouchProcessor;
+import com.nitsanmichael.popping_frog_game.scenes.dialogs.PlayDialog;
 import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
 
 import aurelienribon.tweenengine.BaseTween;
@@ -18,6 +19,7 @@ public class PlayState implements State {
     private static final int GAME_OVER_ANIMATION_DURATION = 1;
 
     private PlayScreen playScreen;
+    private PlayDialog playDialog;
     private boolean isNoLongerPlaying;
 
 
@@ -25,7 +27,12 @@ public class PlayState implements State {
         this.playScreen = playScreen;
         this.isNoLongerPlaying = false;
         Gdx.input.setInputProcessor(new GamePlayTouchProcessor(
-                this.playScreen.gameViewPort, this.playScreen.runtimeInfo));
+                    this.playScreen.gameViewPort, this.playScreen.runtimeInfo));
+        this.playDialog = new PlayDialog(
+                    this.playScreen.game.assetController,
+                    this.playScreen.gameViewPort,
+                    this.playScreen.game.batch,
+                    this.playScreen.runtimeInfo);
         if (isSetupNeeded) {
             playScreen.levelController.setup();
         }
@@ -37,6 +44,7 @@ public class PlayState implements State {
     public void render(float deltaTime) {
         update(deltaTime);
         this.playScreen.draw();
+        this.playDialog.draw();
     }
 
     private void update(float deltaTime) {
@@ -82,6 +90,6 @@ public class PlayState implements State {
 
     @Override
     public void dispose() {
-        // Nothing to dispose.
+        this.playDialog.dispose();
     }
 }
