@@ -9,11 +9,11 @@ public final class Assets {
      * Media.
      */
     // Music.
-    public static final String GAME_PLAY_MUSIC = "media/music.ogg";
+    public static final String GAME_PLAY_MUSIC = "media/game_play_music.ogg";
+    public static final String MAIN_MENU_MUSIC = "media/menu_music.ogg";
     // Sound.
     public static final String LEVEL_UP_SOUND = "media/level_up.wav";
     public static final String GAME_OVER_SOUND = "media/game_over.mp3";
-    public static final String MAIN_MENU_MUSIC = "media/main.ogg";
 
     public static final String MUSIC_FILES [] = {
             GAME_PLAY_MUSIC,
