@@ -24,8 +24,8 @@ import com.nitsanmichael.popping_frog_game.states.StateTracker;
  */
 public class PlayDialog implements Disposable {
 
-    private static final Vector2 PAUSE_BUTTON_SIZE = new Vector2(60, 60);
-    private static final Vector2 PAUSE_BUTTON_POSITION = new Vector2(730, 465);
+    private static final Vector2 PAUSE_BUTTON_SIZE = new Vector2(75, 50);
+    private static final Vector2 PAUSE_BUTTON_POSITION = new Vector2(720, 475);
 
     private Stage stage;
 
