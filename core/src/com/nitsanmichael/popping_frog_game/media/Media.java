@@ -28,7 +28,7 @@ public class Media {
 
     public void playMusic(String name){
         Music music = this.assetController.get(name);
-        if (null != music && 0 != this.musicVolume) {
+        if (null != music && 0 != this.musicVolume && !music.isPlaying()) {
             music.setVolume(this.musicVolume);
             music.setLooping(true);
             music.play();
@@ -37,14 +37,14 @@ public class Media {
 
     public void stopMusic(String name) {
         Music music = this.assetController.get(name);
-        if (null != music) {
+        if (null != music && music.isPlaying()) {
             music.stop();
         }
     }
 
     public void pauseMusic(String name) {
         Music music = this.assetController.get(name);
-        if (null != music) {
+        if (null != music && music.isPlaying()) {
             music.pause();
         }
     }
