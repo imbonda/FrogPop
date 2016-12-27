@@ -100,4 +100,19 @@ public class Data {
         this.localData.setHeroIndex(index);
     }
 
+    /**
+     * @return  True if the media is muted, false otherwise.
+     */
+    public boolean isMute() {
+        return this.localData.isMute();
+    }
+
+    /**
+     * Sets whether or not the media is to be muted.
+     * @param isMute true if the media is to be muted, false otherwise.
+     */
+    public void setMute(boolean isMute) {
+        this.localData.setMute(isMute);
+    }
+
 }

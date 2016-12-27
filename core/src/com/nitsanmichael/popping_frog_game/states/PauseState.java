@@ -20,6 +20,8 @@ public class PauseState implements State {
         Gdx.input.setInputProcessor(new GamePauseTouchProcessor(playScreen.runtimeInfo.stateTracker));
         this.pauseDialog = new PauseDialog(
                     this.playScreen.game.assetController,
+                    this.playScreen.game.data,
+                    this.playScreen.game.media,
                     this.playScreen.gameViewPort,
                     this.playScreen.game.batch,
                     this.playScreen.runtimeInfo);

@@ -37,7 +37,7 @@ public class Media {
 
     public void stopMusic(String name) {
         Music music = this.assetController.get(name);
-        if (null != music && music.isPlaying()) {
+        if (null != music) {
             music.stop();
         }
     }

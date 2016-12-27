@@ -125,6 +125,10 @@ public class SettingsScreen extends FadingScreen {
                     game.media.pauseMusic(Assets.MAIN_MENU_MUSIC);
                 }
                 else {
+                    if (game.data.isMute()) {
+                        game.data.setSoundVolume(0);
+                    }
+                    game.data.setMute(false);
                     game.media.playMusic(Assets.MAIN_MENU_MUSIC);
                 }
             }
@@ -160,6 +164,12 @@ public class SettingsScreen extends FadingScreen {
 
             private void updateMedia(float volume) {
                 PoppingFrog game = SettingsScreen.this.game;
+                if (0 != volume) {
+                    if (game.data.isMute()) {
+                        game.data.setMusicVolume(0);
+                    }
+                    game.data.setMute(false);
+                }
                 game.data.setSoundVolume(volume);
                 game.media.updateSoundVolume(volume);
             }

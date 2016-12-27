@@ -21,6 +21,7 @@ public class LocalData {
     private static final String MUSIC_VOLUME_KEY = "mv";
     private static final String SOUND_VOLUME_KEY = "sv";
     private static final String CHOOSE_HERO_KEY = "ch";
+    private static final String MUTE_KEY = "mt";
 
     private static HashMap<PlayServices.LeaderBoard, String> leaderBoardStringToKey;
     static {
@@ -44,6 +45,7 @@ public class LocalData {
         this.cachedKeyValues.put(MUSIC_VOLUME_KEY, new CachedVariable());
         this.cachedKeyValues.put(SOUND_VOLUME_KEY, new CachedVariable());
         this.cachedKeyValues.put(CHOOSE_HERO_KEY, new CachedVariable());
+        this.cachedKeyValues.put(MUTE_KEY, new CachedVariable());
     }
 
     /**
@@ -79,6 +81,9 @@ public class LocalData {
      *  has been made.
      */
     public float getMusicVolume() {
+        if (isMute()) {
+            return 0;
+        }
         CachedVariable cachedMusicVolume = this.cachedKeyValues.get(MUSIC_VOLUME_KEY);
         if (null == cachedMusicVolume.floatValue()) {
             float musicVolume = this.localDataManager.getFloat(
@@ -103,6 +108,9 @@ public class LocalData {
      *  has been made.
      */
     public float getSoundVolume() {
+        if (isMute()) {
+            return 0;
+        }
         CachedVariable cachedSoundVolume = this.cachedKeyValues.get(SOUND_VOLUME_KEY);
         if (null == cachedSoundVolume.floatValue()) {
             float soundVolume = this.localDataManager.getFloat(
@@ -143,6 +151,27 @@ public class LocalData {
     public void setHeroIndex(int index) {
         this.localDataManager.saveInt(CHOOSE_HERO_KEY, index);
         this.cachedKeyValues.get(CHOOSE_HERO_KEY).set(index);
+    }
+
+    /**
+     * @return  True if the media is muted, false otherwise.
+     */
+    public boolean isMute() {
+        CachedVariable cachedIsMute = this.cachedKeyValues.get(MUTE_KEY);
+        if (null == cachedIsMute.booleanValue()) {
+            boolean isMute = this.localDataManager.getBoolean(MUTE_KEY, false);
+            cachedIsMute.set(isMute);
+        }
+        return cachedIsMute.booleanValue();
+    }
+
+    /**
+     * Sets whether or not the media is to be muted.
+     * @param isMute true if the media is to be muted, false otherwise.
+     */
+    public void setMute(boolean isMute) {
+        this.localDataManager.saveBoolean(MUTE_KEY, isMute);
+        this.cachedKeyValues.get(MUTE_KEY).set(isMute);
     }
 
 }

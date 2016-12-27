@@ -113,6 +113,10 @@ public final class Assets {
     public static final String CHOOSE_PRESSED_ICON = "images/icons/choose_pressed.png";
     public static final String PAUSE_ICON = "images/icons/pause.png";
     public static final String PAUSE_PRESSED_ICON = "images/icons/pause_pressed.png";
+    public static final String MUTE_ICON = "images/icons/mute.png";
+    public static final String MUTE_PRESSED_ICON = "images/icons/mute_pressed.png";
+    public static final String UNMUTE_ICON = "images/icons/unmute.png";
+    public static final String UNMUTE_PRESSED_ICON = "images/icons/unmute_pressed.png";
     // Backgrounds.
     public static final String MENU_BACKGROUND = "images/backgrounds/menu.jpg";
     public static final String PAUSE_BACKGROUND = "images/backgrounds/pause.png";
@@ -202,6 +206,8 @@ public final class Assets {
             CHOSEN_STAMP_ICON,
             CHOOSE_ICON, CHOOSE_PRESSED_ICON,
             PAUSE_ICON, PAUSE_PRESSED_ICON,
+            MUTE_ICON, MUTE_PRESSED_ICON,
+            UNMUTE_ICON, UNMUTE_PRESSED_ICON,
         // Backgrounds
             MENU_BACKGROUND,
             PAUSE_BACKGROUND,
