@@ -57,7 +57,8 @@ public class RegularFrog extends Frog {
     @Override
     public void onDeath() {
         if (isKilled()) {
-            this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
+            int score = this.runtimeInfo.gameScore.get();
+            this.runtimeInfo.gameScore.set(score + FROG_SCORE_PROFIT_VALUE);
         }
         else {
             int lives = this.runtimeInfo.gameLives.get();

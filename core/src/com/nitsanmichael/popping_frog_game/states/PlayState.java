@@ -66,7 +66,7 @@ public class PlayState implements State {
     private boolean isRewardedReplayAllowed() {
         boolean videoAvailable = this.playScreen.game.adsController.isRewardedVideoAvailable();
         boolean minReplayScoreReached =
-                    this.playScreen.runtimeInfo.gameScore >= MIN_SCORE_FOR_REWARDED_REPLAY;
+                    this.playScreen.runtimeInfo.gameScore.get() >= MIN_SCORE_FOR_REWARDED_REPLAY;
         boolean maxReplaysReached = this.playScreen.runtimeInfo.rewardedReplays > 0;
         return videoAvailable && minReplayScoreReached && (!maxReplaysReached);
     }

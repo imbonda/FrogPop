@@ -53,7 +53,8 @@ public class EvilFrog extends Frog {
         if (isKilled()) {
             int lives = this.runtimeInfo.gameLives.get();
             this.runtimeInfo.gameLives.set(lives + FROG_LIFE_PENALTY_VALUE);
-            this.runtimeInfo.gameScore += FROG_SCORE_PENALTY_VALUE;
+            int score = this.runtimeInfo.gameScore.get();
+            this.runtimeInfo.gameScore.set(score + FROG_SCORE_PENALTY_VALUE);
             Gdx.input.vibrate(new long[] { 0, 200, 200, 200}, -1);
         }
     }

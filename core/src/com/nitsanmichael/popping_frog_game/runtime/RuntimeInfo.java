@@ -45,11 +45,14 @@ public class RuntimeInfo {
         }
     }
 
+    // Score bounds.
+    private static final int MIN_SCORE = 0;
+    // Life bounds.
     private static final int MIN_LIVES = 0;
     private static final int MAX_LIVES = 10;
 
+    public RestrictedInteger gameScore;
     public RestrictedInteger gameLives;
-    public int gameScore;
     public int gameLevel;
     public float gameSpeed;
     public int rewardedReplays;
@@ -60,7 +63,7 @@ public class RuntimeInfo {
     public ScreenInfo screenInfo;
 
     public RuntimeInfo(int score, int lives, StateTracker stateTracker, ScreenInfo screenInfo) {
-        this.gameScore = score;
+        this.gameScore = new RestrictedInteger(score, MIN_SCORE, null);
         this.gameLives = new RestrictedInteger(lives, MIN_LIVES, MAX_LIVES);
         this.gameLevel = LevelController.STARTING_LEVEL;
         this.gameSpeed = LevelController.STARTING_SPEED;

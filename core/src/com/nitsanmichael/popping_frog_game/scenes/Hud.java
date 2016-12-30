@@ -52,7 +52,7 @@ public class Hud implements Disposable {
     private void setPanel(AssetController assetController) {
         BitmapFont font = assetController.get(Assets.GAME_FONT);
         font.getData().setScale(0.2f);
-        this.scoreTab = new ScoreTab(font, this.runtimeInfo.gameScore);
+        this.scoreTab = new ScoreTab(font, this.runtimeInfo.gameScore.get());
         Texture lifeIcon = assetController.get(Assets.LIFE_ICON);
         this.lifeTab = new LifeTab(lifeIcon, font, this.runtimeInfo.gameLives.get());
     }
@@ -89,7 +89,7 @@ public class Hud implements Disposable {
      * Updates the hud to indicate the most updated game-state.
      */
     public void update() {
-        this.scoreTab.updateScore(this.runtimeInfo.gameScore);
+        this.scoreTab.updateScore(this.runtimeInfo.gameScore.get());
         this.lifeTab.updateLives(this.runtimeInfo.gameLives.get());
     }
 

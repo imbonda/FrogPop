@@ -84,7 +84,7 @@ public class PlayScreen extends FadingScreen {
     }
 
     public void gameOver() {
-        this.game.data.submitScore(PlayServices.LeaderBoard.HIGHEST_SCORE, this.runtimeInfo.gameScore);
+        this.game.data.submitScore(PlayServices.LeaderBoard.HIGHEST_SCORE, this.runtimeInfo.gameScore.get());
         this.game.data.submitScore(PlayServices.LeaderBoard.HIGHEST_LEVEL, this.runtimeInfo.gameLevel);
         fadeOut(FADE_OUT_TIME, new TweenCallback() {
             @Override

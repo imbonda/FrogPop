@@ -53,7 +53,8 @@ public class HealthFrog extends Frog {
         if (isKilled()) {
             int lives = this.runtimeInfo.gameLives.get();
             this.runtimeInfo.gameLives.set(lives + FROG_LIFE_PROFIT_VALUE);
-            this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
+            int score = this.runtimeInfo.gameScore.get();
+            this.runtimeInfo.gameScore.set(score + FROG_SCORE_PROFIT_VALUE);
         }
     }
 
