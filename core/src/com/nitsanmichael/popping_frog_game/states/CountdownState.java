@@ -10,7 +10,7 @@ import com.nitsanmichael.popping_frog_game.screens.PlayScreen;
  */
 public class CountdownState implements State {
 
-    private static final int TIMER_RESET_ANIMATION_DURATION = 1;
+    private static final float TIMER_RESET_ANIMATION_DURATION = 2.5f;
 
     private PlayScreen playScreen;
 
