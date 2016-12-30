@@ -75,6 +75,7 @@ public class Manual extends Group {
         Label.LabelStyle style = new Label.LabelStyle(font, Color.BROWN);
         Label.LabelStyle positiveStyle = new Label.LabelStyle(font, new Color(0x246d14ff));
         Label.LabelStyle negativeStyle = new Label.LabelStyle(font, Color.FIREBRICK);
+        Label.LabelStyle bonusStyle = new Label.LabelStyle(font, new Color(0x1c5570ff));
 
         // Adding frogs to manual.
         table.top();
@@ -96,7 +97,7 @@ public class Manual extends Group {
         Label devilLabel = new Label("Devil", style);
         devilLabel.setFontScale(0.2f);
         table.add(devilLabel).padTop(20).padLeft(20);
-        descriptionTable = getDescriptionTable(style, positiveStyle, negativeStyle, DEVIL_DESCRIPTION, DEVIL_HIT, null);
+        descriptionTable = getDescriptionTable(style, negativeStyle, positiveStyle, DEVIL_DESCRIPTION, DEVIL_HIT, null);
         table.add(descriptionTable).padTop(20).padLeft(20).padRight(20).align(Align.left);
         table.row();
         // Angel.
@@ -104,7 +105,7 @@ public class Manual extends Group {
         Label angelLabel = new Label("Angel", style);
         angelLabel.setFontScale(0.2f);
         table.add(angelLabel).padTop(20).padLeft(20);
-        descriptionTable = getDescriptionTable(style, positiveStyle, negativeStyle, ANGEL_DESCRIPTION, ANGEL_HIT, null);
+        descriptionTable = getDescriptionTable(style, bonusStyle, null, ANGEL_DESCRIPTION, ANGEL_HIT, null);
         table.add(descriptionTable).padTop(20).padLeft(20).padRight(20).align(Align.left);
         table.row();
         // Genie.
