@@ -55,13 +55,15 @@ public class SettingsScreen extends FadingScreen {
     private Slider soundSlider;
     private Texture backgroundTexture;
     private Viewport backgroundViewport;
-    private Stage stage;
     // Play services login button.
     private ToggleButton loginButton;
     // Play services logout button.
     private ToggleButton logoutButton;
     // One of the above two buttons.
     private ToggleButton activePlayServicesButton;
+
+    private boolean isListening;
+    private Stage stage;
 
 
     public SettingsScreen(final PoppingFrog game) {
@@ -74,6 +76,7 @@ public class SettingsScreen extends FadingScreen {
         adjustSliderKnob(sliderSkin);
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
         font.getData().setScale(0.2f);
+        this.isListening = true;
 
         // Go back button.
         Texture backIcon = this.game.assetController.get(Assets.BACK_ICON);
@@ -85,9 +88,10 @@ public class SettingsScreen extends FadingScreen {
         backButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
-                if (actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                if (!isListening || actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
                     return;
                 }
+                isListening = false;
                 backToMenu();
             }
         });

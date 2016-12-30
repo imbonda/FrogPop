@@ -44,10 +44,12 @@ public class InfoScreen extends FadingScreen {
 
     private PoppingFrog game;
     private Viewport backgroundViewport;
-    private Stage stage;
     private Sprite background;
     private Array<Actor> introActors;
     private boolean isShowingManual;
+
+    private boolean isListening;
+    private Stage stage;
 
 
     public InfoScreen(final PoppingFrog game) {
@@ -57,6 +59,7 @@ public class InfoScreen extends FadingScreen {
                     PoppingFrog.VIRTUAL_WIDTH, PoppingFrog.VIRTUAL_HEIGHT);
         this.introActors = new Array<Actor>();
         this.isShowingManual = false;
+        this.isListening = true;
 
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
 
@@ -70,9 +73,10 @@ public class InfoScreen extends FadingScreen {
         backButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
-                if (actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                if (!isListening || actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
                     return;
                 }
+                isListening = false;
                 backToMenu();
             }
         });

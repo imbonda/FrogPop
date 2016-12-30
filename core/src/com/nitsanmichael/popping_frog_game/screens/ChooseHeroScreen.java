@@ -62,6 +62,8 @@ public class ChooseHeroScreen extends FadingScreen {
     private Table heroesTable;
     private Image chosenStamp;
     private ToggleButton chooseHeroButton;
+
+    private boolean isListening;
     private Stage stage;
 
 
@@ -75,6 +77,7 @@ public class ChooseHeroScreen extends FadingScreen {
 
         this.font = this.game.assetController.get(Assets.GAME_FONT);
         this.highestLevel = game.data.getHighScore(PlayServices.LeaderBoard.HIGHEST_LEVEL);
+        this.isListening = true;
 
         this.chosenStamp = new Image((Texture)this.game.assetController.get(Assets.CHOSEN_STAMP_ICON));
         this.chosenStamp.setSize(90, 70);
@@ -90,9 +93,10 @@ public class ChooseHeroScreen extends FadingScreen {
         backButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
-                if (actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
+                if (!isListening || actor != backButton || message != ToggleButtonListener.ON_TOUCH_UP) {
                     return;
                 }
+                isListening = false;
                 backToMenu();
             }
         });
