@@ -37,7 +37,8 @@ public class GamePlayTouchProcessor implements InputProcessor {
             }
         }
         Gdx.input.vibrate(500);
-        this.runtimeInfo.gameLives -= 1;
+        int lives = this.runtimeInfo.gameLives.get();
+        this.runtimeInfo.gameLives.set(lives - 1);
         return false;
     }
 

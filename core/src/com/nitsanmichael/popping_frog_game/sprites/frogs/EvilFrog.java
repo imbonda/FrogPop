@@ -19,9 +19,8 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
  */
 public class EvilFrog extends Frog {
 
-    private static final int FROG_SCORE_PROFIT_VALUE = -1;
-    private static final int FROG_LIFE_PROFIT_VALUE = -1;
-    private static final int FROG_LIFE_PENALTY_VALUE = 0;
+    private static final int FROG_SCORE_PENALTY_VALUE = -1;
+    private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
     private Animation animation;
 
@@ -52,12 +51,10 @@ public class EvilFrog extends Frog {
     @Override
     public void onDeath() {
         if (isKilled()) {
-            this.runtimeInfo.gameLives += FROG_LIFE_PROFIT_VALUE;
-            this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
+            int lives = this.runtimeInfo.gameLives.get();
+            this.runtimeInfo.gameLives.set(lives + FROG_LIFE_PENALTY_VALUE);
+            this.runtimeInfo.gameScore += FROG_SCORE_PENALTY_VALUE;
             Gdx.input.vibrate(new long[] { 0, 200, 200, 200}, -1);
-        }
-        else {
-            this.runtimeInfo.gameLives += FROG_LIFE_PENALTY_VALUE;
         }
     }
 

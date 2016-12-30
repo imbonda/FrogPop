@@ -51,8 +51,9 @@ public class HealthFrog extends Frog {
     @Override
     public void onDeath() {
         if (isKilled()) {
+            int lives = this.runtimeInfo.gameLives.get();
+            this.runtimeInfo.gameLives.set(lives + FROG_LIFE_PROFIT_VALUE);
             this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
-            this.runtimeInfo.gameLives += FROG_LIFE_PROFIT_VALUE;
         }
     }
 

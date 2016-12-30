@@ -55,10 +55,10 @@ public class PlayState implements State {
         this.playScreen.levelController.update(deltaTime);
         this.playScreen.holesManager.update(deltaTime);
         this.playScreen.hud.update();
-        if (this.playScreen.runtimeInfo.gameLives <= 0 && isRewardedReplayAllowed()) {
+        if (this.playScreen.runtimeInfo.gameLives.get() == 0 && isRewardedReplayAllowed()) {
             switchState(StateTracker.GameState.REWARDED_REPLAY);
         }
-        else if (this.playScreen.runtimeInfo.gameLives <= 0) {
+        else if (this.playScreen.runtimeInfo.gameLives.get() == 0) {
             switchState(StateTracker.GameState.OVER);
         }
     }

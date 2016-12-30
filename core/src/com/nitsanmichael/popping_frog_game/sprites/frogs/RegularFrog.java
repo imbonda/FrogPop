@@ -60,7 +60,8 @@ public class RegularFrog extends Frog {
             this.runtimeInfo.gameScore += FROG_SCORE_PROFIT_VALUE;
         }
         else {
-            this.runtimeInfo.gameLives += FROG_LIFE_PENALTY_VALUE;
+            int lives = this.runtimeInfo.gameLives.get();
+            this.runtimeInfo.gameLives.set(lives + FROG_LIFE_PENALTY_VALUE);
             Gdx.input.vibrate(500);
         }
     }

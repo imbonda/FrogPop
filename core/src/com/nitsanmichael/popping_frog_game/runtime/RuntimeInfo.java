@@ -13,8 +13,43 @@ import com.nitsanmichael.popping_frog_game.states.StateTracker;
  */
 public class RuntimeInfo {
 
+    /**
+     * A helper class, which represents an integer bound to a minimal value (or not if 'null' given),
+     * and a maximal value (or not if 'null' given).
+     */
+    public static class RestrictedInteger {
+
+        private int value;
+        private Integer min, max;
+
+        public RestrictedInteger(Integer value, Integer min, Integer max) {
+            this.min = min;
+            this.max = max;
+            set(value);
+        }
+
+        public void set(Integer value) {
+            if (null != min && value < min) {
+                this.value = min;
+            }
+            else if (null != max && max < value) {
+                this.value = max;
+            }
+            else {
+                this.value = value;
+            }
+        }
+
+        public Integer get() {
+            return this.value;
+        }
+    }
+
+    private static final int MIN_LIVES = 0;
+    private static final int MAX_LIVES = 10;
+
+    public RestrictedInteger gameLives;
     public int gameScore;
-    public int gameLives;
     public int gameLevel;
     public float gameSpeed;
     public int rewardedReplays;
@@ -26,11 +61,11 @@ public class RuntimeInfo {
 
     public RuntimeInfo(int score, int lives, StateTracker stateTracker, ScreenInfo screenInfo) {
         this.gameScore = score;
-        this.gameLives = lives;
-        this.stateTracker = stateTracker;
-        this.screenInfo = screenInfo;
+        this.gameLives = new RestrictedInteger(lives, MIN_LIVES, MAX_LIVES);
         this.gameLevel = LevelController.STARTING_LEVEL;
         this.gameSpeed = LevelController.STARTING_SPEED;
+        this.stateTracker = stateTracker;
+        this.screenInfo = screenInfo;
         this.rewardedReplays = 0;
         this.activeFrogs = new Array<Frog>();
         this.holes = new Array<Hole>();

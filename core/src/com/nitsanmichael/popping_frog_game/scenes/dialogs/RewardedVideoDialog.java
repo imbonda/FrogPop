@@ -159,7 +159,7 @@ public class RewardedVideoDialog implements Disposable {
         this.adsController.showRewardingVideo(new Runnable() {
             @Override
             public void run() {
-                runtimeInfo.gameLives = 3;
+                runtimeInfo.gameLives.set(3);
                 runtimeInfo.rewardedReplays += 1;
                 runtimeInfo.stateTracker.setState(StateTracker.GameState.COUNTDOWN);
             }

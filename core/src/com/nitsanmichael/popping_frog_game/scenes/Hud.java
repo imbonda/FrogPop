@@ -54,7 +54,7 @@ public class Hud implements Disposable {
         font.getData().setScale(0.2f);
         this.scoreTab = new ScoreTab(font, this.runtimeInfo.gameScore);
         Texture lifeIcon = assetController.get(Assets.LIFE_ICON);
-        this.lifeTab = new LifeTab(lifeIcon, font, this.runtimeInfo.gameLives);
+        this.lifeTab = new LifeTab(lifeIcon, font, this.runtimeInfo.gameLives.get());
     }
 
     /**
@@ -90,7 +90,7 @@ public class Hud implements Disposable {
      */
     public void update() {
         this.scoreTab.updateScore(this.runtimeInfo.gameScore);
-        this.lifeTab.updateLives(this.runtimeInfo.gameLives);
+        this.lifeTab.updateLives(this.runtimeInfo.gameLives.get());
     }
 
     /**
