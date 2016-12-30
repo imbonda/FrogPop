@@ -19,7 +19,7 @@ import com.nitsanmichael.popping_frog_game.runtime.RuntimeInfo;
  */
 public class EvilFrog extends Frog {
 
-    private static final int FROG_SCORE_PENALTY_VALUE = -1;
+    private static final int FROG_SCORE_PENALTY_VALUE = -5;
     private static final int FROG_LIFE_PENALTY_VALUE = -1;
 
     private Animation animation;

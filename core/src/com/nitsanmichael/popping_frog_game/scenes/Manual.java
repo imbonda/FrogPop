@@ -39,7 +39,7 @@ public class Manual extends Group {
     private static final String HERO_MISS = "\tlives -1.";
     // Devil.
     private static final String DEVIL_DESCRIPTION = "Do not hit it,\n It is bad for your health!";
-    private static final String DEVIL_HIT = "lives -1,\tscore -1.";
+    private static final String DEVIL_HIT = "lives -1,\tscore -5.";
     // Angel.
     private static final String ANGEL_DESCRIPTION = "It will give you bonus lives!";
     private static final String ANGEL_HIT = "lives +1,\tscore +2.";
