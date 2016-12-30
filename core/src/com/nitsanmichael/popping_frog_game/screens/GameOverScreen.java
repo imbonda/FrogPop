@@ -133,7 +133,7 @@ public class GameOverScreen extends FadingScreen {
         this.highLevelLabel.setPosition(420, 410);
         this.highLevelLabel.setHeight(50);
         // Score label.
-        Label scoreLabel = new Label(SCORE + this.runtimeInfo.gameScore,
+        Label scoreLabel = new Label(SCORE + this.runtimeInfo.gameScore.get(),
                 new Label.LabelStyle(font, Color.WHITE));
         scoreLabel.setFontScale(0.25f);
         scoreLabel.setPosition(490, 350);
