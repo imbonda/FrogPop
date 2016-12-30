@@ -97,6 +97,8 @@ public class ChooseHeroScreen extends FadingScreen {
                     return;
                 }
                 isListening = false;
+                // Remove the BackKeyInputProcessor.
+                Gdx.input.setInputProcessor(stage);
                 backToMenu();
             }
         });
@@ -276,6 +278,7 @@ public class ChooseHeroScreen extends FadingScreen {
                 new Runnable() {
                     @Override
                     public void run() {
+                        isListening = false;
                         backToMenu();
                     }
                 }
