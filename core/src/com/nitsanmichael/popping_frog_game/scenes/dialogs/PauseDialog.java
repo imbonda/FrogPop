@@ -102,7 +102,6 @@ public class PauseDialog implements Disposable {
                 media.updateSoundVolume(data.getSoundVolume());
                 media.updateMusicVolume(data.getMusicVolume());
                 media.playMusic(Assets.GAME_PLAY_MUSIC);
-                // todo
                 // Switch to mute button.
                 unmuteButton.remove();
                 stage.addActor(muteButton);
@@ -128,6 +127,7 @@ public class PauseDialog implements Disposable {
         Label titleLabel = new Label(DIALOG_TITLE, new Label.LabelStyle(font, Color.WHITE));
         titleLabel.setFontScale(0.4f);
         titleLabel.setPosition(310, 400);
+        titleLabel.setHeight(40);
 
         ToggleButton noiseButton =
                     (data.isMute() || (data.getSoundVolume() == 0 && data.getMusicVolume() == 0)) ?

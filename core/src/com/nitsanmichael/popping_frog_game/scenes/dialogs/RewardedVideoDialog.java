@@ -99,6 +99,7 @@ public class RewardedVideoDialog implements Disposable {
         this.timeLabel = new Label(Integer.toString((int)Math.ceil(this.timeLeft)), style);
         this.timeLabel.setFontScale(0.25f);
         this.timeLabel.setPosition(375, 373);
+        this.timeLabel.setHeight(40);
 
         setStage(viewport, batch, filmReelCountdownImage, rewardedReplayButton, xButton);
         setInputProcessor();

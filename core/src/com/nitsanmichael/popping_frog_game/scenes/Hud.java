@@ -51,7 +51,6 @@ public class Hud implements Disposable {
      */
     private void setPanel(AssetController assetController) {
         BitmapFont font = assetController.get(Assets.GAME_FONT);
-        font.getData().setScale(0.2f);
         this.scoreTab = new ScoreTab(font, this.runtimeInfo.gameScore.get());
         Texture lifeIcon = assetController.get(Assets.LIFE_ICON);
         this.lifeTab = new LifeTab(lifeIcon, font, this.runtimeInfo.gameLives.get());

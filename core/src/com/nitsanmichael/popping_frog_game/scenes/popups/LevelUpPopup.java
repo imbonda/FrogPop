@@ -18,6 +18,7 @@ import aurelienribon.tweenengine.TweenCallback;
 public class LevelUpPopup implements Popup {
 
     private static final float INITIAL_FONT_SCALE = 0.3f;
+    private static final float LABEL_HEIGHT = 30;
     private static final String LEVEL_UP_MESSAGE = "Level ";
     private static final Vector2 SRC_FONT_SCALE = new Vector2(0.3f, 0.1f);
     private static final Vector2 DST_FONT_SCALE = new Vector2(0.7f, 0.7f);
@@ -39,6 +40,7 @@ public class LevelUpPopup implements Popup {
         this.levelUpLabel = new Label(LEVEL_UP_MESSAGE, style);
         this.levelUpLabel.setPosition(POSITION.x, POSITION.y);
         this.levelUpLabel.setFontScale(INITIAL_FONT_SCALE);
+        this.levelUpLabel.setHeight(LABEL_HEIGHT);
     }
 
     @Override

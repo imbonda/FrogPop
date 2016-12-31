@@ -8,16 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nitsanmichael.popping_frog_game.PoppingFrog;
@@ -75,7 +72,6 @@ public class SettingsScreen extends FadingScreen {
         Skin sliderSkin = this.game.assetController.get(Assets.SLIDER_SKIN);
         adjustSliderKnob(sliderSkin);
         BitmapFont font = this.game.assetController.get(Assets.GAME_FONT);
-        font.getData().setScale(0.2f);
         this.isListening = true;
 
         // Go back button.
@@ -107,8 +103,10 @@ public class SettingsScreen extends FadingScreen {
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         // Music label.
         Label musicLabel = new Label(MUSIC, labelStyle);
+        musicLabel.setFontScale(0.2f);
         musicLabel.setPosition(200, 350);
         musicLabel.setWidth(250);
+        musicLabel.setHeight(20);
         // Music slider.
         float musicVolume = game.data.getMusicVolume();
         this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
@@ -146,14 +144,18 @@ public class SettingsScreen extends FadingScreen {
         // Music-slider label.
         this.musicSliderLabel = new Label(Integer.toString((int)(musicVolume * 100)) + PERCENTAGE,
                     labelStyle);
+        this.musicSliderLabel.setFontScale(0.2f);
         this.musicSliderLabel.setPosition(520, 350);
         this.musicSliderLabel.setWidth(100);
+        this.musicSliderLabel.setHeight(20);
         this.musicSliderLabel.setColor(1, 1, 1, 1);
 
         // Sound label.
         Label soundLabel = new Label(SOUND, labelStyle);
+        soundLabel.setFontScale(0.2f);
         soundLabel.setPosition(200, 250);
         soundLabel.setWidth(250);
+        soundLabel.setHeight(20);
         // Sound slider.
         float soundVolume = game.data.getSoundVolume();
         this.soundSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
@@ -187,14 +189,18 @@ public class SettingsScreen extends FadingScreen {
         // Sound-slider label.
         this.soundSliderLabel = new Label(Integer.toString((int)(soundVolume * 100)) + PERCENTAGE,
                     labelStyle);
+        this.soundSliderLabel.setFontScale(0.2f);
         this.soundSliderLabel.setPosition(520, 250);
         this.soundSliderLabel.setWidth(100);
+        this.soundSliderLabel.setHeight(20);
         this.soundSliderLabel.setColor(1, 1, 1, 1);
 
         // Play-services label.
-        Label playServices = new Label(PLAY_SERVICES, labelStyle);
-        playServices.setPosition(160, 160);
-        playServices.setWidth(250);
+        Label playServicesLabel = new Label(PLAY_SERVICES, labelStyle);
+        playServicesLabel.setFontScale(0.2f);
+        playServicesLabel.setPosition(160, 160);
+        playServicesLabel.setWidth(250);
+        playServicesLabel.setHeight(20);
 
         // Play-services login.
         Texture loginIcon = this.game.assetController.get(Assets.PLAYSERVICES_LOGIN_ICON);
@@ -232,7 +238,7 @@ public class SettingsScreen extends FadingScreen {
 
         setPlayServicesButton();
 
-        setStage(settingsLabel, musicLabel, soundLabel, playServices, backButton);
+        setStage(settingsLabel, musicLabel, soundLabel, playServicesLabel, backButton);
         this.backgroundTexture = this.game.assetController.get(Assets.MENU_BACKGROUND);
 
         Gdx.input.setCatchBackKey(true);
