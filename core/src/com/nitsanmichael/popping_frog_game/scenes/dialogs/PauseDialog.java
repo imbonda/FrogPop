@@ -47,7 +47,7 @@ public class PauseDialog implements Disposable {
         final ToggleButton playButton = new ToggleButton(
                 new Image(playIcon), new Image(playPressedIcon));
         playButton.setSize(130, 130);
-        playButton.setPosition(325, 230);
+        playButton.setPosition(325, 200);
         playButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -63,7 +63,7 @@ public class PauseDialog implements Disposable {
         Texture mutePressedIcon = assetController.get(Assets.MUTE_PRESSED_ICON);
         this.muteButton = new ToggleButton(new Image(muteIcon), new Image(mutePressedIcon));
         this.muteButton.setSize(87, 87);
-        this.muteButton.setPosition(278, 100);
+        this.muteButton.setPosition(167, 170);
         this.muteButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -86,7 +86,7 @@ public class PauseDialog implements Disposable {
         Texture unmutePressedIcon = assetController.get(Assets.UNMUTE_PRESSED_ICON);
         this.unmuteButton = new ToggleButton(new Image(unmuteIcon), new Image(unmutePressedIcon));
         this.unmuteButton.setSize(87, 87);
-        this.unmuteButton.setPosition(278, 100);
+        this.unmuteButton.setPosition(167, 170);
         this.unmuteButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
@@ -113,7 +113,7 @@ public class PauseDialog implements Disposable {
         Texture homePressedIcon = assetController.get(Assets.HOME_PRESSED_ICON);
         final ToggleButton homeButton = new ToggleButton(new Image(homeIcon), new Image(homePressedIcon));
         homeButton.setSize(80, 80);
-        homeButton.setPosition(420, 100);
+        homeButton.setPosition(530, 173);
         homeButton.addListener(new MessageEventListener() {
             @Override
             public void receivedMessage(int message, Actor actor) {
