@@ -106,7 +106,7 @@ public class SettingsScreen extends FadingScreen {
         musicLabel.setFontScale(0.2f);
         musicLabel.setPosition(200, 350);
         musicLabel.setWidth(250);
-        musicLabel.setHeight(20);
+        musicLabel.setHeight(40);
         // Music slider.
         float musicVolume = game.data.getMusicVolume();
         this.musicSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
@@ -147,7 +147,7 @@ public class SettingsScreen extends FadingScreen {
         this.musicSliderLabel.setFontScale(0.2f);
         this.musicSliderLabel.setPosition(520, 350);
         this.musicSliderLabel.setWidth(100);
-        this.musicSliderLabel.setHeight(20);
+        this.musicSliderLabel.setHeight(40);
         this.musicSliderLabel.setColor(1, 1, 1, 1);
 
         // Sound label.
@@ -155,7 +155,7 @@ public class SettingsScreen extends FadingScreen {
         soundLabel.setFontScale(0.2f);
         soundLabel.setPosition(200, 250);
         soundLabel.setWidth(250);
-        soundLabel.setHeight(20);
+        soundLabel.setHeight(40);
         // Sound slider.
         float soundVolume = game.data.getSoundVolume();
         this.soundSlider = new Slider(0, SLIDER_RANGE, SLIDER_STEP, false, sliderSkin);
@@ -192,7 +192,7 @@ public class SettingsScreen extends FadingScreen {
         this.soundSliderLabel.setFontScale(0.2f);
         this.soundSliderLabel.setPosition(520, 250);
         this.soundSliderLabel.setWidth(100);
-        this.soundSliderLabel.setHeight(20);
+        this.soundSliderLabel.setHeight(40);
         this.soundSliderLabel.setColor(1, 1, 1, 1);
 
         // Play-services label.
@@ -200,7 +200,7 @@ public class SettingsScreen extends FadingScreen {
         playServicesLabel.setFontScale(0.2f);
         playServicesLabel.setPosition(160, 160);
         playServicesLabel.setWidth(250);
-        playServicesLabel.setHeight(20);
+        playServicesLabel.setHeight(40);
 
         // Play-services login.
         Texture loginIcon = this.game.assetController.get(Assets.PLAYSERVICES_LOGIN_ICON);
